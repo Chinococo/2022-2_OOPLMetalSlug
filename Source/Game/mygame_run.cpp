@@ -44,6 +44,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
 	btn.SetTopLeft(540, 495);
 	btns_mainmenu.push_back(btn);
+
+	CAudio *audio = CAudio::Instance();
+	audio->Load(0, "resources/sounds/mslug_menus.wav");
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -82,4 +85,6 @@ void CGameStateRun::OnShow()
 	for (size_t i = 0; i < btns_mainmenu.size(); i++) {
 		btns_mainmenu.at(i).ShowBitmap();
 	}
+	CAudio *audio = CAudio::Instance();
+	audio->Play(0, true);
 }
