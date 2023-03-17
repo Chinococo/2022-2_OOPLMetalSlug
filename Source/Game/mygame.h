@@ -99,6 +99,9 @@ namespace game_framework {
 		CMovingBitmap bg_settings;
 		CMovingBitmap bg_videosettings;
 		std::vector<CMovingBitmap> btns_mainmenu;
+		void show_text_by_phase();
+		int phase = 1;
+		int sub_phase = 1;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
