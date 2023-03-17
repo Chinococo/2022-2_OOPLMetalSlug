@@ -90,8 +90,18 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		CMovingBitmap background;
-		std::vector<CMovingBitmap> mainmenuButtons;
+		CMovingBitmap bg_mainmenu;
+		CMovingBitmap bg_selectmode;
+		CMovingBitmap bg_selectplayer;
+		CMovingBitmap bg_multiplayer;
+		CMovingBitmap bg_create_multiplayer;
+		CMovingBitmap bg_matchmaking;
+		CMovingBitmap bg_settings;
+		CMovingBitmap bg_videosettings;
+		std::vector<CMovingBitmap> btns_mainmenu;
+		void show_text_by_phase();
+		int phase = 1;
+		int sub_phase = 1;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
