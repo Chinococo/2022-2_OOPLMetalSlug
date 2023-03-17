@@ -33,6 +33,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	background.LoadBitmapByString({ "resources/backgrounds/bg_mainmenu.bmp" }, RGB(0, 0, 0));
+	arrow.LoadBitmapByString({ "resources/bmp/arrow.bmp" }, RGB(255, 255, 255));
 	background.SetTopLeft(0, 0);
 	for (int i = 0; i < 4; i++) {
 		CMovingBitmap btn;
@@ -44,11 +45,16 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
 	btn.SetTopLeft(540, 495);
 	mainmenuButtons.push_back(btn);
+	pharse = "init";
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	
+	if (nChar==VK_UP)
+		choose = (choose + 4) % 5;
+	else if (nChar == VK_DOWN)
+		choose = (choose + 1) % 5;
+	UpdateArrowPosition();
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -82,4 +88,23 @@ void CGameStateRun::OnShow()
 	for (size_t i = 0; i < mainmenuButtons.size(); i++) {
 		mainmenuButtons.at(i).ShowBitmap();
 	}
+	show_text_by_phase();
+	arrow.ShowBitmap();
+	UpdateArrowPosition();
+}
+void CGameStateRun::show_text_by_phase() {
+	CDC *pDC = CDDraw::GetBackCDC();
+	if (pharse == "init") {
+		CTextDraw::ChangeFontLog(pDC, 21, "Arial", RGB(255, 255, 255), 800);
+		CTextDraw::Print(pDC, 560, 185, "This is Test1");
+		CTextDraw::Print(pDC, 560, 255, "This is Test2");
+		CTextDraw::Print(pDC, 560, 325, "This is Test3");
+		CTextDraw::Print(pDC, 560, 400, "This is Test4");
+		CTextDraw::Print(pDC, 560, 500, "This is Test5");
+		CDDraw::ReleaseBackCDC();
+	}
+}
+void  CGameStateRun::UpdateArrowPosition() {
+	int position[5] = { 185,255,325,400,500 };
+	arrow.SetTopLeft(430, position[choose]-35);
 }
