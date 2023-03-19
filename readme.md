@@ -164,6 +164,89 @@ gitGraph
     checkout main
     commit id:"update readme file"
     commit id:"readme file 60% 預計排成甘特圖完成"
+```
+```mermaid
+classDiagram
+    class CMovingBitmap {
+    - int frameIndex
+    - int delayCount
+    - int animationCount
+    - bool isAnimation
+    - bool isAnimationDone
+    - bool isBitmapLoaded
+    - bool isOnce
+    - vector<CRect> locations
+    - vector<unsigned> surfaceID
+    - clock_t last_time
+    - string imageFileName
+    - COLORREF filterColor
+    + void LoadBitmap(int, COLORREF = CLR_INVALID)
+    + void LoadBitmap(char*, COLORREF = CLR_INVALID)
+    + void LoadBitmap(vector<char*>, COLORREF = CLR_INVALID)
+    + void LoadBitmapByString(vector<string>, COLORREF = CLR_INVALID)
+    + void LoadEmptyBitmap(int height, int weight)
+    + void UnshowBitmap()
+    + void SetAnimation(int delay, bool _once)
+    + void SetFrameIndexOfBitmap(int frame)
+    + void SetTopLeft(int, int)
+    + void ShowBitmap()
+    + void ShowBitmap(double factor)
+    + int GetFrameIndexOfBitmap()
+    + int GetFrameSizeOfBitmap()
+    + int GetTop()
+    + int GetLeft()
+    + int GetHeight()
+    + int GetWidth()
+    + string GetImageFileName()
+    + COLORREF GetFilterColor()
+    + bool IsAnimation()
+    + bool IsAnimationDone()
+    + bool IsBitmapLoaded()
+    + bool IsOnceAnimation()
+    + static bool IsOverlap(CMovingBitmap bmp1, CMovingBitmap bmp2)
+    + void ToggleAnimation()
+}
 
-
+class Marco{
+    - int DriveHp
+    - int bomb
+    - int arm
+    - int score
+    - int live
+    - int slaver
+    - string weapon_type
+    - int gravity
+    + void jump()
+    + void dead()
+    + bool Isjump()
+    + void weapon()
+    + bool IsInvehicle()
+    + bool CanContinue()
+    + void Attack()
+    + void move()
+    + bool Isground()
+    + void touch(enemy)
+    + void touch(object)
+    + void touch(slaver)
+    + void touch(bullet)
+    + ~Marco()
+}
+class Box{
+    - bool Broken
+    + bool IsBroken()
+    + void SoummonObject()
+    + ~Box()
+}
+class Weapon{
+    - string WeponType
+    + bool IsTouch()
+    + ~Weapon()
+}
+class vehicle{
+    - bool friend
+    + int Hp
+}
+    CMovingBitmap <|-- Marco
+    CMovingBitmap <|-- Box
+    CMovingBitmap <|-- Weapon
 ```
