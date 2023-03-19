@@ -130,3 +130,40 @@ gantt
     固定式機槍:active,des44,after des43,2d
     最終boss:active,des45,after des44,5d
 ```
+### 目前git紀錄
+```mermaid
+%%{init: { 'logLevel': 'debug', 'theme': 'default' , 'themeVariables': {
+              'gitInv0': '#ff0000'
+       } } }%%
+gitGraph
+        
+    commit id:"pure game framework"
+    commit id:"Create test.py"
+    branch KenChen9/master
+    checkout KenChen9/master
+    commit id:"Create test1.py"
+    checkout main
+    merge KenChen9/master
+
+    branch Chinococo/dev
+    checkout Chinococo/dev
+    commit id:"create test2.py"
+    checkout main
+    merge Chinococo/dev
+
+    branch KenChen9-patch-1
+    checkout KenChen9-patch-1
+    commit id:"Create test3.py"
+    checkout main
+    merge KenChen9-patch-1
+    checkout main
+    commit id:"Update framework"
+    commit id:" Created mainmenu background and buttons bmp"
+    merge KenChen9-patch-1
+
+    checkout main
+    commit id:"update readme file"
+    commit id:"readme file 60% 預計排成甘特圖完成"
+
+
+```
