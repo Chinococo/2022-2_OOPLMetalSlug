@@ -250,3 +250,49 @@ class vehicle{
     CMovingBitmap <|-- Box
     CMovingBitmap <|-- Weapon
 ```
+### Test
+```mermaid
+graph LR
+    subgraph Characters
+        subgraph Friendly
+            subgraph Main Characters
+                主角1
+                主角2
+            end
+            俘虜
+            載具(坦克)
+            固定式機槍
+        end
+        subgraph Enemy
+            subgraph Soldiers
+                基本士兵
+                潛水導彈兵
+                士兵(戴盾牌)
+                士兵(趴下移動)
+                士兵(傘兵)
+            end
+            直升機
+            載具(敵方坦克)
+            敵人(丟鋼筋坦克)
+            敵人(裝甲坦克)
+            艾倫
+            Mission中/大Boss
+        end
+    end
+    subgraph Objects
+        物件(箱子)
+        槍枝(衝鋒槍)
+        槍枝(火焰槍)
+        槍枝(霰彈槍)
+        物件(石頭)
+        物件(炸藥箱)
+        電擊陷阱
+        槍枝(導彈槍)
+        載具(船)
+        特殊機關(牆壁)
+    end
+    subgraph Map
+        固定式砲台
+        各種不同台階
+    end
+```
