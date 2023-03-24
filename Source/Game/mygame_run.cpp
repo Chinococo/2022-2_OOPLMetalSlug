@@ -32,18 +32,24 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
-	bg_mainmenu.LoadBitmapByString({ "resources/backgrounds/bg_mainmenu.bmp" }, RGB(0, 0, 0));
+	// 載入主菜單背景圖片
+	bg_mainmenu.LoadBitmapByString({ "resources/img/background/bg_mainmenu.bmp" }, RGB(0, 0, 0));
 	bg_mainmenu.SetTopLeft(0, 0);
+	
+	// 載入主菜單按鈕
 	for (int i = 0; i < 4; i++) {
 		CMovingBitmap btn;
-		btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
+		btn.LoadBitmapByString({ "resources/img/menu/btn_generic.bmp" }, RGB(0, 0, 0));
 		btn.SetTopLeft(540, 70 * i + 175);
 		btn_mainmenu.push_back(btn);
 	}
 	CMovingBitmap btn;
-	btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
+	btn.LoadBitmapByString({ "resources/img/menu/btn_generic.bmp" }, RGB(0, 0, 0));
 	btn.SetTopLeft(540, 495);
 	btn_mainmenu.push_back(btn);
+
+	// 載入英雄 marco
+	marco.loadTexture({ "resources/img/character/marco/frame1.bmp", "resources/img/character/marco/frame2.bmp", "resources/img/character/marco/frame3.bmp" });
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)

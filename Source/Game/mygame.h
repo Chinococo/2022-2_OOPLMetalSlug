@@ -92,6 +92,7 @@ namespace game_framework {
 	private:
 		CMovingBitmap bg_mainmenu;
 		std::vector<CMovingBitmap> btn_mainmenu;
+		Marco marco;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -109,6 +110,21 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		int counter;	// 倒數之計數器
+	};
+
+	class Character {
+	public:
+		void attack();
+		void takeDamage();
+	protected:
+		CMovingBitmap texture;
+	};
+
+	class Marco : public Character {
+	public:
+		void loadTexture(std::vector<std::string> paths) {
+			texture.LoadBitmapByString(paths);
+		}
 	};
 
 }
