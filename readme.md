@@ -296,3 +296,82 @@ graph LR
         各種不同台階
     end
 ```
+## 遊戲架構圖
+```mermaid
+stateDiagram-v2
+direction TB
+%% enum class SelectedMission {ALL, I, II, III, IV, V, VI};
+%% SelectedMission selectedMission = SelectedMission::ALL;
+[*] --> PressStart
+PressStart --> MainMenu: PUSH START
+MainMenu --> SelectMode: MAIN MISSION
+MainMenu --> Settings: SETTINGS
+SelectMode --> SelectPlayer: ARCADE, set selectedMission to ALL
+SelectMode --> SelectLevel: MISSIONS
+SelectLevel --> SelectPlayer: set selectedMission to I, II, III, IV, V, VI
+SelectPlayer --> MissionI: if (selectedMission == ALL)
+MissionI --> MissionII: if (selectedMission == ALL)
+MissionII --> MissionIII: if (selectedMission == ALL)
+MissionIII --> MissionIV: if (selectedMission == ALL)
+MissionIV --> MissionV: if (selectedMission == ALL)
+MissionV --> MissionVI: if (selectedMission == ALL)
+MissionVI --> Ending
+Ending --> MainMenu
+SelectPlayer --> MissionI: if (selectedMission == MissionI)
+SelectPlayer --> MissionII: if (selectedMission == MissionII)
+SelectPlayer --> MissionIII: if (selectedMission == MissionIII)
+SelectPlayer --> MissionIV: if (selectedMission == MissionIV)
+SelectPlayer --> MissionV: if (selectedMission == MissionV)
+SelectPlayer --> MissionVI: if (selectedMission == MissionVI)
+MissionI --> MainMenu
+MissionII --> MainMenu
+MissionIII --> MainMenu
+MissionIV --> MainMenu
+MissionV --> MainMenu
+MissionVI --> MainMenu
+MissionI --> Pause: (ESC)
+MissionII --> Pause: (ESC)
+MissionIII --> Pause: (ESC)
+MissionIV --> Pause: (ESC)
+MissionV --> Pause: (ESC)
+MissionVI --> Pause: (ESC)
+Pause --> QuitConfirm
+QuitConfirm --> MainMenu
+%% PressStart: <any key>
+%% MainMenu: MAIN MISSION, MULTIPLAYER, SETTINGS, LEADERBOARDS, QUIT GAME
+%% SelectMode: EASY, MEDIUM, HARD, VERY HARD, CREDITS, ARCADE, MISSIONS, BACK
+%% SelectPlayer: ONE PLAYER, TWO PLAYER
+%% SelectLevel: MISSION I, MISSION II, MISSION III, MISSION IV, MISSION V, MISSION VI
+%% Mission1..6: (ESC)
+%% Pause: RESUME GAME, VIDEO OPTIONS, VOLUME, CONTROLS, QUIT
+%% QuitConfirm: YES, NO
+```
+## 事件觸發圖
+```mermaid
+stateDiagram-v2
+direction TB
+[] --> event_check
+event_check --> state_menu
+event_check --> state_setting
+event_check --> state_select_mode
+event_check --> state_level
+event_check --> state_select_player
+event_check --> state_mission
+state_menu --> move_arrow_up: if(keyboard up)
+state_menu --> move_arrow_down: if(keyboard down)
+state_setting --> lower_sound: if(mouse slide it to left)
+state_setting --> bigger_sound: if(mouse slide it to right)
+state_setting --> state_setting : detect keyboard to set player keyboard setting if (check keyboard)
+state_select_mode --> move_arrow_left: if(keyboard left)
+state_select_mode --> move_arrow_right: if(keyboard right)
+state_level --> move_arrow_left: if(keyboard left)
+state_level --> move_arrow_right: if(keyboard right)
+state_select_player --> move_arrow_left: if(keyboard left)
+state_select_player --> move_arrow_right: if(keyboard right)
+state_mission --> jump: if(keyboard up)
+state_mission --> down: if(keyboard down)
+state_mission --> move_left: if(keyboard left)
+state_mission --> move_right: if(keyboard right)
+state_mission --> pause: if(keyboard esc)
+state_mission --> cheat_init: if(keyboard 9)
+```
