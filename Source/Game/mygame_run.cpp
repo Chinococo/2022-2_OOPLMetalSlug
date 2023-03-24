@@ -32,18 +32,18 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
-	background.LoadBitmapByString({ "resources/backgrounds/bg_mainmenu.bmp" }, RGB(0, 0, 0));
-	background.SetTopLeft(0, 0);
+	bg_mainmenu.LoadBitmapByString({ "resources/backgrounds/bg_mainmenu.bmp" }, RGB(0, 0, 0));
+	bg_mainmenu.SetTopLeft(0, 0);
 	for (int i = 0; i < 4; i++) {
 		CMovingBitmap btn;
 		btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
 		btn.SetTopLeft(540, 70 * i + 175);
-		mainmenuButtons.push_back(btn);
+		btn_mainmenu.push_back(btn);
 	}
 	CMovingBitmap btn;
 	btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
 	btn.SetTopLeft(540, 495);
-	mainmenuButtons.push_back(btn);
+	btn_mainmenu.push_back(btn);
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -78,8 +78,8 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 
 void CGameStateRun::OnShow()
 {
-	background.ShowBitmap();
-	for (size_t i = 0; i < mainmenuButtons.size(); i++) {
-		mainmenuButtons.at(i).ShowBitmap();
+	bg_mainmenu.ShowBitmap();
+	for (size_t i = 0; i < btn_mainmenu.size(); i++) {
+		btn_mainmenu.at(i).ShowBitmap();
 	}
 }
