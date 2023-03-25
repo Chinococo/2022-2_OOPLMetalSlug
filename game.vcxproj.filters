@@ -14,6 +14,15 @@
     <Filter Include="MyGame">
       <UniqueIdentifier>{0c798913-b7d2-4e26-8241-0f83266cd626}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{3e88353f-f4f0-472e-8893-37ee2ed90016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Header">
+      <UniqueIdentifier>{62212f01-70c6-406f-a91a-c83f511ee687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Source">
+      <UniqueIdentifier>{53e3fd0b-0b80-49bb-bcca-75b5821cb3f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="RES\GAME.RC2">
@@ -54,6 +63,30 @@
     <ClCompile Include="Source\Game\mygame_run.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Source\Character\Source\ally.cpp">
+      <Filter>Source\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Character\Source\character.cpp">
+      <Filter>Source\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Character\Source\hero.cpp">
+      <Filter>Source\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Character\Source\hostage.cpp">
+      <Filter>Source\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Character\Source\object.cpp">
+      <Filter>Source\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Character\Source\obsticle.cpp">
+      <Filter>Source\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Character\Source\bullet.cpp">
+      <Filter>Source\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Source\Character\Source\item.cpp">
+      <Filter>Source\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -88,6 +121,30 @@
     </ClInclude>
     <ClInclude Include="Source\Game\config.h">
       <Filter>MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Character\Header\ally.h">
+      <Filter>Source\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Character\Header\character.h">
+      <Filter>Source\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Character\Header\hero.h">
+      <Filter>Source\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Character\Header\hostage.h">
+      <Filter>Source\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Character\Header\object.h">
+      <Filter>Source\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Character\Header\obsticle.h">
+      <Filter>Source\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Character\Header\item.h">
+      <Filter>Source\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\Character\Header\bullet.h">
+      <Filter>Source\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
