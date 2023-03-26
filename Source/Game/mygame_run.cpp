@@ -57,8 +57,10 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	else if (pharse == "map1") {
 		if (nChar == VK_RIGHT) {
-			Map1X -= MapScrollSpeed;
-			map1.SetTopLeft(Map1X, Map1Y - background.GetHeight());
+			keydown.insert(nChar);
+		}
+		else if (nChar == VK_UP) {
+			keydown.insert(nChar);
 		}
 			
 	}
@@ -98,7 +100,9 @@ void CGameStateRun::clean() {
 }
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	
+	if (pharse == "map1") {
+		keydown.erase(nChar);
+	}
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
@@ -132,6 +136,11 @@ void CGameStateRun::OnShow()
 		arrow.ShowBitmap();
 	}
 	else if (pharse == "map1") {
+		if (keydown.count(VK_RIGHT))
+			Map1X -= MapScrollSpeed;
+		//if (keydown.count(VK_UP))
+		//	Map1Y += MapScrollSpeed;
+		map1.SetTopLeft(Map1X, Map1Y - background.GetHeight());
 		map1.ShowBitmap();
 	}
 	

@@ -38,7 +38,7 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
-
+#include <set>
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
@@ -103,6 +103,7 @@ namespace game_framework {
 		int Map1X = 0;
 		int Map1Y = 380;
 		int MapScrollSpeed = 10;
+		std::set<UINT> keydown;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
