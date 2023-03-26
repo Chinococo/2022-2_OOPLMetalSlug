@@ -38,7 +38,7 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
-
+#include <set>
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
@@ -86,12 +86,24 @@ namespace game_framework {
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
 		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
+		void show_text_by_phase();						// 更新文字
+		void UpdateArrowPosition();                     // 更新箭頭位置
+		void clean();                                   // 清除之前元素
+		void LoadPharseElements();                      // 載入當前pharse應該載入的圖片以及設定
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		CMovingBitmap bg_mainmenu;
-		std::vector<CMovingBitmap> btn_mainmenu;
+		CMovingBitmap background;
+		std::vector < std::tuple<CMovingBitmap, int, int>>  map1;
+		std::vector<CMovingBitmap> mainmenuButtons;
+		std::string pharse;
+		CMovingBitmap arrow;
+		int choose = 0;
+		int Map1X = 0;
+		int Map1Y = 380;
+		int MapScrollSpeed = 10;
+		std::set<UINT> keydown;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
