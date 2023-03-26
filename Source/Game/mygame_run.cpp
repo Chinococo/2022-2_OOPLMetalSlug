@@ -5,6 +5,7 @@
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
+#include <string>
 #include "mygame.h"
 
 using namespace game_framework;
@@ -84,8 +85,15 @@ void CGameStateRun::LoadPharseElements() {
 		UpdateArrowPosition();
 	}
 	else if (pharse == "map1") {
-		map1.LoadBitmapByString({"resources/maps/map1_1.bmp" }, RGB(0, 0, 0));
-		map1.SetTopLeft(Map1X,Map1Y-background.GetHeight());
+		std::vector<std::tuple<CMovingBitmap, int, int>> layer;
+		CMovingBitmap temp;
+		temp.LoadBitmapByString({"resources/maps/map1_1.bmp" }, RGB(255,255, 255));
+		layer.push_back({ temp,0,-30 });
+
+		CMovingBitmap temp1;
+		temp1.LoadBitmapByString({ "resources/maps/background1.bmp" }, RGB(255, 255, 255));
+		layer.push_back({ temp1,+5200,100 });
+		map1 = layer;
 	}
 }
 void CGameStateRun::clean() {
@@ -136,12 +144,19 @@ void CGameStateRun::OnShow()
 		arrow.ShowBitmap();
 	}
 	else if (pharse == "map1") {
-		if (keydown.count(VK_RIGHT))
+		if (keydown.count(VK_RIGHT)&&background.GetWidth()-600)
 			Map1X -= MapScrollSpeed;
 		//if (keydown.count(VK_UP))
 		//	Map1Y += MapScrollSpeed;
-		map1.SetTopLeft(Map1X, Map1Y - background.GetHeight());
-		map1.ShowBitmap();
+		for (unsigned i = map1.size()-1;; i--) {
+			std::get<0>(map1[i]).SetTopLeft(Map1X+ std::get<1>(map1[i]), Map1Y - background.GetHeight()+ std::get<2>(map1[i]));
+			std::get<0>(map1[i]).ShowBitmap();
+			if (i == 0)
+				break;
+		}
+		//show_text_by_phase();
+
+		
 	}
 	
 }
@@ -156,6 +171,12 @@ void CGameStateRun::show_text_by_phase() {
 		CTextDraw::Print(pDC, 560, 500, "This is Test5");
 		CDDraw::ReleaseBackCDC();
 	}
+	else if (pharse == "map1") {
+		CTextDraw::ChangeFontLog(pDC, 21, "Arial", RGB(255, 255, 255), 800);
+		CTextDraw::Print(pDC, 560, 185, to_string(Map1X));
+		CTextDraw::Print(pDC, 560, 255, to_string(Map1Y));
+	}
+
 }
 void  CGameStateRun::UpdateArrowPosition() {
 	int position[5] = { 185,255,325,400,500 };

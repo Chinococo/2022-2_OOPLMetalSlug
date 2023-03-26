@@ -95,7 +95,7 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		CMovingBitmap background;
-		CMovingBitmap map1;
+		std::vector < std::tuple<CMovingBitmap, int, int>>  map1;
 		std::vector<CMovingBitmap> mainmenuButtons;
 		std::string pharse;
 		CMovingBitmap arrow;
