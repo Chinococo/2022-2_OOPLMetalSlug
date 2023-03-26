@@ -32,21 +32,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
-	background.LoadBitmapByString({ "resources/backgrounds/bg_mainmenu.bmp" }, RGB(0, 0, 0));
-	arrow.LoadBitmapByString({ "resources/bmp/arrow.bmp" }, RGB(255, 255, 255));
-	background.SetTopLeft(0, 0);
-	for (int i = 0; i < 4; i++) {
-		CMovingBitmap btn;
-		btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
-		btn.SetTopLeft(540, 70 * i + 175);
-		mainmenuButtons.push_back(btn);
-	}
-	CMovingBitmap btn;
-	btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
-	btn.SetTopLeft(540, 495);
-	mainmenuButtons.push_back(btn);
 	pharse = "init";
-	UpdateArrowPosition();
+	LoadPharseElements();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -62,12 +49,42 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			if (choose == 0) {
 				clean();
 				pharse = "map1";
+				LoadPharseElements();
 			}
 				
 		}
 			
 	}
+	else if (pharse == "map1") {
+		if (nChar == VK_RIGHT) {
+			Map1X -= MapScrollSpeed;
+			map1.SetTopLeft(Map1X, Map1Y - background.GetHeight());
+		}
+			
+	}
 	
+}
+void CGameStateRun::LoadPharseElements() {
+	if (pharse == "init") {
+		background.LoadBitmapByString({ "resources/backgrounds/bg_mainmenu.bmp"}, RGB(0, 0, 0));
+		arrow.LoadBitmapByString({ "resources/bmp/arrow.bmp" }, RGB(255, 255, 255));
+		background.SetTopLeft(0, 0);
+		for (int i = 0; i < 4; i++) {
+			CMovingBitmap btn;
+			btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
+			btn.SetTopLeft(540, 70 * i + 175);
+			mainmenuButtons.push_back(btn);
+		}
+		CMovingBitmap btn;
+		btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
+		btn.SetTopLeft(540, 495);
+		mainmenuButtons.push_back(btn);
+		UpdateArrowPosition();
+	}
+	else if (pharse == "map1") {
+		map1.LoadBitmapByString({"resources/maps/map1_1.bmp" }, RGB(0, 0, 0));
+		map1.SetTopLeft(Map1X,Map1Y-background.GetHeight());
+	}
 }
 void CGameStateRun::clean() {
 	if (pharse == "init") {
@@ -113,7 +130,9 @@ void CGameStateRun::OnShow()
 		}
 		show_text_by_phase();
 		arrow.ShowBitmap();
-		
+	}
+	else if (pharse == "map1") {
+		map1.ShowBitmap();
 	}
 	
 }
