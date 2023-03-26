@@ -14,9 +14,9 @@ Character::Character() {
 }
 
 void Character::jumpUpward() {
-	if (isCollide(ceiling)) {
+	//if (isCollide(ceiling)) {
 
-	}
+	//}
 	else if (timeJumped * 2 <= jumpDuration) {
 		texture = jumpUpTexture;
 		setTopLeft(getLeftX(), getTopY() + 30);
