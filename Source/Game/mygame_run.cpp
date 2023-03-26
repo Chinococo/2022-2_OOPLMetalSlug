@@ -46,17 +46,39 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	btn.SetTopLeft(540, 495);
 	mainmenuButtons.push_back(btn);
 	pharse = "init";
+	UpdateArrowPosition();
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if (nChar==VK_UP)
-		choose = (choose + 4) % 5;
-	else if (nChar == VK_DOWN)
-		choose = (choose + 1) % 5;
-	UpdateArrowPosition();
-}
+	if (pharse == "init") {
+		if (nChar == VK_UP)
+			choose = (choose + 4) % 5;
+		else if (nChar == VK_DOWN)
+			choose = (choose + 1) % 5;
+		UpdateArrowPosition();
 
+		if (nChar == VK_RETURN) {
+			if (choose == 0) {
+				clean();
+				pharse = "map1";
+			}
+				
+		}
+			
+	}
+	
+}
+void CGameStateRun::clean() {
+	if (pharse == "init") {
+		background.UnshowBitmap();
+		for (size_t i = 0; i < mainmenuButtons.size(); i++) {
+			mainmenuButtons.at(i).UnshowBitmap();
+		}
+		arrow.UnshowBitmap();
+	}
+
+}
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	
@@ -84,13 +106,16 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動
 
 void CGameStateRun::OnShow()
 {
-	background.ShowBitmap();
-	for (size_t i = 0; i < mainmenuButtons.size(); i++) {
-		mainmenuButtons.at(i).ShowBitmap();
+	if (pharse == "init") {
+		background.ShowBitmap();
+		for (size_t i = 0; i < mainmenuButtons.size(); i++) {
+			mainmenuButtons.at(i).ShowBitmap();
+		}
+		show_text_by_phase();
+		arrow.ShowBitmap();
+		
 	}
-	show_text_by_phase();
-	arrow.ShowBitmap();
-	UpdateArrowPosition();
+	
 }
 void CGameStateRun::show_text_by_phase() {
 	CDC *pDC = CDDraw::GetBackCDC();
