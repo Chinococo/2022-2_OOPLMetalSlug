@@ -1,314 +1,377 @@
-# Leistungsstarkes Game Framework
-
-LGF (Leistungsstarkes Game Framework) 是一款基於陳偉凱老師的 Game Framework 加上些許功能的 Powerful Game Framework。
-
-專案不保證長期維護，有任何問題或者任何其他想要的 feature，請丟 issue，祝使用愉快 :D
-
-
-
-## Installation
-
-1. 將此專案 clone 下來
-2. 替換原有的 Game Framework / 直接使用這個 Game Framework.
-
-（基本上是相容於舊框架的，因為是基於舊框架新增更多的 feature 以及修正 bug）
-
-
-
-## Feature
-
-### 2022-03-06
-
-- 修正了 `CInteger` 的 Bug，現在可以正常呈現。
-- **半修正**了 `CMovingBitmap.showBitmap(double factor)` 的 Bug，當 `factor` 等於 `0` 時視為隱藏圖片。
-- 可以隱藏 `CMovingBitmap` 的圖片。
-- 可以讀入多個 `CMovingBitmap` 的圖片，並且選擇欲呈現的圖片。
-- 可以讀入多個 `CMovingBitmap` 的圖片，並且利用 `SetAnimation(int delay, bool once)` 來製作動畫。
-- 廢棄 `CAnimation` 的作法。
-
-### 2022-03-11
-
-- 讓 `CInteger` 可以自由顯示是否要顯示前導零。
-
-
-
-### 2022-06-17
-
-- 【New Feature】修正了全螢幕時的黑邊問題，並且會將遊戲視窗絕對置中。
-- 【New Feature】將動畫每幀的延遲加上精準時間。
-- 【New Feature】支援以 `vector<string>` 讀取每幀的畫面。
-- 【New Feature】新增了 `CTextDraw` 類別，**畫上文字時請使用這個類別的函式，全螢幕的字位移才會正確**
-- 【Bug】修正了 CMovngBitmap 在執行動畫時會出現的小 bug。
-
-
-
-### 2023-02-22
-
-- 創立了純淨版（Purified）的 Leistungsstarkes Game Framework 專案，可直接建置方案並執行。
-- 修改了檔案架構，從原先將所有的 `.cpp` 放入 `Source` 資料夾，改為在 `Source` 建立一個資料夾架構來存放 `.cpp` 檔案。
-- 修改了檔案架構，將 `/RES` 重新命名為 `Resources` 來釐清名稱。
-- 創立 `GAME_TITLE` 的定義（`#define`），使框架使用者能夠變更遊戲標題。
-- 將 `mygame.cpp` 分割成三個不同的檔案，分別實作 `GameStateInit`、`GameStateRun` 與 `GameStateOver` 的類別。
-- 重構了部分的 code 使得重複的 code 出現的次數減少。
-- 抽離遊戲設定參數至 `config.cpp`，讓使用者不須也不應更改 `/Library` 與 `/Core` 的程式碼。
-
-
-
-## Documents
-
-### void CMovingBitmap::LoadBitmap(char* , COLORREF)
-
-讀取一張圖片。
-
-```c++
-CMovingBitmap bitmap;
-bitmap.LoadBitmap("RES/bitmap.bmp", RGB(255, 255, 255));
-bitmap.SetLeftRight(0, 0);
-
-# -- on show --
-
-bitmap.ShowBitmap();
+###### tags: `111-2學校上課`
+# OOPL 越南大戰
+## Git Branch視覺化教學
+當你安裝玩Git後，你可以調用以**gitk**
+使用步驟:
+1. 打開cmd，cd到你專案目錄
+2. 打上gitk --all &
+3. 你應該會看到以下圖片
+![](https://i.imgur.com/MAn7Pei.png)
+## Git 指令教學
+| 使令目的 | 指令 |
+| -------- | -------- | 
+| 網路上複製code     | git clone repo.url    |
+| 將更新的code加入stash    | git add .    |
+| 新增節點    | git commit -am "變更的意義"    |
+| 查看目前branch    | git branch    |
+| 刪除分ㄖ   | git branch -d  branch-name  |
+| 變更自己目前在的branch   | git checkout branch-name    |  變更自己目前在的branch   | git checkout branch-name    | 
+|  上傳github(更新master目錄)  | git push    | 
+|  上傳github(更新其他目錄，但分支線上存在)  | git push origin branch-name   | 
+|  上傳github(更新其他目錄，但分支線上不存在)  | git push --set-upstream origin branch-name  | 
+|  合併分支  | git checkout master(母體分支) / git merge 要整併的分支  整併完分支會消失 | 
+## 圖表
+### 圖片
+```mermaid
+graph TD
+    A(抓取圖片) -->|裁減| B(地圖)
+    A(抓取圖片) -->|裁減| C(角色)
+    A(抓取圖片) -->|裁減| D(敵人)    
 ```
-
-
-
-### void  CMovingBitmap::LoadBitmap(vector<char*>, COLORREF = CLR_INVALID);
-
-讀取多張圖片，索引值從 `0` 開始。
-
-```cpp
-CMovingBitmap bitmap;
-bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"}, RGB(255, 255, 255));
-bitmap.SetLeftRight(0, 0);
-
-# -- on show --
-
-bitmap.ShowBitmap(); // 預設呈現第一張 (index = 0)。
+### 選單畫面
+```mermaid
+graph TD
+    A(選單) -->|開始遊戲| B(進入遊戲)
+    A(選單) -->|多人遊戲| C(2P遊玩)
+    A(選單) -->|設定 Game Settings| D(設定畫面)
+    D -->|設定| G(設定聲音大小)
+    D -->|設定| H(設定按鍵)
+    A(選單) -->|選擇關卡| E(進入遊戲)    
+    A(選單) -->|結束遊戲| F(關閉遊戲)  
 ```
-
-
-
-### void CMovingBitmap::UnshowBitmap()
-
-隱藏當前的 `CMovingBitmap`。
-
-```cpp
-CMovingBitmap bitmap;
-bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
-bitmap.setLeftRight(0, 0);
-
-# -- on show --
-bitmap.showBitmap(); // 預設呈現第一張 (index = 0)。
-
-/* Do something... */
-
-bitmap.UnShowBitmap(); // 隱藏圖片。
+### 遊戲運作原理
+```mermaid
+graph TD
+    A(選單) -->|開始遊戲| B(進入遊戲)
+    A(選單) -->|遊戲設定 Game Settings| C(聲音)
+    A(選單) -->|聲音設定 Game Settings| D(設定聲音大小)
+    A(選單) -->|選擇關卡| E(進入遊戲)    
+    A(選單) -->|結束遊戲| F(關閉遊戲)  
 ```
-
-
-
-### void  CMovingBitmap::SelectShowBitmap(int select)
-
-選擇要呈現的 `CMovingBitmap`。
-
-```cpp
-CMovingBitmap bitmap;
-bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
-bitmap.SetLeftRight(0, 0);
-bitmap.SelectShowBitmap(1); // 設定呈現第二張圖片
-
-# -- on show --
-
-bitmap.showBitmap(); // 呈現第二張圖片
+```mermaid
+graph TD
+    A[載入初始化圖片] --> B[檢查是否有傷害性武器與主角重疊]
+    B --> |有| C[讓角色死掉]
+    B --> |沒有| D[檢查剩下的傷害性武器]
+    D --> E[定時更新敵人動作以及傷害]
+    E -->|重新偵測| B
+    F[檢查鍵盤是否有接收到訊號] --> |按了上| G[將角色槍口對上]
+    F --> |按下| H[將角色蹲下]
+    F --> |按右| I[向右移動]
+    F --> |按左| J[向左移動 檢查邊界判斷是否可以移動]
+    K[地圖控制] --> |可以往前| L[前進]
+    K --> |不可回頭| L
 ```
-
-
-
-### void CMovingBitmap::SetAnimation(int delay, bool once)
-
-設定當前的 `CMovingBitmap` 為一個動畫。
-
-```cpp
-CMovingBitmap bitmap;
-bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
-bitmap.SetLeftRight(0, 0);
-bitmap.SelectShowBitmap(1); // 設定呈現第二張圖片
-bitmap.SetAnimation(5, false); // 無限循環呈現
-
-# -- on show --
-
-bitmap.showBitmap(); // 呈現第二張圖片
+### 理想開發時間
+```mermaid
+gantt
+    title 遊戲開發工作進度表
+    dateFormat  YYYY-MM-DD
+    section 選單開發
+    選單設定     :active,    des1, 2023-03-20, 3d
+    聲音大小控制 :active,    des2,2023-03-20, 3d
+    按鍵修改     :active,    des3, after des2, 3d
+    關卡選擇畫面 :active, des4,after des2, 3d
+    section 重要物件設計
+    主角動畫製作 :  active,des5, after des4, 10d
+    地圖畫面移動 :  active,des6, after des4, 10d
+    section Mission1前半部
+    Mission1地圖 :  crit,active,important, after des6, 10d
+    基本敵人製作: active,des7, after des6, 3d
+    物件(箱子):  active,des8, after des6, 1d
+    槍枝(衝鋒槍): active,des9, after des8, 3d
+    俘虜製作 :  active,des10, after des9, 3d
+    槍枝(火焰槍) : active,des11, after des9, 3d
+    敵人(直升機)製作: active,des12, after des11, 3d
+    section Mission1後半部
+    潛水導彈兵 : active,        des13, after des12, 3d
+    物件(石頭) : active,        des14, after des12, 1d
+    物件(彈藥箱) :active,       des15, after des14, 1d
+    載具(坦克) :  active,       des16, after des13, 3d
+    物件(炸藥箱) : active,      des17, after des13, 1d
+    BOSS(第一大關) :active,     des18, after des13, 4d
+    section Mission2前半部
+    Mission2地圖 :  crit,active,important2, after des18, 10d
+    士兵(戴盾牌):active,des19,after des18,2d
+    士兵(趴下移動):active,des20,after des18,2d
+    電擊陷阱:active,des21,after des20,2d
+    士兵(傘兵):active,des22,after des20,2d
+    載具(敵方坦克):active,des23,after des21,2d
+    士兵(傘兵):active,des24,after des21,2d
+    槍枝(導彈槍):active,des25,after des24,2d
+    載具(船):active,des26,after des24,4d
+    section Mission2後半部
+    最終BOSS場地:crit,active,des27,after des26,4d
+    中BOSS:active,des28,after des26,2d
+    最終BOSS:active,des29,after des28,2d
+    section Mission3
+    Mission3地圖 : crit,active,important3, after des27, 10d
+    敵人(艾倫):active,des29,after des27,2d
+    士兵(雪球兵):active,des30,after des27,3d
+    建築物boss:active,des31,after des30,2d
+    特殊機關boss:active,des32,after des30,4d
+    槍枝(霰彈槍):active,des33,after des31,2d
+    最終boss:active,des34,after des31,5d
+    section Mission4
+    Mission4地圖 : crit,active,important4, after des34, 10d
+    固定式砲台:active,des35,after des34,2d
+    大坦克:active,des36,after des35,3d
+    最終boss:active,des37,after des36,5d
+    section Mission5
+    Mission5地圖 : crit,active,important5, after des37, 9d
+    敵人(轟炸機):active,des38,after des37,2d
+    敵人(牆):active,des39,after des38,2d
+    士兵(固定式追蹤飛彈兵):active,des40,after des39,2d
+    最終boss:active,des41,after des39,5d
+    section final mission
+    final mission地圖 : crit,active,important6, after des41, 11d
+    敵人(丟鋼筋坦克):active,des42,after des41,2d
+    敵人(裝甲坦克):active,des43,after des42,2d
+    固定式機槍:active,des44,after des43,2d
+    最終boss:active,des45,after des44,5d
 ```
+### 目前git紀錄
+```mermaid
+%%{init: { 'logLevel': 'debug', 'theme': 'default' , 'themeVariables': {
+              'gitInv0': '#ff0000'
+       } } }%%
+gitGraph
+        
+    commit id:"pure game framework"
+    commit id:"Create test.py"
+    branch KenChen9/master
+    checkout KenChen9/master
+    commit id:"Create test1.py"
+    checkout main
+    merge KenChen9/master
 
+    branch Chinococo/dev
+    checkout Chinococo/dev
+    commit id:"create test2.py"
+    checkout main
+    merge Chinococo/dev
 
+    branch KenChen9-patch-1
+    checkout KenChen9-patch-1
+    commit id:"Create test3.py"
+    checkout main
+    merge KenChen9-patch-1
+    checkout main
+    commit id:"Update framework"
+    commit id:" Created mainmenu background and buttons bmp"
+    merge KenChen9-patch-1
 
-### void CInteger::ShowBitmap(bool leadingZero)
-
-顯示 `CInteger` 是否出現前導零。
-
-```cpp
-CInteger health = CInteger(4); //設定最大長度為 4，預設為 5。
-health.SetInteger(1000);
-health.SetTopLeft(312, 373);
-
-# -- on show --
-health.showBitmap(false); // 不顯示前導零
+    checkout main
+    commit id:"update readme file"
+    commit id:"readme file 60% 預計排成甘特圖完成"
 ```
-
-
-
-### void CMovingBitmap::LoadBitmapByString(vector\<string> filename, COLORREF color)
-
-利用 `vector<string>` 讀取多張圖片，索引值從 `0` 開始。
-
-```cpp
-CMovingBitmap bitmap;
-bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
-bitmap.setLeftRight(0, 0);
-
-# -- on show --
-bitmap.showBitmap(); // 預設呈現第一張 (index = 0)。
-
-/* Do something... */
-
-bitmap.UnShowBitmap(); // 隱藏圖片。
-```
-
-
-
-### int CMovingBitmap::GetSelectShowBitmap()
-
-獲得目前呈現的圖片索引值。
-
-
-
-### bool CMovingBitmap::IsAnimationDone()
-
-確認動畫是否正在執行，僅限於動畫正在執行 `ToggleAnimation()`。
-
-
-
-### void  CMovingBitmap::ToggleAnimation()
-
-運行動畫一次，並且使得 `IsAnimationDone()` 可用。
-
-
-
-### int CMovingBitmap::GetMovingBitmapFrame()
-
-確認這個 `CMovingBitmap` 物件有多少幀動畫。
-
-
-
-### void CTextDraw::ChangeFontLog(CDC *pDC, int size, string fontName, int weight)
-
-更改文字的樣式、文字與粗體。
-
-```cpp
-CDC *pDC = CDDraw::GetBackCDC();
-CFont *fp;
-
-pDC->SetBkMode(TRANSPARENT);
-pDC->SetTextColor(RGB(255, 255, 255));
-
-/* 變更字體，weight = 800 為粗體，500 為一般 */
-CTextDraw::ChangeFontLog(pDC, fp, 40, "Noto Sans TC", 800);
-CTextDraw::Print(pDC, 50, 50, "Hello World!");
-```
-
-
-
-### void CTextDraw::Print(CDC *pDC, int x, int y, string str)
-
-將文字呈現在指定的座標上。
-
-```cpp
-CDC *pDC = CDDraw::GetBackCDC();
-CFont *fp;
-
-pDC->SetBkMode(TRANSPARENT);
-pDC->SetTextColor(RGB(255, 255, 255));
-
-/* 變更字體 */
-CTextDraw::ChangeFontLog(pDC, fp, 40, "Noto Sans TC");
-CTextDraw::Print(pDC, 50, 50, "Hello World!");
-```
-
-
-
-
-
-
-
-## Example
-
-### 讓一個物件不停的動畫循環
-
-```cpp
-CMovingBitmap bitmap;
-
-# -- onInit --
-bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
-bitmap.SetTopLeft(0, 0);
-bitmap.SetAnimation(5, false);
-
-# -- onShow --
-
-bitmap.showBitmap();
-```
-
-
-
-### 碰到一個物件之後執行動畫
-
-```cpp
-CMovingBitmap bitmap;
-
-# -- onInit --
-
-bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
-bitmap.SetTopLeft(0, 0);
-bitmap.SetAnimation(200, false);
-
-# -- onEvent --
-bitmap.ToggleAnimation(1);
-
-# -- onShow --
-
-if(bitmap.IsAnimationDone()){
-    if (hidden_code[current_stage][i][j] == 0) {
-		bitmap.showBitmap();
-    }
-}else{
-    bitmap.showBitmap();
+```mermaid
+classDiagram
+    class CMovingBitmap {
+    - int frameIndex
+    - int delayCount
+    - int animationCount
+    - bool isAnimation
+    - bool isAnimationDone
+    - bool isBitmapLoaded
+    - bool isOnce
+    - vector<CRect> locations
+    - vector<unsigned> surfaceID
+    - clock_t last_time
+    - string imageFileName
+    - COLORREF filterColor
+    + void LoadBitmap(int, COLORREF = CLR_INVALID)
+    + void LoadBitmap(char*, COLORREF = CLR_INVALID)
+    + void LoadBitmap(vector<char*>, COLORREF = CLR_INVALID)
+    + void LoadBitmapByString(vector<string>, COLORREF = CLR_INVALID)
+    + void LoadEmptyBitmap(int height, int weight)
+    + void UnshowBitmap()
+    + void SetAnimation(int delay, bool _once)
+    + void SetFrameIndexOfBitmap(int frame)
+    + void SetTopLeft(int, int)
+    + void ShowBitmap()
+    + void ShowBitmap(double factor)
+    + int GetFrameIndexOfBitmap()
+    + int GetFrameSizeOfBitmap()
+    + int GetTop()
+    + int GetLeft()
+    + int GetHeight()
+    + int GetWidth()
+    + string GetImageFileName()
+    + COLORREF GetFilterColor()
+    + bool IsAnimation()
+    + bool IsAnimationDone()
+    + bool IsBitmapLoaded()
+    + bool IsOnceAnimation()
+    + static bool IsOverlap(CMovingBitmap bmp1, CMovingBitmap bmp2)
+    + void ToggleAnimation()
 }
+
+class Marco{
+    - int DriveHp
+    - int bomb
+    - int arm
+    - int score
+    - int live
+    - int slaver
+    - string weapon_type
+    - int gravity
+    + void jump()
+    + void dead()
+    + bool Isjump()
+    + void weapon()
+    + bool IsInvehicle()
+    + bool CanContinue()
+    + void Attack()
+    + void move()
+    + bool Isground()
+    + void touch(enemy)
+    + void touch(object)
+    + void touch(slaver)
+    + void touch(bullet)
+    + ~Marco()
+}
+class Box{
+    - bool Broken
+    + bool IsBroken()
+    + void SoummonObject()
+    + ~Box()
+}
+class Weapon{
+    - string WeponType
+    + bool IsTouch()
+    + ~Weapon()
+}
+class vehicle{
+    - bool friend
+    + int Hp
+}
+    CMovingBitmap <|-- Marco
+    CMovingBitmap <|-- Box
+    CMovingBitmap <|-- Weapon
 ```
-
-
-
-### 同一個物件呈現不同圖片
-
-```cpp
-CMovingBitmap bitmap;
-
-# -- onInit --
-
-bitmap.LoadBitmap({"RES/bitmap1.bmp", "RES/bitmap2.bmp"});
-bitmap.SetTopLeft(0, 0);
-
-# -- onMove --
-bitmap.SelectShowBitmap(1)
-
-# -- onShow --
-bitmap.showBitmap();
+### Test
+```mermaid
+graph LR
+    subgraph Characters
+        subgraph Friendly
+            subgraph Main Characters
+                主角1
+                主角2
+            end
+            俘虜
+            載具(坦克)
+            固定式機槍
+        end
+        subgraph Enemy
+            subgraph Soldiers
+                基本士兵
+                潛水導彈兵
+                士兵(戴盾牌)
+                士兵(趴下移動)
+                士兵(傘兵)
+            end
+            直升機
+            載具(敵方坦克)
+            敵人(丟鋼筋坦克)
+            敵人(裝甲坦克)
+            艾倫
+            Mission中/大Boss
+        end
+    end
+    subgraph Objects
+        物件(箱子)
+        槍枝(衝鋒槍)
+        槍枝(火焰槍)
+        槍枝(霰彈槍)
+        物件(石頭)
+        物件(炸藥箱)
+        電擊陷阱
+        槍枝(導彈槍)
+        載具(船)
+        特殊機關(牆壁)
+    end
+    subgraph Map
+        固定式砲台
+        各種不同台階
+    end
 ```
-
-
-
-
-
-## 銘謝
-
-謝謝 國立臺北科技大學 陳偉凱教授 開發了這個遊戲框架
-
-並且謝謝 國立臺北科技大學 陳碩漢教授 同意這個框架能夠公開使用。
+## 遊戲架構圖
+```mermaid
+stateDiagram-v2
+direction TB
+%% enum class SelectedMission {ALL, I, II, III, IV, V, VI};
+%% SelectedMission selectedMission = SelectedMission::ALL;
+[*] --> PressStart
+PressStart --> MainMenu: PUSH START
+MainMenu --> SelectMode: MAIN MISSION
+MainMenu --> Settings: SETTINGS
+SelectMode --> SelectPlayer: ARCADE, set selectedMission to ALL
+SelectMode --> SelectLevel: MISSIONS
+SelectLevel --> SelectPlayer: set selectedMission to I, II, III, IV, V, VI
+SelectPlayer --> MissionI: if (selectedMission == ALL)
+MissionI --> MissionII: if (selectedMission == ALL)
+MissionII --> MissionIII: if (selectedMission == ALL)
+MissionIII --> MissionIV: if (selectedMission == ALL)
+MissionIV --> MissionV: if (selectedMission == ALL)
+MissionV --> MissionVI: if (selectedMission == ALL)
+MissionVI --> Ending
+Ending --> MainMenu
+SelectPlayer --> MissionI: if (selectedMission == MissionI)
+SelectPlayer --> MissionII: if (selectedMission == MissionII)
+SelectPlayer --> MissionIII: if (selectedMission == MissionIII)
+SelectPlayer --> MissionIV: if (selectedMission == MissionIV)
+SelectPlayer --> MissionV: if (selectedMission == MissionV)
+SelectPlayer --> MissionVI: if (selectedMission == MissionVI)
+MissionI --> MainMenu
+MissionII --> MainMenu
+MissionIII --> MainMenu
+MissionIV --> MainMenu
+MissionV --> MainMenu
+MissionVI --> MainMenu
+MissionI --> Pause: (ESC)
+MissionII --> Pause: (ESC)
+MissionIII --> Pause: (ESC)
+MissionIV --> Pause: (ESC)
+MissionV --> Pause: (ESC)
+MissionVI --> Pause: (ESC)
+Pause --> QuitConfirm
+QuitConfirm --> MainMenu
+%% PressStart: <any key>
+%% MainMenu: MAIN MISSION, MULTIPLAYER, SETTINGS, LEADERBOARDS, QUIT GAME
+%% SelectMode: EASY, MEDIUM, HARD, VERY HARD, CREDITS, ARCADE, MISSIONS, BACK
+%% SelectPlayer: ONE PLAYER, TWO PLAYER
+%% SelectLevel: MISSION I, MISSION II, MISSION III, MISSION IV, MISSION V, MISSION VI
+%% Mission1..6: (ESC)
+%% Pause: RESUME GAME, VIDEO OPTIONS, VOLUME, CONTROLS, QUIT
+%% QuitConfirm: YES, NO
+```
+## 事件觸發圖
+```mermaid
+stateDiagram-v2
+direction TB
+[] --> event_check
+event_check --> state_menu
+event_check --> state_setting
+event_check --> state_select_mode
+event_check --> state_level
+event_check --> state_select_player
+event_check --> state_mission
+state_menu --> move_arrow_up: if(keyboard up)
+state_menu --> move_arrow_down: if(keyboard down)
+state_setting --> lower_sound: if(mouse slide it to left)
+state_setting --> bigger_sound: if(mouse slide it to right)
+state_setting --> state_setting : detect keyboard to set player keyboard setting if (check keyboard)
+state_select_mode --> move_arrow_left: if(keyboard left)
+state_select_mode --> move_arrow_right: if(keyboard right)
+state_level --> move_arrow_left: if(keyboard left)
+state_level --> move_arrow_right: if(keyboard right)
+state_select_player --> move_arrow_left: if(keyboard left)
+state_select_player --> move_arrow_right: if(keyboard right)
+state_mission --> jump: if(keyboard up)
+state_mission --> down: if(keyboard down)
+state_mission --> move_left: if(keyboard left)
+state_mission --> move_right: if(keyboard right)
+state_mission --> pause: if(keyboard esc)
+state_mission --> cheat_init: if(keyboard 9)
+```

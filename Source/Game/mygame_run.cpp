@@ -155,8 +155,6 @@ void CGameStateRun::OnShow()
 				break;
 		}
 		//show_text_by_phase();
-
-		
 	}
 	
 }
