@@ -95,13 +95,13 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		CMovingBitmap background;
-		std::vector < std::tuple<CMovingBitmap, int, int>>  map1;
+		std::vector<std::pair<CMovingBitmap,std::vector<std::pair<int,int>>>>  map;
 		std::vector<CMovingBitmap> mainmenuButtons;
 		std::string pharse;
 		CMovingBitmap arrow;
 		int choose = 0;
-		int Map1X = 0;
-		int Map1Y = 380;
+		int ViewPointX;
+		int ViewPointY;
 		int MapScrollSpeed = 10;
 		std::set<UINT> keydown;
 	};

@@ -59,6 +59,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	else if (pharse == "map1") {
 		if (nChar == VK_RIGHT) {
 			keydown.insert(nChar);
+		}else if (nChar == VK_LEFT) {
+			keydown.insert(nChar);
 		}
 		else if (nChar == VK_UP) {
 			keydown.insert(nChar);
@@ -85,15 +87,19 @@ void CGameStateRun::LoadPharseElements() {
 		UpdateArrowPosition();
 	}
 	else if (pharse == "map1") {
-		std::vector<std::tuple<CMovingBitmap, int, int>> layer;
-		CMovingBitmap temp;
-		temp.LoadBitmapByString({"resources/maps/map1_1.bmp" }, RGB(255,255, 255));
-		layer.push_back({ temp,0,-30 });
-
-		CMovingBitmap temp1;
-		temp1.LoadBitmapByString({ "resources/maps/background1.bmp" }, RGB(255, 255, 255));
-		layer.push_back({ temp1,+5200,100 });
-		map1 = layer;
+		ViewPointX = -5000;
+		ViewPointY = 380;
+		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
+		layer.push_back({ {"resources/maps/test1.bmp"},{{5430,260}} , RGB(255, 255, 255) });
+		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(255, 255, 255) });
+		//layer.push_back({ {"resources/maps/background1.bmp"},{{5200,100}} , RGB(255, 255, 255) });
+		
+		map.clear();
+		for (unsigned i = 0; i < layer.size(); i++) {
+			CMovingBitmap temp;
+			temp.LoadBitmapByString(std::get<0>(layer[i]),std::get<2>(layer[i]));
+			map.push_back({ temp,std::get<1>(layer[i])});
+		}
 	}
 }
 void CGameStateRun::clean() {
@@ -144,17 +150,21 @@ void CGameStateRun::OnShow()
 		arrow.ShowBitmap();
 	}
 	else if (pharse == "map1") {
-		if (keydown.count(VK_RIGHT)&&background.GetWidth()-600)
-			Map1X -= MapScrollSpeed;
-		//if (keydown.count(VK_UP))
-		//	Map1Y += MapScrollSpeed;
-		for (unsigned i = map1.size()-1;; i--) {
-			std::get<0>(map1[i]).SetTopLeft(Map1X+ std::get<1>(map1[i]), Map1Y - background.GetHeight()+ std::get<2>(map1[i]));
-			std::get<0>(map1[i]).ShowBitmap();
+		if (keydown.count(VK_RIGHT))
+			ViewPointX -= MapScrollSpeed;
+		else if(keydown.count(VK_LEFT)&& ViewPointX<0)
+			ViewPointX += MapScrollSpeed;
+		for (unsigned i = map.size()-1;; i--) {
+			int now_index = std::get<0>(map[i]).GetFrameIndexOfBitmap();
+			std::get<0>(map[i]).SetTopLeft(ViewPointX + std::get<1>(map[i])[now_index].first, 
+				ViewPointY - background.GetHeight()+ std::get<1>(map[i])[now_index].second);
+			std::get<0>(map[i]).ShowBitmap();
 			if (i == 0)
 				break;
 		}
 		//show_text_by_phase();
+
+		
 	}
 	
 }
@@ -168,11 +178,6 @@ void CGameStateRun::show_text_by_phase() {
 		CTextDraw::Print(pDC, 560, 400, "This is Test4");
 		CTextDraw::Print(pDC, 560, 500, "This is Test5");
 		CDDraw::ReleaseBackCDC();
-	}
-	else if (pharse == "map1") {
-		CTextDraw::ChangeFontLog(pDC, 21, "Arial", RGB(255, 255, 255), 800);
-		CTextDraw::Print(pDC, 560, 185, to_string(Map1X));
-		CTextDraw::Print(pDC, 560, 255, to_string(Map1Y));
 	}
 
 }
