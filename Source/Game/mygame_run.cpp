@@ -87,10 +87,11 @@ void CGameStateRun::LoadPharseElements() {
 		UpdateArrowPosition();
 	}
 	else if (pharse == "map1") {
-		ViewPointX = -5000;
-		ViewPointY = 380;
+		ViewPointX = -3600;
+		ViewPointY = 580;
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
-		layer.push_back({ {"resources/maps/test1.bmp"},{{5430,260}} , RGB(255, 255, 255) });
+		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,350}} , RGB(255, 255, 255) });
+		layer.push_back({ {"resources/maps/background1.bmp"},{{3500,330}} , RGB(255, 255, 255) });
 		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(255, 255, 255) });
 		//layer.push_back({ {"resources/maps/background1.bmp"},{{5200,100}} , RGB(255, 255, 255) });
 		
