@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "../Header/object.h"
 #include "../../../Library/gameutil.h"
 

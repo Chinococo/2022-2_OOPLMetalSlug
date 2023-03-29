@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "../Header/bullet.h"
 
 Bullet::Bullet(Facing _facing) {
