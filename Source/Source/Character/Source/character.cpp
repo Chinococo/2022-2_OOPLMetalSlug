@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "../Header/character.h"
 #include "../Header/object.h"
 #include "../../../Library/gameutil.h"
@@ -14,10 +15,10 @@ Character::Character() {
 }
 
 void Character::jumpUpward() {
-	if (isCollide(ceiling)) {
+	//if (isCollide(ceiling)) {
 
-	}
-	else if (timeJumped * 2 <= jumpDuration) {
+	//}
+	if (timeJumped * 2 <= jumpDuration) {
 		texture = jumpUpTexture;
 		setTopLeft(getLeftX(), getTopY() + 30);
 		timeJumped++;
@@ -44,9 +45,9 @@ void Character::fireWeapon() {
 }
 
 void Character::slashNearby() {
-	slashTexture
+	slashTexture;
 }
 
 bool Character::isReadyToLand() {
-
+	return false;
 }
