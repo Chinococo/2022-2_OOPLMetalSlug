@@ -90,10 +90,14 @@ void CGameStateRun::LoadPharseElements() {
 		ViewPointX = -3600;
 		ViewPointY = 580;
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
-		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,350}} , RGB(255, 255, 255) });
+		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) });
 		layer.push_back({ {"resources/maps/background1.bmp"},{{3500,330}} , RGB(255, 255, 255) });
-		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(255, 255, 255) });
-		//layer.push_back({ {"resources/maps/background1.bmp"},{{5200,100}} , RGB(255, 255, 255) });
+		//layer.push_back({ {"resources/maps/test2.bmp"},{{5685,22}} , RGB(0, 0, 0) });//破壞
+		//layer.push_back({ {"resources/maps/test1.bmp"},{{5490,15}} , RGB(0, 0, 0) });//破壞
+		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(0, 0, 0) });
+		//layer.push_back({ {"resources/maps/test0.bmp"},{{5490,15}} , RGB(255, 255, 255) });//原本
+		//layer.push_back({ {"resources/maps/test3.bmp"},{{5840,15}} , RGB(255, 255, 255) });//原本
+		
 		
 		map.clear();
 		for (unsigned i = 0; i < layer.size(); i++) {
