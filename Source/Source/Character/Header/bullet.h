@@ -1,7 +1,8 @@
 #pragma once
-#include "item.h"
+#include "game_object.h"
 
-class Bullet : public Item {
+class CBullet : public CGameObject {
 public:
-	Bullet(Facing _facing);
+	CBullet();
+	virtual ~CBullet();
 };

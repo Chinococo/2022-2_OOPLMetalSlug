@@ -1,6 +1,8 @@
 #pragma once
-#include "object.h"
+#include "game_object.h"
 
-class Item : public Object {
-
+class CItem : public CGameObject {
+public:
+	CItem();
+	~CItem();
 };

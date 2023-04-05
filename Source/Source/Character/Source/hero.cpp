@@ -1,3 +1,10 @@
 #include "stdafx.h"
+#include "../Header/hero.h"
 
-class 
+CHero::CHero() {
+
+}
+
+CHero::~CHero() {
+
+}
