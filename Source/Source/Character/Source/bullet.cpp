@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "../Header/bullet.h"
 
-Bullet::Bullet(Facing _facing) {
-	facing = _facing;
+CBullet::CBullet() {
+
+}
+
+CBullet::~CBullet() {
+
 }
