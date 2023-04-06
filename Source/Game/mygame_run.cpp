@@ -96,13 +96,18 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (Ground::isOverlap(*marco.get(), *ground)) {
 		marco->SetFrameIndexOfBitmap(1);
 		marco->isOnGround = true;
-		soldier->SetFrameIndexOfBitmap(1);
 	}
 	else {
 		marco->SetFrameIndexOfBitmap(0);
-		soldier->SetFrameIndexOfBitmap(0);
 	}
 
+	if (Ground::isOverlap(*soldier.get(), *ground)) {
+		soldier->isOnGround = true;
+		soldier->SetFrameIndexOfBitmap(1);
+	}
+	else {
+		soldier->SetFrameIndexOfBitmap(0);
+	}
 	// decide final position
 	marco->x += marco->dx;
 	marco->y += marco->dy;
