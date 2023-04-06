@@ -251,6 +251,16 @@
     <ClCompile Include="Source\Library\gameutil.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="Source\Source\Character\Source\ally.cpp" />
+    <ClCompile Include="Source\Source\Character\Source\bullet.cpp" />
+    <ClCompile Include="Source\Source\Character\Source\character.cpp" />
+    <ClCompile Include="Source\Source\Character\Source\enemy.cpp" />
+    <ClCompile Include="Source\Source\Character\Source\hero.cpp" />
+    <ClCompile Include="Source\Source\Character\Source\hostage.cpp" />
+    <ClCompile Include="Source\Source\Character\Source\item.cpp" />
+    <ClCompile Include="Source\Source\Character\Source\marco.cpp" />
+    <ClCompile Include="Source\Source\Character\Source\game_object.cpp" />
+    <ClCompile Include="Source\Source\Character\Source\soldier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\Game.h" />
@@ -264,6 +274,16 @@
     <ClInclude Include="Source\Library\audio.h" />
     <ClInclude Include="Source\Library\gamecore.h" />
     <ClInclude Include="Source\Library\gameutil.h" />
+    <ClInclude Include="Source\Source\Character\Header\ally.h" />
+    <ClInclude Include="Source\Source\Character\Header\bullet.h" />
+    <ClInclude Include="Source\Source\Character\Header\character.h" />
+    <ClInclude Include="Source\Source\Character\Header\enemy.h" />
+    <ClInclude Include="Source\Source\Character\Header\hero.h" />
+    <ClInclude Include="Source\Source\Character\Header\hostage.h" />
+    <ClInclude Include="Source\Source\Character\Header\item.h" />
+    <ClInclude Include="Source\Source\Character\Header\marco.h" />
+    <ClInclude Include="Source\Source\Character\Header\game_object.h" />
+    <ClInclude Include="Source\Source\Character\Header\soldier.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc" />

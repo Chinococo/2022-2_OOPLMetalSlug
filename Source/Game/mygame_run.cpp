@@ -16,6 +16,9 @@ using namespace game_framework;
 
 CGameStateRun::CGameStateRun(CGame *g) : CGameState(g)
 {
+	// characters
+	marco = std::make_unique<CMarco>();
+	soldier = std::make_unique<CSoldier>();
 }
 
 CGameStateRun::~CGameStateRun()
@@ -28,13 +31,105 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	
+	// characters
+	// reset dx and dy
+	marco->dx = 0;
+	marco->dy = 0;
+	soldier->dx = 0;
+	soldier->dy = 0;
+
+	// apply gravity
+	const int VELOCITY_GRAVITY = 5;
+	marco->dy += VELOCITY_GRAVITY;
+	soldier->dy += VELOCITY_GRAVITY;
+
+	// control movements
+	const int MOVE_SPEED = 3;
+	const int HANG_TIME_SEC = 10;
+	const int VELOCITY_IN_AIR = 5;
+	if (keydown.count(VK_LEFT)) {
+		marco->dx -= MOVE_SPEED;
+	}
+	if (keydown.count(VK_RIGHT)) {
+		marco->dx += MOVE_SPEED;
+	}
+	if (keydown.count(VK_DOWN)) { // now broken
+		// crouch
+		marco->SetFrameIndexOfBitmap(1);
+	}
+	else {
+		// normal stand
+		marco->SetFrameIndexOfBitmap(0);
+	}
+	if (marco->isOnGround && keydown.count(VK_SPACE)) { // now broken
+		// jump up moment
+		marco->jumpUpTime = clock();
+		marco->isOnGround = false;
+	}
+	if (double(clock() - marco->jumpUpTime) / double(CLOCKS_PER_SEC) < double(HANG_TIME_SEC) / 2) { // // now broken
+		// move upward
+		marco->dy -= VELOCITY_IN_AIR;
+	}
+	else {
+		// start falling
+		marco->dy += VELOCITY_IN_AIR;
+	}
+
+	// land to ground
+	// set a temporary ground
+	const int GROUND_Y = 450;
+	if (marco->y + marco->dy > GROUND_Y) {
+		// stick to ground
+		marco->dy = GROUND_Y - marco->y;
+		marco->isOnGround = true;
+	}
+	if (soldier->y + soldier->dy > GROUND_Y) {
+		// stick to ground
+		soldier->dy = GROUND_Y - soldier->y;
+		marco->isOnGround = true;
+	}
+
+	// check for collisions
+	if (CMovingBitmap::IsOverlap(*marco.get(), *soldier.get())) {
+		marco->SetFrameIndexOfBitmap(1);
+		soldier->SetFrameIndexOfBitmap(1);
+	}
+	else {
+		marco->SetFrameIndexOfBitmap(0);
+		soldier->SetFrameIndexOfBitmap(0);
+	}
+
+	// decide final position
+	marco->x += marco->dx;
+	marco->y += marco->dy;
+	soldier->x += soldier->dx;
+	soldier->y += soldier->dy;
+
+	// set finial position
+	marco->SetTopLeft(marco->x, marco->y);
+	soldier->SetTopLeft(soldier->x, soldier->y);
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	pharse = "init";
 	LoadPharseElements();
+
+	// characters
+	marco->LoadBitmapByString({ "resources/characters/giraffe.bmp", "resources/characters/bee_1.bmp" }, RGB(255, 255, 255));
+	marco->x = 300;
+	marco->y = 300;
+	marco->dx = 0;
+	marco->dy = 0;
+	marco->jumpUpTime = clock();
+	marco->isOnGround = false;
+	soldier->LoadBitmapByString({ "resources/characters/chest.bmp", "resources/characters/ball-ok.bmp" }, RGB(255, 255, 255));
+	soldier->x = 500;
+	soldier->y = 300;
+	soldier->dx = 0;
+	soldier->dy = 0;
+	soldier->jumpUpTime = clock();
+	soldier->isOnGround = false;
 }
 
 void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -65,7 +160,18 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		else if (nChar == VK_UP) {
 			keydown.insert(nChar);
 		}
-			
+		else if (nChar == VK_DOWN) {
+			keydown.insert(nChar);
+		}
+		else if (nChar == VK_LEFT) {
+			keydown.insert(nChar);
+		}
+		else if (nChar == VK_RIGHT) {
+			keydown.insert(nChar);
+		}
+		else if (nChar == VK_SPACE) {
+			keydown.insert(nChar);
+		}
 	}
 	
 }
@@ -172,6 +278,9 @@ void CGameStateRun::OnShow()
 		
 	}
 	
+	// characters
+	marco->ShowBitmap();
+	soldier->ShowBitmap();
 }
 void CGameStateRun::show_text_by_phase() {
 	CDC *pDC = CDDraw::GetBackCDC();
