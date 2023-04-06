@@ -41,58 +41,24 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	// apply gravity
 	const int VELOCITY_GRAVITY = 5;
-	if(!marco->isOnGround)
-		marco->dy += VELOCITY_GRAVITY;
-	soldier->dy += VELOCITY_GRAVITY;
-
 	// control movements
 	const int MOVE_SPEED = 3;
 	const int HANG_TIME_SEC = 10;
 	const int VELOCITY_IN_AIR = 5;
-	if (keydown.count(VK_LEFT)) {
-		marco->dx -= MOVE_SPEED;
-	}
-	if (keydown.count(VK_RIGHT)) {
-		marco->dx += MOVE_SPEED;
-	}
-	if (keydown.count(VK_DOWN)) { // now broken
-		// crouch
-		marco->SetFrameIndexOfBitmap(1);
-	}
-	else {
-		// normal stand
-		marco->SetFrameIndexOfBitmap(0);
-	}/*
-	if (marco->isOnGround && keydown.count(VK_SPACE)) { // now broken
-		// jump up moment
-		marco->jumpUpTime = clock();
-		marco->isOnGround = false;
-	}
-	if (double(clock() - marco->jumpUpTime) / double(CLOCKS_PER_SEC) < double(HANG_TIME_SEC) / 2) { // // now broken
-		// move upward
-		marco->dy -= VELOCITY_IN_AIR;
-	}
-	else {
-		// start falling
-		marco->dy += VELOCITY_IN_AIR;
-	}
 
-	// land to ground
-	// set a temporary ground
+	if(!marco->isOnGround)
+		marco->dy += VELOCITY_GRAVITY;
+	if (!soldier->isOnGround)
+		soldier->dy += VELOCITY_GRAVITY;
+
+	if (keydown.count(VK_LEFT)) 
+		marco->dx -= MOVE_SPEED;
+	if (keydown.count(VK_RIGHT)) 
+		marco->dx += MOVE_SPEED;
 	
-	const int GROUND_Y = 450;
-	if (marco->y + marco->dy > GROUND_Y) {
-		// stick to ground
-		marco->dy = GROUND_Y - marco->y;
-		marco->isOnGround = true;
-	}
-	if (soldier->y + soldier->dy > GROUND_Y) {
-		// stick to ground
-		soldier->dy = GROUND_Y - soldier->y;
-		marco->isOnGround = true;
-	}
-*/
-	// check for collisions
+	if (marco->isOnGround && keydown.count(VK_SPACE)) 
+		marco->isOnGround = false;
+	
 	if (Ground::isOverlap(*marco.get(), *ground)) {
 		marco->SetFrameIndexOfBitmap(1);
 		marco->isOnGround = true;
@@ -163,22 +129,23 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	else if (pharse == "map1") {
 		if (nChar == VK_RIGHT) {
 			keydown.insert(nChar);
-		}else if (nChar == VK_LEFT) {
+		}
+		if (nChar == VK_LEFT) {
 			keydown.insert(nChar);
 		}
-		else if (nChar == VK_UP) {
+		if (nChar == VK_UP) {
 			keydown.insert(nChar);
 		}
-		else if (nChar == VK_DOWN) {
+		if (nChar == VK_DOWN) {
 			keydown.insert(nChar);
 		}
-		else if (nChar == VK_LEFT) {
+		if (nChar == VK_LEFT) {
 			keydown.insert(nChar);
 		}
-		else if (nChar == VK_RIGHT) {
+		if (nChar == VK_RIGHT) {
 			keydown.insert(nChar);
 		}
-		else if (nChar == VK_SPACE) {
+		if (nChar == VK_SPACE) {
 			keydown.insert(nChar);
 		}
 	}
