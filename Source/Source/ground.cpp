@@ -2,7 +2,11 @@
 #include "ground.h"
 #include "../Library/gameutil.h"
 
-Ground::Ground() {
+Ground::Ground(int X1, int Y1, int X2, int Y2) {
+	x1 = X1;
+	x2 = X2;
+	y1 = Y1;
+	y1 = Y1; 
 	LoadEmptyBitmap(10, 1000);
 	SetTopLeft(10, 450);
 }
