@@ -111,7 +111,7 @@ namespace game_framework {
 		int ViewPointY;
 		int MapScrollSpeed = 10;
 		std::set<UINT> keydown;
-		Ground* ground;
+		std::vector < Ground*> ground;
 		// characters
 		std::unique_ptr<CMarco> marco;
 		std::unique_ptr<CSoldier> soldier;

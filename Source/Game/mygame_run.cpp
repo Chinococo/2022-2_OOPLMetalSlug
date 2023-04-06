@@ -62,13 +62,17 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	
 	if (marco->isOnGround && keydown.count(VK_SPACE)) 
 		marco->isOnGround = false;
+	marco->isOnGround = false;
+	for (int i = 0; i < (int)ground.size(); i++) {
+		if (Ground::isOverlap(*marco.get(), *ground[i]) != 0) {//broken
+			marco->isOnGround = true;
+		}
+		if (Ground::isOverlap(*soldier.get(),*ground[i]) != 0) {//broken
+			soldier->isOnGround = true;
+		}
+		//ground[i]->SetTopLeft()
+	}
 	
-	if (Ground::isOverlap(*marco.get(), *ground)!=0) {//broken
-		marco->isOnGround = true;
-	}
-	if (Ground::isOverlap(*soldier.get(), *ground) != 0) {//broken
-		soldier->isOnGround = true;
-	}
 
 	if (CMovingBitmap::IsOverlap(*soldier.get(), *marco.get())) {
 		marco->SetFrameIndexOfBitmap(1);
@@ -93,7 +97,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	pharse = "init";
 	LoadPharseElements();
-	ground = new Ground(20, 450, 700, 350);
+	ground.push_back(new Ground(20, 450, 700, 350, 10, 450,400,10));
+	ground.push_back(new Ground(20, 450, 700, 350, 410, 550,400,10));
 	// characters
 	marco->LoadBitmapByString({ "resources/characters/giraffe.bmp", "resources/characters/bee_1.bmp" }, RGB(255, 255, 255));
 	marco->x = 300;
@@ -174,7 +179,7 @@ void CGameStateRun::LoadPharseElements() {
 		UpdateArrowPosition();
 	}
 	else if (pharse == "map1") {
-		ViewPointX = -3600;
+		ViewPointX = 0;
 		ViewPointY = 580;
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
 		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) });

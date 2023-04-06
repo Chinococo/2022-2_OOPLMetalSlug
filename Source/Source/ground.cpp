@@ -7,8 +7,16 @@ Ground::Ground(int X1, int Y1, int X2, int Y2) {
 	x2 = X2;
 	y1 = Y1;
 	y1 = Y1; 
-	LoadEmptyBitmap(10, 1000);
+	LoadEmptyBitmap(10, 100);
 	SetTopLeft(10, 450);
+}
+Ground::Ground(int X1, int Y1, int X2, int Y2,int Top,int Left, int width, int height) {
+	x1 = X1;
+	x2 = X2;
+	y1 = Y1;
+	y1 = Y1;
+	LoadEmptyBitmap(height,width);
+	SetTopLeft(Top, Left);
 }
 int Ground::isOverlap(game_framework::CMovingBitmap bmp, Ground ground) {
 	
