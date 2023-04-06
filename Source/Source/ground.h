@@ -6,5 +6,9 @@ public:
 	Ground();
 	virtual ~Ground();
 	static bool isOverlap(CMovingBitmap bmp, Ground ground);
-		
+private:
+	int height;
+	int weight;
+	int top;
+	int left;
 };

@@ -3,9 +3,11 @@
 #include "../Library/gameutil.h"
 
 Ground::Ground() {
-
+	LoadEmptyBitmap(10, 1000);
+	SetTopLeft(10, 450);
 }
 bool Ground::isOverlap(game_framework::CMovingBitmap bmp, Ground ground) {
+	
 	// 計算 bmp1 的邊界框座標
 	int bmp1Left = ground.GetLeft();
 	int bmp1Top = ground.GetTop();

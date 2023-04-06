@@ -41,6 +41,7 @@
 // characters
 #include "../Source/Character/Header/marco.h"
 #include "../Source/Character/Header/soldier.h"
+#include "../Source/ground.h"
 #include <memory>
 #include <ctime>
 
@@ -110,7 +111,7 @@ namespace game_framework {
 		int ViewPointY;
 		int MapScrollSpeed = 10;
 		std::set<UINT> keydown;
-
+		Ground* ground;
 		// characters
 		std::unique_ptr<CMarco> marco;
 		std::unique_ptr<CSoldier> soldier;

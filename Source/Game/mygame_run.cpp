@@ -5,6 +5,7 @@
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
+#include "../Source/ground.h"
 #include <string>
 #include "mygame.h"
 
@@ -40,7 +41,8 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	// apply gravity
 	const int VELOCITY_GRAVITY = 5;
-	marco->dy += VELOCITY_GRAVITY;
+	if(!marco->isOnGround)
+		marco->dy += VELOCITY_GRAVITY;
 	soldier->dy += VELOCITY_GRAVITY;
 
 	// control movements
@@ -60,7 +62,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	else {
 		// normal stand
 		marco->SetFrameIndexOfBitmap(0);
-	}
+	}/*
 	if (marco->isOnGround && keydown.count(VK_SPACE)) { // now broken
 		// jump up moment
 		marco->jumpUpTime = clock();
@@ -77,6 +79,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 	// land to ground
 	// set a temporary ground
+	
 	const int GROUND_Y = 450;
 	if (marco->y + marco->dy > GROUND_Y) {
 		// stick to ground
@@ -88,10 +91,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		soldier->dy = GROUND_Y - soldier->y;
 		marco->isOnGround = true;
 	}
-
+*/
 	// check for collisions
-	if (CMovingBitmap::IsOverlap(*marco.get(), *soldier.get())) {
+	if (Ground::isOverlap(*marco.get(), *ground)) {
 		marco->SetFrameIndexOfBitmap(1);
+		marco->isOnGround = true;
 		soldier->SetFrameIndexOfBitmap(1);
 	}
 	else {
@@ -114,7 +118,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	pharse = "init";
 	LoadPharseElements();
-
+	ground = new Ground();
 	// characters
 	marco->LoadBitmapByString({ "resources/characters/giraffe.bmp", "resources/characters/bee_1.bmp" }, RGB(255, 255, 255));
 	marco->x = 300;
