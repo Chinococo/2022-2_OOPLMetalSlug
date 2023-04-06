@@ -63,19 +63,19 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (marco->isOnGround && keydown.count(VK_SPACE)) 
 		marco->isOnGround = false;
 	
-	if (Ground::isOverlap(*marco.get(), *ground)) {
-		marco->SetFrameIndexOfBitmap(1);
+	if (Ground::isOverlap(*marco.get(), *ground)!=0) {//broken
 		marco->isOnGround = true;
+	}
+	if (Ground::isOverlap(*soldier.get(), *ground) != 0) {//broken
+		soldier->isOnGround = true;
+	}
+
+	if (CMovingBitmap::IsOverlap(*soldier.get(), *marco.get())) {
+		marco->SetFrameIndexOfBitmap(1);
+		marco->SetFrameIndexOfBitmap(1);
 	}
 	else {
 		marco->SetFrameIndexOfBitmap(0);
-	}
-
-	if (Ground::isOverlap(*soldier.get(), *ground)) {
-		soldier->isOnGround = true;
-		soldier->SetFrameIndexOfBitmap(1);
-	}
-	else {
 		soldier->SetFrameIndexOfBitmap(0);
 	}
 	// decide final position

@@ -10,7 +10,7 @@ Ground::Ground(int X1, int Y1, int X2, int Y2) {
 	LoadEmptyBitmap(10, 1000);
 	SetTopLeft(10, 450);
 }
-bool Ground::isOverlap(game_framework::CMovingBitmap bmp, Ground ground) {
+int Ground::isOverlap(game_framework::CMovingBitmap bmp, Ground ground) {
 	
 	// 計算 bmp1 的邊界框座標
 	int bmp1Left = ground.GetLeft();
@@ -27,7 +27,17 @@ bool Ground::isOverlap(game_framework::CMovingBitmap bmp, Ground ground) {
 	// 檢查 bmp1 和 bmp2 的邊界框是否有重疊
 	bool isOverlapX = bmp1Right >= bmp2Left && bmp2Right >= bmp1Left;
 	bool isOverlapY = bmp1Bottom >= bmp2Top && bmp2Bottom >= bmp1Top;
-	return isOverlapX && isOverlapY;
+	if (isOverlapX && isOverlapY) {
+		if (bmp2Bottom <= bmp1Top) {
+			return -1; // bmp2 在 bmp1 的上方
+		}
+		else {
+			return 1; // bmp2 在 bmp1 的下方
+		}
+	}
+	else {
+		return 0; // 沒有重疊
+	}
 }
 Ground::~Ground() {
 
