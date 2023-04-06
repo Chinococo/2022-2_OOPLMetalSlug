@@ -261,6 +261,7 @@
     <ClCompile Include="Source\Source\Character\Source\marco.cpp" />
     <ClCompile Include="Source\Source\Character\Source\game_object.cpp" />
     <ClCompile Include="Source\Source\Character\Source\soldier.cpp" />
+    <ClCompile Include="Source\Source\ground.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\Game.h" />
@@ -284,6 +285,7 @@
     <ClInclude Include="Source\Source\Character\Header\marco.h" />
     <ClInclude Include="Source\Source\Character\Header\game_object.h" />
     <ClInclude Include="Source\Source\Character\Header\soldier.h" />
+    <ClInclude Include="Source\Source\ground.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc" />
