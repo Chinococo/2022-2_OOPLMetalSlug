@@ -41,6 +41,7 @@
 // characters
 #include "../Source/Character/Header/marco.h"
 #include "../Source/Character/Header/soldier.h"
+#include "../Source/ground.h"
 #include <memory>
 #include <ctime>
 
@@ -101,16 +102,16 @@ namespace game_framework {
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		CMovingBitmap background;
-		std::vector < std::tuple<CMovingBitmap, int, int>>  map1;
+		std::vector<std::pair<CMovingBitmap,std::vector<std::pair<int,int>>>>  map;
 		std::vector<CMovingBitmap> mainmenuButtons;
 		std::string pharse;
 		CMovingBitmap arrow;
 		int choose = 0;
-		int Map1X = 0;
-		int Map1Y = 380;
+		int ViewPointX;
+		int ViewPointY;
 		int MapScrollSpeed = 10;
 		std::set<UINT> keydown;
-
+		std::vector < Ground*> ground;
 		// characters
 		std::unique_ptr<CMarco> marco;
 		std::unique_ptr<CSoldier> soldier;

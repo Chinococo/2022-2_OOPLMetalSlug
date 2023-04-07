@@ -93,6 +93,9 @@
     <ClCompile Include="Source\Source\Character\Source\game_object.cpp">
       <Filter>Source\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Source\ground.cpp">
+      <Filter>Source\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -156,6 +159,9 @@
       <Filter>Source\Header</Filter>
     </ClInclude>
     <ClInclude Include="Source\Source\Character\Header\game_object.h">
+      <Filter>Source\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\ground.h">
       <Filter>Source\Header</Filter>
     </ClInclude>
   </ItemGroup>

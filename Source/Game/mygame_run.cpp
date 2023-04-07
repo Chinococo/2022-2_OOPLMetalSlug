@@ -5,6 +5,7 @@
 #include "../Library/audio.h"
 #include "../Library/gameutil.h"
 #include "../Library/gamecore.h"
+#include "../Source/ground.h"
 #include <string>
 #include "mygame.h"
 
@@ -31,74 +32,56 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
+	// apply gravity
+	const int VELOCITY_GRAVITY = 5;
+	// control movements
+	const int MOVE_SPEED = 3;
+	const int HANG_TIME_SEC = 10;
+	const int VELOCITY_IN_AIR = 5;
 	// characters
 	// reset dx and dy
 	marco->dx = 0;
 	marco->dy = 0;
 	soldier->dx = 0;
 	soldier->dy = 0;
+	int JumpDy = 0;
+	if (clock() - marco->jumpUpTime < 1000) {
+		double t = 500.0/float(clock() - marco->jumpUpTime);
+		marco->dy  = marco->dy - (int)t;
+	}
+		
+	if(!marco->isOnGround)//重力
+		marco->dy += VELOCITY_GRAVITY ;
+	if (!soldier->isOnGround)
+		soldier->dy += VELOCITY_GRAVITY;
 
-	// apply gravity
-	const int VELOCITY_GRAVITY = 5;
-	marco->dy += VELOCITY_GRAVITY;
-	soldier->dy += VELOCITY_GRAVITY;
-
-	// control movements
-	const int MOVE_SPEED = 3;
-	const int HANG_TIME_SEC = 10;
-	const int VELOCITY_IN_AIR = 5;
-	if (keydown.count(VK_LEFT)) {
+	if (keydown.count(VK_LEFT)) 
 		marco->dx -= MOVE_SPEED;
-	}
-	if (keydown.count(VK_RIGHT)) {
+	if (keydown.count(VK_RIGHT)) 
 		marco->dx += MOVE_SPEED;
-	}
-	if (keydown.count(VK_DOWN)) { // now broken
-		// crouch
-		marco->SetFrameIndexOfBitmap(1);
-	}
-	else {
-		// normal stand
-		marco->SetFrameIndexOfBitmap(0);
-	}
-	if (marco->isOnGround && keydown.count(VK_SPACE)) { // now broken
-		// jump up moment
-		marco->jumpUpTime = clock();
+	
+	if (marco->isOnGround && keydown.count(VK_SPACE)) 
 		marco->isOnGround = false;
+	marco->isOnGround = false;
+	for (int i = 0; i < (int)ground.size(); i++) {
+		if (Ground::isOverlap(*marco.get(), *ground[i]) != 0) {//broken
+			marco->isOnGround = true;
+		}
+		if (Ground::isOverlap(*soldier.get(),*ground[i]) != 0) {//broken
+			soldier->isOnGround = true;
+		}
+		//ground[i]->SetTopLeft()
 	}
-	if (double(clock() - marco->jumpUpTime) / double(CLOCKS_PER_SEC) < double(HANG_TIME_SEC) / 2) { // // now broken
-		// move upward
-		marco->dy -= VELOCITY_IN_AIR;
-	}
-	else {
-		// start falling
-		marco->dy += VELOCITY_IN_AIR;
-	}
+	
 
-	// land to ground
-	// set a temporary ground
-	const int GROUND_Y = 450;
-	if (marco->y + marco->dy > GROUND_Y) {
-		// stick to ground
-		marco->dy = GROUND_Y - marco->y;
-		marco->isOnGround = true;
-	}
-	if (soldier->y + soldier->dy > GROUND_Y) {
-		// stick to ground
-		soldier->dy = GROUND_Y - soldier->y;
-		marco->isOnGround = true;
-	}
-
-	// check for collisions
-	if (CMovingBitmap::IsOverlap(*marco.get(), *soldier.get())) {
+	if (CMovingBitmap::IsOverlap(*soldier.get(), *marco.get())) {
 		marco->SetFrameIndexOfBitmap(1);
-		soldier->SetFrameIndexOfBitmap(1);
+		marco->SetFrameIndexOfBitmap(1);
 	}
 	else {
 		marco->SetFrameIndexOfBitmap(0);
 		soldier->SetFrameIndexOfBitmap(0);
 	}
-
 	// decide final position
 	marco->x += marco->dx;
 	marco->y += marco->dy;
@@ -114,14 +97,15 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
 	pharse = "init";
 	LoadPharseElements();
-
+	ground.push_back(new Ground(20, 450, 700, 350, 10, 450,400,10));
+	ground.push_back(new Ground(20, 450, 700, 350, 410, 550,400,10));
 	// characters
 	marco->LoadBitmapByString({ "resources/characters/giraffe.bmp", "resources/characters/bee_1.bmp" }, RGB(255, 255, 255));
 	marco->x = 300;
 	marco->y = 300;
 	marco->dx = 0;
 	marco->dy = 0;
-	marco->jumpUpTime = clock();
+	marco->jumpUpTime = -99999;
 	marco->isOnGround = false;
 	soldier->LoadBitmapByString({ "resources/characters/chest.bmp", "resources/characters/ball-ok.bmp" }, RGB(255, 255, 255));
 	soldier->x = 500;
@@ -155,20 +139,24 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if (nChar == VK_RIGHT) {
 			keydown.insert(nChar);
 		}
-		else if (nChar == VK_UP) {
+		if (nChar == VK_LEFT) {
 			keydown.insert(nChar);
 		}
-		else if (nChar == VK_DOWN) {
+		if (nChar == VK_UP) {
 			keydown.insert(nChar);
 		}
-		else if (nChar == VK_LEFT) {
+		if (nChar == VK_DOWN) {
 			keydown.insert(nChar);
 		}
-		else if (nChar == VK_RIGHT) {
+		if (nChar == VK_LEFT) {
 			keydown.insert(nChar);
 		}
-		else if (nChar == VK_SPACE) {
+		if (nChar == VK_RIGHT) {     
 			keydown.insert(nChar);
+		}
+		if (nChar == VK_SPACE) {
+			keydown.insert(nChar);
+			marco->jumpUpTime = clock();
 		}
 	}
 	
@@ -191,15 +179,24 @@ void CGameStateRun::LoadPharseElements() {
 		UpdateArrowPosition();
 	}
 	else if (pharse == "map1") {
-		std::vector<std::tuple<CMovingBitmap, int, int>> layer;
-		CMovingBitmap temp;
-		temp.LoadBitmapByString({"resources/maps/map1_1.bmp" }, RGB(255,255, 255));
-		layer.push_back({ temp,0,-30 });
-
-		CMovingBitmap temp1;
-		temp1.LoadBitmapByString({ "resources/maps/background1.bmp" }, RGB(255, 255, 255));
-		layer.push_back({ temp1,+5200,100 });
-		map1 = layer;
+		ViewPointX = 0;
+		ViewPointY = 580;
+		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
+		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) });
+		layer.push_back({ {"resources/maps/background1.bmp"},{{3500,330}} , RGB(255, 255, 255) });
+		//layer.push_back({ {"resources/maps/test2.bmp"},{{5685,22}} , RGB(0, 0, 0) });//破壞
+		//layer.push_back({ {"resources/maps/test1.bmp"},{{5490,15}} , RGB(0, 0, 0) });//破壞
+		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(0, 0, 0) });
+		//layer.push_back({ {"resources/maps/test0.bmp"},{{5490,15}} , RGB(255, 255, 255) });//原本
+		//layer.push_back({ {"resources/maps/test3.bmp"},{{5840,15}} , RGB(255, 255, 255) });//原本
+		
+		
+		map.clear();
+		for (unsigned i = 0; i < layer.size(); i++) {
+			CMovingBitmap temp;
+			temp.LoadBitmapByString(std::get<0>(layer[i]),std::get<2>(layer[i]));
+			map.push_back({ temp,std::get<1>(layer[i])});
+		}
 	}
 }
 void CGameStateRun::clean() {
@@ -218,7 +215,6 @@ void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 		keydown.erase(nChar);
 	}
 }
-
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
 {
 }
@@ -250,22 +246,27 @@ void CGameStateRun::OnShow()
 		arrow.ShowBitmap();
 	}
 	else if (pharse == "map1") {
-		if (keydown.count(VK_RIGHT)&&background.GetWidth()-600)
-			Map1X -= MapScrollSpeed;
-		//if (keydown.count(VK_UP))
-		//	Map1Y += MapScrollSpeed;
-		for (unsigned i = map1.size()-1;; i--) {
-			std::get<0>(map1[i]).SetTopLeft(Map1X+ std::get<1>(map1[i]), Map1Y - background.GetHeight()+ std::get<2>(map1[i]));
-			std::get<0>(map1[i]).ShowBitmap();
+		if (keydown.count(VK_RIGHT))
+			ViewPointX -= MapScrollSpeed;
+		else if(keydown.count(VK_LEFT)&& ViewPointX<0)
+			ViewPointX += MapScrollSpeed;
+		for (unsigned i = map.size()-1;; i--) {
+			int now_index = std::get<0>(map[i]).GetFrameIndexOfBitmap();
+			std::get<0>(map[i]).SetTopLeft(ViewPointX + std::get<1>(map[i])[now_index].first, 
+				ViewPointY - background.GetHeight()+ std::get<1>(map[i])[now_index].second);
+			std::get<0>(map[i]).ShowBitmap();
 			if (i == 0)
 				break;
 		}
+		// characters
+		marco->ShowBitmap();
+		soldier->ShowBitmap();
 		//show_text_by_phase();
+
+		
 	}
 	
-	// characters
-	marco->ShowBitmap();
-	soldier->ShowBitmap();
+	
 }
 void CGameStateRun::show_text_by_phase() {
 	CDC *pDC = CDDraw::GetBackCDC();
@@ -277,11 +278,6 @@ void CGameStateRun::show_text_by_phase() {
 		CTextDraw::Print(pDC, 560, 400, "This is Test4");
 		CTextDraw::Print(pDC, 560, 500, "This is Test5");
 		CDDraw::ReleaseBackCDC();
-	}
-	else if (pharse == "map1") {
-		CTextDraw::ChangeFontLog(pDC, 21, "Arial", RGB(255, 255, 255), 800);
-		CTextDraw::Print(pDC, 560, 185, to_string(Map1X));
-		CTextDraw::Print(pDC, 560, 255, to_string(Map1Y));
 	}
 
 }
