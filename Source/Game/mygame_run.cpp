@@ -30,7 +30,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	if (state == "map1") {
 		marco.update();
-		for (auto &soldier : soldier) {
+		for (auto &soldier : soldiers) {
 			soldier.update();
 		}
 	}
@@ -49,9 +49,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 		mainmenuButtons.push_back(btn);
 	}	
 	int position[5] = { 185,255,325,400,500 };
-	arrow.SetTopLeft(430, position[SelectIndex] - 35);
-	ground.push_back(new Ground({10,450 },{400,10}));
-	ground.push_back(new Ground({410,550 },{400,10}));
+	arrow.SetTopLeft(430, position[selectIndex] - 35);
+	grounds.push_back(Ground({ 10,450 }, { 400,10 }));
+	grounds.push_back(Ground({ 410,550 }, { 400,10 }));
 	ViewPointX = 0;
 	ViewPointY = 580;
 	std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
@@ -71,7 +71,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 	createSoldierGroup();
 	marco.init();
-	for (auto &soldier : soldier) {
+	for (auto &soldier : soldiers) {
 		soldier.init();
 	}
 }
@@ -80,13 +80,13 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	if (state == "init") {
 		if (nChar == VK_UP)
-			SelectIndex = (SelectIndex + 4) % 5;
+			selectIndex = (selectIndex + 4) % 5;
 		else if (nChar == VK_DOWN)
-			SelectIndex = (SelectIndex + 1) % 5;
+			selectIndex = (selectIndex + 1) % 5;
 		int position[5] = { 185,255,325,400,500 };
-		arrow.SetTopLeft(430, position[SelectIndex] - 35);
+		arrow.SetTopLeft(430, position[selectIndex] - 35);
 		if (nChar == VK_RETURN) {
-			if (SelectIndex == 0) {
+			if (selectIndex == 0) {
 				state = "map1";
 			}
 		}
@@ -149,7 +149,7 @@ void CGameStateRun::OnShow()
 				break;
 		}
 		// the latter the object calls draw method, the upper layer it is in
-		for (auto &soldier : soldier) {
+		for (auto &soldier : soldiers) {
 			soldier.draw();
 		}
 		marco.draw();
