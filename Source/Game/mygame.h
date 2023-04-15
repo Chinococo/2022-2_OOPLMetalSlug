@@ -38,14 +38,7 @@
  *      3. Use ShowInitProgress(percent) to display loading progress.
 */
 
-// characters
-#include "../Source/Character/Header/marco.h"
-#include "../Source/Character/Header/soldier.h"
-#include "../Source/ground.h"
-#include <memory>
-#include <ctime>
 
-#include <set>
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
@@ -93,28 +86,17 @@ namespace game_framework {
 		void OnMouseMove(UINT nFlags, CPoint point);	// 處理滑鼠的動作 
 		void OnRButtonDown(UINT nFlags, CPoint point);  // 處理滑鼠的動作
 		void OnRButtonUp(UINT nFlags, CPoint point);	// 處理滑鼠的動作
-		void show_text_by_phase();						// 更新文字
-		void UpdateArrowPosition();                     // 更新箭頭位置
-		void clean();                                   // 清除之前元素
-		void LoadPharseElements();                      // 載入當前pharse應該載入的圖片以及設定
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
 		CMovingBitmap background;
-		std::vector<std::pair<CMovingBitmap,std::vector<std::pair<int,int>>>>  map;
-		std::vector<CMovingBitmap> mainmenuButtons;
-		std::string pharse;
 		CMovingBitmap arrow;
-		int choose = 0;
+		std::vector<CMovingBitmap> mainmenuButtons;
 		int ViewPointX;
 		int ViewPointY;
 		int MapScrollSpeed = 10;
-		std::set<UINT> keydown;
-		std::vector < Ground*> ground;
-		// characters
-		std::unique_ptr<CMarco> marco;
-		std::unique_ptr<CSoldier> soldier;
+		std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>>  map;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

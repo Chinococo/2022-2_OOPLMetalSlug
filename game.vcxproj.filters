@@ -15,13 +15,13 @@
       <UniqueIdentifier>{0c798913-b7d2-4e26-8241-0f83266cd626}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source">
-      <UniqueIdentifier>{3e88353f-f4f0-472e-8893-37ee2ed90016}</UniqueIdentifier>
+      <UniqueIdentifier>{cbab250f-7015-4a86-a4fa-06bf8f794101}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Header">
-      <UniqueIdentifier>{62212f01-70c6-406f-a91a-c83f511ee687}</UniqueIdentifier>
+    <Filter Include="Source\header">
+      <UniqueIdentifier>{c07553e5-9eea-4a43-a0ac-b1ea4c4220cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Source">
-      <UniqueIdentifier>{53e3fd0b-0b80-49bb-bcca-75b5821cb3f3}</UniqueIdentifier>
+    <Filter Include="Source\cpp">
+      <UniqueIdentifier>{494728d0-0dcc-4e11-94b1-7de889e39f1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,38 +63,20 @@
     <ClCompile Include="Source\Game\mygame_run.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\Character\Source\ally.cpp">
-      <Filter>Source\Source</Filter>
+    <ClCompile Include="Source\Source\cpp\Character.cpp">
+      <Filter>Source\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\Character\Source\character.cpp">
-      <Filter>Source\Source</Filter>
+    <ClCompile Include="Source\Source\cpp\Marco.cpp">
+      <Filter>Source\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\Character\Source\hero.cpp">
-      <Filter>Source\Source</Filter>
+    <ClCompile Include="Source\Source\cpp\Soldier.cpp">
+      <Filter>Source\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\Character\Source\hostage.cpp">
-      <Filter>Source\Source</Filter>
+    <ClCompile Include="Source\Source\cpp\GameStroage.cpp">
+      <Filter>Source\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\Character\Source\bullet.cpp">
-      <Filter>Source\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\Character\Source\item.cpp">
-      <Filter>Source\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\Character\Source\enemy.cpp">
-      <Filter>Source\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\Character\Source\marco.cpp">
-      <Filter>Source\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\Character\Source\soldier.cpp">
-      <Filter>Source\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\Character\Source\game_object.cpp">
-      <Filter>Source\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\ground.cpp">
-      <Filter>Source\Source</Filter>
+    <ClCompile Include="Source\Source\cpp\ground.cpp">
+      <Filter>Source\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,38 +113,20 @@
     <ClInclude Include="Source\Game\config.h">
       <Filter>MyGame</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Character\Header\ally.h">
-      <Filter>Source\Header</Filter>
+    <ClInclude Include="Source\Source\header\Character.h">
+      <Filter>Source\header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Character\Header\character.h">
-      <Filter>Source\Header</Filter>
+    <ClInclude Include="Source\Source\header\Marco.h">
+      <Filter>Source\header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Character\Header\hero.h">
-      <Filter>Source\Header</Filter>
+    <ClInclude Include="Source\Source\header\Soldier.h">
+      <Filter>Source\header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Character\Header\hostage.h">
-      <Filter>Source\Header</Filter>
+    <ClInclude Include="Source\Source\header\GameStorage.h">
+      <Filter>Source\header</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Source\Character\Header\item.h">
-      <Filter>Source\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\Character\Header\bullet.h">
-      <Filter>Source\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\Character\Header\enemy.h">
-      <Filter>Source\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\Character\Header\marco.h">
-      <Filter>Source\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\Character\Header\soldier.h">
-      <Filter>Source\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\Character\Header\game_object.h">
-      <Filter>Source\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\ground.h">
-      <Filter>Source\Header</Filter>
+    <ClInclude Include="Source\Source\header\ground.h">
+      <Filter>Source\header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
