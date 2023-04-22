@@ -11,7 +11,8 @@ public:
 	void checkAlive();
 	void move();
 	void draw();
-
+	int  prevTop;
+	int  prevLeft;
 	int x;
 	int y;
 	int speed;

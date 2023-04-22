@@ -24,8 +24,11 @@ void Character::checkAlive() {
 }
 
 void Character::move() {
+
+
 	int dx = 0;
 	int dy = 0;
+	inAir = true;
 	if (movingLeft) {
 		dx = -speed;
 		flip = true;
@@ -36,8 +39,26 @@ void Character::move() {
 		flip = false;
 		direction = 1;
 	}
+	for (std::size_t i = 0; i < grounds.size(); i++) {
+		if (Ground::isOnGround(*this, grounds[i]) == 1) {
+			dy = -1;
+			velocityY = 0;
+			inAir = false;
+		}
+		bool check = grounds[i].start.first == grounds[i].end.first;
+		if (Ground::isOnGroundRight(*this, grounds[i]) == 1&& grounds[i].start.first== grounds[i].end.first ) {
+			if(dx<0)
+				dx = 0;
+		}
+		if (Ground::isOnGroundLeft(*this, grounds[i]) == 1 && grounds[i].start.first == grounds[i].end.first) {
+			if (dx > 0)
+				dx =0;
+		}
+	}
+
+	
 	if (jumping && !inAir) {
-		velocityY = -15;
+ 		velocityY = -15;
 		jumping = false;
 		inAir = true;
 	}
@@ -47,14 +68,8 @@ void Character::move() {
 		velocityY = 15;
 	}
 	dy += velocityY;
-	// no obstacle class is defined yet, so here we set a temporary ground for y axis.
-	for (std::size_t i = 0; i < grounds.size(); i++) {
-		if (Ground::isOnGround(*this, grounds[i]) == 1) {
-			dy = grounds[i].start.second - (y + GetHeight());
-			velocityY = 0;
-			inAir = false;
-		}
-	}
+	prevLeft = x;
+	prevTop = y;
 	x += dx;
 	y += dy;
 }
