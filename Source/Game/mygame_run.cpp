@@ -50,8 +50,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	}	
 	int position[5] = { 185,255,325,400,500 };
 	arrow.SetTopLeft(430, position[selectIndex] - 35);
-	grounds.push_back(Ground({ 10,450 }, { 400,10 }));
-	grounds.push_back(Ground({ 410,550 }, { 400,10 }));
+	grounds.push_back(Ground({ 10,450 }, { 460,450 }));
+	grounds.push_back(Ground({ 410,550 }, { 810,550 }));
 	ViewPointX = 0;
 	ViewPointY = 580;
 	std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;

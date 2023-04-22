@@ -49,8 +49,8 @@ void Character::move() {
 	dy += velocityY;
 	// no obstacle class is defined yet, so here we set a temporary ground for y axis.
 	for (std::size_t i = 0; i < grounds.size(); i++) {
-		if (Ground::isOverlap(*this, grounds[i]) == 1) {
-			dy = grounds[i].topLeft.second - (y + GetHeight());
+		if (Ground::isOnGround(*this, grounds[i]) == 1) {
+			dy = grounds[i].start.second - (y + GetHeight());
 			velocityY = 0;
 			inAir = false;
 		}
