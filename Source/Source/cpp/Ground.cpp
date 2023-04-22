@@ -64,7 +64,7 @@ int Ground::isOnGround(CMovingBitmap bmp, Ground ground) {
 	pair<pair<int, int>, pair<int, int>> line = { ground.start,ground.end };
 	bool check1 = LineSegmentIntersection(CharacterLeftLine, line);
 	bool check2 = LineSegmentIntersection(CharacterRightLine, line);
-	if (LineSegmentIntersection(CharacterLeftLine, line) &&
+	if (LineSegmentIntersection(CharacterLeftLine, line) ||
 		LineSegmentIntersection(CharacterRightLine, line)) {
 		return 1; 
 	}

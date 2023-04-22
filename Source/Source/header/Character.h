@@ -1,6 +1,6 @@
 #pragma once
 #include "../../Library/gameutil.h"
-
+#include <vector>
 class Character : public game_framework::CMovingBitmap {
 public:
 	Character(int _x, int _y, int _speed, int _ammo);
@@ -28,4 +28,5 @@ public:
 	bool jumping = false;
 	bool inAir = false;
 	int action = 0;
+	std::vector<int> lastdy = {-1,-11};
 };

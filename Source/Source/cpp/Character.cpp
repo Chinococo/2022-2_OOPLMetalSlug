@@ -41,7 +41,7 @@ void Character::move() {
 	}
 	for (std::size_t i = 0; i < grounds.size(); i++) {
 		if (Ground::isOnGround(*this, grounds[i]) == 1) {
-			dy = -1;
+  			dy = -1;
 			velocityY = 0;
 			inAir = false;
 		}
@@ -67,11 +67,17 @@ void Character::move() {
 	if (velocityY > 15) {
 		velocityY = 15;
 	}
-	dy += velocityY;
+	if(inAir)
+		dy += velocityY;
+	if ((lastdy[0] <= 0 && lastdy[1] >= 0))
+		dy = 0;
 	prevLeft = x;
 	prevTop = y;
 	x += dx;
 	y += dy;
+	lastdy.push_back(dy);
+	if (lastdy.size() > 2)
+		lastdy.erase(lastdy.begin());
 }
 
 void Character::draw() {
