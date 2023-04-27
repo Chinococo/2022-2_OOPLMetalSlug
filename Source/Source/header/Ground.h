@@ -10,6 +10,7 @@ public:
 	static bool LineSegmentIntersection(pair<pair<int, int>, pair<int, int>> line1, pair<pair<int, int>, pair<int, int>> line2);
 	static bool onSegment(pair<int, int> p, pair<int, int> q, pair<int, int> r);
 	static int orientation(pair<int, int> p, pair<int, int> q, pair<int, int> r);
+	static int GetX_Height(Ground ground, int x);
 	std::pair<int, int> start;
 	std::pair<int, int> end;
 };

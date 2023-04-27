@@ -10,6 +10,9 @@ public:
 	void update_animation();
 	void checkAlive();
 	void move();
+	void gravity();
+	void keybroid_control();
+	void ground_evnet();
 	void draw();
 	int  prevTop;
 	int  prevLeft;
@@ -26,6 +29,8 @@ public:
 	int health = 1;
 	int velocityY = 0;
 	bool jumping = false;
+	int dx = 0;
+	int dy = 0;
 	bool inAir = false;
 	int action = 0;
 	std::vector<int> lastdy = {-1,-11};

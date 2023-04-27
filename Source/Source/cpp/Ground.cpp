@@ -55,6 +55,8 @@ bool Ground::onSegment(pair<int, int> p, pair<int, int> q, pair<int, int> r) {
 	return false;
 }
 int Ground::isOnGround(CMovingBitmap bmp, Ground ground) {
+	if (ground.end.first == ground.start.first)
+		return 0;
 	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft(),bmp.GetTop()+ bmp.GetHeight()} };
 	pair<pair<int, int>, pair<int, int>> CharacterTopLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth() ,bmp.GetTop() } };
 	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {bmp.GetLeft()+ bmp.GetWidth(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth(),bmp.GetTop() + bmp.GetHeight()} };
@@ -73,6 +75,8 @@ int Ground::isOnGround(CMovingBitmap bmp, Ground ground) {
 
 }
 int Ground::isOnGroundLeft(game_framework::CMovingBitmap bmp, Ground ground) {
+	if (ground.end.first != ground.start.first)
+		return 0;
 	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft(),bmp.GetTop() + bmp.GetHeight()} };
 	pair<pair<int, int>, pair<int, int>> CharacterTopLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth() ,bmp.GetTop() } };
 	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {bmp.GetLeft() + bmp.GetWidth(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth(),bmp.GetTop() + bmp.GetHeight()} };
@@ -90,6 +94,8 @@ int Ground::isOnGroundLeft(game_framework::CMovingBitmap bmp, Ground ground) {
 	return 0;
 }
 int Ground::isOnGroundRight(game_framework::CMovingBitmap bmp, Ground ground) {
+	if (ground.end.first != ground.start.first)
+		return 0;
 	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft(),bmp.GetTop() + bmp.GetHeight()} };
 	pair<pair<int, int>, pair<int, int>> CharacterTopLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth() ,bmp.GetTop() } };
 	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {bmp.GetLeft() + bmp.GetWidth(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth(),bmp.GetTop() + bmp.GetHeight()} };
@@ -106,4 +112,14 @@ int Ground::isOnGroundRight(game_framework::CMovingBitmap bmp, Ground ground) {
 	}
 
 	return 0;
+}
+
+int Ground::GetX_Height(Ground ground,int x)
+{
+	if (ground.end.first - ground.start.first == 0)
+		return -1;
+	double m = (double)(ground.end.second - ground.start.second) / (double)(ground.end.first - ground.start.first);
+	double b = ground.end.second - m * ground.end.first;
+	//y = mx + b
+	return (int) (m * x + b);
 }

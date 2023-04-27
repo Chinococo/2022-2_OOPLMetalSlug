@@ -18,6 +18,7 @@ void Marco::init() {
 }
 
 void Marco::update() {
+	this->dx = 0;
 	control();
 	move();
 	draw();
