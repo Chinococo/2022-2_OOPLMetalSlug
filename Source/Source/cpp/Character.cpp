@@ -26,12 +26,14 @@ void Character::move() {
 	
 	inAir = true;
 	for (std::size_t i = 0; i < grounds.size(); i++) {
-		if (Ground::isOnGround(*this, grounds[i]) == 1) {
+		if (Ground::isOnGround(*this, grounds[i]) == 1 ) {
 			int t1 = Ground::GetX_Height(grounds[i], this->x);
 			int t2 = this->y;
 			int t3 = this->GetHeight();
 			auto t = grounds[i];
 			dy = Ground::GetX_Height(grounds[i], this->x) - this->GetHeight() - this->y;
+			if (abs(dy) < 5)
+				dy = 0;
 			velocityY = 0;
 			inAir = false;
 		}
@@ -64,7 +66,7 @@ void Character::gravity()
 		velocityY = 15;
 	}
 	if (inAir)
-		dy += velocityY;
+		dy = velocityY;
 }
 
 void Character::keybroid_control()
@@ -79,10 +81,10 @@ void Character::keybroid_control()
 		flip = false;
 		direction = 1;
 	}
-	if (jumping && !inAir) {
-		velocityY = -15;
-		jumping = false;
+	if (jumping && !inAir && dy>=0) {
+ 		velocityY = -15;
 		inAir = true;
+		jumping = false;
 	}
 }
 

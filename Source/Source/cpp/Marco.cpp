@@ -13,7 +13,7 @@ void Marco::init() {
 		std::string path = "resources/image/HeroMarco/Idle/" + std::to_string(i) + ".bmp";
 		paths.push_back(path);
 	}
-	LoadBitmapByString(paths, RGB(255, 255, 255));
+	LoadBitmapByString(paths, RGB(0,0,0));
 	SetAnimation(100, false);
 }
 

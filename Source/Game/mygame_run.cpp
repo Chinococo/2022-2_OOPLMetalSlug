@@ -51,7 +51,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	int position[5] = { 185,255,325,400,500 };
 	arrow.SetTopLeft(430, position[selectIndex] - 35);
 	grounds.push_back(Ground({ 0,600 }, {800,400 }));
-	grounds.push_back(Ground({ 410,450 }, { 410,800 }));
+	//grounds.push_back(Ground({ 410,450 }, { 410,800 }));
 	grounds.push_back(Ground({ 0,550 }, { 1000,550 }));
 	grounds.push_back(Ground({ 0,0 }, { 0,600 }));
 	grounds.push_back(Ground({ 780,0 }, { 780,600 }));
@@ -152,9 +152,9 @@ void CGameStateRun::OnShow()
 				break;
 		}
 		// the latter the object calls draw method, the upper layer it is in
-		for (auto &soldier : soldiers) {
-			soldier.draw();
-		}
+		//for (auto &soldier : soldiers) {
+		//	soldier.draw();
+		//}
 		marco.draw();
 	}
 }
