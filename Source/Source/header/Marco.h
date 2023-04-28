@@ -6,5 +6,6 @@ public:
 	Marco(int _x, int _y, int _speed, int _ammo);
 	virtual void init() override;
 	virtual void update() override;
+	void update_animation();
 	void control();
 };
