@@ -32,7 +32,7 @@ void Character::move() {
 			int t3 = this->GetHeight();
 			auto t = grounds[i];
 			dy = Ground::GetX_Height(grounds[i], this->x) - this->GetHeight() - this->y;
-			if (abs(dy) < 5)
+			if (abs(dy) < 10)
 				dy = 0;
 			velocityY = 0;
 			inAir = false;
@@ -57,7 +57,22 @@ void Character::move() {
 	y += dy;
 
 }
-
+void Character::ShowBitmapBySetting() {
+	if (isAnimation == true && clock() - last_time >= delayCount) {
+		frameIndex += 1;
+		last_time = clock();
+		if (frameIndex == surfaceID.size() && animationCount > 0) {
+			animationCount -= 1;
+		}
+		if (frameIndex == surfaceID.size() && (isOnce || animationCount == 0)) {
+			isAnimation = false;
+			isAnimationDone = true;
+			frameIndex = surfaceID.size() - 1;
+			return;
+		}
+		frameIndex = frameIndex % 10;
+	}
+}
 void Character::gravity()
 {
 	velocityY += GRAVITY;
@@ -71,6 +86,7 @@ void Character::gravity()
 
 void Character::keybroid_control()
 {
+	animation_range = { 0,10 };
 	if (movingLeft) {
 		dx = -speed;
 		flip = true;
@@ -85,6 +101,10 @@ void Character::keybroid_control()
  		velocityY = -15;
 		inAir = true;
 		jumping = false;
+		
+	}
+	if (movingUp) {
+		animation_range = { 11,16 };
 	}
 }
 
