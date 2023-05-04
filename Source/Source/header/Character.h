@@ -14,6 +14,7 @@ public:
 	virtual void collideWithWall() = 0;
 	virtual void die() = 0;
 	virtual void draw() = 0;
+	bool isAlive() const;
 protected:
 	int x;
 	int y;

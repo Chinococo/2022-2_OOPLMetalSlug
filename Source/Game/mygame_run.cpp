@@ -81,7 +81,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 	}
 	else if (state == "map1") {
-		if (nChar == VK_RIGHT || nChar == VK_SPACE || nChar == VK_LEFT || nChar == VK_UP|| nChar == VK_DOWN) {
+		if (nChar == VK_RIGHT || nChar == VK_SPACE || nChar == VK_LEFT || nChar == VK_UP|| nChar == VK_DOWN || nChar == 0x5A) {
 			keyDowns.insert(nChar);
 		}
 	}
@@ -140,5 +140,8 @@ void CGameStateRun::OnShow()
 			soldiers[i].draw();
 		}
 		marco.draw();
+		for (size_t i = 0; i < bullets.size(); i++) {
+			bullets[i].draw();
+		}
 	}
 }

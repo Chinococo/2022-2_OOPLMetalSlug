@@ -3,7 +3,7 @@
 
 namespace game_framework {
 	void createSoldiers() {
-		soldiers.push_back(Soldier(500, 500, 5));
+		soldiers.push_back(Soldier(500, 500, 4));
 	}
 	void createGrounds() {
 		grounds.push_back(Ground({ 0,600 }, { 800,400 }));
@@ -51,7 +51,7 @@ namespace game_framework {
 
 	const int GRAVITY = 1;
 	std::set<UINT> keyDowns;
-	Marco marco(300, 300, 10);
+	Marco marco(300, 300, 6);
 	std::vector<Soldier> soldiers;
 	std::vector<Bullet> bullets;
 	std::vector<Ground> grounds;

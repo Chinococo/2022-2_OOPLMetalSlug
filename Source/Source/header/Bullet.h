@@ -14,6 +14,5 @@ public:
 	virtual void collideWithWall() override;
 	virtual void die() override;
 	virtual void draw() override;
-	bool isAlive() const;
 	std::string owner;
 };

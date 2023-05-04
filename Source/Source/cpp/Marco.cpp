@@ -53,6 +53,9 @@ void Marco::control() {
 			lastShootTime = currentTime;
 		}
 	}
+	else {
+		shooting = false;
+	}
 }
 
 void Marco::move() {
@@ -70,7 +73,7 @@ void Marco::move() {
 
 void Marco::shoot() {
 	if (shooting) {
-		addBullet(x, y, 50, facingX, facingY, "hero");
+		addBullet(x, y, 20, facingX, facingY, "hero");
 	}
 }
 

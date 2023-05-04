@@ -94,7 +94,3 @@ void Bullet::draw() {
 		UnshowBitmap();
 	}
 }
-
-bool Bullet::isAlive() const {
-	return alive;
-}

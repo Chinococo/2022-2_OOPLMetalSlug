@@ -57,6 +57,7 @@ void Soldier::control() { // AI
 	else {
 		jumping = false;
 	}
+	/*
 	if (currentTime - lastShootTime >= SHOOT_COOLDOWN) {
 		lastShootTime = currentTime;
 		shooting = true;
@@ -64,6 +65,7 @@ void Soldier::control() { // AI
 	else {
 		shooting = false;
 	}
+	*/
 }
 
 void Soldier::move() {
@@ -80,9 +82,9 @@ void Soldier::move() {
 }
 
 void Soldier::shoot() {
-	//if (shooting) {
-		addBullet(x, y, 50, facingX, facingY, "enemy");
-	//}
+	if (shooting) {
+		addBullet(x, y, 20, facingX, facingY, "enemy");
+	}
 }
 
 void Soldier::moveLeftRight() {
