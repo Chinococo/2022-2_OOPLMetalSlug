@@ -3,13 +3,13 @@
 
 using namespace game_framework;
 
-Marco::Marco(int _x, int _y) : Character(_x, _y) {
+Marco::Marco(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
 
 }
 
 void Marco::init() {
 	std::vector<std::string> paths;
-	for (size_t i = 0; i < 4; i++) {
+	for (size_t i = 0; i < 1; i++) {
 		paths.push_back("resources/img/hero/marco/idle/" + std::to_string(i) + ".bmp");
 	}
 	for (size_t i = 0; i < 0; i++) {
@@ -35,6 +35,9 @@ void Marco::update() {
 		control();
 		move();
 	}
+	else {
+		die();
+	}
 }
 
 void Marco::control() {
@@ -43,19 +46,32 @@ void Marco::control() {
 	jumping = keyDowns.count(VK_SPACE);
 	lookingUp = keyDowns.count(VK_UP);
 	pressDown = keyDowns.count(VK_DOWN);
-	shooting = keyDowns.count(0x5A); // Z
+	clock_t currentTime = clock();
+	if (currentTime - lastShootTime >= SHOOT_COOLDOWN) {
+		shooting = keyDowns.count(0x5A);
+		if (shooting) {
+			lastShootTime = currentTime;
+		}
+	}
 }
 
 void Marco::move() {
 	dx = 0;
 	dy = 0;
-	moveLeftRight();
-	jumpAndFall();
 	collideWithBullet();
-	collideWithGround();
 	collideWithWall();
+	moveLeftRight();
+	collideWithGround();
+	jumpAndFall();
+	shoot();
 	x += dx;
 	y += dy;
+}
+
+void Marco::shoot() {
+	if (shooting) {
+		addBullet(x, y, 50, facingX, facingY, "hero");
+	}
 }
 
 void Marco::moveLeftRight() {
@@ -71,7 +87,7 @@ void Marco::moveLeftRight() {
 
 void Marco::jumpAndFall() {
 	if (jumping && !inAir) {
-		velocityY = -30;
+		velocityY = -20;
 		inAir = true;
 	}
 	else {
@@ -81,7 +97,11 @@ void Marco::jumpAndFall() {
 }
 
 void Marco::collideWithBullet() {
-
+	for (size_t i = 0; i < bullets.size(); i++) {
+		if (bullets[i].owner == "enemy" && IsOverlap(*this, bullets[i])) {
+			alive = false;
+		}
+	}
 }
 
 void Marco::collideWithGround() {
@@ -105,9 +125,16 @@ void Marco::collideWithWall() {
 	}
 }
 
+void Marco::die() {
+
+}
+
 void Marco::draw() {
 	if (alive) {
 		SetTopLeft(x, y);
 		ShowBitmap();
+	}
+	else {
+		UnshowBitmap();
 	}
 }

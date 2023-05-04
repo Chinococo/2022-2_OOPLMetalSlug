@@ -31,8 +31,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (state == "map1") {
 		removeInactiveBullets();
 		marco.update();
-		for (auto &soldier : soldiers) {
-			soldier.update();
+		for (size_t i = 0; i < soldiers.size(); i++) {
+			soldiers[i].update();
+		}
+		for (size_t i = 0; i < bullets.size(); i++) {
+			bullets[i].update();
 		}
 	}
 }
@@ -55,8 +58,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	createGrounds();
 	createSoldiers();
 	marco.init();
-	for (auto &soldier : soldiers) {
-		soldier.init();
+	for (size_t i = 0; i < soldiers.size(); i++) {
+		soldiers[i].init();
 	}
 }
 
@@ -118,7 +121,7 @@ void CGameStateRun::OnShow()
 		}
 		arrow.ShowBitmap();
 	}
-	else if(state=="map1") {
+	else if (state == "map1") {
 
 		if (keyDowns.count(VK_RIGHT))
 			ViewPointX -= MapScrollSpeed;

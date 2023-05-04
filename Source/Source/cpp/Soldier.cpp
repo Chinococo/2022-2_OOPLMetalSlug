@@ -3,7 +3,7 @@
 
 using namespace game_framework;
 
-Soldier::Soldier(int _x, int _y) : Character(_x, _y) {
+Soldier::Soldier(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
 
 }
 
@@ -38,35 +38,51 @@ void Soldier::update() {
 }
 
 void Soldier::control() { // AI
+	/*
 	int distanceX = marco.GetLeft() - x;
 	if (distanceX > 0) {
 		movingRight = true;
 		movingLeft = false;
 	}
-	if (distanceX > 0) {
+	else if (distanceX < 0) {
 		movingLeft = true;
 		movingRight = false;
 	}
+	*/
 	clock_t currentTime = clock();
-	if (currentTime - lastJumpTime >= 100) {
+	if (currentTime - lastJumpTime >= JUMP_COOLDOWN) {
 		lastJumpTime = currentTime;
 		jumping = true;
 	}
 	else {
 		jumping = false;
 	}
+	if (currentTime - lastShootTime >= SHOOT_COOLDOWN) {
+		lastShootTime = currentTime;
+		shooting = true;
+	}
+	else {
+		shooting = false;
+	}
 }
 
 void Soldier::move() {
 	dx = 0;
 	dy = 0;
-	moveLeftRight();
-	jumpAndFall();
 	collideWithBullet();
-	collideWithGround();
 	collideWithWall();
+	moveLeftRight();
+	collideWithGround();
+	jumpAndFall();
+	shoot();
 	x += dx;
 	y += dy;
+}
+
+void Soldier::shoot() {
+	//if (shooting) {
+		addBullet(x, y, 50, facingX, facingY, "enemy");
+	//}
 }
 
 void Soldier::moveLeftRight() {
@@ -82,7 +98,7 @@ void Soldier::moveLeftRight() {
 
 void Soldier::jumpAndFall() {
 	if (jumping && !inAir) {
-		velocityY = -30;
+		velocityY = -20;
 		inAir = true;
 	}
 	else {
@@ -92,7 +108,11 @@ void Soldier::jumpAndFall() {
 }
 
 void Soldier::collideWithBullet() {
-
+	for (size_t i = 0; i < bullets.size(); i++) {
+		if (bullets[i].owner == "hero" && IsOverlap(*this, bullets[i])) {
+			alive = false;
+		}
+	}
 }
 
 void Soldier::collideWithGround() {
@@ -116,9 +136,16 @@ void Soldier::collideWithWall() {
 	}
 }
 
+void Soldier::die() {
+
+}
+
 void Soldier::draw() {
 	if (alive) {
 		SetTopLeft(x, y);
 		ShowBitmap();
+	}
+	else {
+		UnshowBitmap();
 	}
 }

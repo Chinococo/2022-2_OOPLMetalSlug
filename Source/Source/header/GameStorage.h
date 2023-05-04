@@ -14,6 +14,7 @@ namespace game_framework {
 	extern void createSoldiers();
 	extern void createGrounds();
 	extern void createMap();
+	extern void addBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner);
 	extern void removeInactiveBullets();
 
 	// map

@@ -3,8 +3,9 @@
 
 using namespace game_framework;
 
-Bullet::Bullet(int _x, int _y, int _facingX, std::string _owner) : Character(_x, _y) {
+Bullet::Bullet(int _x, int _y, int _speedX, int _facingX, int _facingY, std::string _owner) : Character(_x, _y, _speedX) {
 	facingX = _facingX;
+	facingY = _facingY;
 	owner = _owner;
 }
 
@@ -29,7 +30,10 @@ void Bullet::control() {
 void Bullet::move() {
 	dx = 0;
 	dy = 0;
+	collideWithWall();
 	moveLeftRight();
+	collideWithGround();
+	jumpAndFall();
 	x += dx;
 	y += dy;
 }
@@ -38,31 +42,56 @@ void Bullet::moveLeftRight() {
 	if (facingX == -1) {
 		dx += -speedX;
 	}
-	if (facingX == 1) {
+	else if (facingX == 1) {
 		dx += speedX;
 	}
 }
 
 void Bullet::jumpAndFall() {
-
+	if (facingY == -1) {
+		dx = 0;
+		dy += -speedX;
+	}
+	else if (facingY == 1) {
+		dx = 0;
+		dy += speedX;
+	}
 }
 
-void Bullet::collideWithBullet() {
-	
+void Bullet::collideWithCharacter() {
+	if (owner == "hero") {
+		for (size_t i = 0; i < soldiers.size(); i++) {
+			if (IsOverlap(*this, soldiers[i])) {
+				alive = false;
+			}
+		}
+	}
+	else if (owner == "enemy") {
+		if (IsOverlap(*this, marco)) {
+			alive = false;
+		}
+	}
 }
 
 void Bullet::collideWithGround() {
-	alive = false;
+	//alive = false;
 }
 
 void Bullet::collideWithWall() {
-	alive = false;
+	//alive = false;
+}
+
+void Bullet::die() {
+	
 }
 
 void Bullet::draw() {
 	if (alive) {
 		SetTopLeft(x, y);
 		ShowBitmap();
+	}
+	else {
+		UnshowBitmap();
 	}
 }
 
