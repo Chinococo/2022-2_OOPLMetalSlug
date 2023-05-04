@@ -1,21 +1,38 @@
 #pragma once
-#include "Ground.h"
-#include "Marco.h"
-#include "Soldier.h"
-#include <cstdlib>
+#include "../header/Marco.h"
+#include "../header/Soldier.h"
+#include "../header/Ground.h"
+#include "../header/Bullet.h"
 #include <string>
 #include <vector>
-#include <ctime>
 #include <set>
+#include <algorithm>
+#include <ctime>
 
 namespace game_framework {
-	extern void createSoldierGroup();
+	// function
+	extern void createSoldiers();
+	extern void createGrounds();
+	extern void createMap();
+	extern void addBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner);
+	extern void removeInactiveBullets();
 
-	extern const int GRAVITY;
-	extern int selectIndex;
-	extern std::set<UINT> keydown;
+	// map
 	extern std::string state;
+	extern int selectIndex;
+	extern CMovingBitmap background;
+	extern CMovingBitmap arrow;
+	extern std::vector<CMovingBitmap> mainmenuButtons;
+	extern int ViewPointX;
+	extern int ViewPointY;
+	extern int MapScrollSpeed;
+	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> map;
+
+	// character
+	extern const int GRAVITY;
+	extern std::set<UINT> keyDowns;
 	extern Marco marco;
 	extern std::vector<Soldier> soldiers;
+	extern std::vector<Bullet> bullets;
 	extern std::vector<Ground> grounds;
 }

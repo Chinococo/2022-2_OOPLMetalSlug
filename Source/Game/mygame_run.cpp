@@ -29,12 +29,15 @@ void CGameStateRun::OnBeginState()
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	if (state == "map1") {
+		removeInactiveBullets();
 		marco.update();
-		for (auto &soldier : soldiers) {
-			soldier.update();
+		for (size_t i = 0; i < soldiers.size(); i++) {
+			soldiers[i].update();
+		}
+		for (size_t i = 0; i < bullets.size(); i++) {
+			bullets[i].update();
 		}
 	}
-	
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
@@ -50,32 +53,13 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	}	
 	int position[5] = { 185,255,325,400,500 };
 	arrow.SetTopLeft(430, position[selectIndex] - 35);
-	grounds.push_back(Ground({ 0,600 }, {800,400 }));
-	//grounds.push_back(Ground({ 410,450 }, { 410,800 }));
-	grounds.push_back(Ground({ 0,550 }, { 1000,550 }));
-	grounds.push_back(Ground({ 0,0 }, { 0,600 }));
-	grounds.push_back(Ground({ 780,0 }, { 780,600 }));
-	ViewPointX = 0;
-	ViewPointY = 580;
-	std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
-	layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) });
-	layer.push_back({ {"resources/maps/background1.bmp"},{{3500,330}} , RGB(255, 255, 255) });
-	//layer.push_back({ {"resources/maps/test2.bmp"},{{5685,22}} , RGB(0, 0, 0) });//破壞
-	//layer.push_back({ {"resources/maps/test1.bmp"},{{5490,15}} , RGB(0, 0, 0) });//破壞
-	layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(0, 0, 0) });
-	//layer.push_back({ {"resources/maps/test0.bmp"},{{5490,15}} , RGB(255, 255, 255) });//原本
-	//layer.push_back({ {"resources/maps/test3.bmp"},{{5840,15}} , RGB(255, 255, 255) });//原本
-	map.clear();
-	for (unsigned i = 0; i < layer.size(); i++) {
-		CMovingBitmap temp;
-		temp.LoadBitmapByString(std::get<0>(layer[i]), std::get<2>(layer[i]));
-		map.push_back({ temp,std::get<1>(layer[i]) });
-	}
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
-	createSoldierGroup();
+	createMap();
+	createGrounds();
+	createSoldiers();
 	marco.init();
-	for (auto &soldier : soldiers) {
-		soldier.init();
+	for (size_t i = 0; i < soldiers.size(); i++) {
+		soldiers[i].init();
 	}
 }
 
@@ -97,15 +81,15 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 	}
 	else if (state == "map1") {
-		if (nChar == VK_RIGHT || nChar == VK_SPACE || nChar == VK_LEFT || nChar == VK_UP|| nChar == VK_DOWN) {
-			keydown.insert(nChar);
+		if (nChar == VK_RIGHT || nChar == VK_SPACE || nChar == VK_LEFT || nChar == VK_UP|| nChar == VK_DOWN || nChar == 0x5A) {
+			keyDowns.insert(nChar);
 		}
 	}
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	keydown.erase(nChar);
+	keyDowns.erase(nChar);
 }
 
 void CGameStateRun::OnLButtonDown(UINT nFlags, CPoint point)  // 處理滑鼠的動作
@@ -137,11 +121,11 @@ void CGameStateRun::OnShow()
 		}
 		arrow.ShowBitmap();
 	}
-	else if(state=="map1") {
-		
-		if (keydown.count(VK_RIGHT))
+	else if (state == "map1") {
+
+		if (keyDowns.count(VK_RIGHT))
 			ViewPointX -= MapScrollSpeed;
-		else if (keydown.count(VK_LEFT) && ViewPointX < 0)
+		else if (keyDowns.count(VK_LEFT) && ViewPointX < 0)
 			ViewPointX += MapScrollSpeed;
 		for (unsigned i = map.size() - 1;; i--) {
 			int now_index = std::get<0>(map[i]).GetFrameIndexOfBitmap();
@@ -151,10 +135,13 @@ void CGameStateRun::OnShow()
 			if (i == 0)
 				break;
 		}
-		// the latter the object calls draw method, the upper layer it is in
-		//for (auto &soldier : soldiers) {
-		//	soldier.draw();
-		//}
+
+		for (size_t i = 0; i < soldiers.size(); i++) {
+			soldiers[i].draw();
+		}
 		marco.draw();
+		for (size_t i = 0; i < bullets.size(); i++) {
+			bullets[i].draw();
+		}
 	}
 }

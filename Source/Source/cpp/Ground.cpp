@@ -57,10 +57,10 @@ bool Ground::onSegment(pair<int, int> p, pair<int, int> q, pair<int, int> r) {
 int Ground::isOnGround(CMovingBitmap bmp, Ground ground) {
 	if (ground.end.first == ground.start.first)
 		return 0;
-	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft(),bmp.GetTop()+ bmp.GetHeight()} };
+	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft(),bmp.GetTop() + bmp.GetHeight()} };
 	pair<pair<int, int>, pair<int, int>> CharacterTopLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth() ,bmp.GetTop() } };
-	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {bmp.GetLeft()+ bmp.GetWidth(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth(),bmp.GetTop() + bmp.GetHeight()} };
-	pair<pair<int, int>, pair<int, int>> CharacterBottomLine = { {bmp.GetLeft(),bmp.GetTop()+bmp.GetHeight()},{bmp.GetLeft() + bmp.GetWidth() ,bmp.GetTop() + bmp.GetHeight() } };
+	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {bmp.GetLeft() + bmp.GetWidth(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth(),bmp.GetTop() + bmp.GetHeight()} };
+	pair<pair<int, int>, pair<int, int>> CharacterBottomLine = { {bmp.GetLeft(),bmp.GetTop() + bmp.GetHeight()},{bmp.GetLeft() + bmp.GetWidth() ,bmp.GetTop() + bmp.GetHeight() } };
 	//pair<int, int>ground.start, pair<int, int>ground.end
 
 	pair<pair<int, int>, pair<int, int>> line = { ground.start,ground.end };
@@ -68,10 +68,10 @@ int Ground::isOnGround(CMovingBitmap bmp, Ground ground) {
 	bool check2 = LineSegmentIntersection(CharacterRightLine, line);
 	if (LineSegmentIntersection(CharacterLeftLine, line) &&
 		LineSegmentIntersection(CharacterRightLine, line)) {
-		return 1; 
+		return 1;
 	}
 
-	return 0; 
+	return 0;
 
 }
 int Ground::isOnGroundLeft(game_framework::CMovingBitmap bmp, Ground ground) {
@@ -86,7 +86,7 @@ int Ground::isOnGroundLeft(game_framework::CMovingBitmap bmp, Ground ground) {
 	pair<pair<int, int>, pair<int, int>> line = { ground.start,ground.end };
 	bool check1 = LineSegmentIntersection(CharacterTopLine, line);
 	bool check2 = LineSegmentIntersection(CharacterBottomLine, line);
-	int check4 = abs(bmp.GetLeft()+bmp.GetWidth() -  ground.start.first)-abs(bmp.GetLeft() - ground.start.first);
+	int check4 = abs(bmp.GetLeft() + bmp.GetWidth() - ground.start.first) - abs(bmp.GetLeft() - ground.start.first);
 	if (LineSegmentIntersection(CharacterTopLine, line) && LineSegmentIntersection(CharacterBottomLine, line) && abs(bmp.GetLeft() + bmp.GetWidth() - ground.start.first) < abs(bmp.GetLeft() - ground.start.first)) {
 		return 1;
 	}
@@ -107,19 +107,19 @@ int Ground::isOnGroundRight(game_framework::CMovingBitmap bmp, Ground ground) {
 	bool check2 = LineSegmentIntersection(CharacterTopLine, line);
 	bool check3 = LineSegmentIntersection(CharacterBottomLine, line);
 	int check4 = abs(bmp.GetLeft() + bmp.GetWidth() - ground.start.first) - abs(bmp.GetLeft() - ground.start.first);
-	if ( LineSegmentIntersection(CharacterTopLine, line) && LineSegmentIntersection(CharacterBottomLine, line) && abs(bmp.GetLeft() + bmp.GetWidth() - ground.start.first) > abs(bmp.GetLeft() - ground.start.first)) {
+	if (LineSegmentIntersection(CharacterTopLine, line) && LineSegmentIntersection(CharacterBottomLine, line) && abs(bmp.GetLeft() + bmp.GetWidth() - ground.start.first) > abs(bmp.GetLeft() - ground.start.first)) {
 		return 1;
 	}
 
 	return 0;
 }
 
-int Ground::GetX_Height(Ground ground,int x)
+int Ground::GetX_Height(Ground ground, int x)
 {
 	if (ground.end.first - ground.start.first == 0)
 		return -1;
 	double m = (double)(ground.end.second - ground.start.second) / (double)(ground.end.first - ground.start.first);
 	double b = ground.end.second - m * ground.end.first;
 	//y = mx + b
-	return (int) (m * x + b);
+	return (int)(m * x + b);
 }
