@@ -3,45 +3,98 @@
 
 using namespace game_framework;
 
-Marco::Marco(int _x, int _y, int _speed, int _ammo) : Character(_x, _y, _speed, _ammo) {
+Marco::Marco(int _x, int _y) : Character(_x, _y) {
 
 }
 
 void Marco::init() {
 	std::vector<std::string> paths;
-	for (int i = 0; i < 11; i++) {
-		std::string path = "resources/image/HeroMarco/Idle/" + std::to_string(i) + ".bmp";
-		paths.push_back(path);
+	for (size_t i = 0; i < 4; i++) {
+		paths.push_back("resources/hero/marco/idle/" + std::to_string(i) + ".bmp");
 	}
-	for (int i = 0; i < 8; i++) {
-		std::string path = "resources/image/HeroMarco/Up/" + std::to_string(i) + ".bmp";
-		paths.push_back(path);
+	for (size_t i = 0; i < 0; i++) {
+		paths.push_back("resources/hero/marco/move/" + std::to_string(i) + ".bmp");
 	}
-	LoadBitmapByString(paths, RGB(0,0,0));
-	//SetAnimation(100, false);
+	for (size_t i = 0; i < 0; i++) {
+		paths.push_back("resources/hero/marco/jump/" + std::to_string(i) + ".bmp");
+	}
+	for (size_t i = 0; i < 0; i++) {
+		paths.push_back("resources/hero/marco/lookUp/" + std::to_string(i) + ".bmp");
+	}
+	for (size_t i = 0; i < 0; i++) {
+		paths.push_back("resources/hero/marco/shoot/" + std::to_string(i) + ".bmp");
+	}
+	for (size_t i = 0; i < 0; i++) {
+		paths.push_back("resources/hero/marco/die/" + std::to_string(i) + ".bmp");
+	}
+	LoadBitmapByString(paths, RGB(153, 217, 234));
 }
 
 void Marco::update() {
-	this->dx = 0;
-	control();
-	move();
-	update_animation();
-	draw();
-}
-void Marco::update_animation() {
-
-	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start);
-
-	if (duration > std::chrono::milliseconds(100)) {
-		this->SetFrameIndexOfBitmap(((this->GetFrameIndexOfBitmap() + 1) % (this->animation_range.second-this->animation_range.first))+ this->animation_range.first);
-		start = std::chrono::high_resolution_clock::now();
+	if (alive) {
+		control();
+		move();
 	}
+}
+
+void Marco::control() {
+	movingLeft = keyDowns.count(VK_LEFT);
+	movingRight = keyDowns.count(VK_RIGHT);
+	jumping = keyDowns.count(VK_SPACE);
+	lookingUp = keyDowns.count(VK_UP);
+	pressDown = keyDowns.count(VK_DOWN);
+	shooting = keyDowns.count(0x5A); // Z
+}
+
+void Marco::move() {
+	dx = 0;
+	dy = 0;
+	moveLeftRight();
+	jumpAndFall();
+	collideWithBullet();
+	collideWithGround();
+	collideWithWall();
+	x += dx;
+	y += dy;
+}
+
+void Marco::moveLeftRight() {
+	if (movingLeft) {
+		dx += -speedX;
+		facingX = -1;
+	}
+	if (movingRight) {
+		dx += speedX;
+		facingX = 1;
+	}
+}
+
+void Marco::jumpAndFall() {
+	if (jumping && !inAir) {
+		velocityY = -30;
+		inAir = true;
+	}
+	else {
+		velocityY += GRAVITY;
+	}
+	dy += velocityY;
+}
+
+void Marco::collideWithBullet() {
 
 }
-void Marco::control() {
-	movingLeft = game_framework::keydown.count(VK_LEFT);
-	movingRight = game_framework::keydown.count(VK_RIGHT);
-	jumping = game_framework::keydown.count(VK_SPACE);
-	movingUp = game_framework::keydown.count(VK_UP);
-	//shooting = game_framework::keydown.count(VK_UP);
+
+void Marco::collideWithGround() {
+	
+}
+
+void Marco::collideWithWall() {
+
+}
+
+void Marco::draw() {
+	if (alive) {
+		SetTopLeft(x, y);
+		ShowBitmap();
+	}
 }

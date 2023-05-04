@@ -1,18 +1,19 @@
 #include "stdafx.h"
 #include "../header/GameStorage.h"
 
-using namespace game_framework;
-
 namespace game_framework {
-	void createSoldierGroup() {
-		soldiers.push_back(Soldier(600, 300, 1, 999));
+	void createSoldiers() {
+		soldiers.push_back(Soldier(500, 500));
+	}
+	void removeInactiveBullets() {
+		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet &bullet) {
+			return !bullet.isAlive();
+		}), bullets.end());
 	}
 
-	const int GRAVITY = 1;
-	int selectIndex = 0;
-	std::set<UINT> keydown;
-	std::string state = "init";
-	Marco marco(300, 300, 10, 999);
+	const int GRAVITY = 30;
+	std::set<UINT> keyDowns;
+	Marco marco(200, 500);
 	std::vector<Soldier> soldiers;
-	std::vector <Ground> grounds;
+	std::vector<Bullet> bullets;
 }

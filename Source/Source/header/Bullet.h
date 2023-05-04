@@ -1,8 +1,8 @@
 #include "../header/Character.h"
 
-class Soldier : public Character {
+class Bullet : public Character {
 public:
-	Soldier(int _x, int _y);
+	Bullet(int _x, int _y, int _facingX, std::string _owner);
 	virtual void init() override;
 	virtual void update() override;
 	virtual void control() override;
@@ -13,13 +13,6 @@ public:
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
 	virtual void draw() override;
-private:
-	int velocityY = 0;
-	bool movingLeft = false;
-	bool movingRight = false;
-	bool jumping = false;
-	bool inAir = false;
-	bool lookingUp = false;
-	bool pressDown = false;
-	bool shooting = false;
+	bool isAlive() const;
+	std::string owner;
 };

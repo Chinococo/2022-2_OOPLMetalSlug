@@ -63,21 +63,6 @@
     <ClCompile Include="Source\Game\mygame_run.cpp">
       <Filter>MyGame</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Character.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Marco.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Soldier.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\GameStorage.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Ground.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -112,21 +97,6 @@
     </ClInclude>
     <ClInclude Include="Source\Game\config.h">
       <Filter>MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Character.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Marco.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Soldier.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\GameStorage.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Ground.h">
-      <Filter>Source\header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

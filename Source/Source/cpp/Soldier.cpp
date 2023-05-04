@@ -3,34 +3,79 @@
 
 using namespace game_framework;
 
-Soldier::Soldier(int _x, int _y, int _speed, int _ammo) : Character(_x, _y, _speed, _ammo) {
-	jumpCooldown = JUMP_COOLDOWN;
+Soldier::Soldier(int _x, int _y) : Character(_x, _y) {
+
 }
 
 void Soldier::init() {
-	LoadBitmap({ "resources/testImage/giraffe.bmp" }, RGB(255, 255, 255));
+	std::vector<std::string> paths;
+	for (size_t i = 0; i < 4; i++) {
+		paths.push_back("resources/enemy/soldier/idle/" + std::to_string(i) + ".bmp");
+	}
+	for (size_t i = 0; i < 0; i++) {
+		paths.push_back("resources/enemy/soldier/move/" + std::to_string(i) + ".bmp");
+	}
+	for (size_t i = 0; i < 0; i++) {
+		paths.push_back("resources/enemy/soldier/jump/" + std::to_string(i) + ".bmp");
+	}
+	for (size_t i = 0; i < 0; i++) {
+		paths.push_back("resources/enemy/soldier/lookUp/" + std::to_string(i) + ".bmp");
+	}
+	for (size_t i = 0; i < 0; i++) {
+		paths.push_back("resources/enemy/soldier/shoot/" + std::to_string(i) + ".bmp");
+	}
+	for (size_t i = 0; i < 0; i++) {
+		paths.push_back("resources/enemy/soldier/die/" + std::to_string(i) + ".bmp");
+	}
+	LoadBitmapByString(paths, RGB(153, 217, 234));
 }
 
 void Soldier::update() {
-	ai();
-	move();
-	draw();
+	if (alive) {
+		control();
+		move();
+	}
 }
 
-void Soldier::ai() {
-	movingLeft = false;
-	movingRight = false;
-	jumping = false;
-	int distanceToMarcoX = x - marco.x;
-	if (distanceToMarcoX > FIRE_RANGE) {
-		movingLeft = true;
-	}
-	if (distanceToMarcoX < -FIRE_RANGE) {
-		movingRight = true;
-	}
-	jumpCooldown--;
-	if (jumpCooldown == 0) {
-		jumping = true;
-		jumpCooldown = JUMP_COOLDOWN;
+void Soldier::control() { // AI
+
+}
+
+void Soldier::move() {
+	dx = 0;
+	dy = 0;
+	moveLeftRight();
+	jumpAndFall();
+	collideWithBullet();
+	collideWithGround();
+	collideWithWall();
+	x += dx;
+	y += dy;
+}
+
+void Soldier::moveLeftRight() {
+
+}
+
+void Soldier::jumpAndFall() {
+
+}
+
+void Soldier::collideWithBullet() {
+
+}
+
+void Soldier::collideWithGround() {
+
+}
+
+void Soldier::collideWithWall() {
+
+}
+
+void Soldier::draw() {
+	if (alive) {
+		SetTopLeft(x, y);
+		ShowBitmap();
 	}
 }
