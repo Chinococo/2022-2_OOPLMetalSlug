@@ -30,6 +30,7 @@ void Bullet::control() {
 void Bullet::move() {
 	dx = 0;
 	dy = 0;
+	collideWithCharacter();
 	collideWithWall();
 	moveLeftRight();
 	collideWithGround();
