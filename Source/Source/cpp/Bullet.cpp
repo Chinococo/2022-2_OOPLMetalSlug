@@ -10,8 +10,8 @@ Bullet::Bullet(int _x, int _y, int _facingX, std::string _owner) : Character(_x,
 
 void Bullet::init() {
 	std::vector<std::string> paths;
-	for (size_t i = 0; i < 4; i++) {
-		paths.push_back("resources/item/bullet/move/" + std::to_string(i) + ".bmp");
+	for (size_t i = 0; i < 1; i++) {
+		paths.push_back("resources/img/item/bullet/move/" + std::to_string(i) + ".bmp");
 	}
 	LoadBitmapByString(paths, RGB(153, 217, 234));
 }

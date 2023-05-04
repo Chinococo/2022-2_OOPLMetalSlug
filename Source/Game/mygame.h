@@ -89,14 +89,6 @@ namespace game_framework {
 	protected:
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
-	private:
-		CMovingBitmap background;
-		CMovingBitmap arrow;
-		std::vector<CMovingBitmap> mainmenuButtons;
-		int ViewPointX;
-		int ViewPointY;
-		int MapScrollSpeed = 10;
-		std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>>  map;
 	};
 
 	/////////////////////////////////////////////////////////////////////////////

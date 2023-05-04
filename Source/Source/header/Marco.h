@@ -14,6 +14,7 @@ public:
 	virtual void collideWithWall() override;
 	virtual void draw() override;
 private:
+	clock_t lastJumpTime = clock();
 	int velocityY = 0;
 	bool movingLeft = false;
 	bool movingRight = false;
