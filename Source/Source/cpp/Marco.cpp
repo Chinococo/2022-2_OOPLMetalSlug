@@ -48,14 +48,13 @@ void Marco::control() {
 	lookingUp = keyDowns.count(VK_UP);
 	pressDown = keyDowns.count(VK_DOWN);
 	clock_t currentTime = clock();
-	if (currentTime - lastShootTime >= SHOOT_COOLDOWN) {
-		shooting = keyDowns.count(0x5A);
-		if (shooting) {
+	shooting = keyDowns.count(0x5A);
+	if (shooting) {
+		if (currentTime - lastShootTime >= SHOOT_COOLDOWN) {
 			lastShootTime = currentTime;
+		}else {
+			shooting = false;
 		}
-	}
-	else {
-		shooting = false;
 	}
 }
 

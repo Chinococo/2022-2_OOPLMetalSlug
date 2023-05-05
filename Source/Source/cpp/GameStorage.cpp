@@ -33,11 +33,21 @@ namespace game_framework {
 		bullets.push_back(bullet);
 	}
 	void removeInactiveBullets() {
+		
 		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet &bullet) {
 			return !bullet.isAlive();
 		}), bullets.end());
 	}
-
+	void removeInactiveSolider() {
+		for (size_t i = 0; i < soldiers.size();) {
+			if (!soldiers[i].isAlive()) {
+				soldiers.erase(soldiers.begin()+i);
+			}
+			else
+				i++;
+		}
+	}
+	
 	std::string state = "init";
 	int selectIndex = 0;
 	CMovingBitmap background;
