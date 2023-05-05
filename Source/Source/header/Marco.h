@@ -11,6 +11,7 @@ public:
 	virtual void moveLeftRight() override;
 	virtual void jumpAndFall() override;
 	void collideWithBullet();
+	virtual void update_animation() override;
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
 	virtual void die() override;

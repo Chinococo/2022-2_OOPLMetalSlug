@@ -7,6 +7,10 @@ Character::Character(int _x, int _y, int _speedX) : x(_x), y(_y), speedX(_speedX
 
 }
 
+void Character::update_animation()
+{
+}
+
 bool Character::isAlive() const {
 	return alive;
 }

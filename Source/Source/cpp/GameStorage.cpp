@@ -6,11 +6,10 @@ namespace game_framework {
 		soldiers.push_back(Soldier(500, 500, 4));
 	}
 	void createGrounds() {
-		grounds.push_back(Ground({ 0,600 }, { 800,400 }));
+		grounds.push_back(Ground({ 0,600 }, { 800,400 }));//斜坡
 		//grounds.push_back(Ground({ 410,450 }, { 410,800 }));
-		grounds.push_back(Ground({ 0,550 }, { 1000,550 }));
-		grounds.push_back(Ground({ 0,0 }, { 0,600 }));
-		grounds.push_back(Ground({ 780,0 }, { 780,600 }));
+		grounds.push_back(Ground({ 100,0 }, { 100,600 }));//左邊的牆壁
+		grounds.push_back(Ground({ 700,0 }, { 700,600 }));//右邊的牆壁
 	}
 	void createMap() {
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
