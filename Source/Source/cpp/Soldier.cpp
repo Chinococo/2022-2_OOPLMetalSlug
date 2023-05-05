@@ -151,3 +151,27 @@ void Soldier::draw() {
 		UnshowBitmap();
 	}
 }
+
+Soldier & Soldier::operator=(const Soldier & other)
+{
+	/*if (this == &other) {
+		return *this;
+	}
+	return *this;*/
+	this->lastJumpTime = other.lastJumpTime;
+	this->lastShootTime = clock();
+	int velocityY = other.velocityY;
+	/*
+	const int JUMP_COOLDOWN = 2000;
+	const int SHOOT_COOLDOWN = 1000;
+	bool movingLeft = false;
+	bool movingRight = false;
+	bool jumping = false;
+	bool inAir = false;
+	bool lookingUp = false;
+	bool pressDown = false;
+	bool shooting = false;
+	*/
+	return *this;
+}
+

@@ -15,6 +15,7 @@ public:
 	virtual void collideWithWall() override;
 	virtual void die() override;
 	virtual void draw() override;
+	Soldier &operator=(const Soldier &other);
 private:
 	clock_t lastJumpTime = clock();
 	clock_t lastShootTime = clock();

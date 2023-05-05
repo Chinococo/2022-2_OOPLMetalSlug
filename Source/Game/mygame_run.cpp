@@ -30,6 +30,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	if (state == "map1") {
 		removeInactiveBullets();
+		removeInactiveSolider();
 		marco.update();
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].update();
