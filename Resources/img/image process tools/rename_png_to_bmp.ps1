@@ -1,1 +1,0 @@
-Get-ChildItem | Rename-Item -NewName { $_.Name -replace '\.png$','.bmp' }
