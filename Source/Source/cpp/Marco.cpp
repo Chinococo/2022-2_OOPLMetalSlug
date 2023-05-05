@@ -62,8 +62,8 @@ void Marco::move() {
 	dx = 0;
 	dy = 0;
 	collideWithBullet();
-	collideWithWall();
 	moveLeftRight();
+	collideWithWall();
 	collideWithGround();
 	jumpAndFall();
 	shoot();
@@ -119,10 +119,14 @@ void Marco::collideWithGround() {
 
 void Marco::collideWithWall() {
 	for (size_t i = 0; i < grounds.size(); i++) {
-		if (dx > 0 && Ground::isOnGroundLeft(*this, grounds[i]) == 1) {
+		bool t = Ground::isOnGroundLeft(*this, grounds[i]);
+		if (t) {
+			dx = dx;
+		}
+		if (dx >= 0 && Ground::isOnGroundLeft(*this, grounds[i]) == 1) {
 			dx = 0;
 		}
-		else if (dx < 0 && Ground::isOnGroundRight(*this, grounds[i]) == 1) {
+		else if (dx <= 0 && Ground::isOnGroundRight(*this, grounds[i]) == 1) {
 			dx = 0;
 		}
 	}
