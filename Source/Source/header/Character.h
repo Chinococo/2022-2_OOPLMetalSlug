@@ -1,4 +1,5 @@
 #pragma once
+#include<chrono>
 #include "../../Library/gameutil.h"
 
 class Character : public game_framework::CMovingBitmap {
@@ -14,6 +15,7 @@ public:
 	virtual void collideWithWall() = 0;
 	virtual void die() = 0;
 	virtual void draw() = 0;
+	virtual void update_animation();
 	bool isAlive() const;
 protected:
 	int x;
@@ -25,4 +27,6 @@ protected:
 	int facingY = 0;
 	bool alive = true;
 	bool dying = false;
+	std::pair<int, int> animation_range = { 0,9 };
+	std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
 };

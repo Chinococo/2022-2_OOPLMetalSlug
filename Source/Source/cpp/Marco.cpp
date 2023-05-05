@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <chrono>
 #include "../header/GameStorage.h"
 
 using namespace game_framework;
@@ -9,7 +10,7 @@ Marco::Marco(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
 
 void Marco::init() {
 	std::vector<std::string> paths;
-	for (size_t i = 0; i < 4; i++) {
+	for (size_t i = 0; i < 10; i++) {
 		paths.push_back("resources/image/HeroMarco/idle/" + std::to_string(i) + ".bmp");
 	}
 	for (size_t i = 0; i < 0; i++) {
@@ -67,6 +68,7 @@ void Marco::move() {
 	collideWithGround();
 	jumpAndFall();
 	shoot();
+	update_animation();
 	x += dx;
 	y += dy;
 }
@@ -105,6 +107,18 @@ void Marco::collideWithBullet() {
 			alive = false;
 		}
 	}
+}
+
+void Marco::update_animation() {
+	this->animation_range = { 0,9 };
+
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start);
+
+	if (duration > std::chrono::milliseconds(100)) {
+		this->SetFrameIndexOfBitmap(((this->GetFrameIndexOfBitmap() + 1) % (this->animation_range.second - this->animation_range.first)) + this->animation_range.first);
+		start = std::chrono::high_resolution_clock::now();
+	}
+
 }
 
 void Marco::collideWithGround() {
