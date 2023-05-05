@@ -9,8 +9,8 @@ Marco::Marco(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
 
 void Marco::init() {
 	std::vector<std::string> paths;
-	for (size_t i = 0; i < 1; i++) {
-		paths.push_back("resources/img/hero/marco/idle/" + std::to_string(i) + ".bmp");
+	for (size_t i = 0; i < 4; i++) {
+		paths.push_back("resources/img/hero/marco/idle/bmp/" + std::to_string(i) + ".bmp");
 	}
 	for (size_t i = 0; i < 0; i++) {
 		paths.push_back("resources/img/hero/marco/move/" + std::to_string(i) + ".bmp");
