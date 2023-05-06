@@ -11,6 +11,7 @@ public:
 	virtual void moveLeftRight() override;
 	virtual void jumpAndFall() override;
 	void collideWithBullet();
+	virtual void updateAction() override;
 	virtual void changeAnimation() override;
 	virtual void updateAnimation() override;
 	virtual void collideWithGround() override;
@@ -29,6 +30,7 @@ private:
 	bool inAir = false;
 	bool lookingUp = false;
 	bool attacking = false;
+	bool knifing = false;
 	bool throwingGrenade = false;
 	bool pressingDown = false;
 	clock_t lastJumpTime = clock();

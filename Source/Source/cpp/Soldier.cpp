@@ -117,6 +117,10 @@ void Soldier::collideWithBullet() {
 	}
 }
 
+void Soldier::updateAction() {
+
+}
+
 void Soldier::changeAnimation() {
 
 }

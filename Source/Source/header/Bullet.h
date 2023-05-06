@@ -10,6 +10,7 @@ public:
 	virtual void moveLeftRight() override;
 	virtual void jumpAndFall() override;
 	void collideWithCharacter();
+	virtual void updateAction() override;
 	virtual void changeAnimation() override;
 	virtual void updateAnimation() override;
 	virtual void collideWithGround() override;

@@ -9,28 +9,131 @@ Marco::Marco(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
 }
 
 void Marco::init() {
+	// order following enum class Action
+	// IDLE, MOVE, JUMP, LOOK_UP, SHOOT, SHOOT_UP, SHOOT_DOWN, KNIFE, GRENADE, CROUCH_SHOOT, CROUCH_SHOOT_UP, CROUCH_KNIFE, CROUCH_GRENADE, DIE
+	
 	std::vector<std::string> paths;
-	for (size_t i = 0; i < 4; i++) {
+	
+	int delay = 300;
+	std::pair<int, int> range = { 0, 4 };
+	for (int i = 0; i < range.second - range.first; i++) {
 		paths.push_back("resources/img/hero/marco/idle/" + std::to_string(i) + ".bmp");
 	}
-	for (size_t i = 0; i < 0; i++) {
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 100;
+	range = { 4, 27 };
+	for (int i = 0; i < range.second - range.first; i++) {
 		paths.push_back("resources/img/hero/marco/move/" + std::to_string(i) + ".bmp");
 	}
-	for (size_t i = 0; i < 0; i++) {
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 1000;
+	range = { 27, 33 };
+	for (int i = 0; i < range.second - range.first; i++) {
 		paths.push_back("resources/img/hero/marco/jump/" + std::to_string(i) + ".bmp");
 	}
-	for (size_t i = 0; i < 0; i++) {
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 1000;
+	range = { 33, 41 };
+	for (int i = 0; i < range.second - range.first; i++) {
 		paths.push_back("resources/img/hero/marco/lookUp/" + std::to_string(i) + ".bmp");
 	}
-	for (size_t i = 0; i < 0; i++) {
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 300;
+	range = { 41, 49 };
+	for (int i = 0; i < range.second - range.first; i++) {
 		paths.push_back("resources/img/hero/marco/shoot/" + std::to_string(i) + ".bmp");
 	}
-	for (size_t i = 0; i < 0; i++) {
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	// no image now
+	delay = 300;
+	range = { 0, 4 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/noImg/shootUp/" + std::to_string(i) + ".bmp");
+	}
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	// no image now
+	delay = 300;
+	range = { 0, 4 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/noImg/shootDown/" + std::to_string(i) + ".bmp");
+	}
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 300;
+	range = { 49, 57 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/knife/" + std::to_string(i) + ".bmp");
+	}
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	// no image now
+	delay = 300;
+	range = { 0, 4 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/noImg/grenade/" + std::to_string(i) + ".bmp");
+	}
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 300;
+	range = { 57, 74 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/crouchShoot/" + std::to_string(i) + ".bmp");
+	}
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	// no image now
+	delay = 300;
+	range = { 0, 4 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/noImg/crouchShootUp/" + std::to_string(i) + ".bmp");
+	}
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	// no image now
+	delay = 300;
+	range = { 0, 4 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/noImg/crouchKnife/" + std::to_string(i) + ".bmp");
+	}
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 300;
+	range = { 74, 86 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/crouchGrenade/" + std::to_string(i) + ".bmp");
+	}
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 1000;
+	range = { 86, 88 };
+	for (int i = 0; i < range.second - range.first; i++) {
 		paths.push_back("resources/img/hero/marco/die/" + std::to_string(i) + ".bmp");
 	}
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
 	LoadBitmapByString(paths, RGB(0, 0, 0));
-	animationRanges.push_back({ 0, 4 });
 	animationRange = animationRanges[static_cast<int>(action)];
+	animationDelay = animationDelays[static_cast<int>(action)];
 }
 
 void Marco::update() {
@@ -41,23 +144,34 @@ void Marco::update() {
 	else {
 		die();
 	}
+	updateAction();
 	changeAnimation();
 	updateAnimation();
 }
 
 void Marco::control() {
+	clock_t currentTime = clock();
 	movingLeft = keyDowns.count(VK_LEFT);
 	movingRight = keyDowns.count(VK_RIGHT);
 	jumping = keyDowns.count(VK_SPACE);
 	lookingUp = keyDowns.count(VK_UP);
 	pressingDown = keyDowns.count(VK_DOWN);
-	clock_t currentTime = clock();
-	attacking = keyDowns.count(0x5A);
+	attacking = keyDowns.count(0x5A); // Z
+	throwingGrenade = keyDowns.count(0x58); // X
+	knifing = false;
 	if (attacking) {
 		if (currentTime - lastAttackTime >= ATTACK_COOLDOWN) {
 			lastAttackTime = currentTime;
-		}else {
+		}
+		else {
 			attacking = false;
+		}
+	}
+	if (attacking) {
+		for (size_t i = 0; i < soldiers.size(); i++) {
+			if (IsOverlap(*this, soldiers[i])) {
+				knifing = true;
+			}
 		}
 	}
 }
@@ -111,15 +225,76 @@ void Marco::collideWithBullet() {
 	}
 }
 
+void Marco::updateAction() {
+	/* action priority order by
+	DIE,
+	CROUCH_GRENADE,
+	CROUCH_KNIFE,
+	CROUCH_SHOOT_UP,
+	CROUCH_SHOOT,
+	GRENADE,
+	KNIFE,
+	SHOOT_UP,
+	SHOOT_DOWN,
+	SHOOT,
+	LOOK_UP,
+	JUMP,
+	MOVE,
+	IDLE
+	*/
+
+	lastAction = action;
+	if (pressingDown && throwingGrenade) {
+		action = Action::CROUCH_GRENADE;
+	}
+	else if (pressingDown && knifing) {
+		action = Action::CROUCH_KNIFE;
+	}
+	else if (pressingDown && lookingUp && attacking) {
+		action = Action::CROUCH_SHOOT_UP;
+	}
+	else if (pressingDown && attacking) {
+		action = Action::CROUCH_SHOOT;
+	}
+	else if (throwingGrenade) {
+		action = Action::GRENADE;
+	}
+	else if (knifing) {
+		action = Action::KNIFE;
+	}
+	else if (lookingUp && attacking) {
+		action = Action::SHOOT_UP;
+	}
+	else if (inAir && pressingDown && attacking) {
+		action = Action::SHOOT_DOWN;
+	}
+	else if (attacking) {
+		action = Action::SHOOT;
+	}
+	else if (lookingUp) {
+		action = Action::LOOK_UP;
+	}
+	else if (jumping) {
+		action = Action::JUMP;
+	}
+	else if (movingLeft || movingRight) {
+		action = Action::MOVE;
+	}
+	else {
+		action = Action::IDLE;
+	}
+}
+
 void Marco::changeAnimation() {
 	if (action != lastAction) {
 		animationRange = animationRanges[static_cast<int>(action)];
+		animationDelay = animationDelays[static_cast<int>(action)];
 		SetFrameIndexOfBitmap(GetFrameIndexOfBitmap() + animationRange.first + ((flip) ? animationflipBias : 0));
 	}
 }
 
 void Marco::updateAnimation() {
-	if (clock() - start > ANIMATION_DELAY) {
+	if (clock() - start > animationDelay) {
 		SetFrameIndexOfBitmap((GetFrameIndexOfBitmap() + 1) % (animationRange.second - animationRange.first));
 		start = clock();
 	}
