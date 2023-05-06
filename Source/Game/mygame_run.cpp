@@ -82,6 +82,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 	}
 	else if (state == "map1") {
+		// 0x5A -> Z
+		// 0x58 -> X
 		if (nChar == VK_LEFT || nChar == VK_RIGHT || nChar == VK_SPACE || nChar == VK_UP|| nChar == VK_DOWN || nChar == 0x5A || nChar == 0x58) {
 			keyDowns.insert(nChar);
 		}

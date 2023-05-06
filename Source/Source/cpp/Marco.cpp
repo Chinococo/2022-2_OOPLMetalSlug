@@ -140,13 +140,13 @@ void Marco::update() {
 	if (alive) {
 		control();
 		move();
+		updateAction();
+		changeAnimation();
+		updateAnimation();
 	}
 	else {
 		die();
 	}
-	updateAction();
-	changeAnimation();
-	updateAnimation();
 }
 
 void Marco::control() {
