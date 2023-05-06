@@ -60,10 +60,10 @@ void Soldier::control() { // AI
 	/*
 	if (currentTime - lastShootTime >= SHOOT_COOLDOWN) {
 		lastShootTime = currentTime;
-		shooting = true;
+		attacking = true;
 	}
 	else {
-		shooting = false;
+		attacking = false;
 	}
 	*/
 }
@@ -76,13 +76,13 @@ void Soldier::move() {
 	moveLeftRight();
 	collideWithGround();
 	jumpAndFall();
-	shoot();
+	attack();
 	x += dx;
 	y += dy;
 }
 
-void Soldier::shoot() {
-	if (shooting) {
+void Soldier::attack() {
+	if (attacking) {
 		addBullet(x, y, 20, facingX, facingY, "enemy");
 	}
 }
@@ -100,7 +100,7 @@ void Soldier::moveLeftRight() {
 
 void Soldier::jumpAndFall() {
 	if (jumping && !inAir) {
-		velocityY = -20;
+		velocityY = JUMP_VELOCITY;
 		inAir = true;
 	}
 	else {
@@ -115,6 +115,14 @@ void Soldier::collideWithBullet() {
 			alive = false;
 		}
 	}
+}
+
+void Soldier::changeAnimation() {
+
+}
+
+void Soldier::updateAnimation() {
+
 }
 
 void Soldier::collideWithGround() {
@@ -152,26 +160,9 @@ void Soldier::draw() {
 	}
 }
 
-Soldier & Soldier::operator=(const Soldier & other)
-{
-	/*if (this == &other) {
-		return *this;
-	}
-	return *this;*/
-	this->lastJumpTime = other.lastJumpTime;
-	this->lastShootTime = clock();
-	int velocityY = other.velocityY;
-	/*
-	const int JUMP_COOLDOWN = 2000;
-	const int SHOOT_COOLDOWN = 1000;
-	bool movingLeft = false;
-	bool movingRight = false;
-	bool jumping = false;
-	bool inAir = false;
-	bool lookingUp = false;
-	bool pressDown = false;
-	bool shooting = false;
-	*/
+Soldier &Soldier::operator=(const Soldier &other) {
+	x = other.x;
+	y = other.y;
+	speedX = other.speedX;
 	return *this;
 }
-

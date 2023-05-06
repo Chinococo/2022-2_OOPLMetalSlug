@@ -74,6 +74,14 @@ void Bullet::collideWithCharacter() {
 	}
 }
 
+void Bullet::changeAnimation() {
+
+}
+
+void Bullet::updateAnimation() {
+
+}
+
 void Bullet::collideWithGround() {
 	//alive = false;
 }
@@ -94,4 +102,14 @@ void Bullet::draw() {
 	else {
 		UnshowBitmap();
 	}
+}
+
+Bullet &Bullet::operator=(const Bullet &other) {
+	x = other.x;
+	y = other.y;
+	speedX = other.speedX;
+	facingX = other.facingX;
+	facingY = other.facingY;
+	owner = other.owner;
+	return *this;
 }

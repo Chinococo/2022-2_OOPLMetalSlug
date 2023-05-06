@@ -10,9 +10,12 @@ public:
 	virtual void moveLeftRight() override;
 	virtual void jumpAndFall() override;
 	void collideWithCharacter();
+	virtual void changeAnimation() override;
+	virtual void updateAnimation() override;
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
 	virtual void die() override;
 	virtual void draw() override;
+	Bullet &Bullet::operator=(const Bullet &other);
 	std::string owner;
 };

@@ -10,8 +10,8 @@ Marco::Marco(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
 
 void Marco::init() {
 	std::vector<std::string> paths;
-	for (size_t i = 0; i < 10; i++) {
-		paths.push_back("resources/image/HeroMarco/idle/" + std::to_string(i) + ".bmp");
+	for (size_t i = 0; i < 4; i++) {
+		paths.push_back("resources/img/hero/marco/idle/" + std::to_string(i) + ".bmp");
 	}
 	for (size_t i = 0; i < 0; i++) {
 		paths.push_back("resources/img/hero/marco/move/" + std::to_string(i) + ".bmp");
@@ -28,7 +28,9 @@ void Marco::init() {
 	for (size_t i = 0; i < 0; i++) {
 		paths.push_back("resources/img/hero/marco/die/" + std::to_string(i) + ".bmp");
 	}
-	LoadBitmapByString(paths, RGB(0,0,0));
+	LoadBitmapByString(paths, RGB(0, 0, 0));
+	animationRanges.push_back({ 0, 4 });
+	animationRange = animationRanges[static_cast<int>(action)];
 }
 
 void Marco::update() {
@@ -39,6 +41,8 @@ void Marco::update() {
 	else {
 		die();
 	}
+	changeAnimation();
+	updateAnimation();
 }
 
 void Marco::control() {
@@ -46,14 +50,14 @@ void Marco::control() {
 	movingRight = keyDowns.count(VK_RIGHT);
 	jumping = keyDowns.count(VK_SPACE);
 	lookingUp = keyDowns.count(VK_UP);
-	pressDown = keyDowns.count(VK_DOWN);
+	pressingDown = keyDowns.count(VK_DOWN);
 	clock_t currentTime = clock();
-	shooting = keyDowns.count(0x5A);
-	if (shooting) {
-		if (currentTime - lastShootTime >= SHOOT_COOLDOWN) {
-			lastShootTime = currentTime;
+	attacking = keyDowns.count(0x5A);
+	if (attacking) {
+		if (currentTime - lastAttackTime >= ATTACK_COOLDOWN) {
+			lastAttackTime = currentTime;
 		}else {
-			shooting = false;
+			attacking = false;
 		}
 	}
 }
@@ -66,14 +70,13 @@ void Marco::move() {
 	collideWithWall();
 	collideWithGround();
 	jumpAndFall();
-	shoot();
-	update_animation();
+	attack();
 	x += dx;
 	y += dy;
 }
 
-void Marco::shoot() {
-	if (shooting) {
+void Marco::attack() {
+	if (attacking) {
 		addBullet(x, y, 20, facingX, facingY, "hero");
 	}
 }
@@ -91,7 +94,7 @@ void Marco::moveLeftRight() {
 
 void Marco::jumpAndFall() {
 	if (jumping && !inAir) {
-		velocityY = -20;
+		velocityY = JUMP_VELOCITY;
 		inAir = true;
 	}
 	else {
@@ -108,16 +111,18 @@ void Marco::collideWithBullet() {
 	}
 }
 
-void Marco::update_animation() {
-	this->animation_range = { 0,9 };
-
-	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start);
-
-	if (duration > std::chrono::milliseconds(100)) {
-		this->SetFrameIndexOfBitmap(((this->GetFrameIndexOfBitmap() + 1) % (this->animation_range.second - this->animation_range.first)) + this->animation_range.first);
-		start = std::chrono::high_resolution_clock::now();
+void Marco::changeAnimation() {
+	if (action != lastAction) {
+		animationRange = animationRanges[static_cast<int>(action)];
+		SetFrameIndexOfBitmap(GetFrameIndexOfBitmap() + animationRange.first + ((flip) ? animationflipBias : 0));
 	}
+}
 
+void Marco::updateAnimation() {
+	if (clock() - start > ANIMATION_DELAY) {
+		SetFrameIndexOfBitmap((GetFrameIndexOfBitmap() + 1) % (animationRange.second - animationRange.first));
+		start = clock();
+	}
 }
 
 void Marco::collideWithGround() {
@@ -146,7 +151,7 @@ void Marco::collideWithWall() {
 }
 
 void Marco::die() {
-
+	animationRange = animationRanges[static_cast<int>(Action::DIE)];
 }
 
 void Marco::draw() {
