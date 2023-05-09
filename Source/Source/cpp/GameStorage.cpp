@@ -6,7 +6,7 @@ namespace game_framework {
 		soldiers.push_back(Soldier(500, 500, 4));
 	}
 	void createGrounds() {
-		grounds.push_back(Ground({ 0,600 }, { 800,400 }));//斜坡
+		grounds.push_back(Ground({ 0,400 }, { 1600,400 }));//斜坡
 		//grounds.push_back(Ground({ 410,450 }, { 410,800 }));
 		grounds.push_back(Ground({ 100,0 }, { 100,600 }));//左邊的牆壁
 		grounds.push_back(Ground({ 700,0 }, { 700,600 }));//右邊的牆壁
@@ -56,6 +56,7 @@ namespace game_framework {
 	int ViewPointX = 0;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
+	bool scroll = false;
 	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> map;
 
 	const int GRAVITY = 1;

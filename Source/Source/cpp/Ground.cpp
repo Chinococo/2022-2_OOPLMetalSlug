@@ -55,12 +55,14 @@ bool Ground::onSegment(pair<int, int> p, pair<int, int> q, pair<int, int> r) {
 	return false;
 }
 int Ground::isOnGround(CMovingBitmap bmp, Ground ground) {
+	
 	if (ground.end.first == ground.start.first)
 		return 0;
-	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft(),bmp.GetTop() + bmp.GetHeight()} };
-	pair<pair<int, int>, pair<int, int>> CharacterTopLine = { {bmp.GetLeft(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth() ,bmp.GetTop() } };
-	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {bmp.GetLeft() + bmp.GetWidth(),bmp.GetTop()},{bmp.GetLeft() + bmp.GetWidth(),bmp.GetTop() + bmp.GetHeight()} };
-	pair<pair<int, int>, pair<int, int>> CharacterBottomLine = { {bmp.GetLeft(),bmp.GetTop() + bmp.GetHeight()},{bmp.GetLeft() + bmp.GetWidth() ,bmp.GetTop() + bmp.GetHeight() } };
+	int test = ViewPointX;
+	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {abs(ViewPointX)+bmp.GetLeft(), bmp.GetTop()},{abs(ViewPointX)+bmp.GetLeft(),  bmp.GetTop() + bmp.GetHeight()} };
+	pair<pair<int, int>, pair<int, int>> CharacterTopLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop()},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth() , bmp.GetTop() } };
+	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth(), bmp.GetTop()},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth(), bmp.GetTop() + bmp.GetHeight()} };
+	pair<pair<int, int>, pair<int, int>> CharacterBottomLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() + bmp.GetHeight()},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth() , bmp.GetTop() + bmp.GetHeight() } };
 	//pair<int, int>ground.start, pair<int, int>ground.end
 
 	pair<pair<int, int>, pair<int, int>> line = { ground.start,ground.end };

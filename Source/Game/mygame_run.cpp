@@ -126,10 +126,10 @@ void CGameStateRun::OnShow()
 	}
 	else if (state == "map1") {
 
-		if (keyDowns.count(VK_RIGHT))
+		if (keyDowns.count(VK_RIGHT)&&scroll)
 			ViewPointX -= MapScrollSpeed;
-		else if (keyDowns.count(VK_LEFT) && ViewPointX < 0)
-			ViewPointX += MapScrollSpeed;
+		//else if (keyDowns.count(VK_LEFT) && ViewPointX < 0)
+		//	ViewPointX += MapScrollSpeed;
 		for (unsigned i = map.size() - 1;; i--) {
 			int now_index = std::get<0>(map[i]).GetFrameIndexOfBitmap();
 			std::get<0>(map[i]).SetTopLeft(ViewPointX + std::get<1>(map[i])[now_index].first,
