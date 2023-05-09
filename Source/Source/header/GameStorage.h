@@ -36,4 +36,6 @@ namespace game_framework {
 	extern std::vector<Soldier> soldiers;
 	extern std::vector<Bullet> bullets;
 	extern std::vector<Ground> grounds;
+	extern bool scroll;
+	extern bool Loading;
 }

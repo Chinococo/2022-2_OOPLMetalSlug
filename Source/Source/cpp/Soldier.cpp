@@ -27,7 +27,7 @@ void Soldier::init() {
 	for (size_t i = 0; i < 0; i++) {
 		paths.push_back("resources/img/enemy/soldier/die/" + std::to_string(i) + ".bmp");
 	}
-	LoadBitmapByString(paths, RGB(153, 217, 234));
+	LoadBitmapByString(paths, RGB(255,255,255));
 }
 
 void Soldier::update() {

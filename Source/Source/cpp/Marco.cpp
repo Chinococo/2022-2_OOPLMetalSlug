@@ -215,6 +215,7 @@ void Marco::update() {
 
 void Marco::control() {
 	clock_t currentTime = clock();
+	scroll = (this->GetLeft() > 400);
 	movingLeft = keyDowns.count(VK_LEFT);
 	movingRight = keyDowns.count(VK_RIGHT);
 	jumping = keyDowns.count(VK_SPACE);
@@ -249,7 +250,8 @@ void Marco::move() {
 	collideWithGround();
 	jumpAndFall();
 	attack();
-	x += dx;
+	if(x + dx>0)
+		x += dx;
 	y += dy;
 }
 
@@ -265,7 +267,7 @@ void Marco::moveLeftRight() {
 		facingX = -1;
 		flip = true;
 	}
-	if (movingRight) {
+	if (movingRight&&!scroll) {
 		dx += speedX;
 		facingX = 1;
 		flip = false;
@@ -385,7 +387,7 @@ void Marco::collideWithWall() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		bool t = Ground::isOnGroundLeft(*this, grounds[i]);
 		if (t) {
-			dx = dx;
+			dx = 0;
 		}
 		if (dx >= 0 && Ground::isOnGroundLeft(*this, grounds[i]) == 1) {
 			dx = 0;

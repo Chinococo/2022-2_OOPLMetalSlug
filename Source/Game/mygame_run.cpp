@@ -75,6 +75,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		arrow.SetTopLeft(430, position[selectIndex] - 35);
 		if (nChar == VK_RETURN) {
 			if (selectIndex == 0) {
+				Loading = false;
+				
 				state = "map1";
 			}
 		}
@@ -125,11 +127,11 @@ void CGameStateRun::OnShow()
 		arrow.ShowBitmap();
 	}
 	else if (state == "map1") {
-
-		if (keyDowns.count(VK_RIGHT))
+		
+		if (keyDowns.count(VK_RIGHT)&&scroll)
 			ViewPointX -= MapScrollSpeed;
-		else if (keyDowns.count(VK_LEFT) && ViewPointX < 0)
-			ViewPointX += MapScrollSpeed;
+		//else if (keyDowns.count(VK_LEFT) && ViewPointX < 0)
+		//	ViewPointX += MapScrollSpeed;
 		for (unsigned i = map.size() - 1;; i--) {
 			int now_index = std::get<0>(map[i]).GetFrameIndexOfBitmap();
 			std::get<0>(map[i]).SetTopLeft(ViewPointX + std::get<1>(map[i])[now_index].first,
@@ -146,5 +148,24 @@ void CGameStateRun::OnShow()
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
 		}
+		if (!Loading) {
+			Sleep(1000);
+			Loading = true;
+		}
+		else {
+			CDC *pDC = CDDraw::GetBackCDC();
+			//game_framework::ChangeFontLog
+			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0,0,0), 500);
+			CString str;
+			str.Format(_T("now index=%d x=%d y=%d"), marco.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
+
+			// 將CString轉換為std::string
+			std::string result = CT2A(str);
+
+			CTextDraw::Print(pDC, 0, 0, result);
+			CDDraw::ReleaseBackCDC();
+		}
+		
+		
 	}
 }
