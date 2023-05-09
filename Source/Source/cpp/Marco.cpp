@@ -250,7 +250,8 @@ void Marco::move() {
 	collideWithGround();
 	jumpAndFall();
 	attack();
-	x += dx;
+	if(x + dx>0)
+		x += dx;
 	y += dy;
 }
 
