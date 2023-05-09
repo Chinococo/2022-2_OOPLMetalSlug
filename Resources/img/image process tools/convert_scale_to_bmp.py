@@ -7,7 +7,7 @@ argc = len(sys.argv)
 if argc == 1:
     scale = 1
 else:
-    scale = int(sys.argv[1])
+    scale = float(sys.argv[1])
 
 ext_from = ".png"
 

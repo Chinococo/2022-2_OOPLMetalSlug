@@ -11,11 +11,13 @@ public:
 	virtual void move() = 0;
 	virtual void moveLeftRight() = 0;
 	virtual void jumpAndFall() = 0;
+	virtual void updateAction() = 0;
+	virtual void changeAnimation() = 0;
+	virtual void updateAnimation() = 0;
 	virtual void collideWithGround() = 0;
 	virtual void collideWithWall() = 0;
 	virtual void die() = 0;
 	virtual void draw() = 0;
-	virtual void update_animation();
 	bool isAlive() const;
 protected:
 	int x;
@@ -25,8 +27,12 @@ protected:
 	int speedX;
 	int facingX = 1;
 	int facingY = 0;
+	int animationflipBias = 0;
+	int animationDelay;
 	bool alive = true;
 	bool dying = false;
-	std::pair<int, int> animation_range = { 0,9 };
-	std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
+	std::pair<int, int> animationRange; // { start, end }, including start, excluding end
+	std::vector<std::pair<int, int>> animationRanges;
+	std::vector<int> animationDelays;
+	clock_t start = clock();
 };

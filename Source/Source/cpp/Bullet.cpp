@@ -12,7 +12,7 @@ Bullet::Bullet(int _x, int _y, int _speedX, int _facingX, int _facingY, std::str
 void Bullet::init() {
 	std::vector<std::string> paths;
 	for (size_t i = 0; i < 1; i++) {
-		paths.push_back("resources/img/item/bullet/move/" + std::to_string(i) + ".bmp");
+		paths.push_back("resources/img/item/bullet/pistol/move/" + std::to_string(i) + ".bmp");
 	}
 	LoadBitmapByString(paths, RGB(153, 217, 234));
 }
@@ -74,6 +74,18 @@ void Bullet::collideWithCharacter() {
 	}
 }
 
+void Bullet::updateAction() {
+
+}
+
+void Bullet::changeAnimation() {
+
+}
+
+void Bullet::updateAnimation() {
+
+}
+
 void Bullet::collideWithGround() {
 	//alive = false;
 }
@@ -94,4 +106,14 @@ void Bullet::draw() {
 	else {
 		UnshowBitmap();
 	}
+}
+
+Bullet &Bullet::operator=(const Bullet &other) {
+	x = other.x;
+	y = other.y;
+	speedX = other.speedX;
+	facingX = other.facingX;
+	facingY = other.facingY;
+	owner = other.owner;
+	return *this;
 }
