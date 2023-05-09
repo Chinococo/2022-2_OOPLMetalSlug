@@ -73,4 +73,5 @@ namespace game_framework {
 	std::vector<Soldier> soldiers;
 	std::vector<Bullet> bullets;
 	std::vector<Ground> grounds;
+	bool Loading = false;
 }
