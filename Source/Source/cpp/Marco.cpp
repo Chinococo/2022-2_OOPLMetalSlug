@@ -386,7 +386,7 @@ void Marco::collideWithWall() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		bool t = Ground::isOnGroundLeft(*this, grounds[i]);
 		if (t) {
-			dx = dx;
+			dx = 0;
 		}
 		if (dx >= 0 && Ground::isOnGroundLeft(*this, grounds[i]) == 1) {
 			dx = 0;
