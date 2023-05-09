@@ -46,7 +46,7 @@ void Marco::init() {
 	animationRanges.push_back(range);
 	animationDelays.push_back(delay);
 
-	delay = 300;
+	delay = 30;
 	range = { 41, 49 };
 	for (int i = 0; i < range.second - range.first; i++) {
 		paths.push_back("resources/img/hero/marco/shoot/" + std::to_string(i) + ".bmp");
@@ -130,6 +130,70 @@ void Marco::init() {
 	}
 	animationRanges.push_back(range);
 	animationDelays.push_back(delay);
+	animationflipBias = range.second;
+
+
+
+	/*filp*/
+
+	range = { 0, 4 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/idle/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 4, 27 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/move/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 27, 33 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/jump/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 33, 41 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/lookUp/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 41, 49 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/shoot/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 49, 53 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/noImg/shootUp/" + std::to_string(i) + ".bmp");
+	}
+	range = { 53, 57 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/noImg/shootDown/" + std::to_string(i) + ".bmp");
+	}
+	range = { 57, 65 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/knife/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 65, 69 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/noImg/grenade/" + std::to_string(i) + ".bmp");
+	}
+
+	range = { 69, 86 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/crouchShoot/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 86, 90 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/noImg/crouchShootUp/" + std::to_string(i) + ".bmp");
+	}
+	range = { 90, 94 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/noImg/crouchKnife/" + std::to_string(i) + ".bmp");
+	}
+	range = { 94, 106 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/crouchGrenade/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 106, 108 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img/hero/marco/die/flip_" + std::to_string(i) + ".bmp");
+	}
+
 
 	LoadBitmapByString(paths, RGB(0, 0, 0));
 	animationRange = animationRanges[static_cast<int>(action)];
@@ -191,7 +255,7 @@ void Marco::move() {
 
 void Marco::attack() {
 	if (attacking) {
-		addBullet(x, y, 20, facingX, facingY, "hero");
+		addBullet(x+(flip?-1:1)*20, y+20, 20, facingX, facingY, "hero");
 	}
 }
 
@@ -273,6 +337,7 @@ void Marco::updateAction() {
 	}
 	else if (attacking) {
 		action = Action::SHOOT;
+		once = false;
 	}
 	else if (lookingUp) {
 		action = Action::LOOK_UP;
@@ -284,7 +349,8 @@ void Marco::updateAction() {
 		action = Action::MOVE;
 	}
 	else {
-		action = Action::IDLE;
+		if(once)
+			action = Action::IDLE;
 	}
 }
 
@@ -292,13 +358,15 @@ void Marco::changeAnimation() {
 	if (action != lastAction) {
 		animationRange = animationRanges[static_cast<int>(action)];
 		animationDelay = animationDelays[static_cast<int>(action)];
-		SetFrameIndexOfBitmap(GetFrameIndexOfBitmap() + animationRange.first + ((flip) ? animationflipBias : 0));
+		SetFrameIndexOfBitmap(animationRange.first + ((flip) ? animationflipBias : 0));
 	}
 }
 
 void Marco::updateAnimation() {
 	if (clock() - start > animationDelay) {
-		SetFrameIndexOfBitmap((GetFrameIndexOfBitmap() + 1) % (animationRange.second - animationRange.first));
+		SetFrameIndexOfBitmap(((GetFrameIndexOfBitmap()- animationRange.first- +((flip) ? animationflipBias : 0) + 1) % (animationRange.second - animationRange.first))+ animationRange.first + ((flip) ? animationflipBias : 0));
+		if ((GetFrameIndexOfBitmap() - animationRange.first- +((flip) ? animationflipBias : 0)) % (animationRange.second - animationRange.first ) == 0)
+			once = true;
 		start = clock();
 	}
 }

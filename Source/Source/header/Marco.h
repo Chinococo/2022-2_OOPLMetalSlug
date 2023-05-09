@@ -19,6 +19,7 @@ public:
 	virtual void die() override;
 	virtual void draw() override;
 private:
+	bool once = false;
 	int velocityY = 0;
 	const int JUMP_VELOCITY = -20;
 	const int ATTACK_COOLDOWN = 200;
