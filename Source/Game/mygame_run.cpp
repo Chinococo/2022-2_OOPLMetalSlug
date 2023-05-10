@@ -58,9 +58,13 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	createMap();
 	createGrounds();
 	createSoldiers();
+	createMapObject();
 	marco.init();
 	for (size_t i = 0; i < soldiers.size(); i++) {
 		soldiers[i].init();
+	}
+	for (size_t i = 0; i < MapObjects.size(); i++) {
+		MapObjects[i].init();
 	}
 }
 
@@ -134,6 +138,7 @@ void CGameStateRun::OnShow()
 		//	ViewPointX += MapScrollSpeed;
 		updateUnderCharacterLayer();
 		updateCharacter();
+		updateMapObject();
 		updateUpperCharacterLayer();
 		if (!Loading) {
 			Sleep(1000);

@@ -27,6 +27,7 @@ void Marco::init() {
 	for (int i = 0; i < range.second - range.first; i++) {
 		paths.push_back("resources/img/hero/marco/move/" + std::to_string(i) + ".bmp");
 	}
+	range = { 4, 16 };
 	animationRanges.push_back(range);
 	animationDelays.push_back(delay);
 

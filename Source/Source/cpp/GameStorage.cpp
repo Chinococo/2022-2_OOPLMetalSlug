@@ -53,15 +53,23 @@ namespace game_framework {
 			return !bullet.isAlive();
 		}), bullets.end());
 	}
+	void removeMapObject()
+	{
+		for (size_t i = 0; i < MapObjects.size();) {
+			if (!MapObjects[i].isAlive()) {
+				MapObjects.erase(MapObjects.begin() + i);
+			}
+			else
+				i++;
+		}
+	}
 	void updateCharacter()
 	{
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].draw();
 		}
 		marco.draw();
-		for (size_t i = 0; i < bullets.size(); i++) {
-			bullets[i].draw();
-		}
+		
 		
 	}
 	void updateUnderCharacterLayer()
@@ -77,6 +85,18 @@ namespace game_framework {
 	}
 	void updateUpperCharacterLayer()
 	{
+		for (size_t i = 0; i < bullets.size(); i++) {
+			bullets[i].draw();
+		}
+	}
+	void updateMapObject()
+	{
+		for (size_t i = 0; i < MapObjects.size(); i++)
+			MapObjects[i].update();
+	}
+	void createMapObject()
+	{
+		MapObjects.push_back(MapObject(400, 350, 10, { "resources/maps/enemy_platform_1.bmp","resources/maps/enemy_platform_1_broken.bmp" }));
 	}
 	void removeInactiveSolider() {
 		for (size_t i = 0; i < soldiers.size();) {
@@ -93,7 +113,7 @@ namespace game_framework {
 	CMovingBitmap background;
 	CMovingBitmap arrow;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -3000;
+	int ViewPointX = 0;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
@@ -102,6 +122,7 @@ namespace game_framework {
 	const int GRAVITY = 1;
 	std::set<UINT> keyDowns;
 	Marco marco(300, 300, 6);
+	std::vector < MapObject> MapObjects;
 	std::vector<Soldier> soldiers;
 	std::vector<Bullet> bullets;
 	std::vector<Ground> grounds;
