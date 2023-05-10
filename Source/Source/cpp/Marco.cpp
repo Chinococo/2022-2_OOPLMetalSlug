@@ -377,8 +377,10 @@ void Marco::updateAnimation() {
 void Marco::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (Ground::isOnGround(*this, grounds[i]) == 1&&velocityY>0  ) {
-			bool check = (this->GetTop() + this->GetHeight()) - Ground::GetX_Height(grounds[i], x) < 15;
+			//&& (this->GetTop() + this->GetHeight()) - Ground::GetX_Height(grounds[i], x) < 15;
 			dy = Ground::GetX_Height(grounds[i], x) - GetHeight() - y;
+			if (abs(dy) > 40)
+				dy = 0;
 			velocityY = 0;
 			inAir = false;
 		}

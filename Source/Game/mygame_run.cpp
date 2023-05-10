@@ -137,8 +137,8 @@ void CGameStateRun::OnShow()
 		//else if (keyDowns.count(VK_LEFT) && ViewPointX < 0)
 		//	ViewPointX += MapScrollSpeed;
 		updateUnderCharacterLayer();
-		updateCharacter();
 		updateMapObject();
+		updateCharacter();
 		updateUpperCharacterLayer();
 		if (!Loading) {
 			Sleep(1000);

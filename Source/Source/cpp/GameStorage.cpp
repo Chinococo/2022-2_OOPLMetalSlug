@@ -12,10 +12,10 @@ namespace game_framework {
 		grounds.push_back(Ground({ 1750,550 }, { 5000,550 }));
 		grounds.push_back(Ground({ 2300,430 }, { 2550,430 }));
 		grounds.push_back(Ground({ 2520,320 }, { 3100,320 }));
-		grounds.push_back(Ground({ 3000,425 }, { 3150,425 }));
+		grounds.push_back(Ground({ 2930,425 }, { 3150,425 }));
 		grounds.push_back(Ground({ 3150,325 }, { 3600,325 }));
 		grounds.push_back(Ground({ 3600,325 }, { 4200,325 }));
-		grounds.push_back(Ground({ 4100,430 }, { 4250,430 }));
+		grounds.push_back(Ground({ 4050,430 }, { 4250,430 }));
 
 		/*牆壁*/
 		grounds.push_back(Ground({ 0,0 }, { 0,600 }));
@@ -40,6 +40,14 @@ namespace game_framework {
 			CMovingBitmap temp;
 			temp.LoadBitmapByString(std::get<0>(layer[i]), std::get<2>(layer[i]));
 			UnderCharacter.push_back({ temp,std::get<1>(layer[i]) });
+		}
+		UpperCharacter.clear();
+		layer.clear();
+		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) });
+		for (unsigned i = 0; i < layer.size(); i++) {
+			CMovingBitmap temp;
+			temp.LoadBitmapByString(std::get<0>(layer[i]), std::get<2>(layer[i]));
+			UpperCharacter.push_back({ temp,std::get<1>(layer[i]) });
 		}
 	}
 	void addBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner) {
@@ -85,6 +93,14 @@ namespace game_framework {
 	}
 	void updateUpperCharacterLayer()
 	{
+		for (unsigned i = UpperCharacter.size() - 1;; i--) {
+			int now_index = std::get<0>(UpperCharacter[i]).GetFrameIndexOfBitmap();
+			std::get<0>(UpperCharacter[i]).SetTopLeft(ViewPointX + std::get<1>(UpperCharacter[i])[now_index].first,
+				ViewPointY - background.GetHeight() + std::get<1>(UpperCharacter[i])[now_index].second);
+			std::get<0>(UpperCharacter[i]).ShowBitmap();
+			if (i == 0)
+				break;
+		}
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
 		}
@@ -118,7 +134,7 @@ namespace game_framework {
 	int MapScrollSpeed = 10;
 	bool scroll = false;
 	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
-
+	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;
 	const int GRAVITY = 1;
 	std::set<UINT> keyDowns;
 	Marco marco(300, 300, 6);

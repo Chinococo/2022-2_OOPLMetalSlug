@@ -34,6 +34,7 @@ namespace game_framework {
 	extern int ViewPointY;
 	extern int MapScrollSpeed;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
+	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;
 
 	// character
 	extern const int GRAVITY;
