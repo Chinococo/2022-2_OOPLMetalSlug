@@ -22,11 +22,12 @@ void Marco::init() {
 	animationRanges.push_back(range);
 	animationDelays.push_back(delay);
 
-	delay = 100;
+	delay =70;
 	range = { 4, 27 };
 	for (int i = 0; i < range.second - range.first; i++) {
 		paths.push_back("resources/img/hero/marco/move/" + std::to_string(i) + ".bmp");
 	}
+	range = { 4, 16 };
 	animationRanges.push_back(range);
 	animationDelays.push_back(delay);
 
@@ -375,7 +376,8 @@ void Marco::updateAnimation() {
 
 void Marco::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
-		if (Ground::isOnGround(*this, grounds[i]) == 1) {
+		if (Ground::isOnGround(*this, grounds[i]) == 1&&velocityY>0  ) {
+			bool check = (this->GetTop() + this->GetHeight()) - Ground::GetX_Height(grounds[i], x) < 15;
 			dy = Ground::GetX_Height(grounds[i], x) - GetHeight() - y;
 			velocityY = 0;
 			inAir = false;
