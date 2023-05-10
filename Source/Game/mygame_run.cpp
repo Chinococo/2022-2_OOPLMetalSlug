@@ -132,22 +132,9 @@ void CGameStateRun::OnShow()
 			ViewPointX -= MapScrollSpeed;
 		//else if (keyDowns.count(VK_LEFT) && ViewPointX < 0)
 		//	ViewPointX += MapScrollSpeed;
-		for (unsigned i = map.size() - 1;; i--) {
-			int now_index = std::get<0>(map[i]).GetFrameIndexOfBitmap();
-			std::get<0>(map[i]).SetTopLeft(ViewPointX + std::get<1>(map[i])[now_index].first,
-				ViewPointY - background.GetHeight() + std::get<1>(map[i])[now_index].second);
-			std::get<0>(map[i]).ShowBitmap();
-			if (i == 0)
-				break;
-		}
-
-		for (size_t i = 0; i < soldiers.size(); i++) {
-			soldiers[i].draw();
-		}
-		marco.draw();
-		for (size_t i = 0; i < bullets.size(); i++) {
-			bullets[i].draw();
-		}
+		updateUnderCharacterLayer();
+		updateCharacter();
+		updateUpperCharacterLayer();
 		if (!Loading) {
 			Sleep(1000);
 			Loading = true;

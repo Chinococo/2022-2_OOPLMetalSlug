@@ -81,6 +81,9 @@
     <ClCompile Include="Source\Source\cpp\Soldier.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Source\cpp\MapObject.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -132,6 +135,9 @@
       <Filter>Source\header</Filter>
     </ClInclude>
     <ClInclude Include="Source\Source\header\Soldier.h">
+      <Filter>Source\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\header\MapObject.h">
       <Filter>Source\header</Filter>
     </ClInclude>
   </ItemGroup>

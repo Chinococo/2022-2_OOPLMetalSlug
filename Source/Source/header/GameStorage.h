@@ -3,6 +3,7 @@
 #include "../header/Soldier.h"
 #include "../header/Ground.h"
 #include "../header/Bullet.h"
+#include "../header/MapObject.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -17,7 +18,9 @@ namespace game_framework {
 	extern void removeInactiveSolider();
 	extern void addBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner);
 	extern void removeInactiveBullets();
-
+	extern void updateCharacter();
+	extern void updateUnderCharacterLayer();
+	extern void updateUpperCharacterLayer();
 	// map
 	extern std::string state;
 	extern int selectIndex;
@@ -27,7 +30,7 @@ namespace game_framework {
 	extern int ViewPointX;
 	extern int ViewPointY;
 	extern int MapScrollSpeed;
-	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> map;
+	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
 
 	// character
 	extern const int GRAVITY;
