@@ -15,7 +15,7 @@ namespace game_framework {
 		grounds.push_back(Ground({ 3000,425 }, { 3150,425 }));
 		grounds.push_back(Ground({ 3150,325 }, { 3600,325 }));
 		grounds.push_back(Ground({ 3600,325 }, { 4200,325 }));
-		grounds.push_back(Ground({ 4100,430 }, { 4280,430 }));
+		grounds.push_back(Ground({ 4100,430 }, { 4250,430 }));
 
 		/*牆壁*/
 		grounds.push_back(Ground({ 0,0 }, { 0,600 }));
