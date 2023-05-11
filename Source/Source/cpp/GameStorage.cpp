@@ -12,34 +12,46 @@ namespace game_framework {
 		grounds.push_back(Ground({ 1750,550 }, { 5000,550 }));
 		grounds.push_back(Ground({ 2300,430 }, { 2550,430 }));
 		grounds.push_back(Ground({ 2520,320 }, { 3100,320 }));
-		grounds.push_back(Ground({ 3000,425 }, { 3150,425 }));
+		grounds.push_back(Ground({ 2930,425 }, { 3150,425 }));
 		grounds.push_back(Ground({ 3150,325 }, { 3600,325 }));
 		grounds.push_back(Ground({ 3600,325 }, { 4200,325 }));
-		grounds.push_back(Ground({ 4100,430 }, { 4250,430 }));
-
+		grounds.push_back(Ground({ 4050,430 }, { 4250,430 }));
+		grounds.push_back(Ground({ 5010,515 }, { 9000,515 }));
+		grounds.push_back(Ground({ 5520,330 }, { 5750,330 }));
 		/*牆壁*/
 		grounds.push_back(Ground({ 0,0 }, { 0,600 }));
 
 		/*Debug專用*/
-		grounds.push_back(Ground({ 4100,430 }, { 10000,430 }));
+		//grounds.push_back(Ground({ 4100,430 }, { 10000,430 }));
 
 	}
 	void createMap() {
-		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
-		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) });
-		layer.push_back({ {"resources/maps/background1.bmp"},{{3500,330}} , RGB(255, 255, 255) });
-		//layer.push_back({ {"resources/maps/test2.bmp"},{{5685,22}} , RGB(0, 0, 0) });//破壞
-		//layer.push_back({ {"resources/maps/test1.bmp"},{{5490,15}} , RGB(0, 0, 0) });//破壞
-		//layer.push_back({ {"resources/maps/enemy_platform_1.bmp"},{{5338,200}} , RGB(255, 255, 255) });//原本
-		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(0, 0, 0) });
-		//layer.push_back({ {"resources/maps/test0.bmp"},{{5490,15}} , RGB(255, 255, 255) });//原本
-		//layer.push_back({ {"resources/maps/test3.bmp"},{{5840,15}} , RGB(255, 255, 255) });//原本
-		
+		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF,bool>> layer;
+		layer.push_back({ {"resources/maps/water_01_01.bmp","resources/maps/water_01_02.bmp","resources/maps/water_01_03.bmp","resources/maps/water_01_04.bmp"
+			,"resources/maps/water_01_05.bmp","resources/maps/water_01_06.bmp","resources/maps/water_01_07.bmp"},{{5035,485},{5035,485},{5035,485},{5035,485},{5035,485},{5035,485},{5035,485}} , RGB(255, 255, 255),true });
+		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255),false });
+		layer.push_back({ {"resources/maps/background1.bmp"},{{3500,330}} , RGB(255, 255, 255),false });
+		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(255,255,255),false });
+		layer.push_back({ {"resources/maps/background.bmp"},{{5400,0}} , RGB(255, 255, 255),false });
+		layer.push_back({ {"resources/maps/background3.bmp"},{{6000,-140}} , RGB(255, 255, 255),false });
 		UnderCharacter.clear();
 		for (unsigned i = 0; i < layer.size(); i++) {
 			CMovingBitmap temp;
 			temp.LoadBitmapByString(std::get<0>(layer[i]), std::get<2>(layer[i]));
+			if (get<3>(layer[i])) {
+				temp.SetAnimation(200,false);
+				temp.ToggleAnimation();
+			}
+				
 			UnderCharacter.push_back({ temp,std::get<1>(layer[i]) });
+		}
+		UpperCharacter.clear();
+		layer.clear();
+		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) ,false });
+		for (unsigned i = 0; i < layer.size(); i++) {
+			CMovingBitmap temp;
+			temp.LoadBitmapByString(std::get<0>(layer[i]), std::get<2>(layer[i]));
+			UpperCharacter.push_back({ temp,std::get<1>(layer[i]) });
 		}
 	}
 	void addBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner) {
@@ -85,6 +97,14 @@ namespace game_framework {
 	}
 	void updateUpperCharacterLayer()
 	{
+		for (unsigned i = UpperCharacter.size() - 1;; i--) {
+			int now_index = std::get<0>(UpperCharacter[i]).GetFrameIndexOfBitmap();
+			std::get<0>(UpperCharacter[i]).SetTopLeft(ViewPointX + std::get<1>(UpperCharacter[i])[now_index].first,
+				ViewPointY - background.GetHeight() + std::get<1>(UpperCharacter[i])[now_index].second);
+			std::get<0>(UpperCharacter[i]).ShowBitmap();
+			if (i == 0)
+				break;
+		}
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
 		}
@@ -96,7 +116,10 @@ namespace game_framework {
 	}
 	void createMapObject()
 	{
-		MapObjects.push_back(MapObject(400, 350, 10, { "resources/maps/enemy_platform_1.bmp","resources/maps/enemy_platform_1_broken.bmp" }));
+		MapObjects.push_back(MapObject(4830, 180, 10, { "resources/maps/enemy_platform_1.bmp","resources/maps/enemy_platform_1_broken.bmp" }));
+		MapObjects.push_back(MapObject(5480, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
+		MapObjects.push_back(MapObject(7500, 25, 10, { "resources/maps/miniboss_01.bmp","resources/maps/miniboss_02.bmp"  }));
+		//MapObjects.push_back(MapObject(6000, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
 	}
 	void removeInactiveSolider() {
 		for (size_t i = 0; i < soldiers.size();) {
@@ -113,12 +136,12 @@ namespace game_framework {
 	CMovingBitmap background;
 	CMovingBitmap arrow;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = 0;
+	int ViewPointX = -6000;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
 	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
-
+	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;
 	const int GRAVITY = 1;
 	std::set<UINT> keyDowns;
 	Marco marco(300, 300, 6);
