@@ -91,8 +91,10 @@ namespace game_framework {
 	}
 	void updateUnderCharacterLayer()
 	{
-		if (marco.GetLeft() + abs(ViewPointX) > 8500&& marco.GetLeft() + abs(ViewPointX) < 9500)
-			background_mission1.SetTopLeft(background.GetLeft() + (marco.GetLeft() + abs(ViewPointX) - 8500)/10 , background_mission1.GetTop());
+		if (marco.GetLeft() + abs(ViewPointX) > 8500&& marco.GetLeft() + abs(ViewPointX) < 9000)
+			background_mission1.SetTopLeft(background.GetLeft() + (marco.GetLeft() + abs(ViewPointX) - 8500)/1000 , background_mission1.GetTop());
+		else
+			background_mission1.SetTopLeft((ViewPointX  + 9400-background_mission1.GetWidth()) , background_mission1.GetTop());
 		background_mission1.ShowBitmap();
 		for (unsigned i = UnderCharacter.size() - 1;; i--) {
 			int now_index = std::get<0>(UnderCharacter[i]).GetFrameIndexOfBitmap();
