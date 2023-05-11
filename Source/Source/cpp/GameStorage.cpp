@@ -3,23 +3,7 @@
 
 namespace game_framework {
 	void createSoldiers() {
-		const int moveSpeed = 1;
-		soldiers.push_back(Soldier(100, 100, moveSpeed));
-		//soldiers.push_back(Soldier(200, 200, moveSpeed));
-		//soldiers.push_back(Soldier(300, 300, moveSpeed));
-		//soldiers.push_back(Soldier(400, 400, moveSpeed));
-		//soldiers.push_back(Soldier(500, 500, moveSpeed));
-		soldiers.push_back(Soldier(600, 100, moveSpeed));
-		/*
-		soldiers.push_back(Soldier(1000, 500, 1));
-		soldiers.push_back(Soldier(1500, 500, 1));
-		soldiers.push_back(Soldier(2000, 500, 1));
-		soldiers.push_back(Soldier(2500, 500, 1));
-		soldiers.push_back(Soldier(3000, 500, 1));
-		soldiers.push_back(Soldier(3500, 500, 1));
-		soldiers.push_back(Soldier(4000, 500, 1));
-		soldiers.push_back(Soldier(4500, 500, 1));
-		*/
+		soldiers.push_back(Soldier(500, 500, 4));
 	}
 	void createGrounds() {
 		/* 地板 */
@@ -104,10 +88,8 @@ namespace game_framework {
 	{
 		for (unsigned i = UnderCharacter.size() - 1;; i--) {
 			int now_index = std::get<0>(UnderCharacter[i]).GetFrameIndexOfBitmap();
-			std::get<0>(UnderCharacter[i]).SetTopLeft(
-				ViewPointX + std::get<1>(UnderCharacter[i])[now_index].first,
-				ViewPointY - background.GetHeight() + std::get<1>(UnderCharacter[i])[now_index].second
-			);
+			std::get<0>(UnderCharacter[i]).SetTopLeft(ViewPointX + std::get<1>(UnderCharacter[i])[now_index].first,
+				ViewPointY - background.GetHeight() + std::get<1>(UnderCharacter[i])[now_index].second);
 			std::get<0>(UnderCharacter[i]).ShowBitmap();
 			if (i == 0)
 				break;
