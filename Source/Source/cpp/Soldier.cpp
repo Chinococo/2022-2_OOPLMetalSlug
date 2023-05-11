@@ -113,7 +113,7 @@ void Soldier::control() { // AI
 
 	clock_t currentTime = clock();
 
-	int distanceX = marco.GetLeft() - x;
+	int distanceX = (abs(ViewPointX) + marco.GetLeft()) - x;
 	if (distanceX > 0) {
 		movingRight = true;
 		movingLeft = false;
@@ -123,7 +123,7 @@ void Soldier::control() { // AI
 		movingRight = false;
 	}
 
-	if (currentTime - lastJumpTime >= JUMP_COOLDOWN) {
+	if ((currentTime - lastJumpTime >= JUMP_COOLDOWN) && (rand() % 10 + 1 == 0)) {
 		lastJumpTime = currentTime;
 		jumping = true;
 	}
@@ -131,15 +131,15 @@ void Soldier::control() { // AI
 		jumping = false;
 	}
 
-	/*
-	if (currentTime - lastAttackTime >= ATTACK_COOLDOWN) {
+	
+	if ((currentTime - lastAttackTime >= ATTACK_COOLDOWN) && distanceX < 50) {
 		lastAttackTime = currentTime;
 		attacking = true;
 	}
 	else {
 		attacking = false;
 	}
-	*/
+	
 }
 
 void Soldier::move() {
@@ -269,7 +269,7 @@ void Soldier::collideWithWall() {
 
 void Soldier::draw() {
 	if (alive) {
-		SetTopLeft(x, y);
+		SetTopLeft(ViewPointX + x, y);
 		ShowBitmap();
 	}
 	else {

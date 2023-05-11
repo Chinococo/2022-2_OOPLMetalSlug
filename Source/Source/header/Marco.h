@@ -21,7 +21,7 @@ private:
 	bool once = false;
 	int velocityY = 0;
 	const int JUMP_VELOCITY = -15;
-	const int ATTACK_COOLDOWN = 200;
+	const int ATTACK_COOLDOWN = 300;
 	bool movingLeft = false;
 	bool movingRight = false;
 	bool jumping = false;

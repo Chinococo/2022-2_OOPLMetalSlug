@@ -5,7 +5,7 @@
 using namespace game_framework;
 
 Marco::Marco(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
-
+	
 }
 
 void Marco::init() {

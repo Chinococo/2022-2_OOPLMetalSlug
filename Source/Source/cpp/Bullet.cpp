@@ -77,7 +77,7 @@ void Bullet::init() {
 }
 
 void Bullet::update() {
-	if (!dying) {
+	if (alive) {
 		control();
 		move();
 		/*
@@ -91,15 +91,18 @@ void Bullet::update() {
 		/*
 		changeAnimation();
 		updateAnimation();
-		*/
+		
 		if (clock() - deathTimer > 100) {
 			alive = false;
 		}
+		*/
 	}
 }
 
 void Bullet::control() {
-
+	if (clock() - aliveTimer > 1000) {
+		alive = false;
+	}
 }
 
 void Bullet::move() {
@@ -148,17 +151,17 @@ void Bullet::collideWithCharacter() {
 	if (owner == "hero") {
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			if (IsOverlap(*this, soldiers[i])) {
-				dying = true;
+				alive = false;
 			}
 		}
 		for (size_t i = 0; i < MapObjects.size(); i++) 
 			if (IsOverlap(*this, MapObjects[i])&&MapObjects[i].isAlive()) {
-				dying = true;
+				alive = false;
 			}
 	}
 	else if (owner == "enemy") {
 		if (IsOverlap(*this, marco)) {
-			dying = true;
+			alive = false;
 		}
 	}
 }

@@ -22,6 +22,7 @@ public:
 	bool movingRight = false;
 	bool movingUp = false;
 	bool movingDown = false;
+	clock_t aliveTimer = clock();
 	enum class Action {
 		MOVE_H, MOVE_V, DIE
 	} action = Action::MOVE_H, lastAction = Action::MOVE_H;
