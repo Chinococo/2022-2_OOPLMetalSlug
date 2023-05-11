@@ -25,22 +25,27 @@ namespace game_framework {
 
 	}
 	void createMap() {
-		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
-		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) });
-		layer.push_back({ {"resources/maps/background1.bmp"},{{3500,330}} , RGB(255, 255, 255) });
-		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(255,255,255) });
-		layer.push_back({ {"resources/maps/background.bmp"},{{5400,0}} , RGB(255, 255, 255) });
+		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF,bool>> layer;
+		layer.push_back({ {"resources/maps/water_01_01.bmp","resources/maps/water_01_02.bmp","resources/maps/water_01_03.bmp","resources/maps/water_01_04.bmp"
+			,"resources/maps/water_01_05.bmp","resources/maps/water_01_06.bmp","resources/maps/water_01_07.bmp"},{{5035,485},{5035,485},{5035,485},{5035,485},{5035,485},{5035,485},{5035,485}} , RGB(255, 255, 255),true });
+		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255),false });
+		layer.push_back({ {"resources/maps/background1.bmp"},{{3500,330}} , RGB(255, 255, 255),false });
+		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(255,255,255),false });
+		layer.push_back({ {"resources/maps/background.bmp"},{{5400,0}} , RGB(255, 255, 255),false });
 		UnderCharacter.clear();
 		for (unsigned i = 0; i < layer.size(); i++) {
 			CMovingBitmap temp;
 			temp.LoadBitmapByString(std::get<0>(layer[i]), std::get<2>(layer[i]));
+			if (get<3>(layer[i])) {
+				temp.SetAnimation(200,false);
+				temp.ToggleAnimation();
+			}
+				
 			UnderCharacter.push_back({ temp,std::get<1>(layer[i]) });
 		}
 		UpperCharacter.clear();
 		layer.clear();
-		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) });
-		//layer.push_back({ {"resources/maps/water_01_01.bmp","resources/maps/water_01_02.bmp","resources/maps/water_01_03.bmp","resources/maps/water_01_04.bmp"
-		//	,"resources/maps/water_01_05.bmp","resources/maps/water_01_06.bmp","resources/maps/water_01_07.bmp"},{{5035,500},{5035,500},{5035,500},{5035,500},{5035,500},{5035,500},{5035,500}} , RGB(255, 255, 255) });
+		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) ,false });
 		for (unsigned i = 0; i < layer.size(); i++) {
 			CMovingBitmap temp;
 			temp.LoadBitmapByString(std::get<0>(layer[i]), std::get<2>(layer[i]));
@@ -109,8 +114,8 @@ namespace game_framework {
 	}
 	void createMapObject()
 	{
-		MapObjects.push_back(MapObject(4850, 180, 10, { "resources/maps/enemy_platform_1.bmp","resources/maps/enemy_platform_1_broken.bmp" }));
-		MapObjects.push_back(MapObject(5490, 0, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
+		MapObjects.push_back(MapObject(4830, 180, 10, { "resources/maps/enemy_platform_1.bmp","resources/maps/enemy_platform_1_broken.bmp" }));
+		MapObjects.push_back(MapObject(5480, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
 	}
 	void removeInactiveSolider() {
 		for (size_t i = 0; i < soldiers.size();) {
