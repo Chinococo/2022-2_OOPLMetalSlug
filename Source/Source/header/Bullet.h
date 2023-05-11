@@ -15,15 +15,8 @@ public:
 	virtual void updateAnimation() override;
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
+	virtual void die() override;
 	virtual void draw() override;
 	Bullet &Bullet::operator=(const Bullet &other);
 	std::string owner;
-	bool movingLeft = false;
-	bool movingRight = false;
-	bool movingUp = false;
-	bool movingDown = false;
-	clock_t aliveTimer = clock();
-	enum class Action {
-		MOVE_H, MOVE_V, DIE
-	} action = Action::MOVE_H, lastAction = Action::MOVE_H;
 };
