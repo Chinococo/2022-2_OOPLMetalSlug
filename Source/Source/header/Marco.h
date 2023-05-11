@@ -33,8 +33,9 @@ private:
 	bool throwingGrenade = false;
 	bool pressingDown = false;
 	bool flip = false;
+	bool nearEnemy = false;
 	clock_t lastAttackTime = clock();
 	enum class Action {
-		IDLE, MOVE, JUMP, LOOK_UP, SHOOT, SHOOT_UP, SHOOT_DOWN, KNIFE, GRENADE, CROUCH_SHOOT, CROUCH_SHOOT_UP, CROUCH_KNIFE, CROUCH_GRENADE, DIE
+		IDLE, MOVE, JUMP, LOOK_UP, SHOOT, SHOOT_UP, SHOOT_DOWN, KNIFE, GRENADE, CROUCH_IDLE, CROUCH_MOVE, CROUCH_SHOOT, CROUCH_KNIFE, CROUCH_GRENADE, DIE
 	} action = Action::IDLE, lastAction = Action::IDLE;
 };
