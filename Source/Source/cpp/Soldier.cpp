@@ -9,36 +9,110 @@ Soldier::Soldier(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
 
 void Soldier::init() {
 	std::vector<std::string> paths;
-	for (size_t i = 0; i < 1; i++) {
-		paths.push_back("resources/img/enemy/soldier/idle/" + std::to_string(i) + ".bmp");
+
+	int delay = 300;
+	std::pair<int, int> range = { 0, 6 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img_v2/soldier/idle/" + std::to_string(i) + ".bmp");
 	}
-	for (size_t i = 0; i < 0; i++) {
-		paths.push_back("resources/img/enemy/soldier/move/" + std::to_string(i) + ".bmp");
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 70;
+	range = { 6, 18 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img_v2/soldier/move/" + std::to_string(i) + ".bmp");
 	}
-	for (size_t i = 0; i < 0; i++) {
-		paths.push_back("resources/img/enemy/soldier/jump/" + std::to_string(i) + ".bmp");
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 300;
+	range = { 18, 28 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img_v2/soldier/jump/" + std::to_string(i) + ".bmp");
 	}
-	for (size_t i = 0; i < 0; i++) {
-		paths.push_back("resources/img/enemy/soldier/lookUp/" + std::to_string(i) + ".bmp");
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 300;
+	range = { 28, 37 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img_v2/soldier/bomb/" + std::to_string(i) + ".bmp");
 	}
-	for (size_t i = 0; i < 0; i++) {
-		paths.push_back("resources/img/enemy/soldier/shoot/" + std::to_string(i) + ".bmp");
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+
+	delay = 300;
+	range = { 37, 43 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img_v2/soldier/die/" + std::to_string(i) + ".bmp");
 	}
-	for (size_t i = 0; i < 0; i++) {
-		paths.push_back("resources/img/enemy/soldier/die/" + std::to_string(i) + ".bmp");
+	animationRanges.push_back(range);
+	animationDelays.push_back(delay);
+	animationflipBias = range.second;
+
+
+
+	/* flip */
+
+	range = { 0, 6 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img_v2/soldier/idle/flip_" + std::to_string(i) + ".bmp");
 	}
-	LoadBitmapByString(paths, RGB(255,255,255));
+	range = { 6, 18 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img_v2/soldier/move/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 18, 28 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img_v2/soldier/jump/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 28, 37 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img_v2/soldier/bomb/flip_" + std::to_string(i) + ".bmp");
+	}
+	range = { 37, 46 };
+	for (int i = 0; i < range.second - range.first; i++) {
+		paths.push_back("resources/img_v2/soldier/die/flip_" + std::to_string(i) + ".bmp");
+	}
+
+	LoadBitmapByString(paths, RGB(0, 0, 0));
+	animationRange = animationRanges[static_cast<int>(action)];
+	animationDelay = animationDelays[static_cast<int>(action)];
 }
 
 void Soldier::update() {
-	if (alive) {
+	if (!dying) {
 		control();
 		move();
+		updateAction();
+		changeAnimation();
+		updateAnimation();
+	}
+	else {
+		action = Action::DIE;
+		changeAnimation();
+		updateAnimation();
+		if (clock() - deathTimer > 1000) {
+			alive = false;
+		}
 	}
 }
 
 void Soldier::control() { // AI
-	/*
+	if (!marco.isAlive()) {
+		movingLeft = false;
+		movingRight = false;
+		jumping = false;
+		lookingUp = false;
+		attacking = false;
+		throwingGrenade = false;
+		pressingDown = false;
+		return;
+	}
+
+	clock_t currentTime = clock();
+
 	int distanceX = marco.GetLeft() - x;
 	if (distanceX > 0) {
 		movingRight = true;
@@ -48,8 +122,7 @@ void Soldier::control() { // AI
 		movingLeft = true;
 		movingRight = false;
 	}
-	*/
-	clock_t currentTime = clock();
+
 	if (currentTime - lastJumpTime >= JUMP_COOLDOWN) {
 		lastJumpTime = currentTime;
 		jumping = true;
@@ -57,9 +130,10 @@ void Soldier::control() { // AI
 	else {
 		jumping = false;
 	}
+
 	/*
-	if (currentTime - lastShootTime >= SHOOT_COOLDOWN) {
-		lastShootTime = currentTime;
+	if (currentTime - lastAttackTime >= ATTACK_COOLDOWN) {
+		lastAttackTime = currentTime;
 		attacking = true;
 	}
 	else {
@@ -74,16 +148,27 @@ void Soldier::move() {
 	collideWithBullet();
 	collideWithWall();
 	moveLeftRight();
+	if (lookingUp && !pressingDown) {
+		facingY = -1;
+	}
+	else if (!lookingUp && pressingDown) {
+		facingY = 1;
+	}
+	else {
+		facingY = 0;
+	}
 	collideWithGround();
 	jumpAndFall();
 	attack();
-	x += dx;
+	if (x + dx > 0) {
+		x += dx;
+	}
 	y += dy;
 }
 
 void Soldier::attack() {
 	if (attacking) {
-		addBullet(x, y, 20, facingX, facingY, "enemy");
+		addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "enemy");
 	}
 }
 
@@ -91,10 +176,12 @@ void Soldier::moveLeftRight() {
 	if (movingLeft) {
 		dx += -speedX;
 		facingX = -1;
+		flip = false;
 	}
 	if (movingRight) {
 		dx += speedX;
 		facingX = 1;
+		flip = true;
 	}
 }
 
@@ -112,21 +199,51 @@ void Soldier::jumpAndFall() {
 void Soldier::collideWithBullet() {
 	for (size_t i = 0; i < bullets.size(); i++) {
 		if (bullets[i].owner == "hero" && IsOverlap(*this, bullets[i])) {
-			alive = false;
+			dying = true;
+			deathTimer = clock();
 		}
 	}
 }
 
 void Soldier::updateAction() {
-
+	lastAction = action;
+	if (inAir) {
+		if (attacking) {
+			action = Action::BOMB;
+		}
+		else if (movingLeft || movingRight) {
+			action = Action::JUMP;
+		}
+		else {
+			action = Action::JUMP;
+		}
+	}
+	else {
+		if (attacking) {
+			action = Action::BOMB;
+		}
+		else if (movingLeft || movingRight) {
+			action = Action::MOVE;
+		}
+		else {
+			action = Action::IDLE;
+		}
+	}
 }
 
 void Soldier::changeAnimation() {
-
+	if (action != lastAction) {
+		animationRange = animationRanges[static_cast<int>(action)];
+		animationDelay = animationDelays[static_cast<int>(action)];
+		SetFrameIndexOfBitmap(animationRange.first + ((flip) ? animationflipBias : 0));
+	}
 }
 
 void Soldier::updateAnimation() {
-
+	if (clock() - start > animationDelay) {
+		SetFrameIndexOfBitmap(((GetFrameIndexOfBitmap() - animationRange.first - +((flip) ? animationflipBias : 0) + 1) % (animationRange.second - animationRange.first)) + animationRange.first + ((flip) ? animationflipBias : 0));
+		start = clock();
+	}
 }
 
 void Soldier::collideWithGround() {
@@ -148,10 +265,6 @@ void Soldier::collideWithWall() {
 			dx = 0;
 		}
 	}
-}
-
-void Soldier::die() {
-
 }
 
 void Soldier::draw() {

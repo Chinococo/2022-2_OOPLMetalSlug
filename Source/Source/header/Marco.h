@@ -16,7 +16,6 @@ public:
 	virtual void updateAnimation() override;
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
-	virtual void die() override;
 	virtual void draw() override;
 private:
 	bool once = false;
@@ -32,7 +31,6 @@ private:
 	bool knifing = false;
 	bool throwingGrenade = false;
 	bool pressingDown = false;
-	bool flip = false;
 	bool nearEnemy = false;
 	clock_t lastAttackTime = clock();
 	enum class Action {

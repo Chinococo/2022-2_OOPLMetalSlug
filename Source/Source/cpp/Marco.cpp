@@ -209,7 +209,7 @@ void Marco::init() {
 }
 
 void Marco::update() {
-	if (alive) {
+	if (!dying) {
 		control();
 		move();
 		updateAction();
@@ -217,7 +217,12 @@ void Marco::update() {
 		updateAnimation();
 	}
 	else {
-		die();
+		action = Action::DIE;
+		changeAnimation();
+		updateAnimation();
+		if (clock() - deathTimer > 1000) {
+			alive = false;
+		}
 	}
 }
 
@@ -254,18 +259,28 @@ void Marco::move() {
 	dy = 0;
 	collideWithBullet();
 	moveLeftRight();
+	if (lookingUp && !pressingDown) {
+		facingY = -1;
+	}
+	else if (!lookingUp && pressingDown) {
+		facingY = 1;
+	}
+	else {
+		facingY = 0;
+	}
 	collideWithWall();
 	collideWithGround();
 	jumpAndFall();
 	attack();
-	if(x + dx>0)
+	if (x + dx > 0) {
 		x += dx;
+	}
 	y += dy;
 }
 
 void Marco::attack() {
 	if (attacking) {
-		addBullet(x+(flip?-1:1)*20, y+20, 20, facingX, facingY, "hero");
+		addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "hero");
 	}
 }
 
@@ -296,7 +311,8 @@ void Marco::jumpAndFall() {
 void Marco::collideWithBullet() {
 	for (size_t i = 0; i < bullets.size(); i++) {
 		if (bullets[i].owner == "enemy" && IsOverlap(*this, bullets[i])) {
-			alive = false;
+			dying = true;
+			deathTimer = clock();
 		}
 	}
 }
@@ -326,15 +342,20 @@ void Marco::updateAction() {
 			if (throwingGrenade) {
 				action = Action::GRENADE;
 			}
-			else if (attacking)
-				if (nearEnemy) 
+			else if (attacking) {
+				if (nearEnemy) {
 					action = Action::KNIFE;
-				else 
-					action = Action::SHOOT_DOWN;			
-			else if (movingLeft || movingRight) 
-				action = Action::JUMP; 
-			else 
+				}
+				else {
+					action = Action::SHOOT_DOWN;
+				}
+			}
+			else if (movingLeft || movingRight) {
 				action = Action::JUMP;
+			}
+			else {
+				action = Action::JUMP;
+			}
 		}
 		else {
 			if (throwingGrenade) {
@@ -525,10 +546,6 @@ void Marco::collideWithWall() {
 			dx = 0;
 		}
 	}
-}
-
-void Marco::die() {
-	animationRange = animationRanges[static_cast<int>(Action::DIE)];
 }
 
 void Marco::draw() {

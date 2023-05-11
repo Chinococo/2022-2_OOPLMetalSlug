@@ -3,7 +3,7 @@
 
 namespace game_framework {
 	void createSoldiers() {
-		soldiers.push_back(Soldier(500, 500, 4));
+		soldiers.push_back(Soldier(500, 500, 1));
 	}
 	void createGrounds() {
 		/* 地板 */
