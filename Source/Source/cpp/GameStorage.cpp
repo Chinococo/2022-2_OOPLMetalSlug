@@ -18,6 +18,7 @@ namespace game_framework {
 		grounds.push_back(Ground({ 4050,430 }, { 4250,430 }));
 		grounds.push_back(Ground({ 5010,515 }, { 9000,515 }));
 		grounds.push_back(Ground({ 5520,330 }, { 5750,330 }));
+		grounds.push_back(Ground({ 5000,550 }, { 10000,550 }));
 		/*牆壁*/
 		grounds.push_back(Ground({ 0,0 }, { 0,600 }));
 
@@ -26,6 +27,8 @@ namespace game_framework {
 
 	}
 	void createMap() {
+		background_mission1.LoadBitmapByString({ "resources/maps/background4.bmp" }, RGB(255, 255, 255));
+		background_mission1.SetTopLeft(8000, -100);
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF,bool>> layer;
 		layer.push_back({ {"resources/maps/water_01_01.bmp","resources/maps/water_01_02.bmp","resources/maps/water_01_03.bmp","resources/maps/water_01_04.bmp"
 			,"resources/maps/water_01_05.bmp","resources/maps/water_01_06.bmp","resources/maps/water_01_07.bmp"},{{5035,485},{5035,485},{5035,485},{5035,485},{5035,485},{5035,485},{5035,485}} , RGB(255, 255, 255),true });
@@ -34,6 +37,7 @@ namespace game_framework {
 		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(255,255,255),false });
 		layer.push_back({ {"resources/maps/background.bmp"},{{5400,0}} , RGB(255, 255, 255),false });
 		layer.push_back({ {"resources/maps/background3.bmp"},{{6000,-140}} , RGB(255, 255, 255),false });
+		layer.push_back({ {"resources/maps/background4.bmp"},{{8000,-50}} , RGB(255, 255, 255),false });
 		UnderCharacter.clear();
 		for (unsigned i = 0; i < layer.size(); i++) {
 			CMovingBitmap temp;
@@ -45,6 +49,7 @@ namespace game_framework {
 				
 			UnderCharacter.push_back({ temp,std::get<1>(layer[i]) });
 		}
+
 		UpperCharacter.clear();
 		layer.clear();
 		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) ,false });
@@ -86,6 +91,11 @@ namespace game_framework {
 	}
 	void updateUnderCharacterLayer()
 	{
+		if (marco.GetLeft() + abs(ViewPointX) > 8500&& marco.GetLeft() + abs(ViewPointX) < 9000)
+			background_mission1.SetTopLeft(background.GetLeft() + (marco.GetLeft() + abs(ViewPointX) - 8500)/1000 , background_mission1.GetTop());
+		else
+			background_mission1.SetTopLeft((ViewPointX  + 9400-background_mission1.GetWidth()) , background_mission1.GetTop());
+		background_mission1.ShowBitmap();
 		for (unsigned i = UnderCharacter.size() - 1;; i--) {
 			int now_index = std::get<0>(UnderCharacter[i]).GetFrameIndexOfBitmap();
 			std::get<0>(UnderCharacter[i]).SetTopLeft(ViewPointX + std::get<1>(UnderCharacter[i])[now_index].first,
@@ -118,7 +128,10 @@ namespace game_framework {
 	{
 		MapObjects.push_back(MapObject(4830, 180, 10, { "resources/maps/enemy_platform_1.bmp","resources/maps/enemy_platform_1_broken.bmp" }));
 		MapObjects.push_back(MapObject(5480, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
-		MapObjects.push_back(MapObject(7500, 25, 10, { "resources/maps/miniboss_01.bmp","resources/maps/miniboss_02.bmp"  }));
+		MapObjects.push_back(MapObject(7500, -18, 10, { "resources/maps/miniboss_01.bmp","resources/maps/miniboss_02.bmp","resources/maps/miniboss_03.bmp","resources/maps/miniboss_04.bmp","resources/maps/empty.bmp" }));
+		MapObjects.push_back(MapObject(8000, -10, 10, { "resources/maps/miniboss1_01.bmp","resources/maps/miniboss1_02.bmp","resources/maps/miniboss1_03.bmp","resources/maps/miniboss1_04.bmp"
+			,"resources/maps/miniboss1_05.bmp","resources/maps/miniboss1_06.bmp","resources/maps/miniboss1_07.bmp","resources/maps/miniboss1_08.bmp","resources/maps/empty.bmp" }, 3));
+		
 		//MapObjects.push_back(MapObject(6000, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
 	}
 	void removeInactiveSolider() {
@@ -134,9 +147,10 @@ namespace game_framework {
 	std::string state = "init";
 	int selectIndex = 0;
 	CMovingBitmap background;
+	CMovingBitmap background_mission1;
 	CMovingBitmap arrow;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -000;
+	int ViewPointX = -7000;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
