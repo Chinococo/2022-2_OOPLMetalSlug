@@ -28,7 +28,6 @@ namespace game_framework {
 	extern std::string state;
 	extern int selectIndex;
 	extern CMovingBitmap background;
-	extern CMovingBitmap background_mission1;
 	extern CMovingBitmap arrow;
 	extern std::vector<CMovingBitmap> mainmenuButtons;
 	extern int ViewPointX;
@@ -36,7 +35,7 @@ namespace game_framework {
 	extern int MapScrollSpeed;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;
-	
+
 	// character
 	extern const int GRAVITY;
 	extern std::set<UINT> keyDowns;

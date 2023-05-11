@@ -16,7 +16,6 @@ public:
 	virtual void updateAnimation() = 0;
 	virtual void collideWithGround() = 0;
 	virtual void collideWithWall() = 0;
-	virtual void die() = 0;
 	virtual void draw() = 0;
 	bool isAlive() const;
 protected:
@@ -31,6 +30,8 @@ protected:
 	int animationDelay;
 	bool alive = true;
 	bool dying = false;
+	bool flip = false;
+	clock_t deathTimer = clock();
 	std::pair<int, int> animationRange; // { start, end }, including start, excluding end
 	std::vector<std::pair<int, int>> animationRanges;
 	std::vector<int> animationDelays;
