@@ -90,7 +90,7 @@ void Marco::init() {
 	animationRanges.push_back(range);
 	animationDelays.push_back(delay);
 
-	delay = 300;
+	delay = 100;
 	range = { 69, 86 };
 	for (int i = 0; i < range.second - range.first; i++) {
 		paths.push_back("resources/img/hero/marco/crouchShoot/" + std::to_string(i) + ".bmp");
@@ -312,8 +312,125 @@ void Marco::updateAction() {
 	MOVE,
 	IDLE
 	*/
-
+	
 	lastAction = action;
+	if (pressingDown) {
+		if (inAir) {
+			if (throwingGrenade) {
+				action = Action::GRENADE;
+			}
+			else if (attacking)
+				if (nearEnemy) 
+					action = Action::KNIFE;
+				else 
+					action = Action::SHOOT_DOWN;			
+			else if (movingLeft || movingRight) 
+				action = Action::JUMP; 
+			else 
+				action = Action::JUMP;
+		}
+		else {
+			if (throwingGrenade) {
+				action = Action::CROUCH_GRENADE;
+			}
+			else if (attacking) {
+				if (nearEnemy) {
+					action = Action::CROUCH_KNIFE;
+				}
+				else {
+					action = Action::CROUCH_SHOOT;
+				}
+			}
+			else if (movingLeft || movingRight) {
+				action = Action::CROUCH_MOVE;
+			}
+			else {
+				action = Action::CROUCH_IDLE;
+			}
+		}
+	}
+	else if (lookingUp) {
+		if (inAir) {
+			if (throwingGrenade) {
+				action = Action::GRENADE;
+			}
+			else if (attacking) {
+				if (nearEnemy) {
+					action = Action::KNIFE;
+				}
+				else {
+					action = Action::SHOOT_UP;
+				}
+			}
+			else if (movingLeft || movingRight) {
+				action = Action::JUMP;
+			}
+			else {
+				action = Action::LOOK_UP;
+			}
+		}
+		else {
+			if (throwingGrenade) {
+				action = Action::GRENADE;
+			}
+			else if (attacking) {
+				if (nearEnemy) {
+					action = Action::KNIFE;
+				}
+				else {
+					action = Action::SHOOT_UP;
+				}
+			}
+			else if (movingLeft || movingRight) {
+				action = Action::MOVE;
+			}
+			else {
+				action = Action::LOOK_UP;
+			}
+		}
+	}
+	else {
+		if (inAir) {
+			if (throwingGrenade) {
+				action = Action::GRENADE;
+			}
+			else if (attacking) {
+				if (nearEnemy) {
+					action = Action::KNIFE;
+				}
+				else {
+					action = Action::SHOOT;
+				}
+			}
+			else if (movingLeft || movingRight) {
+				action = Action::JUMP;
+			}
+			else {
+				action = Action::JUMP;
+			}
+		}
+		else {
+			if (throwingGrenade) {
+				action = Action::GRENADE;
+			}
+			else if (attacking) {
+				if (nearEnemy) {
+					action = Action::KNIFE;
+				}
+				else {
+					action = Action::SHOOT;
+				}
+			}
+			else if (movingLeft || movingRight) {
+				action = Action::MOVE;
+			}
+			else {
+				action = Action::IDLE;
+			}
+		}
+	}
+	//lastAction = action;
+	/*
 	if (pressingDown && throwingGrenade) {
 		action = Action::CROUCH_GRENADE;
 	}
@@ -355,6 +472,7 @@ void Marco::updateAction() {
 		if(once)
 			action = Action::IDLE;
 	}
+	*/
 }
 
 void Marco::changeAnimation() {
