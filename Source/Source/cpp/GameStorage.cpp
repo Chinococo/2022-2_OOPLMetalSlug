@@ -28,13 +28,8 @@ namespace game_framework {
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF>> layer;
 		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) });
 		layer.push_back({ {"resources/maps/background1.bmp"},{{3500,330}} , RGB(255, 255, 255) });
-		//layer.push_back({ {"resources/maps/test2.bmp"},{{5685,22}} , RGB(0, 0, 0) });//破壞
-		//layer.push_back({ {"resources/maps/test1.bmp"},{{5490,15}} , RGB(0, 0, 0) });//破壞
-		//layer.push_back({ {"resources/maps/enemy_platform_1.bmp"},{{5338,200}} , RGB(255, 255, 255) });//原本
-		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(0, 0, 0) });
-		//layer.push_back({ {"resources/maps/test0.bmp"},{{5490,15}} , RGB(255, 255, 255) });//原本
-		//layer.push_back({ {"resources/maps/test3.bmp"},{{5840,15}} , RGB(255, 255, 255) });//原本
-		
+		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(255,255,255) });
+		layer.push_back({ {"resources/maps/background.bmp"},{{5400,0}} , RGB(255, 255, 255) });
 		UnderCharacter.clear();
 		for (unsigned i = 0; i < layer.size(); i++) {
 			CMovingBitmap temp;
@@ -44,6 +39,8 @@ namespace game_framework {
 		UpperCharacter.clear();
 		layer.clear();
 		layer.push_back({ {"resources/maps/background2.bmp"},{{3650,330}} , RGB(255, 255, 255) });
+		//layer.push_back({ {"resources/maps/water_01_01.bmp","resources/maps/water_01_02.bmp","resources/maps/water_01_03.bmp","resources/maps/water_01_04.bmp"
+		//	,"resources/maps/water_01_05.bmp","resources/maps/water_01_06.bmp","resources/maps/water_01_07.bmp"},{{5035,500},{5035,500},{5035,500},{5035,500},{5035,500},{5035,500},{5035,500}} , RGB(255, 255, 255) });
 		for (unsigned i = 0; i < layer.size(); i++) {
 			CMovingBitmap temp;
 			temp.LoadBitmapByString(std::get<0>(layer[i]), std::get<2>(layer[i]));
@@ -113,6 +110,7 @@ namespace game_framework {
 	void createMapObject()
 	{
 		MapObjects.push_back(MapObject(4850, 180, 10, { "resources/maps/enemy_platform_1.bmp","resources/maps/enemy_platform_1_broken.bmp" }));
+		MapObjects.push_back(MapObject(5490, 0, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
 	}
 	void removeInactiveSolider() {
 		for (size_t i = 0; i < soldiers.size();) {
@@ -129,7 +127,7 @@ namespace game_framework {
 	CMovingBitmap background;
 	CMovingBitmap arrow;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = 0-4900;
+	int ViewPointX = -4800;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
