@@ -14,7 +14,9 @@ MapObject::MapObject(int _x, int _y, int _hp,vector<string> _path) {
 
 void MapObject::update(){
 	collideWithBullet();
-	this->SetFrameIndexOfBitmap(static_cast<int>(std::floor(static_cast<double>((hp-now_hp) / hp) * (this->GetFrameSizeOfBitmap()-1))));
+	double test1 = static_cast<double>(static_cast<double>(hp - now_hp) / hp);
+	int test2 = static_cast<int>(std::floor(static_cast<double>(static_cast<double>(hp - now_hp) / hp) * (this->GetFrameSizeOfBitmap() - 1)));
+	this->SetFrameIndexOfBitmap(static_cast<int>(std::floor(static_cast<double>(static_cast<double>(hp-now_hp) / hp) * (this->GetFrameSizeOfBitmap()-1))));
 	this->SetTopLeft(ViewPointX+x, y);
 	//if (this->isAlive())
 		this->ShowBitmap();
@@ -37,4 +39,4 @@ void MapObject::collideWithBullet() {
 			now_hp -= 1;
 		}
 	}
-}
+} 

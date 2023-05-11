@@ -18,6 +18,7 @@ namespace game_framework {
 		grounds.push_back(Ground({ 4050,430 }, { 4250,430 }));
 		grounds.push_back(Ground({ 5010,515 }, { 9000,515 }));
 		grounds.push_back(Ground({ 5520,330 }, { 5750,330 }));
+		grounds.push_back(Ground({ 5000,550 }, { 10000,550 }));
 		/*牆壁*/
 		grounds.push_back(Ground({ 0,0 }, { 0,600 }));
 
@@ -118,7 +119,7 @@ namespace game_framework {
 	{
 		MapObjects.push_back(MapObject(4830, 180, 10, { "resources/maps/enemy_platform_1.bmp","resources/maps/enemy_platform_1_broken.bmp" }));
 		MapObjects.push_back(MapObject(5480, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
-		MapObjects.push_back(MapObject(7500, 25, 10, { "resources/maps/miniboss_01.bmp","resources/maps/miniboss_02.bmp"  }));
+		MapObjects.push_back(MapObject(7500, -18, 10, { "resources/maps/miniboss_01.bmp","resources/maps/miniboss_02.bmp","resources/maps/miniboss_03.bmp","resources/maps/miniboss_04.bmp" }));
 		//MapObjects.push_back(MapObject(6000, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
 	}
 	void removeInactiveSolider() {
@@ -136,7 +137,7 @@ namespace game_framework {
 	CMovingBitmap background;
 	CMovingBitmap arrow;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -000;
+	int ViewPointX = -5000;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
