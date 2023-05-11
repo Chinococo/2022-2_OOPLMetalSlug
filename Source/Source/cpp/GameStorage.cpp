@@ -16,12 +16,13 @@ namespace game_framework {
 		grounds.push_back(Ground({ 3150,325 }, { 3600,325 }));
 		grounds.push_back(Ground({ 3600,325 }, { 4200,325 }));
 		grounds.push_back(Ground({ 4050,430 }, { 4250,430 }));
-
+		grounds.push_back(Ground({ 5010,515 }, { 9000,515 }));
+		grounds.push_back(Ground({ 5520,330 }, { 5750,330 }));
 		/*牆壁*/
 		grounds.push_back(Ground({ 0,0 }, { 0,600 }));
 
 		/*Debug專用*/
-		grounds.push_back(Ground({ 4100,430 }, { 10000,430 }));
+		//grounds.push_back(Ground({ 4100,430 }, { 10000,430 }));
 
 	}
 	void createMap() {
@@ -32,6 +33,7 @@ namespace game_framework {
 		layer.push_back({ {"resources/maps/background1.bmp"},{{3500,330}} , RGB(255, 255, 255),false });
 		layer.push_back({ {"resources/maps/map1_1.bmp"},{{0,15}} , RGB(255,255,255),false });
 		layer.push_back({ {"resources/maps/background.bmp"},{{5400,0}} , RGB(255, 255, 255),false });
+		layer.push_back({ {"resources/maps/background3.bmp"},{{6000,-140}} , RGB(255, 255, 255),false });
 		UnderCharacter.clear();
 		for (unsigned i = 0; i < layer.size(); i++) {
 			CMovingBitmap temp;
@@ -116,6 +118,8 @@ namespace game_framework {
 	{
 		MapObjects.push_back(MapObject(4830, 180, 10, { "resources/maps/enemy_platform_1.bmp","resources/maps/enemy_platform_1_broken.bmp" }));
 		MapObjects.push_back(MapObject(5480, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
+		MapObjects.push_back(MapObject(7500, 25, 10, { "resources/maps/miniboss_01.bmp","resources/maps/miniboss_02.bmp"  }));
+		//MapObjects.push_back(MapObject(6000, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
 	}
 	void removeInactiveSolider() {
 		for (size_t i = 0; i < soldiers.size();) {
@@ -132,7 +136,7 @@ namespace game_framework {
 	CMovingBitmap background;
 	CMovingBitmap arrow;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -4800;
+	int ViewPointX = -6000;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
