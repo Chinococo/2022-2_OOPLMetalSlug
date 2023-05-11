@@ -16,7 +16,6 @@ public:
 	virtual void updateAnimation() override;
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
-	virtual void die() override;
 	virtual void draw() override;
 	Soldier &operator=(const Soldier &other);
 private:
@@ -30,9 +29,12 @@ private:
 	bool inAir = false;
 	bool lookingUp = false;
 	bool attacking = false;
-	bool knifing = false;
+	bool nearEnemy = false;
 	bool throwingGrenade = false;
 	bool pressingDown = false;
 	clock_t lastJumpTime = clock();
 	clock_t lastAttackTime = clock();
+	enum class Action {
+		IDLE, MOVE, JUMP, BOMB, DIE
+	} action = Action::IDLE, lastAction = Action::IDLE;
 };
