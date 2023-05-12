@@ -28,6 +28,7 @@ namespace game_framework {
 	extern std::string state;
 	extern int selectIndex;
 	extern CMovingBitmap background;
+	extern CMovingBitmap background_mission1;
 	extern CMovingBitmap arrow;
 	extern std::vector<CMovingBitmap> mainmenuButtons;
 	extern int ViewPointX;

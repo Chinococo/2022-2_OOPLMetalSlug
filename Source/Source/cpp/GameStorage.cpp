@@ -32,16 +32,18 @@ namespace game_framework {
 		grounds.push_back(Ground({ 3150,325 }, { 3600,325 }));
 		grounds.push_back(Ground({ 3600,325 }, { 4200,325 }));
 		grounds.push_back(Ground({ 4050,430 }, { 4250,430 }));
-		grounds.push_back(Ground({ 5010,515 }, { 9000,515 }));
+		grounds.push_back(Ground({ 4800,515 }, { 9000,515 }));
 		grounds.push_back(Ground({ 5520,330 }, { 5750,330 }));
 		/*牆壁*/
 		grounds.push_back(Ground({ 0,0 }, { 0,600 }));
 
 		/*Debug專用*/
-		//grounds.push_back(Ground({ 4100,430 }, { 10000,430 }));
+		grounds.push_back(Ground({ 5750,515 }, { 10000,515 }));
 
 	}
 	void createMap() {
+		background_mission1.LoadBitmapByString({ "resources/maps/background4.bmp" }, RGB(255, 255, 255));
+		background_mission1.SetTopLeft(8000, -100);
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF,bool>> layer;
 		layer.push_back({ {"resources/maps/water_01_01.bmp","resources/maps/water_01_02.bmp","resources/maps/water_01_03.bmp","resources/maps/water_01_04.bmp"
 			,"resources/maps/water_01_05.bmp","resources/maps/water_01_06.bmp","resources/maps/water_01_07.bmp"},{{5035,485},{5035,485},{5035,485},{5035,485},{5035,485},{5035,485},{5035,485}} , RGB(255, 255, 255),true });
@@ -102,6 +104,11 @@ namespace game_framework {
 	}
 	void updateUnderCharacterLayer()
 	{
+		if (marco.GetLeft() + abs(ViewPointX) > 8500 && marco.GetLeft() + abs(ViewPointX) < 9000)
+			background_mission1.SetTopLeft(background.GetLeft() + (marco.GetLeft() + abs(ViewPointX) - 8500) / 1000, background_mission1.GetTop());
+		else
+			background_mission1.SetTopLeft((ViewPointX + 9400 - background_mission1.GetWidth()), background_mission1.GetTop());
+		background_mission1.ShowBitmap();
 		for (unsigned i = UnderCharacter.size() - 1;; i--) {
 			int now_index = std::get<0>(UnderCharacter[i]).GetFrameIndexOfBitmap();
 			std::get<0>(UnderCharacter[i]).SetTopLeft(
@@ -156,6 +163,7 @@ namespace game_framework {
 	int selectIndex = 0;
 	CMovingBitmap background;
 	CMovingBitmap arrow;
+	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
 	int ViewPointX = -000;
 	int ViewPointY = 580;
