@@ -123,7 +123,7 @@ void Soldier::control() { // AI
 		movingRight = false;
 	}
 
-	if ((currentTime - lastJumpTime >= JUMP_COOLDOWN) && (rand() % 10 + 1 == 0)) {
+	if ((currentTime - lastJumpTime >= JUMP_COOLDOWN) && (rand() % 10 == 0)) {
 		lastJumpTime = currentTime;
 		jumping = true;
 	}
@@ -132,7 +132,7 @@ void Soldier::control() { // AI
 	}
 
 	
-	if ((currentTime - lastAttackTime >= ATTACK_COOLDOWN) && distanceX < 50) {
+	if ((currentTime - lastAttackTime >= ATTACK_COOLDOWN) && abs(distanceX) < 200 ) {
 		lastAttackTime = currentTime;
 		attacking = true;
 	}
@@ -168,7 +168,7 @@ void Soldier::move() {
 
 void Soldier::attack() {
 	if (attacking) {
-		addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "enemy");
+		addBullet(ViewPointX+x + facingX * 20, y + 20, 20, facingX, facingY, "enemy");
 	}
 }
 

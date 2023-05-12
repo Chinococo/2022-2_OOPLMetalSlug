@@ -20,7 +20,7 @@ public:
 	Soldier &operator=(const Soldier &other);
 private:
 	int velocityY = 0;
-	const int JUMP_VELOCITY = -20;
+	const int JUMP_VELOCITY = -15;
 	const int JUMP_COOLDOWN = 2000;
 	const int ATTACK_COOLDOWN = 1000;
 	bool movingLeft = false;
