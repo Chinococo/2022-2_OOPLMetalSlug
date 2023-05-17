@@ -12,6 +12,7 @@
 
 namespace game_framework {
 	// function
+	extern std::vector<std::vector<std::string>> readCSV(const std::string& filename);
 	extern void createSoldiers();
 	extern void createGrounds();
 	extern void createMap();
@@ -33,6 +34,7 @@ namespace game_framework {
 	extern std::vector<CMovingBitmap> mainmenuButtons;
 	extern int ViewPointX;
 	extern int ViewPointY;
+	extern int ViewPointYInit;
 	extern int MapScrollSpeed;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;

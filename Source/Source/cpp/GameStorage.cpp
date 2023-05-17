@@ -1,7 +1,32 @@
 #include "stdafx.h"
 #include "../header/GameStorage.h"
-
+#include <fstream>
+#include <sstream>
 namespace game_framework {
+	std::vector<std::vector<std::string>> readCSV(const std::string& filename) {
+		std::vector<std::vector<std::string>> data;
+		std::ifstream file(filename);
+
+		if (!file.is_open()) {
+			return data;
+		}
+
+		std::string line;
+		while (std::getline(file, line)) {
+			std::vector<std::string> row;
+			std::string cell;
+			std::stringstream lineStream(line);
+
+			while (std::getline(lineStream, cell, ',')) {
+				row.push_back(cell);
+			}
+
+			data.push_back(row);
+		}
+
+		file.close();
+		return data;
+	}
 	void createSoldiers() {
 		const int moveSpeed = 1;
 		soldiers.push_back(Soldier(100, 100, moveSpeed));
@@ -165,18 +190,19 @@ namespace game_framework {
 	CMovingBitmap arrow;
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -000;
-	int ViewPointY = 580;
+	int ViewPointX = 0;
+	int ViewPointY = 600;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
 	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
 	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;
 	const int GRAVITY = 1;
 	std::set<UINT> keyDowns;
-	Marco marco(300, 300, 6);
+	Marco marco(300, 100, 6);
 	std::vector < MapObject> MapObjects;
 	std::vector<Soldier> soldiers;
 	std::vector<Bullet> bullets;
 	std::vector<Ground> grounds;
 	bool Loading = false;
+	int ViewPointYInit = 580;
 }
