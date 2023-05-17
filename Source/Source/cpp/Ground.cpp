@@ -79,13 +79,13 @@ int Ground::isOnGround(CMovingBitmap bmp, Ground ground) {
 int Ground::isOnGroundLeft(game_framework::CMovingBitmap bmp, Ground ground) {
 	if (ground.end.first != ground.start.first)
 		return 0;
-	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() + ViewPointY - ViewPointYInit},{abs(ViewPointX) + bmp.GetLeft(),  bmp.GetTop() + bmp.GetHeight() + ViewPointY - ViewPointYInit} };
-	pair<pair<int, int>, pair<int, int>> CharacterTopLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() + ViewPointY - ViewPointYInit},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth() , bmp.GetTop() + ViewPointY - ViewPointYInit } };
-	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth(), bmp.GetTop() + ViewPointY - ViewPointYInit},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth(), bmp.GetTop() + bmp.GetHeight() + ViewPointY - ViewPointYInit} };
-	pair<pair<int, int>, pair<int, int>> CharacterBottomLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() + bmp.GetHeight() + ViewPointY - ViewPointYInit},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth() , bmp.GetTop() + bmp.GetHeight() + ViewPointY - ViewPointYInit } };
+	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop()},{abs(ViewPointX) + bmp.GetLeft(),  bmp.GetTop() + bmp.GetHeight()} };
+	pair<pair<int, int>, pair<int, int>> CharacterTopLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() },{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth() , bmp.GetTop() } };
+	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth(), bmp.GetTop()},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth(), bmp.GetTop() + bmp.GetHeight()} };
+	pair<pair<int, int>, pair<int, int>> CharacterBottomLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() + bmp.GetHeight() },{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth() , bmp.GetTop() + bmp.GetHeight() } };
 	//pair<int, int>ground.start, pair<int, int>ground.end
 
-	pair<pair<int, int>, pair<int, int>> line = { ground.start,ground.end };
+	pair<pair<int, int>, pair<int, int>> line = { {ground.start.first,ground.start.second + ViewPointY - ViewPointYInit}, {ground.end.first,ground.end.second + ViewPointY - ViewPointYInit} };
 	bool check1 = LineSegmentIntersection(CharacterTopLine, line);
 	bool check2 = LineSegmentIntersection(CharacterBottomLine, line);
 	int check4 = abs(bmp.GetLeft() + bmp.GetWidth() - ground.start.first) - abs(bmp.GetLeft() - ground.start.first);
@@ -98,13 +98,13 @@ int Ground::isOnGroundLeft(game_framework::CMovingBitmap bmp, Ground ground) {
 int Ground::isOnGroundRight(game_framework::CMovingBitmap bmp, Ground ground) {
 	if (ground.end.first != ground.start.first)
 		return 0;
-	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() + ViewPointY - ViewPointYInit},{abs(ViewPointX) + bmp.GetLeft(),  bmp.GetTop() + bmp.GetHeight() + ViewPointY - ViewPointYInit} };
-	pair<pair<int, int>, pair<int, int>> CharacterTopLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() + ViewPointY - ViewPointYInit},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth() , bmp.GetTop() + ViewPointY - ViewPointYInit } };
-	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth(), bmp.GetTop() + ViewPointY - ViewPointYInit},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth(), bmp.GetTop() + bmp.GetHeight() + ViewPointY - ViewPointYInit} };
-	pair<pair<int, int>, pair<int, int>> CharacterBottomLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() + bmp.GetHeight() + ViewPointY - ViewPointYInit},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth() , bmp.GetTop() + bmp.GetHeight() + ViewPointY - ViewPointYInit } };
+	pair<pair<int, int>, pair<int, int>> CharacterLeftLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop()},{abs(ViewPointX) + bmp.GetLeft(),  bmp.GetTop() + bmp.GetHeight()} };
+	pair<pair<int, int>, pair<int, int>> CharacterTopLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() },{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth() , bmp.GetTop() } };
+	pair<pair<int, int>, pair<int, int>> CharacterRightLine = { {abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth(), bmp.GetTop()},{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth(), bmp.GetTop() + bmp.GetHeight()} };
+	pair<pair<int, int>, pair<int, int>> CharacterBottomLine = { {abs(ViewPointX) + bmp.GetLeft(), bmp.GetTop() + bmp.GetHeight() },{abs(ViewPointX) + bmp.GetLeft() + bmp.GetWidth() , bmp.GetTop() + bmp.GetHeight() } };
 	//pair<int, int>ground.start, pair<int, int>ground.end
 
-	pair<pair<int, int>, pair<int, int>> line = { ground.start,ground.end };
+	pair<pair<int, int>, pair<int, int>> line = { {ground.start.first,ground.start.second + ViewPointY - ViewPointYInit}, {ground.end.first,ground.end.second + ViewPointY - ViewPointYInit} };
 	bool check1 = LineSegmentIntersection(CharacterLeftLine, line);
 	bool check2 = LineSegmentIntersection(CharacterTopLine, line);
 	bool check3 = LineSegmentIntersection(CharacterBottomLine, line);
