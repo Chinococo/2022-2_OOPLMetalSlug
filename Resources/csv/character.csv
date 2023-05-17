@@ -14,3 +14,8 @@ marco,73~90,resources/img_v2/marco/crouchShoot/,100
 marco,90~97,resources/img_v2/marco/crouchKnife/,300
 marco,97~103,resources/img_v2/marco/crouchGrenade/,300
 marco,103~105,resources/img_v2/marco/die/,1000
+soldier,0~6,resources/img_v2/soldier/idle/,300
+soldier,6~18,resources/img_v2/soldier/move/,70
+soldier,18~28,resources/img_v2/soldier/jump/,300
+soldier,28~37,resources/img_v2/soldier/bomb/,300
+soldier,37~43,resources/img_v2/soldier/die/,300
