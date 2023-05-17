@@ -1,0 +1,16 @@
+﻿character,range,prefix,delay
+marco,0~4,resources/img_v2/marco/idle/,300
+marco,4~20,resources/img_v2/marco/move/,70
+marco,20~26,resources/img_v2/marco/jump/,1000
+marco,26~27,resources/img_v2/marco/lookUp/,1000
+marco,27~35,resources/img_v2/marco/shoot/,30
+marco,35~42,resources/img_v2/marco/shootUp/,300
+marco,42~48,resources/img_v2/marco/shootDown/,300
+marco,48~56,resources/img_v2/marco/knife/,300
+marco,56~62,resources/img_v2/marco/grenade/,300
+marco,62~66,resources/img_v2/marco/crouchIdle/,300
+marco,66~73,resources/img_v2/marco/crouchMove/,300
+marco,73~90,resources/img_v2/marco/crouchShoot/,100
+marco,90~97,resources/img_v2/marco/crouchKnife/,300
+marco,97~103,resources/img_v2/marco/crouchGrenade/,300
+marco,103~105,resources/img_v2/marco/die/,1000

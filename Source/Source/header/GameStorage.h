@@ -12,6 +12,7 @@
 
 namespace game_framework {
 	// function
+	extern std::vector<std::vector<std::string>> readCSV(const std::string& filename);
 	extern void createSoldiers();
 	extern void createGrounds();
 	extern void createMap();
