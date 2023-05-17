@@ -249,7 +249,7 @@ void Soldier::updateAnimation() {
 void Soldier::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (Ground::isOnGround(*this, grounds[i]) == 1) {
-			dy = Ground::GetX_Height(grounds[i], x) - GetHeight() - y;
+			dy = Ground::GetX_Height(grounds[i], x) - GetHeight() - y + ViewPointY - ViewPointYInit;
 			velocityY = 0;
 			inAir = false;
 		}

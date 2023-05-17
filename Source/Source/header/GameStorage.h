@@ -34,6 +34,7 @@ namespace game_framework {
 	extern std::vector<CMovingBitmap> mainmenuButtons;
 	extern int ViewPointX;
 	extern int ViewPointY;
+	extern int ViewPointYInit;
 	extern int MapScrollSpeed;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;

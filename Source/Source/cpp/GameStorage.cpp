@@ -190,18 +190,19 @@ namespace game_framework {
 	CMovingBitmap arrow;
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -000;
-	int ViewPointY = 580;
+	int ViewPointX = 0;
+	int ViewPointY = 600;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
 	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
 	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;
 	const int GRAVITY = 1;
 	std::set<UINT> keyDowns;
-	Marco marco(300, 300, 6);
+	Marco marco(300, 100, 6);
 	std::vector < MapObject> MapObjects;
 	std::vector<Soldier> soldiers;
 	std::vector<Bullet> bullets;
 	std::vector<Ground> grounds;
 	bool Loading = false;
+	int ViewPointYInit = 580;
 }
