@@ -22,6 +22,13 @@ bool Character::myIsOverlap(Character *other) {
 	int otherBottom = other->GetTop() + other->GetHeight();
 	int otherRight = other->GetLeft() + other->GetWidth();
 
+	if (dynamic_cast<Marco *>(other)) {
+		otherTop += ViewPointY;
+		otherLeft += ViewPointX;
+		otherBottom += ViewPointY;
+		otherRight += ViewPointX;
+	}
+
 	if (bottom < otherTop || otherBottom < top) {
 		return false;
 	}

@@ -3,6 +3,8 @@
 
 Firework::Firework(int x, int y, std::string direction) : Character(x, y, velocityX) {
 	this->direction = direction;
+	dying = false;
+	alive = true;
 }
 
 void Firework::init() {
@@ -61,14 +63,13 @@ void Firework::init() {
 }
 
 void Firework::update() {
-	if (clock() - deathTimer >= 500) {
-		alive = false;
-		return;
-	}
 	if (!dying) {
 		move();
 		SetTopLeft(x, y);
-		deathTimer = clock();
+		return;
+	}
+	if (clock() - deathTimer >= 500) {
+		alive = false;
 		return;
 	}
 	/*
@@ -89,7 +90,7 @@ void Firework::move() {
 
 	collideWithHero();
 	moveLeftRight();
-	collideWithGround();
+	//collideWithGround();
 
 	x += dx;
 	y += dy;
@@ -135,6 +136,7 @@ void Firework::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (Ground::isOnGround(*this, grounds[i]) == 1) {
 			dying = true;
+			deathTimer = clock();
 			return;
 		}
 	}
@@ -147,6 +149,7 @@ void Firework::collideWithWall() {
 void Firework::collideWithHero() {
 	if (myIsOverlap(&marco)) {
 		dying = true;
+		deathTimer = clock();
 	}
 }
 

@@ -99,7 +99,7 @@ void Soldier::control() { // AI
 	*/
 
 	
-	if ((currentTime - lastAttackTime >= ATTACK_COOLDOWN) && abs(distanceX) < 200 ) {
+	if (currentTime - lastAttackTime >= ATTACK_COOLDOWN) {
 		lastAttackTime = currentTime;
 		attacking = true;
 	}

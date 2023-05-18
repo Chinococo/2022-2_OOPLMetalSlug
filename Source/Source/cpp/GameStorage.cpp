@@ -107,11 +107,14 @@ namespace game_framework {
 		firework.init();
 		soldierFireworks.push_back(firework);
 	}
-	void removeInactiveBullets() {
-		
+	void removeInactives() {
 		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet &bullet) {
 			return !bullet.isAlive();
 		}), bullets.end());
+
+		soldierFireworks.erase(std::remove_if(soldierFireworks.begin(), soldierFireworks.end(), [](const Firework &firework) {
+			return !firework.isAlive();
+		}), soldierFireworks.end());
 	}
 	void removeMapObject()
 	{
