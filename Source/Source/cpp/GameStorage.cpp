@@ -129,11 +129,11 @@ namespace game_framework {
 	}
 	void updateUnderCharacterLayer()
 	{
-		if (marco.GetLeft() + abs(ViewPointX) > 8500 && marco.GetLeft() + abs(ViewPointX) < 9000)
-			background_mission1.SetTopLeft(background.GetLeft() + (marco.GetLeft() + abs(ViewPointX) - 8500) / 1000, background_mission1.GetTop());
-		else
-			background_mission1.SetTopLeft((ViewPointX + 9400 - background_mission1.GetWidth()), background_mission1.GetTop());
-		background_mission1.ShowBitmap();
+		//if (marco.GetLeft() + abs(ViewPointX) > 8500 && marco.GetLeft() + abs(ViewPointX) < 9000)
+		//	background_mission1.SetTopLeft(background.GetLeft() + (marco.GetLeft() + abs(ViewPointX) - 8500) / 1000, background_mission1.GetTop());
+		//else
+		//	background_mission1.SetTopLeft((ViewPointX + 9400 - background_mission1.GetWidth()), background_mission1.GetTop());
+		//background_mission1.ShowBitmap();
 		for (unsigned i = UnderCharacter.size() - 1;; i--) {
 			int now_index = std::get<0>(UnderCharacter[i]).GetFrameIndexOfBitmap();
 			std::get<0>(UnderCharacter[i]).SetTopLeft(
@@ -169,13 +169,13 @@ namespace game_framework {
 		std::vector<std::vector<std::string>> csv = readCSV("resources/csv/mapobject.csv");
 		for (unsigned i = 1; i < csv.size(); i++) {
 			vector<std::string> image;
-			for (unsigned index = 5; index < csv[i].size(); index++) {
+			for (unsigned index = 6; index < csv[i].size(); index++) {
 				if (csv[i][index] == "")
 					break;
 				image.push_back(csv[i][index]);
 			}
 			if(std::stoi(csv[i][0])==1)
-				MapObjects.push_back(MapObject(std::stoi(csv[i][1]), std::stoi(csv[i][2]), std::stoi(csv[i][4]),image, std::stoi(csv[i][3])));
+				MapObjects.push_back(MapObject(std::stoi(csv[i][1]), std::stoi(csv[i][2]), std::stoi(csv[i][4]),image, csv[i][5], std::stoi(csv[i][3])));
 		}
 	}
 	void removeInactiveSolider() {
@@ -187,15 +187,17 @@ namespace game_framework {
 				i++;
 		}
 	}
-	
+	bool Loadcheckpoint() {
+		return false;
+	}
 	std::string state = "init";
 	int selectIndex = 0;
 	CMovingBitmap background;
 	CMovingBitmap arrow;
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = 0;
-	int ViewPointY = 600;
+	int ViewPointX = -7000;
+	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
 	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;

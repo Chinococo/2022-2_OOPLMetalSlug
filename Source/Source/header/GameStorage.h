@@ -25,6 +25,7 @@ namespace game_framework {
 	extern void updateUpperCharacterLayer();
 	extern void updateMapObject();
 	extern void createMapObject();
+	extern bool Loadcheckpoint();
 	// map
 	extern std::string state;
 	extern int selectIndex;
