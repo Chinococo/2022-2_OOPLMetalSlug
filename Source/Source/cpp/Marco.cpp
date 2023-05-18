@@ -128,7 +128,7 @@ void Marco::moveLeftRight() {
 		facingX = -1;
 		flip = true;
 	}
-	if (movingRight&&!scroll) {
+	if (movingRight&&(Checkcheckpoint()||!scroll)) {
 		dx += speedX;
 		facingX = 1;
 		flip = false;

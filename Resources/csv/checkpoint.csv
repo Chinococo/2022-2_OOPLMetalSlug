@@ -1,5 +1,5 @@
-map id,type,name
-1,MapObject,enemy_platform_1
-1,MapObject,enemy_buliding_1
-1,MapObject,miniboss_01
-1,MapObject,miniboss1_01
+map id,type,name,x
+1,MapObject,enemy_platform_1,4200
+1,MapObject,enemy_buliding_1,5000
+1,MapObject,miniboss_01,7000
+1,MapObject,miniboss1_01,7600

@@ -132,7 +132,7 @@ void CGameStateRun::OnShow()
 	}
 	else if (state == "map1") {
 		
-		if (keyDowns.count(VK_RIGHT)&&scroll)
+		if (keyDowns.count(VK_RIGHT)&&scroll&&!Checkcheckpoint())
 			ViewPointX -= MapScrollSpeed;
 		//else if (keyDowns.count(VK_LEFT) && ViewPointX < 0)
 		//	ViewPointX += MapScrollSpeed;

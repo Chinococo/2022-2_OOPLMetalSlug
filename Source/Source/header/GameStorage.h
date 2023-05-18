@@ -25,7 +25,7 @@ namespace game_framework {
 	extern void updateUpperCharacterLayer();
 	extern void updateMapObject();
 	extern void createMapObject();
-	extern bool Loadcheckpoint();
+	extern bool Checkcheckpoint();
 	// map
 	extern std::string state;
 	extern int selectIndex;
@@ -39,6 +39,7 @@ namespace game_framework {
 	extern int MapScrollSpeed;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;
+	extern vector<vector<string>> checkpointcsv;
 
 	// character
 	extern const int GRAVITY;

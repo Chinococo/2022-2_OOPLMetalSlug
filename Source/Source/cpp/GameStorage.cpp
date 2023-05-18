@@ -187,16 +187,25 @@ namespace game_framework {
 				i++;
 		}
 	}
-	bool Loadcheckpoint() {
+	bool Checkcheckpoint() {
+		for (unsigned i = 1; i < checkpointcsv.size(); i++)
+			for (unsigned j = 0; j < MapObjects.size(); j++) {
+				if (MapObjects[j].GetName() != checkpointcsv[i][2]|| checkpointcsv[i][1]!="MapObject"|| checkpointcsv[i][0] != "1")
+					continue;
+				if (MapObjects[j].isAlive() && abs(ViewPointX) >= std::stoi(checkpointcsv[i][3]))
+					return true;
+			}
 		return false;
+				
 	}
+	vector<vector<string>> checkpointcsv = readCSV("resources/csv/checkpoint.csv");
 	std::string state = "init";
 	int selectIndex = 0;
 	CMovingBitmap background;
 	CMovingBitmap arrow;
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -7000;
+	int ViewPointX = 0 ;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
