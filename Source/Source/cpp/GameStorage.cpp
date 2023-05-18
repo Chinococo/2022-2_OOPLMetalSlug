@@ -57,13 +57,15 @@ namespace game_framework {
 		grounds.push_back(Ground({ 3150,325 }, { 3600,325 }));
 		grounds.push_back(Ground({ 3600,325 }, { 4200,325 }));
 		grounds.push_back(Ground({ 4050,430 }, { 4250,430 }));
-		grounds.push_back(Ground({ 4800,515 }, { 9000,515 }));
 		grounds.push_back(Ground({ 5520,330 }, { 5750,330 }));
+		grounds.push_back(Ground({ 4800,515 }, { 10000,515 }));
+		grounds.push_back(Ground({ 9000,515 }, { 10000,200 }));
+		grounds.push_back(Ground({ 9800,240 }, { 12000,240 }));
 		/*牆壁*/
 		grounds.push_back(Ground({ 0,0 }, { 0,600 }));
 
 		/*Debug專用*/
-		grounds.push_back(Ground({ 5750,515 }, { 10000,515 }));
+		//grounds.push_back(Ground({ 5750,515 }, { 10000,515 }));
 
 	}
 	void createMap() {
@@ -205,7 +207,7 @@ namespace game_framework {
 	CMovingBitmap arrow;
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = 0 ;
+	int ViewPointX = -8000 ;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;

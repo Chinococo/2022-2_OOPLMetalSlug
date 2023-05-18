@@ -134,8 +134,8 @@ void CGameStateRun::OnShow()
 		
 		if (keyDowns.count(VK_RIGHT)&&scroll&&!Checkcheckpoint())
 			ViewPointX -= MapScrollSpeed;
-		//else if (keyDowns.count(VK_LEFT) && ViewPointX < 0)
-		//	ViewPointX += MapScrollSpeed;
+		if (abs(ViewPointX) < 9500 && abs(ViewPointX) > 8700)
+			ViewPointY = static_cast<int>(580 +floor(static_cast<double>(abs(ViewPointX) -8700)/3.8));
 		updateUnderCharacterLayer();
 		updateMapObject();
 		updateCharacter();
@@ -147,7 +147,7 @@ void CGameStateRun::OnShow()
 		else {
 			CDC *pDC = CDDraw::GetBackCDC();
 			//game_framework::ChangeFontLog
-			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0,0,0), 500);
+			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(150, 150, 150), 500);
 			CString str;
 			str.Format(_T("now index=%d x=%d y=%d"), marco.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
 
