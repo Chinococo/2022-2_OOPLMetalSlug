@@ -1,4 +1,4 @@
-map id,x,y,broken,index,hp,image,,,,,,,
+map id,x,y,broken index,hp,image,,,,,,,,
 1,4830,180,-1,10,resources/maps/enemy_platform_1.bmp,resources/maps/enemy_platform_1_broken.bmp,,,,,,,
 1,5480,-10,-1,10,resources/maps/enemy_buliding_1.bmp,resources/maps/enemy_buliding_1_broken.bmp,,,,,,,
 1,7500,-18,-1,10,resources/maps/miniboss_01.bmp,resources/maps/miniboss_02.bmp,resources/maps/miniboss_03.bmp,resources/maps/miniboss_04.bmp,resources/maps/empty.bmp,,,,

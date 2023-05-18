@@ -174,18 +174,9 @@ namespace game_framework {
 					break;
 				image.push_back(csv[i][index]);
 			}
-
-				
 			if(std::stoi(csv[i][0])==1)
 				MapObjects.push_back(MapObject(std::stoi(csv[i][1]), std::stoi(csv[i][2]), std::stoi(csv[i][4]),image, std::stoi(csv[i][3])));
 		}
-		//MapObjects.push_back(MapObject(4830, 180, 10, { "resources/maps/enemy_platform_1.bmp","resources/maps/enemy_platform_1_broken.bmp" }));
-		//MapObjects.push_back(MapObject(5480, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
-		//MapObjects.push_back(MapObject(7500, -18, 10, { "resources/maps/miniboss_01.bmp","resources/maps/miniboss_02.bmp","resources/maps/miniboss_03.bmp","resources/maps/miniboss_04.bmp","resources/maps/empty.bmp" }));
-		//MapObjects.push_back(MapObject(8000, -10, 10, { "resources/maps/miniboss1_01.bmp","resources/maps/miniboss1_02.bmp","resources/maps/miniboss1_03.bmp","resources/maps/miniboss1_04.bmp"
-		//	,"resources/maps/miniboss1_05.bmp","resources/maps/miniboss1_06.bmp","resources/maps/miniboss1_07.bmp","resources/maps/miniboss1_08.bmp","resources/maps/empty.bmp" }, 3));
-
-		//MapObjects.push_back(MapObject(6000, -10, 10, { "resources/maps/enemy_buliding_1.bmp","resources/maps/enemy_buliding_1_broken.bmp" }));
 	}
 	void removeInactiveSolider() {
 		for (size_t i = 0; i < soldiers.size();) {
