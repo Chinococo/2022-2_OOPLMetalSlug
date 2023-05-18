@@ -18,6 +18,7 @@ public:
 	virtual void collideWithWall() = 0;
 	virtual void draw() = 0;
 	bool isAlive() const;
+	bool myIsOverlap(Character *other);
 protected:
 	int x;
 	int y;

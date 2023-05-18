@@ -102,6 +102,11 @@ namespace game_framework {
 		bullet.init();
 		bullets.push_back(bullet);
 	}
+	void addFirework(int x, int y, std::string direction) {
+		Firework firework(x, y, direction);
+		firework.init();
+		soldierFireworks.push_back(firework);
+	}
 	void removeInactiveBullets() {
 		
 		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet &bullet) {
@@ -206,6 +211,7 @@ namespace game_framework {
 	std::vector <MapObject> MapObjects;
 	std::vector<Soldier> soldiers;
 	std::vector<Bullet> bullets;
+	std::vector<Firework> soldierFireworks;
 	std::vector<Ground> grounds;
 	bool Loading = false;
 	int ViewPointYInit = 580;

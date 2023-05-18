@@ -76,15 +76,19 @@ void Soldier::control() { // AI
 	clock_t currentTime = clock();
 
 	int distanceX = (abs(ViewPointX) + marco.GetLeft()) - x;
-	if (distanceX > 0) {
-		movingRight = true;
-		movingLeft = false;
-	}
-	else if (distanceX < 0) {
-		movingLeft = true;
-		movingRight = false;
+
+	movingLeft = false;
+	movingRight = false;
+	if (abs(distanceX) > 250) {
+		if (distanceX > 0) {
+			movingRight = true;
+		}
+		else if (distanceX < 0) {
+			movingLeft = true;
+		}
 	}
 
+	/*
 	if ((currentTime - lastJumpTime >= JUMP_COOLDOWN) && (rand() % 10 == 0)) {
 		lastJumpTime = currentTime;
 		jumping = true;
@@ -92,6 +96,7 @@ void Soldier::control() { // AI
 	else {
 		jumping = false;
 	}
+	*/
 
 	
 	if ((currentTime - lastAttackTime >= ATTACK_COOLDOWN) && abs(distanceX) < 200 ) {
@@ -130,7 +135,9 @@ void Soldier::move() {
 
 void Soldier::attack() {
 	if (attacking) {
-		addBullet(ViewPointX+x + facingX * 20, y + 20, 20, facingX, facingY, "enemy");
+		//addBullet(ViewPointX+x + facingX * 20, y + 20, 20, facingX, facingY, "enemy");
+		std::string direction = (facingX == -1) ? "left" : "right";
+		addFirework(ViewPointX + x, ViewPointY + y, direction);
 	}
 }
 
@@ -172,6 +179,7 @@ void Soldier::updateAction() {
 	if (inAir) {
 		if (attacking) {
 			action = Action::BOMB;
+			once = false;
 		}
 		else if (movingLeft || movingRight) {
 			action = Action::JUMP;
@@ -183,6 +191,7 @@ void Soldier::updateAction() {
 	else {
 		if (attacking) {
 			action = Action::BOMB;
+			once = false;
 		}
 		else if (movingLeft || movingRight) {
 			action = Action::MOVE;
@@ -204,6 +213,8 @@ void Soldier::changeAnimation() {
 void Soldier::updateAnimation() {
 	if (clock() - start > animationDelay) {
 		SetFrameIndexOfBitmap(((GetFrameIndexOfBitmap() - animationRange.first - +((flip) ? animationflipBias : 0) + 1) % (animationRange.second - animationRange.first)) + animationRange.first + ((flip) ? animationflipBias : 0));
+		if ((GetFrameIndexOfBitmap() - animationRange.first - +((flip) ? animationflipBias : 0)) % (animationRange.second - animationRange.first) == 0)
+			once = true;
 		start = clock();
 	}
 }
