@@ -2,7 +2,7 @@
 #include "../header/GameStorage.h"
 
 Firework::Firework(int x, int y, std::string direction) : Character(x, y, velocityX) {
-
+	this->direction = direction;
 }
 
 void Firework::init() {
