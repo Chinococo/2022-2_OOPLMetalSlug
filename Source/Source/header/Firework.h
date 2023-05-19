@@ -6,6 +6,7 @@ private:
 	std::string direction;
 	int velocityX = 3;
 	int velocityY = 0;
+	int ALIVE_DURATION = 100;
 	enum class Action {
 		MOVE, DIE
 	} action, lastAction;

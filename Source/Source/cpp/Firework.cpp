@@ -70,7 +70,7 @@ void Firework::update() {
 		SetTopLeft(x-abs(ViewPointX), y-ViewPointY+ViewPointYInit);
 		return;
 	}
-	if (clock() - deathTimer >= 500) {
+	if (clock() - deathTimer >= ALIVE_DURATION) {
 		alive = false;
 		return;
 	}
@@ -92,7 +92,7 @@ void Firework::move() {
 
 	collideWithHero();
 	moveLeftRight();
-	//collideWithGround();
+	collideWithGround();
 
 	x += dx;
 	y += dy;
@@ -137,6 +137,23 @@ void Firework::updateAnimation() {
 void Firework::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (Ground::isOnGround(*this, grounds[i]) == 1) {
+			dy = Ground::GetX_Height(grounds[i], x) - GetHeight() - y + ViewPointY - ViewPointYInit;
+			if (abs(dy) > 40) {
+				dy = 0;
+			}
+			return;
+		}
+	}
+}
+
+void Firework::collideWithWall() {
+	for (size_t i = 0; i < grounds.size(); i++) {
+		if (Ground::isOnGroundLeft(*this, grounds[i]) == 1) {
+			dying = true;
+			deathTimer = clock();
+			return;
+		}
+		else if (Ground::isOnGroundRight(*this, grounds[i]) == 1) {
 			dying = true;
 			deathTimer = clock();
 			return;
@@ -144,12 +161,8 @@ void Firework::collideWithGround() {
 	}
 }
 
-void Firework::collideWithWall() {
-	
-}
-
 void Firework::collideWithHero() {
-	if (myIsOverlap(&marco)) {
+	if (IsOverlap(*this, marco)) {
 		dying = true;
 		deathTimer = clock();
 	}
