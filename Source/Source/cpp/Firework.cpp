@@ -65,7 +65,9 @@ void Firework::init() {
 void Firework::update() {
 	if (!dying) {
 		move();
-		SetTopLeft(x-abs(ViewPointX), y-ViewPointY);
+		int x1 = x - abs(ViewPointX);
+		int y1 = y - ViewPointY + ViewPointYInit;
+		SetTopLeft(x-abs(ViewPointX), y-ViewPointY+ViewPointYInit);
 		return;
 	}
 	if (clock() - deathTimer >= 500) {
@@ -158,5 +160,5 @@ void Firework::draw() {
 		UnshowBitmap();
 		return;
 	}
-	ShowBitmap();
+	ShowBitmap(0.8);
 }
