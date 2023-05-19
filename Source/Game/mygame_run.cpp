@@ -29,7 +29,7 @@ void CGameStateRun::OnBeginState()
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
 	if (state == "map1") {
-		removeInactiveBullets();
+		removeInactives();
 		removeInactiveSolider();
 		marco.update();
 		for (size_t i = 0; i < soldiers.size(); i++) {
@@ -37,6 +37,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		}
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].update();
+		}
+		for (size_t i = 0; i < soldierFireworks.size(); i++) {
+			soldierFireworks[i].update();
 		}
 	}
 }
@@ -158,6 +161,15 @@ void CGameStateRun::OnShow()
 			CDDraw::ReleaseBackCDC();
 		}
 		
-		
+		for (size_t i = 0; i < soldiers.size(); i++) {
+			soldiers[i].draw();
+		}
+		marco.draw();
+		for (size_t i = 0; i < bullets.size(); i++) {
+			bullets[i].draw();
+		}
+		for (size_t i = 0; i < soldierFireworks.size(); i++) {
+			soldierFireworks[i].draw();
+		}
 	}
 }

@@ -19,10 +19,11 @@ public:
 	virtual void draw() override;
 	Soldier &operator=(const Soldier &other);
 private:
+	bool once = true;
 	int velocityY = 0;
 	const int JUMP_VELOCITY = -15;
 	const int JUMP_COOLDOWN = 2000;
-	const int ATTACK_COOLDOWN = 1000;
+	const int ATTACK_COOLDOWN = 3000;
 	bool movingLeft = false;
 	bool movingRight = false;
 	bool jumping = false;
@@ -35,6 +36,6 @@ private:
 	clock_t lastJumpTime = clock();
 	clock_t lastAttackTime = clock();
 	enum class Action {
-		IDLE, MOVE, JUMP, BOMB, DIE
+		IDLE, MOVE, JUMP, FIREWORK, GRENADE, BOMB, DIE
 	} action = Action::IDLE, lastAction = Action::IDLE;
 };
