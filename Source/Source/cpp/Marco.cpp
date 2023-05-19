@@ -128,7 +128,7 @@ void Marco::moveLeftRight() {
 		facingX = -1;
 		flip = true;
 	}
-	if (movingRight&&!scroll) {
+	if (movingRight&&(Checkcheckpoint()||!scroll)) {
 		dx += speedX;
 		facingX = 1;
 		flip = false;
@@ -377,7 +377,7 @@ void Marco::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (Ground::isOnGround(*this, grounds[i]) == 1&&velocityY>0  ) {
 			//&& (this->GetTop() + this->GetHeight()) - Ground::GetX_Height(grounds[i], x) < 15;
-			dy = Ground::GetX_Height(grounds[i], x) - GetHeight() - y + ViewPointY - ViewPointYInit;
+			dy = Ground::GetX_Height(grounds[i], abs(ViewPointX)+x) - GetHeight() - y+ViewPointY-ViewPointYInit;
 			if (abs(dy) > 40)
 				dy = 0;
 			velocityY = 0;

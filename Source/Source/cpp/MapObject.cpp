@@ -2,7 +2,7 @@
 #include "../header/GameStorage.h"
 #include "cmath"
 using namespace game_framework;
-MapObject::MapObject(int _x, int _y, int _hp, vector<string> _path, int _destry_animation_index) {
+MapObject::MapObject(int _x, int _y, int _hp, vector<string> _path,  string _name, int _destry_animation_index) {
 
 	//this->SetTopLeft(_x, _y);
 	this->x = _x;
@@ -12,6 +12,17 @@ MapObject::MapObject(int _x, int _y, int _hp, vector<string> _path, int _destry_
 	this->path = _path;
 	this->destry_animation_index = _destry_animation_index;
 	this->start = clock();
+	this->name = _name;
+}
+
+int MapObject::GetX()
+{
+	return x;
+}
+
+string MapObject::GetName()
+{
+	return name;
 }
 
 void MapObject::update(){
