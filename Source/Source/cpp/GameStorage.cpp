@@ -48,19 +48,12 @@ namespace game_framework {
 	}
 	void createGrounds() {
 		/* 地板 */
-		grounds.push_back(Ground({ 0,475 }, { 1820,475 }));
-		grounds.push_back(Ground({ 1820,400 }, { 1820,800 }));
-		grounds.push_back(Ground({ 1750,550 }, { 5000,550 }));
-		grounds.push_back(Ground({ 2300,430 }, { 2550,430 }));
-		grounds.push_back(Ground({ 2520,320 }, { 3100,320 }));
-		grounds.push_back(Ground({ 2930,425 }, { 3150,425 }));
-		grounds.push_back(Ground({ 3150,325 }, { 3600,325 }));
-		grounds.push_back(Ground({ 3600,325 }, { 4200,325 }));
-		grounds.push_back(Ground({ 4050,430 }, { 4250,430 }));
-		grounds.push_back(Ground({ 5520,330 }, { 5750,330 }));
-		grounds.push_back(Ground({ 4800,515 }, { 10000,515 }));
-		grounds.push_back(Ground({ 9000,515 }, { 10000,200 }));
-		grounds.push_back(Ground({ 9800,240 }, { 12000,240 }));
+		for (unsigned i = 1; i < groundcsv.size(); i++) {
+			if (std::stoi(groundcsv[i][0]) != 1)
+				continue;
+			grounds.push_back(Ground({ std::stoi(groundcsv[i][1]),std::stoi(groundcsv[i][2]) }, { std::stoi(groundcsv[i][3]),std::stoi(groundcsv[i][4]) }));
+		}
+
 		/*牆壁*/
 		grounds.push_back(Ground({ 0,0 }, { 0,600 }));
 
@@ -201,13 +194,14 @@ namespace game_framework {
 				
 	}
 	vector<vector<string>> checkpointcsv = readCSV("resources/csv/checkpoint.csv");
+	vector<vector<string>> groundcsv = readCSV("resources/csv/ground.csv");
 	std::string state = "init";
 	int selectIndex = 0;
 	CMovingBitmap background;
 	CMovingBitmap arrow;
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -8000 ;
+	int ViewPointX = -0 ;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;

@@ -51,4 +51,5 @@ namespace game_framework {
 	extern std::vector<Ground> grounds;
 	extern bool scroll;
 	extern bool Loading;
+	extern vector<vector<string>> groundcsv;
 }

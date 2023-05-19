@@ -1,5 +1,14 @@
-map id,x,y,broken index,hp,name,image,,,,,,,,
-1,4830,180,-1,10,enemy_platform_1,resources/maps/enemy_platform_1.bmp,resources/maps/enemy_platform_1_broken.bmp,,,,,,,
-1,5480,-10,-1,10,enemy_buliding_1,resources/maps/enemy_buliding_1.bmp,resources/maps/enemy_buliding_1_broken.bmp,,,,,,,
-1,7500,-18,-1,10,miniboss_01,resources/maps/miniboss_01.bmp,resources/maps/miniboss_02.bmp,resources/maps/miniboss_03.bmp,resources/maps/miniboss_04.bmp,resources/maps/empty.bmp,,,,
-1,8000,-10,3,10,miniboss1_01,resources/maps/miniboss1_01.bmp,resources/maps/miniboss1_02.bmp,resources/maps/miniboss1_03.bmp,resources/maps/miniboss1_04.bmp,resources/maps/miniboss1_05.bmp,resources/maps/miniboss1_06.bmp,resources/maps/miniboss1_07.bmp,resources/maps/miniboss1_08.bmp,resources/maps/empty.bmp
+map id,x1,y1,x1,y1
+1,0,475 ,  1820,475 
+1,1820,400 ,  1820,800 
+1,1750,550 ,  5000,550 
+1,2300,430 ,  2550,430 
+1,2520,320 ,  3100,320 
+1,2930,425 ,  3150,425 
+1,3150,325 ,  3600,325 
+1,3600,325 ,  4200,325 
+1,4050,430 ,  4250,430 
+1,5520,330 ,  5750,330 
+1,4800,515 ,  10000,515 
+1,9000,515 ,  10000,200 
+1,9800,240 ,  12000,240 
