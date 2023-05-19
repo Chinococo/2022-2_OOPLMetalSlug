@@ -4,6 +4,8 @@
 #include "../header/Ground.h"
 #include "../header/Bullet.h"
 #include "../header/MapObject.h"
+#include "../header/Firework.h"
+#include "../header/Grenade.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -18,7 +20,8 @@ namespace game_framework {
 	extern void createMap();
 	extern void removeInactiveSolider();
 	extern void addBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner);
-	extern void removeInactiveBullets();
+	extern void addFirework(int x, int y, std::string direction);
+	extern void removeInactives();
 	extern void removeMapObject();
 	extern void updateCharacter();
 	extern void updateUnderCharacterLayer();
@@ -48,6 +51,7 @@ namespace game_framework {
 	extern std::vector <MapObject> MapObjects;
 	extern std::vector<Soldier> soldiers;
 	extern std::vector<Bullet> bullets;
+	extern std::vector<Firework> soldierFireworks;
 	extern std::vector<Ground> grounds;
 	extern bool scroll;
 	extern bool Loading;

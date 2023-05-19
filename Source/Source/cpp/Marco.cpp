@@ -151,6 +151,14 @@ void Marco::collideWithBullet() {
 		if (bullets[i].owner == "enemy" && IsOverlap(*this, bullets[i])) {
 			dying = true;
 			deathTimer = clock();
+			break;
+		}
+	}
+	for (size_t i = 0; i < soldierFireworks.size(); i++) {
+		if (IsOverlap(*this, soldierFireworks[i])) {
+			dying = true;
+			deathTimer = clock();
+			break;
 		}
 	}
 }

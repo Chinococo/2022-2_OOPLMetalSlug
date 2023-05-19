@@ -253,7 +253,9 @@
     </ClCompile>
     <ClCompile Include="Source\Source\cpp\Bullet.cpp" />
     <ClCompile Include="Source\Source\cpp\Character.cpp" />
+    <ClCompile Include="Source\Source\cpp\Firework.cpp" />
     <ClCompile Include="Source\Source\cpp\GameStorage.cpp" />
+    <ClCompile Include="Source\Source\cpp\Grenade.cpp" />
     <ClCompile Include="Source\Source\cpp\Ground.cpp" />
     <ClCompile Include="Source\Source\cpp\MapObject.cpp" />
     <ClCompile Include="Source\Source\cpp\Marco.cpp" />
@@ -273,7 +275,9 @@
     <ClInclude Include="Source\Library\gameutil.h" />
     <ClInclude Include="Source\Source\header\Bullet.h" />
     <ClInclude Include="Source\Source\header\Character.h" />
+    <ClInclude Include="Source\Source\header\Firework.h" />
     <ClInclude Include="Source\Source\header\GameStorage.h" />
+    <ClInclude Include="Source\Source\header\Grenade.h" />
     <ClInclude Include="Source\Source\header\Ground.h" />
     <ClInclude Include="Source\Source\header\MapObject.h" />
     <ClInclude Include="Source\Source\header\Marco.h" />
