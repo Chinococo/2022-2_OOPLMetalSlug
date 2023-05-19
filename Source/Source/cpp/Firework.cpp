@@ -65,7 +65,7 @@ void Firework::init() {
 void Firework::update() {
 	if (!dying) {
 		move();
-		SetTopLeft(x, y);
+		SetTopLeft(x-abs(ViewPointX), y-ViewPointY);
 		return;
 	}
 	if (clock() - deathTimer >= 500) {

@@ -137,7 +137,7 @@ void Soldier::attack() {
 	if (attacking) {
 		//addBullet(ViewPointX+x + facingX * 20, y + 20, 20, facingX, facingY, "enemy");
 		std::string direction = (facingX == -1) ? "left" : "right";
-		addFirework(ViewPointX + x, ViewPointY + y, direction);
+		addFirework(x + abs(ViewPointX), y+ViewPointY , direction);
 	}
 }
 
