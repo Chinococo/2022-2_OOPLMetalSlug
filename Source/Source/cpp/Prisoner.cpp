@@ -5,12 +5,13 @@ Prisoner::Prisoner(int x, int y) : Character(x, y, velocityX) {
 	this->x = x;
 	this->y = y;
 	anchoredX = x;
-	anchoredY = y;
 }
 
 
 void Prisoner::update() {
 	control();
+	move();
+	SetTopLeft(x + ViewPointX, y - ViewPointY + ViewPointYInit);
 }
 
 void Prisoner::handleTied() {
@@ -41,7 +42,7 @@ void Prisoner::handleRescued() {
 	action = Action::RESCUED;
 
 	// Switch to next action
-	if (isAnimationDone) {
+	if (once) {
 		sprite = Sprite::MOVE;
 		action = Action::MOVE;
 	}
@@ -51,8 +52,6 @@ void Prisoner::handleMove() {
 	// Set sprite and action for this state
 	sprite = Sprite::MOVE;
 	action = Action::MOVE;
-
-	move();
 	
 	// Switch to next action
 	if (IsOverlap(*this, marco)) {
@@ -70,7 +69,7 @@ void Prisoner::handleReward() {
 
 
 	// Switch to next action
-	if (isAnimationDone) {
+	if (once) {
 		sprite = Sprite::MOVE;
 		action = Action::LEAVE;
 	}
@@ -81,7 +80,11 @@ void Prisoner::handleLeave() {
 	sprite = Sprite::MOVE;
 	action = Action::LEAVE;
 
-	alive = false; // Waiting to be deleted
+	direction = "left"; // Wait for move method to move (will be refactored)
+
+	if (x + GetWidth() < 0) {
+		alive = false; // Waiting to be deleted
+	}
 }
 
 
@@ -144,8 +147,6 @@ void Prisoner::control() {
 		break;
 	}
 
-	SetTopLeft(x + ViewPointX, y - ViewPointY + ViewPointYInit);
-
 	// Handle animation
 	updateAction();
 	changeAnimation();
@@ -156,9 +157,11 @@ void Prisoner::move() {
 	dx = 0;
 	dy = 0;
 
-	// Horizontal movement
-	moveLeftRight();
-	collideWithWall();
+	if (action != Action::TIED && action != Action::RESCUED) {
+		// Horizontal movement
+		moveLeftRight();
+		collideWithWall();
+	}
 
 	// Vertical movement
 	collideWithGround();
@@ -176,7 +179,7 @@ void Prisoner::moveLeftRight() {
 		facingX = -1;
 		flip = false;
 		
-		if (abs(x + dx - anchoredX) > WANDER_RANGE) {
+		if (abs(x + dx - anchoredX) > WANDER_DISTANCE) {
 			// too far away from anchoredX, turn back
 			direction = "right";
 		}
@@ -186,7 +189,7 @@ void Prisoner::moveLeftRight() {
 		facingX = 1;
 		flip = true;
 
-		if (abs(x + dx - anchoredX) > WANDER_RANGE) {
+		if (abs(x + dx - anchoredX) > WANDER_DISTANCE) {
 			// too far away from anchoredX, turn back
 			direction = "left";
 		}
@@ -231,6 +234,7 @@ void Prisoner::updateAnimation() {
 
 void Prisoner::collideWithGround() {
 	// Check for falling
+	inAir = true;
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (Ground::isOnGround(*this, grounds[i]) == 1 && velocityY > 0) {
 			dy = Ground::GetX_Height(grounds[i], abs(ViewPointX) + x) - GetHeight() - y + ViewPointY - ViewPointYInit;
@@ -267,7 +271,7 @@ void Prisoner::collideWithBorder() {
 		dx = 800 - x;
 	}
 
-	if (y + dy < 0) {
+	if ((action != Action::LEAVE) && (y + dy < 0)) {
 		dy = -y;
 	}
 	else if (y + dy > 600) {

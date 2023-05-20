@@ -165,6 +165,32 @@ void CGameStateRun::OnShow()
 			std::string result = CT2A(str);
 
 			CTextDraw::Print(pDC, 0, 0, result);
+
+
+			// For debugging
+			std::string prisonerActionTest = "NONE";
+			switch (prisoners[0].action) {
+			case Prisoner::Action::TIED:
+				prisonerActionTest = "TIED";
+				break;
+			case Prisoner::Action::RESCUED:
+				prisonerActionTest = "RESCUED";
+				break;
+			case Prisoner::Action::MOVE:
+				prisonerActionTest = "MOVE";
+				break;
+			case Prisoner::Action::REWARD:
+				prisonerActionTest = "REWARD";
+				break;
+			case Prisoner::Action::LEAVE:
+				prisonerActionTest = "LEAVE";
+				break;
+			}
+			str.Format(_T("prisoner action=%s"), prisonerActionTest.c_str());
+			result = CT2A(str);
+			CTextDraw::Print(pDC, 0, 30, result);
+
+
 			CDDraw::ReleaseBackCDC();
 		}
 		

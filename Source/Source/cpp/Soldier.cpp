@@ -98,7 +98,7 @@ void Soldier::control() { // AI
 	}
 	*/
 
-	
+	/*
 	if (currentTime - lastAttackTime >= ATTACK_COOLDOWN) {
 		lastAttackTime = currentTime;
 		attacking = true;
@@ -106,7 +106,7 @@ void Soldier::control() { // AI
 	else {
 		attacking = false;
 	}
-	
+	*/
 }
 
 void Soldier::move() {

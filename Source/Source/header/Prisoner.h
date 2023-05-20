@@ -3,9 +3,8 @@
 
 class Prisoner : public Character {
 private:
-	const int WANDER_RANGE = 200;
+	const int WANDER_DISTANCE = 200;
 	int anchoredX = 0;
-	int anchoredY = 0;
 	int velocityX = 2;
 	int velocityY = 0;
 	bool inAir = false;
@@ -14,11 +13,13 @@ private:
 	enum class Sprite {
 		TIED, RESCUED, MOVE, FALL, REWARD
 	} sprite = Sprite::TIED;
+	
+public:
 	enum class Action {
 		TIED, RESCUED, MOVE, REWARD, LEAVE
 	} action = Action::TIED;
-
-public:
+	// Should've split movement logic into methods
+	// This will be refactored in the future update
 	Prisoner(int x, int y);
 	virtual void init() override;
 	virtual void update() override;
