@@ -113,8 +113,8 @@ void Soldier::move() {
 	dx = 0;
 	dy = 0;
 	collideWithBullet();
-	collideWithWall();
 	moveLeftRight();
+	collideWithWall();
 	if (lookingUp && !pressingDown) {
 		facingY = -1;
 	}
