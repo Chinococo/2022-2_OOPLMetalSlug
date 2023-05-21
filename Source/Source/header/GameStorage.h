@@ -57,4 +57,5 @@ namespace game_framework {
 	extern bool scroll;
 	extern bool Loading;
 	extern vector<vector<string>> groundcsv;
+	extern Boss1 boss;
 }

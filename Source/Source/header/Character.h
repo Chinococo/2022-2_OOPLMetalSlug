@@ -5,18 +5,18 @@
 class Character : public game_framework::CMovingBitmap {
 public:
 	Character(int _x, int _y, int _speedX);
-	virtual void init() = 0;
-	virtual void update() = 0;
-	virtual void control() = 0;
-	virtual void move() = 0;
-	virtual void moveLeftRight() = 0;
-	virtual void jumpAndFall() = 0;
-	virtual void updateAction() = 0;
-	virtual void changeAnimation() = 0;
-	virtual void updateAnimation() = 0;
-	virtual void collideWithGround() = 0;
-	virtual void collideWithWall() = 0;
-	virtual void draw() = 0;
+	virtual void init() {}
+	virtual void update() {}
+	virtual void control() {}
+	virtual void move() {}
+	virtual void moveLeftRight() {}
+	virtual void jumpAndFall() {}
+	virtual void updateAction() {}
+	virtual void changeAnimation() {}
+	virtual void updateAnimation() {}
+	virtual void collideWithGround() {}
+	virtual void collideWithWall() {}
+	virtual void draw()  {}
 	bool isAlive() const;
 	bool myIsOverlap(Character *other);
 protected:

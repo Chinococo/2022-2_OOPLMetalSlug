@@ -46,6 +46,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
+	boss.init();
 	background.LoadBitmapByString({ "resources/backgrounds/bg_mainmenu.bmp" }, RGB(0, 0, 0));
 	arrow.LoadBitmapByString({ "resources/bmp/arrow.bmp" }, RGB(255, 255, 255));
 	background.SetTopLeft(0, 0);
@@ -164,6 +165,7 @@ void CGameStateRun::OnShow()
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].draw();
 		}
+		boss.draw();
 		marco.draw();
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
@@ -171,5 +173,6 @@ void CGameStateRun::OnShow()
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			soldierFireworks[i].draw();
 		}
+		
 	}
 }

@@ -191,13 +191,20 @@ namespace game_framework {
 		}
 	}
 	bool Checkcheckpoint() {
-		for (unsigned i = 1; i < checkpointcsv.size(); i++)
+		for (unsigned i = 1; i < checkpointcsv.size(); i++) {
+		
+			if (checkpointcsv[i][1] == "boss1"&&abs(ViewPointX) >= std::stoi(checkpointcsv[i][3])) 
+				return true;
+			
+		
 			for (unsigned j = 0; j < MapObjects.size(); j++) {
 				if (MapObjects[j].GetName() != checkpointcsv[i][2]|| checkpointcsv[i][1]!="MapObject"|| checkpointcsv[i][0] != "1")
 					continue;
-				if (MapObjects[j].isAlive() && abs(ViewPointX) >= std::stoi(checkpointcsv[i][3]))
+				if(MapObjects[j].isAlive() && abs(ViewPointX) >= std::stoi(checkpointcsv[i][3]))
 					return true;
+				
 			}
+		}
 		return false;
 				
 	}
@@ -210,7 +217,7 @@ namespace game_framework {
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
 	int ViewPointX = -0 ;
-	int ViewPointY = 380;
+	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
 	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
@@ -225,4 +232,5 @@ namespace game_framework {
 	std::vector<Ground> grounds;
 	bool Loading = false;
 	int ViewPointYInit = 580;
+	Boss1 boss(9900,- 210);
 }
