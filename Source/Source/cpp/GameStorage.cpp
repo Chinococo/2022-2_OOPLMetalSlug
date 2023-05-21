@@ -210,7 +210,7 @@ namespace game_framework {
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
 	int ViewPointX = -0 ;
-	int ViewPointY = 580;
+	int ViewPointY = 380;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
 	std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;

@@ -6,6 +6,7 @@
 #include "../header/MapObject.h"
 #include "../header/Firework.h"
 #include "../header/Grenade.h"
+#include "../header/Boss1.h"
 #include <string>
 #include <vector>
 #include <set>

@@ -35,7 +35,7 @@ void MapObject::update(){
 
 	}
 	this->SetFrameIndexOfBitmap(static_cast<int>(std::floor(static_cast<double>(static_cast<double>(hp - now_hp) / hp) * (this->GetFrameSizeOfBitmap() - 1))));
-	this->SetTopLeft(ViewPointX + x, y);
+	this->SetTopLeft(ViewPointX + x, y-ViewPointYInit+ViewPointY);
 	//if (this->isAlive())
 		this->ShowBitmap();
 	//else
