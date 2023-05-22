@@ -66,8 +66,8 @@ void Firework::update() {
 	if (!dying) {
 		move();
 		int x1 = x - abs(ViewPointX);
-		int y1 = y - ViewPointY + ViewPointYInit;
-		SetTopLeft(x-abs(ViewPointX), y-ViewPointY+ViewPointYInit);
+		int y1 = y;
+		SetTopLeft(x-abs(ViewPointX), y);
 		return;
 	}
 	if (clock() - deathTimer >= ALIVE_DURATION) {

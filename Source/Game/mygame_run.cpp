@@ -41,14 +41,19 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			soldierFireworks[i].update();
 		}
+
+		boss.update();
+
 		for (size_t i = 0; i < prisoners.size(); i++) {
 			prisoners[i].update();
 		}
+
 	}
 }
 
 void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 {
+	boss.init();
 	background.LoadBitmapByString({ "resources/backgrounds/bg_mainmenu.bmp" }, RGB(0, 0, 0));
 	arrow.LoadBitmapByString({ "resources/bmp/arrow.bmp" }, RGB(255, 255, 255));
 	background.SetTopLeft(0, 0);
@@ -159,7 +164,7 @@ void CGameStateRun::OnShow()
 			//game_framework::ChangeFontLog
 			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(150, 150, 150), 500);
 			CString str;
-			str.Format(_T("now index=%d x=%d y=%d"), marco.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
+			str.Format(_T("now index=%d x=%d y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
 
 			// 將CString轉換為std::string
 			std::string result = CT2A(str);
@@ -182,6 +187,7 @@ void CGameStateRun::OnShow()
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].draw();
 		}
+		boss.draw();
 		marco.draw();
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
@@ -189,5 +195,6 @@ void CGameStateRun::OnShow()
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			soldierFireworks[i].draw();
 		}
+		
 	}
 }

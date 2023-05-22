@@ -1,4 +1,4 @@
-﻿character,range,prefix,delay
+character,range,prefix,delay
 marco,0~6,resources/img_v2/marco/idle/,100
 marco,6~22,resources/img_v2/marco/move/,100
 marco,22~28,resources/img_v2/marco/jump/,100
@@ -23,8 +23,16 @@ soldier,42~51,resources/img_v2/soldier/bomb/,100
 soldier,51~60,resources/img_v2/soldier/die/,100
 firework,0~1,resources/img_v2/firework/move/,1000
 firework,1~2,resources/img_v2/firework/die/,1000
+boss1,0~5,resources/img_v2/boss1/,1000
+boss1_canno,0~18,resources/img_v2/boss1/canno/movingdown/,100
+boss1_canno,18~28,resources/img_v2/boss1/canno/movingup/,100
+boss1_canno,28~35,resources/img_v2/boss1/canno/attacklow/,100
+boss1_canno,35~43,resources/img_v2/boss1/canno/attackup/,100
+boss1_canno,43~44,resources/img_v2/boss1/canno/idledown/,100
+boss1_canno,44~45,resources/img_v2/boss1/canno/idleup/,100
 prisoner,0~1,resources/img_v2/prisoner/tied/,1000
 prisoner,1~10,resources/img_v2/prisoner/rescued/,2000
 prisoner,10~22,resources/img_v2/prisoner/move/,500
 prisoner,22~23,resources/img_v2/prisoner/fall/,100
 prisoner,23~24,resources/img_v2/prisoner/reward/,300
+

@@ -6,7 +6,10 @@
 #include "../header/MapObject.h"
 #include "../header/Firework.h"
 #include "../header/Grenade.h"
+#include "../header/Boss1.h"
+#include "../header/boss1_canno.h"
 #include "../header/Prisoner.h"
+
 #include <string>
 #include <vector>
 #include <set>
@@ -59,4 +62,5 @@ namespace game_framework {
 	extern bool scroll;
 	extern bool Loading;
 	extern vector<vector<string>> groundcsv;
+	extern Boss1 boss;
 }

@@ -251,6 +251,8 @@
     <ClCompile Include="Source\Library\gameutil.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="Source\Source\cpp\boss1.cpp" />
+    <ClCompile Include="Source\Source\cpp\boss1_canno.cpp" />
     <ClCompile Include="Source\Source\cpp\Bullet.cpp" />
     <ClCompile Include="Source\Source\cpp\Character.cpp" />
     <ClCompile Include="Source\Source\cpp\Firework.cpp" />
@@ -274,6 +276,8 @@
     <ClInclude Include="Source\Library\audio.h" />
     <ClInclude Include="Source\Library\gamecore.h" />
     <ClInclude Include="Source\Library\gameutil.h" />
+    <ClInclude Include="Source\Source\header\Boss1.h" />
+    <ClInclude Include="Source\Source\header\boss1_canno.h" />
     <ClInclude Include="Source\Source\header\Bullet.h" />
     <ClInclude Include="Source\Source\header\Character.h" />
     <ClInclude Include="Source\Source\header\Firework.h" />
