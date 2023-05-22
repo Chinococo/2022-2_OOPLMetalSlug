@@ -11,7 +11,7 @@ private:
 	
 	int anchoredX = 0;
 	
-	int velocityX = 2;
+	int velocityX = 5;
 	int velocityY = 0;
 	
 	bool inAir = false;

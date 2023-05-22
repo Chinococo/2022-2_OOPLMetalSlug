@@ -55,6 +55,9 @@ void Prisoner::update() {
 		return;
 	}
 
+	dx = 0;
+	dy = 0;
+
 	switch (action) {
 	case Action::TIED:
 		handleTied();
@@ -102,7 +105,6 @@ void Prisoner::handleTied() {
 
 	// Handle Collision
 	collideWithGround();
-	collideWithBorder();
 
 	// Switch to next action
 	bool rescuredByHeroKnife = IsOverlap(*this, marco) && marco.isAttacking();
@@ -131,7 +133,6 @@ void Prisoner::handleRescued() {
 
 	// Handle Collision
 	collideWithGround();
-	collideWithBorder();
 
 	// Switch to next action
 	if (once) {
@@ -146,10 +147,7 @@ void Prisoner::handleMove() {
 	action = Action::MOVE;
 
 	// Perform movement
-	int absAnchoredX = anchoredX + ViewPointX;
-	int absPosX = x + dx + ViewPointX;
-
-	if (abs(absPosX - absAnchoredX) > WANDER_DISTANCE) {
+	if (abs(x+dx - anchoredX) > WANDER_DISTANCE) {
 		if (direction == Direction::LEFT) {
 			direction = Direction::RIGHT;
 		}
@@ -163,7 +161,6 @@ void Prisoner::handleMove() {
 	// Handle Collision
 	collideWithWall();
 	collideWithGround();
-	collideWithBorder();
 
 	// Switch to next action
 	if (IsOverlap(*this, marco)) {
@@ -182,7 +179,6 @@ void Prisoner::handleReward() {
 
 	// Handle Collision
 	collideWithGround();
-	collideWithBorder();
 
 	// Build a new pickup here (point pickup or weapon pickup)
 
@@ -207,7 +203,6 @@ void Prisoner::handleLeave() {
 	// Handle Collision
 	collideWithWall();
 	collideWithGround();
-	collideWithBorder();
 
 	if (x + GetWidth() < 0) {
 		alive = false; // Waiting to be deleted
@@ -227,9 +222,7 @@ void Prisoner::moveLeftRight() {
 }
 
 void Prisoner::fall() {
-	if (velocityY < 5) {
-		velocityY += GRAVITY;
-	}
+	velocityY += GRAVITY;
 	dy += velocityY;
 }
 
@@ -240,9 +233,6 @@ void Prisoner::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (Ground::isOnGround(*this, grounds[i]) == 1 && velocityY > 0) {
 			dy = Ground::GetX_Height(grounds[i], abs(ViewPointX) + x) - GetHeight() - y + ViewPointY - ViewPointYInit;
-
-			if (abs(dy) > 40) // Prevent lifting by steep wall
-				dy = 0;
 
 			// Stop falling
 			inAir = false;
@@ -258,9 +248,11 @@ void Prisoner::collideWithWall() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (dx > 0 && Ground::isOnGroundLeft(*this, grounds[i]) == 1) {
 			dx = 0;
+			direction = Direction::LEFT;
 		}
 		else if (dx < 0 && Ground::isOnGroundRight(*this, grounds[i]) == 1) {
 			dx = 0;
+			direction = Direction::RIGHT;
 		}
 	}
 }

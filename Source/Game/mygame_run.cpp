@@ -144,6 +144,8 @@ void CGameStateRun::OnShow()
 		
 		if (keyDowns.count(VK_RIGHT)&&scroll&&!Checkcheckpoint())
 			ViewPointX -= MapScrollSpeed;
+		if (keyDowns.count(VK_LEFT) && !Checkcheckpoint())
+			ViewPointX += MapScrollSpeed;
 		if (abs(ViewPointX) < 9500 && abs(ViewPointX) > 8700)
 			ViewPointY = static_cast<int>(580 +floor(static_cast<double>(abs(ViewPointX) -8700)/3.8));
 		updateUnderCharacterLayer();
