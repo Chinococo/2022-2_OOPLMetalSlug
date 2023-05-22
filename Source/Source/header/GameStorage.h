@@ -8,6 +8,8 @@
 #include "../header/Grenade.h"
 #include "../header/Boss1.h"
 #include "../header/boss1_canno.h"
+#include "../header/Prisoner.h"
+
 #include <string>
 #include <vector>
 #include <set>
@@ -17,6 +19,7 @@
 namespace game_framework {
 	// function
 	extern std::vector<std::vector<std::string>> readCSV(const std::string& filename);
+	extern void createPrisoners();
 	extern void createSoldiers();
 	extern void createGrounds();
 	extern void createMap();
@@ -54,6 +57,7 @@ namespace game_framework {
 	extern std::vector<Soldier> soldiers;
 	extern std::vector<Bullet> bullets;
 	extern std::vector<Firework> soldierFireworks;
+	extern std::vector<Prisoner> prisoners;
 	extern std::vector<Ground> grounds;
 	extern bool scroll;
 	extern bool Loading;

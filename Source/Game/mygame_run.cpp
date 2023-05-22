@@ -41,7 +41,13 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			soldierFireworks[i].update();
 		}
+
 		boss.update();
+
+		for (size_t i = 0; i < prisoners.size(); i++) {
+			prisoners[i].update();
+		}
+
 	}
 }
 
@@ -64,12 +70,16 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	createGrounds();
 	createSoldiers();
 	createMapObject();
+	createPrisoners();
 	marco.init();
 	for (size_t i = 0; i < soldiers.size(); i++) {
 		soldiers[i].init();
 	}
 	for (size_t i = 0; i < MapObjects.size(); i++) {
 		MapObjects[i].init();
+	}
+	for (size_t i = 0; i < prisoners.size(); i++) {
+		prisoners[i].init();
 	}
 }
 
@@ -160,9 +170,20 @@ void CGameStateRun::OnShow()
 			std::string result = CT2A(str);
 
 			CTextDraw::Print(pDC, 0, 0, result);
+
+
+			// For debugging
+			str.Format(_T("prisoner action=%s"), prisoners[0].getAction().c_str());
+			result = CT2A(str);
+			CTextDraw::Print(pDC, 0, 30, result);
+
+
 			CDDraw::ReleaseBackCDC();
 		}
 		
+		for (size_t i = 0; i < prisoners.size(); i++) {
+			prisoners[i].draw();
+		}
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].draw();
 		}

@@ -27,6 +27,9 @@ namespace game_framework {
 		file.close();
 		return data;
 	}
+	void createPrisoners() {
+		prisoners.push_back(Prisoner(200, 100));
+	}
 	void createSoldiers() {
 		const int moveSpeed = 1;
 		soldiers.push_back(Soldier(100, 100, moveSpeed));
@@ -229,6 +232,7 @@ namespace game_framework {
 	std::vector<Soldier> soldiers;
 	std::vector<Bullet> bullets;
 	std::vector<Firework> soldierFireworks;
+	std::vector<Prisoner> prisoners;
 	std::vector<Ground> grounds;
 	bool Loading = false;
 	int ViewPointYInit = 580;

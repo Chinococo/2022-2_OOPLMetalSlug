@@ -261,6 +261,7 @@
     <ClCompile Include="Source\Source\cpp\Ground.cpp" />
     <ClCompile Include="Source\Source\cpp\MapObject.cpp" />
     <ClCompile Include="Source\Source\cpp\Marco.cpp" />
+    <ClCompile Include="Source\Source\cpp\Prisoner.cpp" />
     <ClCompile Include="Source\Source\cpp\Soldier.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +286,7 @@
     <ClInclude Include="Source\Source\header\Ground.h" />
     <ClInclude Include="Source\Source\header\MapObject.h" />
     <ClInclude Include="Source\Source\header\Marco.h" />
+    <ClInclude Include="Source\Source\header\Prisoner.h" />
     <ClInclude Include="Source\Source\header\Soldier.h" />
   </ItemGroup>
   <ItemGroup>

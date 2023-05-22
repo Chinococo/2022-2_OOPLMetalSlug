@@ -173,5 +173,5 @@ void Firework::draw() {
 		UnshowBitmap();
 		return;
 	}
-	ShowBitmap(0.8);
+	ShowBitmap(0.6);
 }

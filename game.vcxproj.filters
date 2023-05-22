@@ -94,6 +94,7 @@
       <Filter>Source\cpp</Filter>
     </ClCompile>
     <ClCompile Include="Source\Source\cpp\boss1_canno.cpp">
+    <ClCompile Include="Source\Source\cpp\Prisoner.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
   </ItemGroup>
@@ -162,6 +163,7 @@
       <Filter>Source\header</Filter>
     </ClInclude>
     <ClInclude Include="Source\Source\header\boss1_canno.h">
+    <ClInclude Include="Source\Source\header\Prisoner.h">
       <Filter>Source\header</Filter>
     </ClInclude>
   </ItemGroup>

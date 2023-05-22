@@ -16,7 +16,8 @@ public:
 	virtual void updateAnimation() {}
 	virtual void collideWithGround() {}
 	virtual void collideWithWall() {}
-	virtual void draw()  {}
+	virtual void draw() {}
+  
 	bool isAlive() const;
 	bool myIsOverlap(Character *other);
 protected:
