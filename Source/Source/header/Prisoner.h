@@ -33,6 +33,9 @@ private:
 	void handleReward();
 	void handleLeave();
 
+	virtual void moveLeftRight() override;
+	void fall();
+
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
 	void collideWithBorder();
@@ -46,4 +49,7 @@ public:
 	virtual void init() override;
 	virtual void update() override;
 	virtual void draw() override;
+
+	// For debugging
+	std::string getAction() const;
 };
