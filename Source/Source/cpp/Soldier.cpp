@@ -98,7 +98,7 @@ void Soldier::control() { // AI
 	}
 	*/
 
-	
+	/*
 	if (currentTime - lastAttackTime >= ATTACK_COOLDOWN) {
 		lastAttackTime = currentTime;
 		attacking = true;
@@ -106,15 +106,15 @@ void Soldier::control() { // AI
 	else {
 		attacking = false;
 	}
-	
+	*/
 }
 
 void Soldier::move() {
 	dx = 0;
 	dy = 0;
 	collideWithBullet();
-	collideWithWall();
 	moveLeftRight();
+	collideWithWall();
 	if (lookingUp && !pressingDown) {
 		facingY = -1;
 	}

@@ -90,6 +90,9 @@
     <ClCompile Include="Source\Source\cpp\Grenade.cpp">
       <Filter>Source\cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Source\cpp\Prisoner.cpp">
+      <Filter>Source\cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Library\audio.h">
@@ -150,6 +153,9 @@
       <Filter>Source\header</Filter>
     </ClInclude>
     <ClInclude Include="Source\Source\header\Grenade.h">
+      <Filter>Source\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Source\header\Prisoner.h">
       <Filter>Source\header</Filter>
     </ClInclude>
   </ItemGroup>
