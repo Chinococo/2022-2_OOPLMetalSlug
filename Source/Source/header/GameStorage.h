@@ -7,6 +7,7 @@
 #include "../header/Firework.h"
 #include "../header/Grenade.h"
 #include "../header/Boss1.h"
+#include "../header/boss1_canno.h"
 #include <string>
 #include <vector>
 #include <set>

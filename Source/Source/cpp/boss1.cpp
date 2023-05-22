@@ -5,6 +5,7 @@ Boss1::Boss1(int _x, int _y) : Character(_x, _y,0)
 {
 	this->x = _x;
 	this->y = _y;
+	this->canno = new boss1_canno(x + 450, y+280);
 }
 void Boss1::init() {
 	vector<vector<string>> csv = readCSV("resources/csv/character.csv");
@@ -25,15 +26,17 @@ void Boss1::init() {
 	LoadBitmapByString(paths, RGB(255, 255, 255));
 	animationRange = animationRanges[static_cast<int>(action)];
 	animationDelay = animationDelays[static_cast<int>(action)];
-	
+	this->canno->init();
 }
 
 void Boss1::update()
 {
+	canno->update();
 }
 
 void Boss1::draw()
 {
 	this->SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
-	this->ShowBitmap(2.1);
+	this->ShowBitmap(2);
+	this->canno->draw();
 }

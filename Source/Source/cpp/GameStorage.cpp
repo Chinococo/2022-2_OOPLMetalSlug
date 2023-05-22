@@ -216,7 +216,7 @@ namespace game_framework {
 	CMovingBitmap arrow;
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -0 ;
+	int ViewPointX = -10000 ;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
@@ -232,5 +232,5 @@ namespace game_framework {
 	std::vector<Ground> grounds;
 	bool Loading = false;
 	int ViewPointYInit = 580;
-	Boss1 boss(9900,- 210);
+	Boss1 boss(9900,- 190);
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "../header/Character.h"
-
+#include "../header/boss1_canno.h"
 class Boss1 : public Character {
 public:
 	Boss1(int _x, int _y);
@@ -21,6 +21,7 @@ public:
 private:
 	int x;
 	int y;
+	boss1_canno* canno;
 	enum class Action {
 		IDLE
 	} action = Action::IDLE, lastAction = Action::IDLE;

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "../header/GameStorage.h"
-#include "..\header\boss1_canno.h"
+#include "../header/boss1_canno.h"
 
 boss1_canno::boss1_canno(int _x, int _y) : Character(_x, _y, 0)
 {
@@ -18,7 +18,7 @@ void boss1_canno::init()
 	std::vector<std::string> paths;
 	std::pair<int, int> range;
 	for (unsigned line = 0; line < csv.size(); line++) {
-		if (csv[line][0] != "boss1")
+		if (csv[line][0] != "boss1_canno")
 			continue;
 		int delay = std::stoi(csv[line][3]);
 		string prefix = csv[line][2];
@@ -32,12 +32,24 @@ void boss1_canno::init()
 	LoadBitmapByString(paths, RGB(255, 255, 255));
 	animationRange = animationRanges[static_cast<int>(action)];
 	animationDelay = animationDelays[static_cast<int>(action)];
+	SetFrameIndexOfBitmap(animationRange.first + ((flip) ? animationflipBias : 0));
 }
 
 void boss1_canno::update()
 {
+	
+	flip = 0;
+	animationflipBias = 0;
+	if ((((GetFrameIndexOfBitmap() - animationRange.first - +((flip) ? animationflipBias : 0) + 1) % (animationRange.second - animationRange.first))) == 0)
+		return;
+	if (clock() - start > animationDelay) {
+		SetFrameIndexOfBitmap(((GetFrameIndexOfBitmap() - animationRange.first - +((flip) ? animationflipBias : 0) + 1) % (animationRange.second - animationRange.first)) + animationRange.first + ((flip) ? animationflipBias : 0));
+		start = clock();
+	}
 }
-
 void boss1_canno::draw()
 {
+	this->SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
+	this->ShowBitmap(1.8);
 }
+

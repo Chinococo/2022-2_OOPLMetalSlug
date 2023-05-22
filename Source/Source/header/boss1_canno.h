@@ -10,7 +10,7 @@ class boss1_canno : public Character {
 		void draw();
 	private:
 		enum class Action {
-			IDLE
-		} action = Action::IDLE, lastAction = Action::IDLE;
+			Movingup, MovingDown
+		} action = Action::MovingDown, lastAction = Action::MovingDown;
 		int x, y;
 };

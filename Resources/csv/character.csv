@@ -24,3 +24,5 @@ soldier,51~60,resources/img_v2/soldier/die/,100
 firework,0~1,resources/img_v2/firework/move/,1000
 firework,1~2,resources/img_v2/firework/die/,1000
 boss1,0~5,resources/img_v2/boss1/,1000
+boss1_canno,0~10,resources/img_v2/boss1/canno/movingup/,100
+boss1_canno,10~28,resources/img_v2/boss1/canno/movingdown/,100
