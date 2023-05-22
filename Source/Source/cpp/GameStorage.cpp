@@ -20,11 +20,12 @@ namespace game_framework {
 			while (std::getline(lineStream, cell, ',')) {
 				row.push_back(cell);
 			}
-
-			data.push_back(row);
+			if(row.size()>0)
+				data.push_back(row);
 		}
 
 		file.close();
+		
 		return data;
 	}
 	void createPrisoners() {

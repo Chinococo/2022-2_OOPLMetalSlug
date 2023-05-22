@@ -12,6 +12,9 @@ void Boss1::init() {
 	std::vector<std::string> paths;
 	std::pair<int, int> range;
 	for (unsigned line = 0; line < csv.size(); line++) {
+		if (csv[line].size() == 0)
+			continue;
+
 		if (csv[line][0] != "boss1")
 			continue;
 		int delay = std::stoi(csv[line][3]);
