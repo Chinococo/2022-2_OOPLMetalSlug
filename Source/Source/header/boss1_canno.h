@@ -11,7 +11,7 @@ class boss1_canno : public Character {
 		void draw();
 	private:
 		enum class Action {
-			MovingDown,Movingup,AttackLow, AttackUp,IDLEUp,IDLEDown
+			MovingDown,Movingup,AttackLow, AttackUp, IDLEDown,IDLEUp
 		} action = Action::MovingDown, lastAction = Action::MovingDown;
 		int x, y;
 		bool position;

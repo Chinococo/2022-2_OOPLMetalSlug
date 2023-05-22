@@ -216,7 +216,7 @@ namespace game_framework {
 	CMovingBitmap arrow;
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -0 ;
+	int ViewPointX = -10000 ;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;

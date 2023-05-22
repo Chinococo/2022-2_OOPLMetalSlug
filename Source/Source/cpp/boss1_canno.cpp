@@ -60,10 +60,10 @@ void boss1_canno::Move() {
 	else if(Done&&action!= Action::IDLEUp&&action != Action::IDLEDown){
 		
 		if (position) {//up
-			//action = Action::IDLEUp;
+			action = Action::IDLEUp;
 		}
 		else {
-			//action = Action::IDLEDown;
+			action = Action::IDLEDown;
 		}
 	}
 	if (lastAction != action) {
