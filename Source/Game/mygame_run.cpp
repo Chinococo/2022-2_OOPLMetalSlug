@@ -154,7 +154,7 @@ void CGameStateRun::OnShow()
 			//game_framework::ChangeFontLog
 			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(150, 150, 150), 500);
 			CString str;
-			str.Format(_T("now index=%d x=%d y=%d"), marco.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
+			str.Format(_T("now index=%d x=%d y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
 
 			// 將CString轉換為std::string
 			std::string result = CT2A(str);

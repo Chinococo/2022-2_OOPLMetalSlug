@@ -26,3 +26,7 @@ firework,1~2,resources/img_v2/firework/die/,1000
 boss1,0~5,resources/img_v2/boss1/,1000
 boss1_canno,0~10,resources/img_v2/boss1/canno/movingup/,100
 boss1_canno,10~28,resources/img_v2/boss1/canno/movingdown/,100
+boss1_canno,28~35,resources/img_v2/boss1/canno/attacklow/,100
+boss1_canno,35~43,resources/img_v2/boss1/canno/attackup/,100
+boss1_canno,43~44,resources/img_v2/boss1/canno/idledown/,100
+boss1_canno,44~45,resources/img_v2/boss1/canno/idleup/,100

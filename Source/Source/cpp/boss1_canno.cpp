@@ -34,15 +34,59 @@ void boss1_canno::init()
 	animationDelay = animationDelays[static_cast<int>(action)];
 	SetFrameIndexOfBitmap(animationRange.first + ((flip) ? animationflipBias : 0));
 }
-
+void boss1_canno::Move() {
+	position = static_cast<int>(action) % 2;
+	if (clock() - start_AI > 5000&&Done) {
+		lastAction = action;
+		start_AI = clock();
+		if (rand() % 4 == 0) {
+			if (position) {//up
+				action = Action::MovingDown;
+			}
+			else {
+				action = Action::Movingup;
+			}
+		}
+		else {
+			if (position) {//up
+				action = Action::AttackUp;
+			}
+			else {
+				action = Action::AttackLow;
+			}
+		}
+		
+	}
+	else if(Done&&action!= Action::IDLEUp&&action != Action::IDLEDown){
+		
+		if (position) {//up
+			//action = Action::IDLEUp;
+		}
+		else {
+			//action = Action::IDLEDown;
+		}
+	}
+	if (lastAction != action) {
+		lastAction = action;
+		Done = false;
+		animationRange = animationRanges[static_cast<int>(action)];
+		animationDelay = animationDelays[static_cast<int>(action)];
+		SetFrameIndexOfBitmap(animationRange.first + ((flip) ? animationflipBias : 0));
+	}
+	
+}
 void boss1_canno::update()
 {
 	
 	flip = 0;
 	animationflipBias = 0;
-	if ((((GetFrameIndexOfBitmap() - animationRange.first - +((flip) ? animationflipBias : 0) + 1) % (animationRange.second - animationRange.first))) == 0)
+	if ((((GetFrameIndexOfBitmap() - animationRange.first - +((flip) ? animationflipBias : 0) + 1) % (animationRange.second - animationRange.first))) == 0) {
+		Done = true;
 		return;
+	}
+		
 	if (clock() - start > animationDelay) {
+		int t = GetFrameIndexOfBitmap();
 		SetFrameIndexOfBitmap(((GetFrameIndexOfBitmap() - animationRange.first - +((flip) ? animationflipBias : 0) + 1) % (animationRange.second - animationRange.first)) + animationRange.first + ((flip) ? animationflipBias : 0));
 		start = clock();
 	}
@@ -50,6 +94,6 @@ void boss1_canno::update()
 void boss1_canno::draw()
 {
 	this->SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
-	this->ShowBitmap(1.8);
+	this->ShowBitmap(1.6);
 }
 
