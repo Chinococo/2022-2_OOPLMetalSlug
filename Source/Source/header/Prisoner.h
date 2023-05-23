@@ -9,47 +9,63 @@ class Prisoner : public Character {
 private:
 	const int WANDER_DISTANCE = 200;
 	
-	int anchoredX = 0;
+	int absolutePositionLeft = 0;
+	int absolutePositionTop = 0;
+
+	int absoluteAnchorHorizontal = 0;
+
+	int distanceHorizontal = 0;
+	int distanceVertical = 0;
+
+	int collisionBoxTweakLeft = 0;
+	int collisionBoxTweakTop = 0;
+
+	int collisionBoxWidth = 0;
+	int collisionBoxHeight = 0;
 	
-	int velocityX = 5;
-	int velocityY = 0;
+	int velocityHorizontal = 5;
+	int velocityVertical = 0;
 	
 	bool inAir = false;
-	bool once = true;
-	
+	bool animationDone = false;
+
+	Direction currentDirectionHorizontal = Direction::LEFT;
+
 	enum class Sprite {
 		TIED, RESCUED, MOVE, FALL, REWARD
-	} sprite = Sprite::TIED;
+	} currentSprite = Sprite::TIED;
 
 	enum class Action {
 		TIED, RESCUED, MOVE, REWARD, LEAVE
-	} action = Action::TIED;
+	} currentAction = Action::TIED;
 
-	Direction direction = Direction::RIGHT;
+	void handleActionTied();
+	void handleActionRescued();
+	void handleActionMove();
+	void handleActionReward();
+	void handleActionLeave();
 
-	void handleTied();
-	void handleRescued();
-	void handleMove();
-	void handleReward();
-	void handleLeave();
+	void moveHorizontally(Direction direction);
+	void moveVertically(Direction direction);
 
-	virtual void moveLeftRight() override;
-	void fall();
+	bool isCollideWith(Marco marco);
+	bool isCollideWith(Bullet bullet);
 
-	virtual void collideWithGround() override;
-	virtual void collideWithWall() override;
-	void collideWithBorder();
+	void handleGroundCollision();
+	void handleWallCollision();
+	void handleBorderCollision();
 
-	virtual void changeAnimation() override;
-	virtual void updateAnimation() override;
+	void switchSprite(Sprite sprite);
+	void nextFrame();
 	
 public:
-	Prisoner(int x, int y);
+	Prisoner(int left, int top);
 	
-	virtual void init() override;
-	virtual void update() override;
-	virtual void draw() override;
+	void init();
+	void update();
+	void draw();
 
 	// For debugging
+	std::string getSprite() const;
 	std::string getAction() const;
 };
