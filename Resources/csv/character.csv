@@ -30,6 +30,8 @@ boss1_canno,28~35,resources/img_v2/boss1/canno/attacklow/,100
 boss1_canno,35~43,resources/img_v2/boss1/canno/attackup/,100
 boss1_canno,43~44,resources/img_v2/boss1/canno/idledown/,100
 boss1_canno,44~45,resources/img_v2/boss1/canno/idleup/,100
+boss1_canno,45~51,resources/img_v2/boss1/canno/laserlow/,100
+boss1_canno,51~57,resources/img_v2/boss1/canno/laserup/,100
 prisoner,0~1,resources/img_v2/prisoner/tied/,1000
 prisoner,1~10,resources/img_v2/prisoner/rescued/,2000
 prisoner,10~22,resources/img_v2/prisoner/move/,500

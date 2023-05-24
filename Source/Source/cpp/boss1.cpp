@@ -34,7 +34,7 @@ void Boss1::init() {
 
 void Boss1::update()
 {
-	canno->Move();
+	//canno->Move();
 	canno->update();
 }
 
