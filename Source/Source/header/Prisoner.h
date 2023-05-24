@@ -29,7 +29,7 @@ private:
 	bool inAir = false;
 	bool animationDone = false;
 
-	clock_t spriteTimer = clock();
+	std::chrono::time_point<std::chrono::steady_clock> spriteTimer = std::chrono::steady_clock::now();
 
 	Direction directionHorizontal = Direction::LEFT;
 
@@ -50,7 +50,7 @@ private:
 	void moveHorizontally(Direction direction);
 	void moveVertically(Direction direction);
 
-	bool isCollide(Character other);
+	bool isCollideWith(Character other);
 
 	void handleGroundCollision();
 	void handleWallCollision();
@@ -66,7 +66,13 @@ public:
 	void draw();
 
 	// For debugging
-	int getFrameIndex();
+	/*
+	int getAbsIndex();
+	int getRelIndex();
+	*/
 	std::string getSprite() const;
 	std::string getAction() const;
+	/*
+	bool isAnimationDone() const;
+	*/
 };

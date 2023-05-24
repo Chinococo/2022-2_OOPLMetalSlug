@@ -164,7 +164,7 @@ void CGameStateRun::OnShow()
 			//game_framework::ChangeFontLog
 			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0, 0, 0), 1000);
 			CString str;
-			str.Format(_T("now index=%d x=%d y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
+			str.Format(_T("now index=%d, x=%d, y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
 
 			// 將CString轉換為std::string
 			std::string result = CT2A(str);
@@ -174,13 +174,18 @@ void CGameStateRun::OnShow()
 
 			// For debugging
 			Prisoner &prisoner = prisoners[0];
-			str.Format(_T("prisoner index=%d, action=%s, sprite=%s"),
-				prisoner.getFrameIndex(),
-				prisoner.getAction().c_str(),
-				prisoner.getSprite().c_str()
-			);
+			str.Format(_T("prisoner action=%s, sprite=%s"), prisoner.getAction(), prisoner.getSprite());
 			result = CT2A(str);
 			CTextDraw::Print(pDC, 0, 30, result);
+			/*
+			str.Format(_T("prisoner absIndex=%d, relIndex=%d"), prisoner.getAbsIndex(), prisoner.getRelIndex());
+			result = CT2A(str);
+			CTextDraw::Print(pDC, 0, 60, result);
+			
+			str.Format(_T("prisoner animationDone=%d"), prisoner.isAnimationDone());
+			result = CT2A(str);
+			CTextDraw::Print(pDC, 0, 90, result);
+			*/
 
 
 			CDDraw::ReleaseBackCDC();

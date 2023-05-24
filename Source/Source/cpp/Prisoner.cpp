@@ -113,11 +113,11 @@ void Prisoner::handleActionTied() {
 	handleGroundCollision();
 
 	// Switch to next action
-	bool isRescuredByHeroKnife = isCollide(marco) && marco.isAttacking();
+	bool isRescuredByHeroKnife = isCollideWith(marco) && marco.isAttacking();
 	bool isRescuredByHeroBullet = false;
 
 	for (size_t i = 0; i < bullets.size(); i++) {
-		if (bullets[i].owner == "hero" && isCollide(bullets[i])) {
+		if (bullets[i].owner == "hero" && isCollideWith(bullets[i])) {
 			isRescuredByHeroBullet = true;
 			break;
 		}
@@ -175,8 +175,12 @@ void Prisoner::handleActionMove() {
 	handleWallCollision();
 	handleGroundCollision();
 
+	if (inAir) {
+		switchSprite(Sprite::FALL);
+	}
+
 	// Switch to next action
-	if (isCollide(marco)) {
+	if (isCollideWith(marco)) {
 		action = Action::REWARD;
 	}
 }
@@ -246,7 +250,7 @@ void Prisoner::moveVertically(Direction direction) {
 	}
 }
 
-bool Prisoner::isCollide(Character other) {
+bool Prisoner::isCollideWith(Character other) {
 	int relativePositionLeft = absolutePositionLeft + ViewPointX;
 	int relativePositionTop = absolutePositionTop - ViewPointY + ViewPointYInit;
 
@@ -289,8 +293,6 @@ void Prisoner::handleGroundCollision() {
 			// Stop falling
 			inAir = false;
 			velocityVertical = 0;
-
-			switchSprite(Sprite::FALL);
 			break;
 		}
 	}
@@ -310,20 +312,24 @@ void Prisoner::handleWallCollision() {
 }
 
 void Prisoner::switchSprite(Sprite sprite) {
-	int bias = (flip) ? animationflipBias : 0;
+	int bias = (directionHorizontal == Direction::RIGHT) ? animationflipBias : 0;
 	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
+
+	this->sprite = sprite;
 
 	SetFrameIndexOfBitmap(range.first + bias);
 }
 
 void Prisoner::nextFrame() {
-	int delay = animationDelays[static_cast<int>(sprite)];
+	auto delayMillisecond = std::chrono::milliseconds(animationDelays[static_cast<int>(sprite)]);
+	auto timePointNow = std::chrono::steady_clock::now();
+	auto elapsedMilliSecond = std::chrono::duration_cast<std::chrono::milliseconds>(timePointNow - spriteTimer);
 
-	if (clock() - spriteTimer < delay) {
+	if (elapsedMilliSecond < delayMillisecond) {
 		return;
 	}
 
-	int bias = (flip) ? animationflipBias : 0;
+	int bias = (directionHorizontal == Direction::RIGHT) ? animationflipBias : 0;
 	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
 
 	int frameIndex = GetFrameIndexOfBitmap();
@@ -331,17 +337,24 @@ void Prisoner::nextFrame() {
 	int newFrameIndex = (frameIndex - range.first - bias + 1) % totalFrames;
 	int frameOffset = newFrameIndex + range.first + bias;
 
-	animationDone = (frameOffset - animationRange.first) % totalFrames == totalFrames - 1;
+	animationDone = (frameOffset - range.first) % totalFrames == totalFrames - 1;
 
 	SetFrameIndexOfBitmap(frameOffset);
 
-	spriteTimer = clock();
+	spriteTimer = timePointNow;
 }
-
-int Prisoner::getFrameIndex() {
+/*
+int Prisoner::getAbsIndex() {
 	return GetFrameIndexOfBitmap();
 }
 
+int Prisoner::getRelIndex() {
+	int frameIndex = GetFrameIndexOfBitmap();
+	int bias = (directionHorizontal == Direction::RIGHT) ? animationflipBias : 0;
+	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
+	return frameIndex - range.first - bias;
+}
+*/
 std::string Prisoner::getSprite() const {
 	switch (sprite) {
 	case Prisoner::Sprite::TIED:
@@ -375,107 +388,8 @@ std::string Prisoner::getAction() const {
 		return "NONE";
 	}
 }
-
 /*
-void Prisoner::moveLeftRight() {
-	if (direction == Direction::LEFT) {
-		dx -= velocityX;
-	}
-	else if (direction == Direction::RIGHT) {
-		dx += velocityX;
-	}
-	else {
-		dx = 0;
-	}
-}
-
-void Prisoner::fall() {
-	velocityY += GRAVITY;
-	dy += velocityY;
-}
-
-void Prisoner::collideWithGround() {
-	// Check for falling
-	inAir = true;
-
-	for (size_t i = 0; i < grounds.size(); i++) {
-		if (Ground::isOnGround(*this, grounds[i]) == 1 && velocityY > 0) {
-			dy = Ground::GetX_Height(grounds[i], abs(ViewPointX) + x) - GetHeight() - y + ViewPointY - ViewPointYInit;
-
-			// Stop falling
-			inAir = false;
-			velocityY = 0;
-
-			sprite = Sprite::FALL;
-			break;
-		}
-	}
-}
-
-void Prisoner::collideWithWall() {
-	for (size_t i = 0; i < grounds.size(); i++) {
-		if (dx > 0 && Ground::isOnGroundLeft(*this, grounds[i]) == 1) {
-			dx = 0;
-			direction = Direction::LEFT;
-		}
-		else if (dx < 0 && Ground::isOnGroundRight(*this, grounds[i]) == 1) {
-			dx = 0;
-			direction = Direction::RIGHT;
-		}
-	}
-}
-
-void Prisoner::collideWithBorder() {
-	if (x + dx < 0) {
-		dx = -x;
-	}
-	else if (x + dx > 800) {
-		dx = 800 - x;
-	}
-
-	if ((action != Action::LEAVE) && (y + dy < 0)) {
-		dy = -y;
-	}
-	else if (y + dy > 600) {
-		dy = 600 - y;
-	}
-}
-
-void Prisoner::changeAnimation() {
-	animationRange = animationRanges[static_cast<int>(sprite)];
-	animationDelay = animationDelays[static_cast<int>(sprite)];
-	SetFrameIndexOfBitmap(animationRange.first + ((flip) ? animationflipBias : 0));
-}
-
-void Prisoner::updateAnimation() {
-	if (clock() - start > animationDelay) {
-		int frameIndex = GetFrameIndexOfBitmap();
-		int animationBias = (flip) ? animationflipBias : 0;
-		int totalFrames = animationRange.second - animationRange.first;
-		int newFrameIndex = (frameIndex - animationRange.first - animationBias + 1) % totalFrames;
-		int frameOffset = newFrameIndex + animationRange.first + animationBias;
-		SetFrameIndexOfBitmap(frameOffset);
-
-		animationDone = (frameOffset - animationRange.first) % totalFrames == 0;
-
-		start = clock();
-	}
-}
-
-std::string Prisoner::getAction() const {
-	switch (action) {
-	case Prisoner::Action::TIED:
-		return "TIED";
-	case Prisoner::Action::RESCUED:
-		return "RESCUED";
-	case Prisoner::Action::MOVE:
-		return "MOVE";
-	case Prisoner::Action::REWARD:
-		return "REWARD";
-	case Prisoner::Action::LEAVE:
-		return "LEAVE";
-	default:
-		return "NONE";
-	}
+bool Prisoner::isAnimationDone() const {
+	return animationDone;
 }
 */
