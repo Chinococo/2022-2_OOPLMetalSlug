@@ -7,7 +7,6 @@
 #include "../Library/gamecore.h"
 #include "mygame.h"
 #include "../Source/header/GameStorage.h"
-
 using namespace game_framework;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -156,7 +155,7 @@ void CGameStateRun::OnShow()
 		updateCharacter();
 		updateUpperCharacterLayer();
 		if (!Loading) {
-			Sleep(1000);
+			Sleep(100);
 			Loading = true;
 		}
 		else {
@@ -165,18 +164,18 @@ void CGameStateRun::OnShow()
 			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0, 0, 0), 1000);
 			CString str;
 			str.Format(_T("now index=%d, x=%d, y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
-
-			// 將CString轉換為std::string
-			std::string result = CT2A(str);
-
+			std::string result = CT2A(str);// 將CString轉換為std::string
 			CTextDraw::Print(pDC, 0, 0, result);
-
-
+			
+		
 			// For debugging
-			Prisoner &prisoner = prisoners[0];
-			str.Format(_T("prisoner action=%s, sprite=%s"), prisoner.getAction(), prisoner.getSprite());
-			result = CT2A(str);
-			CTextDraw::Print(pDC, 0, 30, result);
+			Prisoner prisoner = prisoners[0];
+			char buffer[256]; // 假設你的字串不會超過 256 個字元
+			string temp = "你好";
+			std::snprintf(buffer, sizeof(buffer), "prisoner action=%s, sprite=%s", temp.c_str(), prisoner.getSprite().c_str());
+			std::string str1 = buffer;
+			
+			CTextDraw::Print(pDC, 0, 30, str1);
 			/*
 			str.Format(_T("prisoner absIndex=%d, relIndex=%d"), prisoner.getAbsIndex(), prisoner.getRelIndex());
 			result = CT2A(str);
