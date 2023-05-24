@@ -5,11 +5,7 @@ Prisoner::Prisoner(int absolutePositionLeft, int absolutePositionTop)
 	: Character(absolutePositionLeft, absolutePositionTop, velocityHorizontal),
 	absolutePositionLeft(absolutePositionLeft),
 	absolutePositionTop(absolutePositionTop),
-	absoluteAnchorHorizontal(absolutePositionLeft
-) {
-	collisionBoxWidth = GetWidth();
-	collisionBoxHeight = GetHeight();
-}
+	absoluteAnchorHorizontal(absolutePositionLeft) {}
 
 void Prisoner::init() {
 	std::vector<std::vector<std::string>> csv = readCSV("resources/csv/character.csv");
@@ -335,11 +331,15 @@ void Prisoner::nextFrame() {
 	int newFrameIndex = (frameIndex - range.first - bias + 1) % totalFrames;
 	int frameOffset = newFrameIndex + range.first + bias;
 
-	animationDone = (frameOffset - animationRange.first) % totalFrames == 0;
+	animationDone = (frameOffset - animationRange.first) % totalFrames == totalFrames - 1;
 
 	SetFrameIndexOfBitmap(frameOffset);
 
 	spriteTimer = clock();
+}
+
+int Prisoner::getFrameIndex() {
+	return GetFrameIndexOfBitmap();
 }
 
 std::string Prisoner::getSprite() const {

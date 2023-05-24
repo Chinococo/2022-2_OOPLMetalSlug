@@ -20,8 +20,8 @@ private:
 	int collisionBoxTweakLeft = 0;
 	int collisionBoxTweakTop = 0;
 
-	int collisionBoxWidth = 0;
-	int collisionBoxHeight = 0;
+	int collisionBoxWidth = 30;
+	int collisionBoxHeight = 90;
 	
 	int velocityHorizontal = 5;
 	int velocityVertical = 0;
@@ -66,6 +66,7 @@ public:
 	void draw();
 
 	// For debugging
+	int getFrameIndex();
 	std::string getSprite() const;
 	std::string getAction() const;
 };

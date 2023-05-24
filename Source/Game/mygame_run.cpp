@@ -162,7 +162,7 @@ void CGameStateRun::OnShow()
 		else {
 			CDC *pDC = CDDraw::GetBackCDC();
 			//game_framework::ChangeFontLog
-			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(150, 150, 150), 500);
+			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0, 0, 0), 1000);
 			CString str;
 			str.Format(_T("now index=%d x=%d y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
 
@@ -173,7 +173,12 @@ void CGameStateRun::OnShow()
 
 
 			// For debugging
-			str.Format(_T("prisoner action=%s"), prisoners[0].getAction().c_str());
+			Prisoner &prisoner = prisoners[0];
+			str.Format(_T("prisoner index=%d, action=%s, sprite=%s"),
+				prisoner.getFrameIndex(),
+				prisoner.getAction().c_str(),
+				prisoner.getSprite().c_str()
+			);
 			result = CT2A(str);
 			CTextDraw::Print(pDC, 0, 30, result);
 
