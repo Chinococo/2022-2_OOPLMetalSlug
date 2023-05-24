@@ -1,9 +1,15 @@
 #include "stdafx.h"
 #include "../header/GameStorage.h"
 
-Prisoner::Prisoner(int left, int top)
-	: Character(left, top, velocityHorizontal),
-	absoluteAnchorHorizontal(left) {}
+Prisoner::Prisoner(int absolutePositionLeft, int absolutePositionTop)
+	: Character(absolutePositionLeft, absolutePositionTop, velocityHorizontal),
+	absolutePositionLeft(absolutePositionLeft),
+	absolutePositionTop(absolutePositionTop),
+	absoluteAnchorHorizontal(absolutePositionLeft
+) {
+	collisionBoxWidth = GetWidth();
+	collisionBoxHeight = GetHeight();
+}
 
 void Prisoner::init() {
 	std::vector<std::vector<std::string>> csv = readCSV("resources/csv/character.csv");
@@ -46,10 +52,6 @@ void Prisoner::init() {
 	}
 
 	LoadBitmapByString(paths, RGB(0, 0, 0));
-	/*
-	animationRange = animationRanges[static_cast<int>(currentSprite)];
-	animationDelay = animationDelays[static_cast<int>(currentSprite)];
-	*/
 }
 
 void Prisoner::update() {
@@ -60,7 +62,7 @@ void Prisoner::update() {
 	distanceHorizontal = 0;
 	distanceVertical = 0;
 
-	switch (currentAction) {
+	switch (action) {
 	case Action::TIED:
 		handleActionTied();
 		break;
@@ -87,7 +89,7 @@ void Prisoner::update() {
 	SetTopLeft(relativePositionLeft, relativePositionTop);
 
 	// Handle animation
-	switchSprite(currentSprite);
+	switchSprite(sprite);
 	nextFrame();
 }
 
@@ -102,54 +104,59 @@ void Prisoner::draw() {
 
 void Prisoner::handleActionTied() {
 	// Set sprite and action for this state
-	currentSprite = Sprite::TIED;
-	currentAction = Action::TIED;
+	action = Action::TIED;
+
+	switchSprite(Sprite::TIED);
 
 	// Perform movement
-	moveVertically(Direction::DOWN);
+	if (inAir) {
+		moveVertically(Direction::DOWN);
+	}
 
 	// Handle Collision
 	handleGroundCollision();
 
 	// Switch to next action
-	bool isRescuredByHeroKnife = IsOverlap(*this, marco) && marco.isAttacking();
+	bool isRescuredByHeroKnife = isCollide(marco) && marco.isAttacking();
 	bool isRescuredByHeroBullet = false;
 
 	for (size_t i = 0; i < bullets.size(); i++) {
-		if (bullets[i].owner == "hero" && IsOverlap(*this, bullets[i])) {
+		if (bullets[i].owner == "hero" && isCollide(bullets[i])) {
 			isRescuredByHeroBullet = true;
 			break;
 		}
 	}
 
 	if (isRescuredByHeroKnife || isRescuredByHeroBullet) {
-		currentSprite = Sprite::RESCUED;
-		currentAction = Action::RESCUED;
+		action = Action::RESCUED;
 	}
 }
 
 void Prisoner::handleActionRescued() {
 	// Set sprite and action for this state
-	currentSprite = Sprite::RESCUED;
-	currentAction = Action::RESCUED;
+	action = Action::RESCUED;
+
+	switchSprite(Sprite::RESCUED);
 
 	// Perform movement
-	moveVertically(Direction::DOWN);
+	if (inAir) {
+		moveVertically(Direction::DOWN);
+	}
 
 	// Handle Collision
 	handleGroundCollision();
 
 	// Switch to next action
 	if (animationDone) {
-		currentSprite = Sprite::MOVE;
-		currentAction = Action::MOVE;
+		action = Action::MOVE;
 	}
 }
 
 void Prisoner::handleActionMove() {
 	// Set sprite and action for this state
-	currentSprite = Sprite::MOVE;
-	currentAction = Action::MOVE;
+	action = Action::MOVE;
+
+	switchSprite(Sprite::MOVE);
 
 	// Perform movement
 	int newPositionHorizontal = absolutePositionLeft + distanceHorizontal;
@@ -157,15 +164,15 @@ void Prisoner::handleActionMove() {
 
 	// Set direction
 	if (distanceFromAnchorHorizontal > WANDER_DISTANCE) {
-		if (currentDirectionHorizontal == Direction::LEFT) {
-			currentDirectionHorizontal = Direction::RIGHT;
+		if (directionHorizontal == Direction::LEFT) {
+			directionHorizontal = Direction::RIGHT;
 		}
-		else if (currentDirectionHorizontal == Direction::RIGHT) {
-			currentDirectionHorizontal = Direction::LEFT;
+		else if (directionHorizontal == Direction::RIGHT) {
+			directionHorizontal = Direction::LEFT;
 		}
 	}
 
-	moveHorizontally(currentDirectionHorizontal);
+	moveHorizontally(directionHorizontal);
 	moveVertically(Direction::DOWN);
 
 	// Handle Collision
@@ -173,19 +180,21 @@ void Prisoner::handleActionMove() {
 	handleGroundCollision();
 
 	// Switch to next action
-	if (isCollideWith(marco)) {
-		currentSprite = Sprite::REWARD;
-		currentAction = Action::REWARD;
+	if (isCollide(marco)) {
+		action = Action::REWARD;
 	}
 }
 
 void Prisoner::handleActionReward() {
 	// Set sprite and action for this state
-	currentSprite = Sprite::REWARD;
-	currentAction = Action::REWARD;
+	action = Action::REWARD;
+
+	switchSprite(Sprite::REWARD);
 
 	// Perform movement
-	moveVertically(Direction::DOWN);
+	if (inAir) {
+		moveVertically(Direction::DOWN);
+	}
 
 	// Handle Collision
 	collideWithGround();
@@ -195,22 +204,24 @@ void Prisoner::handleActionReward() {
 
 	// Switch to next action
 	if (animationDone) {
-		currentSprite = Sprite::MOVE;
-		currentAction = Action::LEAVE;
+		action = Action::LEAVE;
 	}
 }
 
 void Prisoner::handleActionLeave() {
 	// Set sprite and action for this state
-	currentSprite = Sprite::MOVE;
-	currentAction = Action::LEAVE;
+	action = Action::LEAVE;
+
+	switchSprite(Sprite::MOVE);
 
 	// Set direction
-	currentDirectionHorizontal = Direction::LEFT;
+	directionHorizontal = Direction::LEFT;
 
 	// Perform movement
 	moveHorizontally(Direction::LEFT);
-	moveVertically(Direction::DOWN);
+	if (inAir) {
+		moveVertically(Direction::DOWN);
+	}
 
 	// Handle Collision
 	handleWallCollision();
@@ -239,36 +250,100 @@ void Prisoner::moveVertically(Direction direction) {
 	}
 }
 
-bool Prisoner::isCollideWith(Marco marco) {
-	marco.GetLeft();
-}
+bool Prisoner::isCollide(Character other) {
+	int relativePositionLeft = absolutePositionLeft + ViewPointX;
+	int relativePositionTop = absolutePositionTop - ViewPointY + ViewPointYInit;
 
-bool Prisoner::isCollideWith(Bullet bullet) {
+	int relativeCollisionBoxLeft = relativePositionLeft + collisionBoxTweakLeft;
+	int relativeCollisionBoxTop = relativePositionTop + collisionBoxTweakTop;
 
+	int relativeCollisionBoxRight = relativeCollisionBoxLeft + collisionBoxWidth;
+	int relativeCollisionBoxBottom = relativeCollisionBoxTop + collisionBoxHeight;
+
+	int otherRelativePositionLeft = other.GetLeft();
+	int otherRelativePositionTop = other.GetTop();
+	int otherRelativePositionRight = otherRelativePositionLeft + other.GetWidth();
+	int otherRelativePositionBottom = otherRelativePositionTop + other.GetHeight();
+
+	if (relativeCollisionBoxRight < otherRelativePositionLeft ||
+		otherRelativePositionRight < relativeCollisionBoxLeft ||
+		relativeCollisionBoxBottom < otherRelativePositionTop ||
+		otherRelativePositionBottom < relativeCollisionBoxTop
+	) {
+		return false;
+	}
+
+	return true;
 }
 
 void Prisoner::handleGroundCollision() {
+	// Check for falling
+	inAir = true;
 
+	for (size_t i = 0; i < grounds.size(); i++) {
+		if (velocityVertical > 0 &&
+			Ground::isOnGround(*this, grounds[i]) == 1
+		) {
+			int relativePositionTop = absolutePositionTop - ViewPointY + ViewPointYInit;
+			int relativeCollisionBoxTop = relativePositionTop + collisionBoxTweakTop;
+			int relativeCollisionBoxBottom = relativeCollisionBoxTop + collisionBoxHeight;
+
+			distanceVertical = Ground::GetX_Height(grounds[i], absolutePositionLeft) - relativeCollisionBoxBottom;
+
+			// Stop falling
+			inAir = false;
+			velocityVertical = 0;
+
+			switchSprite(Sprite::FALL);
+			break;
+		}
+	}
 }
 
 void Prisoner::handleWallCollision() {
-
-}
-
-void Prisoner::handleBorderCollision() {
-
+	for (size_t i = 0; i < grounds.size(); i++) {
+		if (dx > 0 && Ground::isOnGroundLeft(*this, grounds[i]) == 1) {
+			dx = 0;
+			directionHorizontal = Direction::LEFT;
+		}
+		else if (dx < 0 && Ground::isOnGroundRight(*this, grounds[i]) == 1) {
+			dx = 0;
+			directionHorizontal = Direction::RIGHT;
+		}
+	}
 }
 
 void Prisoner::switchSprite(Sprite sprite) {
+	int bias = (flip) ? animationflipBias : 0;
+	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
 
+	SetFrameIndexOfBitmap(range.first + bias);
 }
 
 void Prisoner::nextFrame() {
+	int delay = animationDelays[static_cast<int>(sprite)];
 
+	if (clock() - spriteTimer < delay) {
+		return;
+	}
+
+	int bias = (flip) ? animationflipBias : 0;
+	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
+
+	int frameIndex = GetFrameIndexOfBitmap();
+	int totalFrames = range.second - range.first;
+	int newFrameIndex = (frameIndex - range.first - bias + 1) % totalFrames;
+	int frameOffset = newFrameIndex + range.first + bias;
+
+	animationDone = (frameOffset - animationRange.first) % totalFrames == 0;
+
+	SetFrameIndexOfBitmap(frameOffset);
+
+	spriteTimer = clock();
 }
 
 std::string Prisoner::getSprite() const {
-	switch (currentSprite) {
+	switch (sprite) {
 	case Prisoner::Sprite::TIED:
 		return "TIED";
 	case Prisoner::Sprite::RESCUED:
@@ -285,7 +360,7 @@ std::string Prisoner::getSprite() const {
 }
 
 std::string Prisoner::getAction() const {
-	switch (currentAction) {
+	switch (action) {
 	case Prisoner::Action::TIED:
 		return "TIED";
 	case Prisoner::Action::RESCUED:

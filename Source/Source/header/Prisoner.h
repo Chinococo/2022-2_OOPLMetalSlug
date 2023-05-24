@@ -29,15 +29,17 @@ private:
 	bool inAir = false;
 	bool animationDone = false;
 
-	Direction currentDirectionHorizontal = Direction::LEFT;
+	clock_t spriteTimer = clock();
+
+	Direction directionHorizontal = Direction::LEFT;
 
 	enum class Sprite {
 		TIED, RESCUED, MOVE, FALL, REWARD
-	} currentSprite = Sprite::TIED;
+	} sprite = Sprite::TIED;
 
 	enum class Action {
 		TIED, RESCUED, MOVE, REWARD, LEAVE
-	} currentAction = Action::TIED;
+	} action = Action::TIED;
 
 	void handleActionTied();
 	void handleActionRescued();
@@ -48,18 +50,16 @@ private:
 	void moveHorizontally(Direction direction);
 	void moveVertically(Direction direction);
 
-	bool isCollideWith(Marco marco);
-	bool isCollideWith(Bullet bullet);
+	bool isCollide(Character other);
 
 	void handleGroundCollision();
 	void handleWallCollision();
-	void handleBorderCollision();
 
 	void switchSprite(Sprite sprite);
 	void nextFrame();
 	
 public:
-	Prisoner(int left, int top);
+	Prisoner(int absolutePositionLeft, int absolutePositionTop);
 	
 	void init();
 	void update();
