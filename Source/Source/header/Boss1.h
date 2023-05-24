@@ -22,6 +22,7 @@ private:
 	int x;
 	int y;
 	boss1_canno* canno;
+	
 	enum class Action {
 		IDLE
 	} action = Action::IDLE, lastAction = Action::IDLE;

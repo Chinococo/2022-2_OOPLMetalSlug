@@ -238,4 +238,5 @@ namespace game_framework {
 	bool Loading = false;
 	int ViewPointYInit = 580;
 	Boss1 boss(9900,- 190);
+	
 }

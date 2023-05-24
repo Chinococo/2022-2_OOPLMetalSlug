@@ -6,6 +6,7 @@ Boss1::Boss1(int _x, int _y) : Character(_x, _y,0)
 	this->x = _x;
 	this->y = _y;
 	this->canno = new boss1_canno(x + 450, y+270);
+
 }
 void Boss1::init() {
 	vector<vector<string>> csv = readCSV("resources/csv/character.csv");
@@ -34,8 +35,9 @@ void Boss1::init() {
 
 void Boss1::update()
 {
-	//canno->Move();
+	canno->Move();
 	canno->update();
+
 }
 
 void Boss1::draw()
@@ -43,4 +45,5 @@ void Boss1::draw()
 	this->SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
 	this->ShowBitmap(2);
 	this->canno->draw();
+	
 }

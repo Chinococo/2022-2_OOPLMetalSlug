@@ -1,6 +1,6 @@
 #pragma once
 #include "../../Library/gameutil.h"
-
+#include "../header/Boss1_laser.h"
 class boss1_canno : public Character {
 	public:
 		boss1_canno(int _x, int _y);
@@ -17,4 +17,5 @@ class boss1_canno : public Character {
 		bool position;
 		time_t start_AI = clock();
 		bool Done=false;
+		Boss1_laser *laser;
 };

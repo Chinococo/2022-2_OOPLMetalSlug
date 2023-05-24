@@ -6,6 +6,7 @@ boss1_canno::boss1_canno(int _x, int _y) : Character(_x, _y, 0)
 {
 	this->x = _x;
 	this->y = _y;
+	this->laser = new Boss1_laser(x, y);
 }
 
 void boss1_canno::Setaction(string _action)
@@ -14,6 +15,7 @@ void boss1_canno::Setaction(string _action)
 
 void boss1_canno::init()
 {
+	this->laser->init();
 	vector<vector<string>> csv = readCSV("resources/csv/character.csv");
 	std::vector<std::string> paths;
 	std::pair<int, int> range;
@@ -35,6 +37,7 @@ void boss1_canno::init()
 	SetFrameIndexOfBitmap(animationRange.first + ((flip) ? animationflipBias : 0));
 }
 void boss1_canno::Move() {
+	this->laser->move();
 	position = static_cast<int>(action) % 2;
 	if (clock() - start_AI > 5000&&Done) {
 		lastAction = action;
@@ -48,17 +51,27 @@ void boss1_canno::Move() {
 			}
 		}
 		else {
-			if (position) {//up
-				action = Action::AttackUp;
+			if (rand() % 2) {
+				if (position) {//up
+					action = Action::AttackUp;
+				}
+				else {
+					action = Action::AttackLow;
+				}
 			}
 			else {
-				action = Action::AttackLow;
+				if (position) {//up
+					action = Action::LaserUp;
+				}
+				else {
+					action = Action::LasetLow;
+				}
 			}
+			
 		}
 		
 	}
 	else if(Done&&action!= Action::IDLEUp&&action != Action::IDLEDown){
-		
 		if (position) {//up
 			action = Action::IDLEUp;
 		}
@@ -67,6 +80,15 @@ void boss1_canno::Move() {
 		}
 	}
 	if (lastAction != action) {
+		if (action == Action::LaserUp) {
+			this->laser->isAlive = true;
+			this->laser->setXY(x, 10 + y);
+		}
+		if (action == Action::LasetLow) {
+			this->laser->isAlive = true;
+			this->laser->setXY(x, y + 100);
+		}
+			
 		lastAction = action;
 		Done = false;
 		animationRange = animationRanges[static_cast<int>(action)];
@@ -95,5 +117,7 @@ void boss1_canno::draw()
 {
 	this->SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
 	this->ShowBitmap(1.6);
+	if(this->laser->isAlive)
+		this->laser->draw();
 }
 

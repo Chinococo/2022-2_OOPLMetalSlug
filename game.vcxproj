@@ -253,6 +253,7 @@
     </ClCompile>
     <ClCompile Include="Source\Source\cpp\boss1.cpp" />
     <ClCompile Include="Source\Source\cpp\boss1_canno.cpp" />
+    <ClCompile Include="Source\Source\cpp\Boss1_laser.cpp" />
     <ClCompile Include="Source\Source\cpp\Bullet.cpp" />
     <ClCompile Include="Source\Source\cpp\Character.cpp" />
     <ClCompile Include="Source\Source\cpp\Firework.cpp" />
@@ -278,6 +279,7 @@
     <ClInclude Include="Source\Library\gameutil.h" />
     <ClInclude Include="Source\Source\header\Boss1.h" />
     <ClInclude Include="Source\Source\header\boss1_canno.h" />
+    <ClInclude Include="Source\Source\header\Boss1_laser.h" />
     <ClInclude Include="Source\Source\header\Bullet.h" />
     <ClInclude Include="Source\Source\header\Character.h" />
     <ClInclude Include="Source\Source\header\Firework.h" />
