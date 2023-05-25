@@ -10,7 +10,7 @@
 #include "../header/boss1_canno.h"
 #include "../header/boss1_laser.h"
 #include "../header/Prisoner.h"
-
+#include "../header/boss1_fire.h"
 #include <string>
 #include <vector>
 #include <set>

@@ -7,6 +7,7 @@ boss1_canno::boss1_canno(int _x, int _y) : Character(_x, _y, 0)
 	this->x = _x;
 	this->y = _y;
 	this->laser = new Boss1_laser(x, y);
+	this->fire = new Boss1_fire(x, y);
 }
 
 void boss1_canno::Setaction(string _action)
@@ -16,6 +17,7 @@ void boss1_canno::Setaction(string _action)
 void boss1_canno::init()
 {
 	this->laser->init();
+	this->fire->init();
 	vector<vector<string>> csv = readCSV("resources/csv/character.csv");
 	std::vector<std::string> paths;
 	std::pair<int, int> range;
@@ -38,6 +40,7 @@ void boss1_canno::init()
 }
 void boss1_canno::Move() {
 	this->laser->move();
+	this->fire->move();
 	position = static_cast<int>(action) % 2;
 	if (clock() - start_AI > 5000&&Done) {
 		lastAction = action;
@@ -82,11 +85,19 @@ void boss1_canno::Move() {
 	if (lastAction != action) {
 		if (action == Action::LaserUp) {
 			this->laser->isAlive = true;
-			this->laser->setXY(x, 10 + y);
+			this->laser->setXY(x, 20 + y);
 		}
 		if (action == Action::LasetLow) {
 			this->laser->isAlive = true;
 			this->laser->setXY(x, y + 100);
+		}
+		if (action == Action::AttackUp) {
+			this->fire->isAlive = true;
+			this->fire->setXY(x, 20 + y);
+		}
+		if (action == Action::AttackLow) {
+			this->fire->isAlive = true;
+			this->fire->setXY(x, y + 100);
 		}
 			
 		lastAction = action;
@@ -119,5 +130,7 @@ void boss1_canno::draw()
 	this->ShowBitmap(1.6);
 	if(this->laser->isAlive)
 		this->laser->draw();
+	if (this->fire->isAlive)
+		this->fire->draw();
 }
 

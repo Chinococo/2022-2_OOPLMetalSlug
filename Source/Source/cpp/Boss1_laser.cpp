@@ -7,11 +7,11 @@ Boss1_laser::Boss1_laser(int _x, int _y)
 	this->y = _y;
 	
 }void  Boss1_laser::init() {
-	this->LoadBitmapByString({ "resources/img_v2/boss1/canno/laser/air0.bmp" });
+	this->LoadBitmapByString({ "resources/img_v2/boss1/canno/laser/air0.bmp" },RGB(255,255,255));
 }
 void Boss1_laser::move()
 {
-	if (clock() - start > 500) {
+	if (clock() - start > 100) {
 		x -= 10;
 		start = clock();
 	}
