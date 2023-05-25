@@ -15,6 +15,19 @@ MapObject::MapObject(int _x, int _y, int _hp, vector<string> _path,  string _nam
 	this->name = _name;
 }
 
+MapObject::MapObject(int _x, int _y, int _hp, vector<string> _path, string _name, int _destry_animation_index, pair<pair<int, int>, pair<int, int>> _CollideBox) : Character(_x, _y, 0)
+{
+	this->x = _x;
+	this->y = _y;
+	this->hp = _hp;
+	this->now_hp = _hp;
+	this->path = _path;
+	this->destry_animation_index = _destry_animation_index;
+	this->start = clock();
+	this->name = _name;
+	this->CollideBox = _CollideBox;
+}
+
 int MapObject::GetX()
 {
 	return x;
@@ -53,7 +66,7 @@ void MapObject::init()
 
 void MapObject::collideWithBullet() {
 	for (size_t i = 0; i < bullets.size(); i++) {
-		if (bullets[i].owner == "hero" && IsOverlap(*this, bullets[i]) && isAlive()) {
+		if (bullets[i].owner == "hero" && IsOverlap_(bullets[i]) && isAlive()) {
 			now_hp -= 1;
 		}
 	}

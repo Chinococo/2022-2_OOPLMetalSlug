@@ -150,13 +150,15 @@ void Bullet::jumpAndFall() {
 void Bullet::collideWithCharacter() {
 	if (owner == "hero") {
 		for (size_t i = 0; i < soldiers.size(); i++) {
-			if (IsOverlap(*this, soldiers[i])) {
+			if (alive&&IsOverlap(*this, soldiers[i])) {
 				alive = false;
+				break;
 			}
 		}
 		for (size_t i = 0; i < MapObjects.size(); i++) 
-			if (IsOverlap(*this, MapObjects[i])&&MapObjects[i].isAlive()) {
+			if (alive&&IsOverlap_(MapObjects[i])&&MapObjects[i].isAlive()) {
 				alive = false;
+				break;
 			}
 		if(IsOverlap_(boss))
 			alive = false;
