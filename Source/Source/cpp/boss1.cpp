@@ -6,7 +6,7 @@ Boss1::Boss1(int _x, int _y) : Character(_x, _y,0)
 	this->x = _x;
 	this->y = _y;
 	this->canno = new boss1_canno(x + 450, y+270);
-
+	this->CollideBox = { {x + 450,y},{x + 450,y + 600} };
 }
 void Boss1::init() {
 	vector<vector<string>> csv = readCSV("resources/csv/character.csv");

@@ -158,6 +158,8 @@ void Bullet::collideWithCharacter() {
 			if (IsOverlap(*this, MapObjects[i])&&MapObjects[i].isAlive()) {
 				alive = false;
 			}
+		if(IsOverlap_(boss))
+			alive = false;
 	}
 	else if (owner == "enemy") {
 		if (IsOverlap(*this, marco)) {
