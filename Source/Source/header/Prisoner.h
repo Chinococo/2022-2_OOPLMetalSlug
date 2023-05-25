@@ -7,7 +7,7 @@ enum class Direction {
 
 class Prisoner : public Character {
 private:
-	const int WANDER_DISTANCE = 200;
+	const int WANDER_DISTANCE = 50;
 	
 	int absolutePositionLeft = 0;
 	int absolutePositionTop = 0;
@@ -20,7 +20,7 @@ private:
 	int collisionBoxTweakLeft = 0;
 	int collisionBoxTweakTop = 0;
 
-	int collisionBoxWidth = 30;
+	int collisionBoxWidth = 50;
 	int collisionBoxHeight = 90;
 	
 	int velocityHorizontal = 5;
@@ -39,12 +39,13 @@ private:
 	} sprite = Sprite::TIED;
 
 	enum class Action {
-		TIED, RESCUED, MOVE, REWARD, LEAVE
+		TIED, RESCUED, MOVE, FALL, REWARD, LEAVE
 	} action = Action::TIED;
 
 	void handleActionTied();
 	void handleActionRescued();
 	void handleActionMove();
+	void handleActionFall();
 	void handleActionReward();
 	void handleActionLeave();
 

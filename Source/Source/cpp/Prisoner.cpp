@@ -57,6 +57,8 @@ void Prisoner::update() {
 		return;
 	}
 
+	//-----------------------------
+
 	distanceHorizontal = 0;
 	distanceVertical = 0;
 
@@ -70,6 +72,9 @@ void Prisoner::update() {
 	case Action::MOVE:
 		handleActionMove();
 		break;
+	case Action::FALL:
+		handleActionFall();
+		break;
 	case Action::REWARD:
 		handleActionReward();
 		break;
@@ -81,12 +86,15 @@ void Prisoner::update() {
 	absolutePositionLeft += distanceHorizontal;
 	absolutePositionTop += distanceVertical;
 
+	//-----------------------------
+
 	int relativePositionLeft = absolutePositionLeft + ViewPointX;
 	int relativePositionTop = absolutePositionTop - ViewPointY + ViewPointYInit;
 
 	SetTopLeft(relativePositionLeft, relativePositionTop);
 
-	// Handle animation
+	//-----------------------------
+
 	auto delayMillisecond = std::chrono::milliseconds(animationDelays[static_cast<int>(sprite)]);
 	auto timePointNow = std::chrono::steady_clock::now();
 	auto elapsedMilliSecond = std::chrono::duration_cast<std::chrono::milliseconds>(timePointNow - spriteTimer);
@@ -107,19 +115,21 @@ void Prisoner::draw() {
 }
 
 void Prisoner::handleActionTied() {
-	// Perform movement
-	if (inAir && sprite != Sprite::FALL) {
-		moveVertically(Direction::DOWN);
-	}
-	else if (sprite != Sprite::TIED) {
+	if (sprite != Sprite::TIED) {
 		switchSprite(Sprite::TIED);
 	}
 
-	// Handle Collision
+	//-----------------------------
+
+	moveVertically(Direction::DOWN);
+
+	//-----------------------------
+
 	handleGroundCollision();
 	handleWallCollision();
 
-	// Switch to next action
+	//-----------------------------
+
 	bool isRescuredByHeroKnife = isCollideWith(marco) && marco.isAttacking();
 	bool isRescuredByHeroBullet = false;
 
@@ -136,36 +146,33 @@ void Prisoner::handleActionTied() {
 }
 
 void Prisoner::handleActionRescued() {
-	// Perform movement
-	if (inAir && sprite != Sprite::FALL) {
-		moveVertically(Direction::DOWN);
-	}
-	else if (sprite != Sprite::RESCUED) {
+	if (sprite != Sprite::RESCUED) {
 		switchSprite(Sprite::RESCUED);
 	}
 
-	// Handle Collision
+	//-----------------------------
+
+	moveVertically(Direction::DOWN);
+
+	//-----------------------------
+
 	handleGroundCollision();
 	handleWallCollision();
 
-	// Switch to next action
+	//-----------------------------
+
 	if (animationDone) {
-		switchSprite(Sprite::MOVE);
 		action = Action::MOVE;
 	}
 }
 
 void Prisoner::handleActionMove() {
-	// Perform movement
-	if (inAir && sprite != Sprite::FALL) {
-		switchSprite(Sprite::FALL);
-		moveVertically(Direction::DOWN);
-	}
-	else if (!inAir && sprite != Sprite::MOVE) {
+	if (sprite != Sprite::MOVE) {
 		switchSprite(Sprite::MOVE);
 	}
 	
-	// Set direction
+	//-----------------------------
+
 	int newPositionHorizontal = absolutePositionLeft + distanceHorizontal;
 	int distanceFromAnchorHorizontal = abs(newPositionHorizontal - absoluteAnchorHorizontal);
 
@@ -179,34 +186,64 @@ void Prisoner::handleActionMove() {
 	}
 
 	moveHorizontally(directionHorizontal);
+	moveVertically(Direction::DOWN);
 	
-	// Handle Collision
+	//-----------------------------
+
 	handleWallCollision();
 	handleGroundCollision();
 
-	// Switch to next action
+	//-----------------------------
+
 	if (isCollideWith(marco)) {
 		action = Action::REWARD;
+	}
+	else if (inAir) {
+		action = Action::FALL;
+	}
+}
+
+void Prisoner::handleActionFall() {
+	if (sprite != Sprite::FALL) {
+		switchSprite(Sprite::FALL);
+	}
+	
+	//-----------------------------
+
+	moveVertically(Direction::DOWN);
+
+	//-----------------------------
+
+	handleWallCollision();
+	handleGroundCollision();
+
+	//-----------------------------
+
+	if (!inAir) {
+		action = Action::MOVE;
 	}
 }
 
 void Prisoner::handleActionReward() {
-	// Perform movement
-	if (inAir && sprite != Sprite::FALL) {
-		moveVertically(Direction::DOWN);
-	}
-	else if (sprite != Sprite::REWARD) {
+	if (sprite != Sprite::REWARD) {
 		switchSprite(Sprite::REWARD);
 	}
 
-	// Handle Collision
-	handleWallCollision();
-	handleGroundCollision();
+	//-----------------------------
 
 	// Build a new pickup here (point pickup or weapon pickup)
 
+	//-----------------------------
 
-	// Switch to next action
+	moveVertically(Direction::DOWN);
+
+	//-----------------------------
+
+	handleWallCollision();
+	handleGroundCollision();
+
+	//-----------------------------
+
 	if (animationDone) {
 		switchSprite(Sprite::MOVE);
 		action = Action::LEAVE;
@@ -214,20 +251,21 @@ void Prisoner::handleActionReward() {
 }
 
 void Prisoner::handleActionLeave() {
-	// Perform movement
-	if (inAir && sprite != Sprite::FALL) {
-		moveVertically(Direction::DOWN);
-	}
-	else if (sprite != Sprite::MOVE) {
+	if (sprite != Sprite::MOVE) {
 		switchSprite(Sprite::MOVE);
 	}
 
+	//-----------------------------
+
 	moveHorizontally(Direction::LEFT);
+	moveVertically(Direction::DOWN);
 
-	// Handle Collision
-	handleWallCollision();
+	//-----------------------------
 
-	// Waiting to be deleted
+	handleGroundCollision();
+
+	//-----------------------------
+
 	int relativePositionRight = absolutePositionLeft + ViewPointX + GetWidth();
 
 	if (relativePositionRight < 0) {
@@ -242,6 +280,9 @@ void Prisoner::moveHorizontally(Direction direction) {
 	else if (direction == Direction::RIGHT) {
 		distanceHorizontal += velocityHorizontal;
 	}
+
+	//-----------------------------
+
 	directionHorizontal = direction;
 }
 
@@ -256,6 +297,9 @@ void Prisoner::moveVertically(Direction direction) {
 		velocityVertical = 0;
 	}
 	distanceVertical += velocityVertical;
+
+	//-----------------------------
+
 	directionVertical = direction;
 }
 
@@ -301,7 +345,6 @@ void Prisoner::handleWallCollision() {
 }
 
 void Prisoner::handleGroundCollision() {
-	// Check for falling
 	inAir = true;
 
 	for (size_t i = 0; i < grounds.size(); i++) {
@@ -312,7 +355,6 @@ void Prisoner::handleGroundCollision() {
 
 			distanceVertical = Ground::GetX_Height(grounds[i], absolutePositionLeft) - relativeCollisionBoxBottom;
 
-			// Stop falling
 			inAir = false;
 			velocityVertical = 0;
 			break;
@@ -406,6 +448,8 @@ std::string Prisoner::getAction() const {
 		return "RESCUED";
 	case Prisoner::Action::MOVE:
 		return "MOVE";
+	case Prisoner::Action::FALL:
+		return "FALL";
 	case Prisoner::Action::REWARD:
 		return "REWARD";
 	case Prisoner::Action::LEAVE:
