@@ -23,7 +23,7 @@ void Boss1_fire::move()
 
 void Boss1_fire::draw()
 {
-	this->ShowBitmap(4);
+	this->ShowBitmap(3);
 }
 void Boss1_fire::setXY(int _x, int _y) {
 	this->x = _x;

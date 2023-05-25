@@ -19,5 +19,5 @@ class boss1_canno : public Character {
 		time_t start_AI = clock();
 		bool Done=false;
 		Boss1_laser *laser;
-		Boss1_fire *fire;
+		vector<Boss1_fire*>fire;
 };
