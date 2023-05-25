@@ -161,9 +161,9 @@ void CGameStateRun::OnShow()
 		else {
 			CDC *pDC = CDDraw::GetBackCDC();
 			//game_framework::ChangeFontLog
-			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0, 0, 0), 1000);
+			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0, 0, 0), 500);
 			CString str;
-			str.Format(_T("now index=%d, x=%d, y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
+			str.Format(_T("marco index=%d, x=%d, y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
 			std::string result = CT2A(str);// 將CString轉換為std::string
 			CTextDraw::Print(pDC, 0, 0, result);
 			
@@ -172,17 +172,25 @@ void CGameStateRun::OnShow()
 			Prisoner prisoner = prisoners[0];
 			char buffer[256]; // 假設你的字串不會超過 256 個字元
 
-			std::snprintf(buffer, sizeof(buffer), "prisoner action=%s, sprite=%s", prisoner.getAction().c_str(), prisoner.getSprite().c_str());
+			std::snprintf(buffer, sizeof(buffer), "prisoner absLeft=%d, absTop=%d", prisoner.getAbsLeft(), prisoner.getAbsTop());
 			std::string str1 = buffer;
-			CTextDraw::Print(pDC, 0, 30, str1);
+			CTextDraw::Print(pDC, 0, 25, str1);
 
-			std::snprintf(buffer, sizeof(buffer), "prisoner absIndex=%d, relIndex=%d", prisoner.getAbsIndex(), prisoner.getRelIndex());
+			std::snprintf(buffer, sizeof(buffer), "prisoner action=%s, sprite=%s", prisoner.getAction().c_str(), prisoner.getSprite().c_str());
 			str1 = buffer;
-			CTextDraw::Print(pDC, 0, 60, str1);
+			CTextDraw::Print(pDC, 0, 50, str1);
+
+			std::snprintf(buffer, sizeof(buffer), "prisoner directionHorizontal=%s", prisoner.getDirectionHorizontal().c_str());
+			str1 = buffer;
+			CTextDraw::Print(pDC, 0, 75, str1);
+
+			std::snprintf(buffer, sizeof(buffer), "prisoner absFrame=%d, relFrame=%d", prisoner.getAbsFrame(), prisoner.getRelFrame());
+			str1 = buffer;
+			CTextDraw::Print(pDC, 0, 100, str1);
 
 			std::snprintf(buffer, sizeof(buffer), "prisoner animationDone=%d", prisoner.isAnimationDone());
 			str1 = buffer;
-			CTextDraw::Print(pDC, 0, 90, str1);
+			CTextDraw::Print(pDC, 0, 125, str1);
 
 
 			CDDraw::ReleaseBackCDC();

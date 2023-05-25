@@ -2,7 +2,7 @@
 #include "Character.h"
 
 enum class Direction {
-	LEFT, RIGHT, UP, DOWN
+	NONE, LEFT, RIGHT, UP, DOWN
 };
 
 class Prisoner : public Character {
@@ -32,6 +32,7 @@ private:
 	std::chrono::time_point<std::chrono::steady_clock> spriteTimer = std::chrono::steady_clock::now();
 
 	Direction directionHorizontal = Direction::LEFT;
+	Direction directionVertical = Direction::NONE;
 
 	enum class Sprite {
 		TIED, RESCUED, MOVE, FALL, REWARD
@@ -66,8 +67,11 @@ public:
 	void draw();
 
 	// For debugging
-	int getAbsIndex();
-	int getRelIndex();
+	int getAbsLeft() const;
+	int getAbsTop() const;
+	int getAbsFrame();
+	int getRelFrame();
+	std::string getDirectionHorizontal() const;
 	std::string getSprite() const;
 	std::string getAction() const;
 	bool isAnimationDone() const;
