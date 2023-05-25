@@ -31,6 +31,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		removeInactives();
 		removeInactiveSolider();
 		marco.update();
+		for (size_t i = 0; i < rshobus.size(); i++) {
+			rshobus[i].update();
+		}
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].update();
 		}
@@ -70,6 +73,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	createSoldiers();
 	createMapObject();
 	createPrisoners();
+	createRShobus();
 	marco.init();
 	for (size_t i = 0; i < soldiers.size(); i++) {
 		soldiers[i].init();
@@ -79,6 +83,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	}
 	for (size_t i = 0; i < prisoners.size(); i++) {
 		prisoners[i].init();
+	}
+	for (size_t i = 0; i < rshobus.size(); i++) {
+		rshobus[i].init();
 	}
 }
 
@@ -201,6 +208,9 @@ void CGameStateRun::OnShow()
 		}
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].draw();
+		}
+		for (size_t i = 0; i < rshobus.size(); i++) {
+			rshobus[i].draw();
 		}
 		boss.draw();
 		marco.draw();

@@ -35,3 +35,5 @@ prisoner,1~10,resources/img_v2/prisoner/rescued/,1000
 prisoner,10~22,resources/img_v2/prisoner/move/,1000
 prisoner,22~27,resources/img_v2/prisoner/fall/,1000
 prisoner,27~37,resources/img_v2/prisoner/reward/,500
+rshobu,0~28,resources/img_v2/Rshobu/move/,100
+rshobu,28~29,resources/img_v2/Rshobu/die/,100

@@ -1,175 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="MFC">
-      <UniqueIdentifier>{da904ee8-7f59-4a6c-b3ff-b91b6fb6d0ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameLibrary">
-      <UniqueIdentifier>{df7aa532-3fdf-46a0-b3fc-8f5922e8d9e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame">
-      <UniqueIdentifier>{0c798913-b7d2-4e26-8241-0f83266cd626}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source">
-      <UniqueIdentifier>{cbab250f-7015-4a86-a4fa-06bf8f794101}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\header">
-      <UniqueIdentifier>{c07553e5-9eea-4a43-a0ac-b1ea4c4220cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\cpp">
-      <UniqueIdentifier>{494728d0-0dcc-4e11-94b1-7de889e39f1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MyGame\Resource Files">
-      <UniqueIdentifier>{1a913106-0be0-4476-b0ce-2aa855072614}</UniqueIdentifier>
-      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe</Extensions>
-    </Filter>
+    <ClCompile Include="Source\Core\game.cpp" />
+    <ClCompile Include="Source\Core\gameDoc.cpp" />
+    <ClCompile Include="Source\Core\gameView.cpp" />
+    <ClCompile Include="Source\Core\MainFrm.cpp" />
+    <ClCompile Include="Source\Core\StdAfx.cpp" />
+    <ClCompile Include="Source\Game\mygame_initialize.cpp" />
+    <ClCompile Include="Source\Game\mygame_over.cpp" />
+    <ClCompile Include="Source\Game\mygame_run.cpp" />
+    <ClCompile Include="Source\Library\audio.cpp" />
+    <ClCompile Include="Source\Library\gamecore.cpp" />
+    <ClCompile Include="Source\Library\gameutil.cpp" />
+    <ClCompile Include="Source\Source\cpp\boss1.cpp" />
+    <ClCompile Include="Source\Source\cpp\boss1_canno.cpp" />
+    <ClCompile Include="Source\Source\cpp\Bullet.cpp" />
+    <ClCompile Include="Source\Source\cpp\Character.cpp" />
+    <ClCompile Include="Source\Source\cpp\Firework.cpp" />
+    <ClCompile Include="Source\Source\cpp\GameStorage.cpp" />
+    <ClCompile Include="Source\Source\cpp\Grenade.cpp" />
+    <ClCompile Include="Source\Source\cpp\Ground.cpp" />
+    <ClCompile Include="Source\Source\cpp\MapObject.cpp" />
+    <ClCompile Include="Source\Source\cpp\Marco.cpp" />
+    <ClCompile Include="Source\Source\cpp\Prisoner.cpp" />
+    <ClCompile Include="Source\Source\cpp\Soldier.cpp" />
+    <ClCompile Include="Source\Source\cpp\RShobu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="RES\GAME.RC2">
-      <Filter>MyGame\Resource Files</Filter>
-    </None>
+    <ClInclude Include="Source\Core\Game.h" />
+    <ClInclude Include="Source\Core\gameDoc.h" />
+    <ClInclude Include="Source\Core\gameView.h" />
+    <ClInclude Include="Source\Core\MainFrm.h" />
+    <ClInclude Include="Source\Core\Resource.h" />
+    <ClInclude Include="Source\Core\StdAfx.h" />
+    <ClInclude Include="Source\Game\config.h" />
+    <ClInclude Include="Source\Game\mygame.h" />
+    <ClInclude Include="Source\Library\audio.h" />
+    <ClInclude Include="Source\Library\gamecore.h" />
+    <ClInclude Include="Source\Library\gameutil.h" />
+    <ClInclude Include="Source\Source\header\Boss1.h" />
+    <ClInclude Include="Source\Source\header\boss1_canno.h" />
+    <ClInclude Include="Source\Source\header\Bullet.h" />
+    <ClInclude Include="Source\Source\header\Character.h" />
+    <ClInclude Include="Source\Source\header\Firework.h" />
+    <ClInclude Include="Source\Source\header\GameStorage.h" />
+    <ClInclude Include="Source\Source\header\Grenade.h" />
+    <ClInclude Include="Source\Source\header\Ground.h" />
+    <ClInclude Include="Source\Source\header\MapObject.h" />
+    <ClInclude Include="Source\Source\header\Marco.h" />
+    <ClInclude Include="Source\Source\header\Prisoner.h" />
+    <ClInclude Include="Source\Source\header\Soldier.h" />
+    <ClInclude Include="Source\Source\header\RShobu.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Library\audio.cpp">
-      <Filter>GameLibrary</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Library\gamecore.cpp">
-      <Filter>GameLibrary</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Library\gameutil.cpp">
-      <Filter>GameLibrary</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Core\game.cpp">
-      <Filter>MFC</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Core\gameDoc.cpp">
-      <Filter>MFC</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Core\gameView.cpp">
-      <Filter>MFC</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Core\MainFrm.cpp">
-      <Filter>MFC</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Core\StdAfx.cpp">
-      <Filter>MFC</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\mygame_initialize.cpp">
-      <Filter>MyGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\mygame_over.cpp">
-      <Filter>MyGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game\mygame_run.cpp">
-      <Filter>MyGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Bullet.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Character.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\GameStorage.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Ground.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Marco.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Soldier.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\MapObject.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Firework.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\Grenade.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\boss1.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Source\cpp\boss1_canno.cpp">
-    <ClCompile Include="Source\Source\cpp\Prisoner.cpp">
-      <Filter>Source\cpp</Filter>
-    </ClCompile>
+    <ResourceCompile Include="Source\Core\game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Library\audio.h">
-      <Filter>GameLibrary</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Library\gamecore.h">
-      <Filter>GameLibrary</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Library\gameutil.h">
-      <Filter>GameLibrary</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Core\Game.h">
-      <Filter>MFC</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Core\gameDoc.h">
-      <Filter>MFC</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Core\gameView.h">
-      <Filter>MFC</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Core\MainFrm.h">
-      <Filter>MFC</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Core\Resource.h">
-      <Filter>MFC</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Core\StdAfx.h">
-      <Filter>MFC</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\mygame.h">
-      <Filter>MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game\config.h">
-      <Filter>MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Bullet.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Character.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\GameStorage.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Ground.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Marco.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Soldier.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\MapObject.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Firework.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Grenade.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\Boss1.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Source\header\boss1_canno.h">
-    <ClInclude Include="Source\Source\header\Prisoner.h">
-      <Filter>Source\header</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Source\Core\game.rc">
-      <Filter>MFC</Filter>
-    </ResourceCompile>
+    <None Include="RES\GAME.RC2" />
   </ItemGroup>
 </Project>
