@@ -171,20 +171,18 @@ void CGameStateRun::OnShow()
 			// For debugging
 			Prisoner prisoner = prisoners[0];
 			char buffer[256]; // 假設你的字串不會超過 256 個字元
-			string temp = "你好";
-			std::snprintf(buffer, sizeof(buffer), "prisoner action=%s, sprite=%s", temp.c_str(), prisoner.getSprite().c_str());
+
+			std::snprintf(buffer, sizeof(buffer), "prisoner action=%s, sprite=%s", prisoner.getAction().c_str(), prisoner.getSprite().c_str());
 			std::string str1 = buffer;
-			
 			CTextDraw::Print(pDC, 0, 30, str1);
-			/*
-			str.Format(_T("prisoner absIndex=%d, relIndex=%d"), prisoner.getAbsIndex(), prisoner.getRelIndex());
-			result = CT2A(str);
-			CTextDraw::Print(pDC, 0, 60, result);
-			
-			str.Format(_T("prisoner animationDone=%d"), prisoner.isAnimationDone());
-			result = CT2A(str);
-			CTextDraw::Print(pDC, 0, 90, result);
-			*/
+
+			std::snprintf(buffer, sizeof(buffer), "prisoner absIndex=%d, relIndex=%d", prisoner.getAbsIndex(), prisoner.getRelIndex());
+			str1 = buffer;
+			CTextDraw::Print(pDC, 0, 60, str1);
+
+			std::snprintf(buffer, sizeof(buffer), "prisoner animationDone=%d", prisoner.isAnimationDone());
+			str1 = buffer;
+			CTextDraw::Print(pDC, 0, 90, str1);
 
 
 			CDDraw::ReleaseBackCDC();

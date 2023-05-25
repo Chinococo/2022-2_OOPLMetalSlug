@@ -48,6 +48,8 @@ void Prisoner::init() {
 	}
 
 	LoadBitmapByString(paths, RGB(0, 0, 0));
+
+	switchSprite(Sprite::TIED);
 }
 
 void Prisoner::update() {
@@ -85,7 +87,6 @@ void Prisoner::update() {
 	SetTopLeft(relativePositionLeft, relativePositionTop);
 
 	// Handle animation
-	switchSprite(sprite);
 	nextFrame();
 }
 
@@ -98,13 +99,7 @@ void Prisoner::draw() {
 	}
 }
 
-void Prisoner::handleActionTied() {
-	// Set sprite and action for this state
-	action = Action::TIED;
-
-	switchSprite(Sprite::TIED);
-
-	// Perform movement
+void Prisoner::handleActionTied() {// Perform movement
 	if (inAir) {
 		moveVertically(Direction::DOWN);
 	}
@@ -124,16 +119,12 @@ void Prisoner::handleActionTied() {
 	}
 
 	if (isRescuredByHeroKnife || isRescuredByHeroBullet) {
+		switchSprite(Sprite::RESCUED);
 		action = Action::RESCUED;
 	}
 }
 
 void Prisoner::handleActionRescued() {
-	// Set sprite and action for this state
-	action = Action::RESCUED;
-
-	switchSprite(Sprite::RESCUED);
-
 	// Perform movement
 	if (inAir) {
 		moveVertically(Direction::DOWN);
@@ -144,16 +135,12 @@ void Prisoner::handleActionRescued() {
 
 	// Switch to next action
 	if (animationDone) {
+		switchSprite(Sprite::MOVE);
 		action = Action::MOVE;
 	}
 }
 
 void Prisoner::handleActionMove() {
-	// Set sprite and action for this state
-	action = Action::MOVE;
-
-	switchSprite(Sprite::MOVE);
-
 	// Perform movement
 	int newPositionHorizontal = absolutePositionLeft + distanceHorizontal;
 	int distanceFromAnchorHorizontal = abs(newPositionHorizontal - absoluteAnchorHorizontal);
@@ -169,7 +156,9 @@ void Prisoner::handleActionMove() {
 	}
 
 	moveHorizontally(directionHorizontal);
-	moveVertically(Direction::DOWN);
+	if (inAir) {
+		moveVertically(Direction::DOWN);
+	}
 
 	// Handle Collision
 	handleWallCollision();
@@ -178,9 +167,13 @@ void Prisoner::handleActionMove() {
 	if (inAir) {
 		switchSprite(Sprite::FALL);
 	}
+	else {
+		switchSprite(Sprite::MOVE);
+	}
 
 	// Switch to next action
 	if (isCollideWith(marco)) {
+		switchSprite(Sprite::REWARD);
 		action = Action::REWARD;
 	}
 }
@@ -188,8 +181,6 @@ void Prisoner::handleActionMove() {
 void Prisoner::handleActionReward() {
 	// Set sprite and action for this state
 	action = Action::REWARD;
-
-	switchSprite(Sprite::REWARD);
 
 	// Perform movement
 	if (inAir) {
@@ -204,6 +195,7 @@ void Prisoner::handleActionReward() {
 
 	// Switch to next action
 	if (animationDone) {
+		switchSprite(Sprite::MOVE);
 		action = Action::LEAVE;
 	}
 }
@@ -211,11 +203,6 @@ void Prisoner::handleActionReward() {
 void Prisoner::handleActionLeave() {
 	// Set sprite and action for this state
 	action = Action::LEAVE;
-
-	switchSprite(Sprite::MOVE);
-
-	// Set direction
-	directionHorizontal = Direction::LEFT;
 
 	// Perform movement
 	moveHorizontally(Direction::LEFT);
@@ -241,6 +228,7 @@ void Prisoner::moveHorizontally(Direction direction) {
 	else if (direction == Direction::RIGHT) {
 		distanceHorizontal += velocityHorizontal;
 	}
+	directionHorizontal = direction;
 }
 
 void Prisoner::moveVertically(Direction direction) {
@@ -282,8 +270,8 @@ void Prisoner::handleGroundCollision() {
 
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (velocityVertical > 0 &&
-			Ground::isOnGround(*this, grounds[i]) == 1
-		) {
+			Ground::isOnGround(*this, grounds[i]) == 1)
+		{
 			int relativePositionTop = absolutePositionTop - ViewPointY + ViewPointYInit;
 			int relativeCollisionBoxTop = relativePositionTop + collisionBoxTweakTop;
 			int relativeCollisionBoxBottom = relativeCollisionBoxTop + collisionBoxHeight;
@@ -312,6 +300,10 @@ void Prisoner::handleWallCollision() {
 }
 
 void Prisoner::switchSprite(Sprite sprite) {
+	if (this->sprite == sprite) {
+		return;
+	}
+
 	int bias = (directionHorizontal == Direction::RIGHT) ? animationflipBias : 0;
 	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
 
@@ -343,7 +335,7 @@ void Prisoner::nextFrame() {
 
 	spriteTimer = timePointNow;
 }
-/*
+
 int Prisoner::getAbsIndex() {
 	return GetFrameIndexOfBitmap();
 }
@@ -354,7 +346,7 @@ int Prisoner::getRelIndex() {
 	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
 	return frameIndex - range.first - bias;
 }
-*/
+
 std::string Prisoner::getSprite() const {
 	switch (sprite) {
 	case Prisoner::Sprite::TIED:
@@ -388,8 +380,7 @@ std::string Prisoner::getAction() const {
 		return "NONE";
 	}
 }
-/*
+
 bool Prisoner::isAnimationDone() const {
 	return animationDone;
 }
-*/

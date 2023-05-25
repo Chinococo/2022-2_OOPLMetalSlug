@@ -66,13 +66,9 @@ public:
 	void draw();
 
 	// For debugging
-	/*
 	int getAbsIndex();
 	int getRelIndex();
-	*/
 	std::string getSprite() const;
 	std::string getAction() const;
-	/*
 	bool isAnimationDone() const;
-	*/
 };
