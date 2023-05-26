@@ -25,6 +25,7 @@
     <ClCompile Include="Source\Source\cpp\Prisoner.cpp" />
     <ClCompile Include="Source\Source\cpp\Soldier.cpp" />
     <ClCompile Include="Source\Source\cpp\RShobu.cpp" />
+    <ClCompile Include="Source\Source\cpp\RShobuBomb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\Game.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="Source\Source\header\Prisoner.h" />
     <ClInclude Include="Source\Source\header\Soldier.h" />
     <ClInclude Include="Source\Source\header\RShobu.h" />
+    <ClInclude Include="Source\Source\header\RShobuBomb.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc" />

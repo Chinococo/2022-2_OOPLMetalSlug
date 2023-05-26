@@ -1,11 +1,13 @@
 #pragma once
 #include "Character.h"
+#include "RShobuBomb.h"
 #include <chrono>
 
 class RShobu : public Character {
 private:
 	const int DISTANCE_TO_HERO_HORIZONTAL = 30;
 	const int DISTANCE_TO_HERO_VERTICAL = 100;
+	const int FIRE_DELAY_MILLISECOND = 1500;
 
 	int health = 20;
 
@@ -18,7 +20,7 @@ private:
 	int collisionBoxTweakLeft = 0;
 	int collisionBoxTweakTop = 0;
 
-	int collisionBoxWidth = 100;
+	int collisionBoxWidth = 150;
 	int collisionBoxHeight = 90;
 
 	int velocityHorizontal = 12;
@@ -27,6 +29,9 @@ private:
 	bool animationDone = false;
 
 	std::chrono::time_point<std::chrono::steady_clock> spriteTimer = std::chrono::steady_clock::now();
+	std::chrono::time_point<std::chrono::steady_clock> fireTimer = std::chrono::steady_clock::now();
+
+	std::vector<RShobuBomb> bombs;
 
 	Direction directionHorizontal = Direction::LEFT;
 	Direction directionVertical = Direction::NONE;
@@ -39,9 +44,10 @@ private:
 		MOVE, DIE
 	} action = Action::MOVE;
 
-	void handleActionChase();
 	void handleActionMove();
 	void handleActionDie();
+
+	void fire();
 
 	void moveHorizontally(Direction direction);
 	void moveVertically(Direction direction);

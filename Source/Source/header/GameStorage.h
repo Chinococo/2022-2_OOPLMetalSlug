@@ -10,6 +10,7 @@
 #include "../header/boss1_canno.h"
 #include "../header/Prisoner.h"
 #include "../header/RShobu.h"
+#include "../header/RShobuBomb.h"
 
 #include <string>
 #include <vector>

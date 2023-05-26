@@ -1,18 +1,18 @@
 #include "stdafx.h"
 #include "../header/GameStorage.h"
 
-RShobu::RShobu(int absolutePositionLeft, int absolutePositionTop)
+RShobuBomb::RShobuBomb(int absolutePositionLeft, int absolutePositionTop)
 	: Character(absolutePositionLeft, absolutePositionTop, velocityHorizontal),
 	absolutePositionLeft(absolutePositionLeft),
 	absolutePositionTop(absolutePositionTop) {}
 
-void RShobu::init() {
+void RShobuBomb::init() {
 	std::vector<std::vector<std::string>> csv = readCSV("resources/csv/character.csv");
 	std::vector<std::string> paths;
 	std::pair<int, int> range;
 
 	for (size_t i = 1; i < csv.size(); i++) {
-		if (csv[i][0] != "rshobu")
+		if (csv[i][0] != "rshobuBomb")
 			continue;
 
 		int delay = std::stoi(csv[i][3]);
@@ -31,7 +31,7 @@ void RShobu::init() {
 
 	// filp
 	for (size_t i = 1; i < csv.size(); i++) {
-		if (csv[i][0] != "rshobu")
+		if (csv[i][0] != "rshobuBomb")
 			continue;
 
 		int delay = std::stoi(csv[i][3]);
@@ -51,7 +51,7 @@ void RShobu::init() {
 	switchSprite(Sprite::MOVE);
 }
 
-void RShobu::update() {
+void RShobuBomb::update() {
 	if (!alive) {
 		return;
 	}
@@ -64,9 +64,6 @@ void RShobu::update() {
 	switch (action) {
 	case Action::MOVE:
 		handleActionMove();
-		break;
-	case Action::DIE:
-		handleActionDie();
 		break;
 	}
 
@@ -90,144 +87,55 @@ void RShobu::update() {
 		nextFrame();
 		spriteTimer = timePointNow;
 	}
-
-	//-----------------------------
-
-	bombs.erase(std::remove_if(bombs.begin(), bombs.end(), [](const RShobuBomb &bomb) {
-		return !bomb.isAlive();
-	}), bombs.end());
-
-	for (size_t i = 0; i < bombs.size(); i++) {
-		bombs[i].update();
-	}
 }
 
-void RShobu::draw() {
+void RShobuBomb::draw() {
 	if (alive) {
-		ShowBitmap(2.3);
-
-		for (size_t i = 0; i < bombs.size(); i++) {
-			bombs[i].draw();
-		}
+		ShowBitmap(2.2);
 	}
 	else {
 		UnshowBitmap();
 	}
 }
 
-void RShobu::handleActionMove() {
+void RShobuBomb::handleActionMove() {
 	if (sprite != Sprite::MOVE) {
 		switchSprite(Sprite::MOVE);
 	}
 
 	//-----------------------------
 
-	auto delayMillisecond = std::chrono::milliseconds(FIRE_DELAY_MILLISECOND);
-	auto timePointNow = std::chrono::steady_clock::now();
-	auto elapsedMilliSecond = std::chrono::duration_cast<std::chrono::milliseconds>(timePointNow - fireTimer);
-
-	if (elapsedMilliSecond >= delayMillisecond) {
-		fire();
-		fireTimer = timePointNow;
-	}
+	moveVertically(Direction::DOWN);
 
 	//-----------------------------
 
-	int relativeMarcoMiddleHorizontal = marco.GetLeft() + marco.GetWidth() / 2;
-	int relativeMarcoMiddleVertical = marco.GetTop() + marco.GetHeight() / 2;
-
-	int absoluteMiddleHorizontal = absolutePositionLeft + GetWidth() / 2;
-	int absoluteMiddleVertical = absolutePositionTop + GetHeight() / 2;
-
-	int relativeMiddleHorizontal = absoluteMiddleHorizontal + ViewPointX;
-	int relativeMiddleVertical = absoluteMiddleVertical - ViewPointY + ViewPointYInit;
-
-	int distanceToMarcoHorizontal = relativeMarcoMiddleHorizontal - absoluteMiddleHorizontal;
-	int distanceToMarcoVertical = relativeMarcoMiddleVertical - absoluteMiddleVertical;
-
-	if (distanceToMarcoHorizontal < -DISTANCE_TO_HERO_HORIZONTAL) {
-		moveHorizontally(Direction::LEFT);
-	}
-	else if (distanceToMarcoHorizontal > DISTANCE_TO_HERO_HORIZONTAL) {
-		moveHorizontally(Direction::RIGHT);
-	}
-
-	if (distanceToMarcoVertical < DISTANCE_TO_HERO_VERTICAL) {
-		moveVertically(Direction::UP);
-	}
-	else if (distanceToMarcoVertical > DISTANCE_TO_HERO_VERTICAL) {
-		moveVertically(Direction::DOWN);
-	}
+	handleGroundCollision();
 
 	//-----------------------------
 
-	for (size_t i = 0; i < bullets.size(); i++) {
-		if (isCollideWith(bullets[i])) {
-			health--;
-			break;
-		}
-	}
-
-	handleWallCollision();
-
-	//-----------------------------
-
-	if (health == 0) {
-		action = Action::DIE;
-	}
-}
-
-void RShobu::handleActionDie() {
-	if (sprite != Sprite::DIE) {
-		switchSprite(Sprite::DIE);
-	}
-
-	//-----------------------------
-
-	if (animationDone) {
+	if (!inAir) {
 		alive = false;
 	}
 }
 
-void RShobu::fire() {
-	int absolutePositionMiddleHorizontal = absolutePositionLeft + GetWidth() / 2;
-	int absolutePositionBottom = absolutePositionTop + GetHeight();
-
-	RShobuBomb bomb(absolutePositionMiddleHorizontal + 35, absolutePositionBottom + 50);
-	bomb.init();
-	bombs.push_back(bomb);
-}
-
-void RShobu::moveHorizontally(Direction direction) {
-	if (direction == Direction::LEFT) {
-		distanceHorizontal -= velocityHorizontal;
-	}
-	else if (direction == Direction::RIGHT) {
-		distanceHorizontal += velocityHorizontal;
-	}
-
-	//-----------------------------
-
-	directionHorizontal = direction;
-}
-
-void RShobu::moveVertically(Direction direction) {
+void RShobuBomb::moveVertically(Direction direction) {
 	if (direction == Direction::UP) {
-		distanceVertical -= velocityVertical;
+		velocityVertical = -15;
 	}
 	else if (direction == Direction::DOWN) {
-		distanceVertical += velocityVertical;
+		velocityVertical += GRAVITY;
 	}
 	else if (direction == Direction::NONE) {
-		distanceVertical = 0;
+		velocityVertical = 0;
 	}
+	distanceVertical += velocityVertical;
 
 	//-----------------------------
 
 	directionVertical = direction;
 }
 
-bool RShobu::isCollideWith(Character other) {
+bool RShobuBomb::isCollideWith(Character other) {
 	int relativePositionLeft = absolutePositionLeft + ViewPointX;
 	int relativePositionTop = absolutePositionTop - ViewPointY + ViewPointYInit;
 
@@ -253,20 +161,40 @@ bool RShobu::isCollideWith(Character other) {
 	return true;
 }
 
-void RShobu::handleWallCollision() {
+void RShobuBomb::handleWallCollision() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (distanceHorizontal > 0 && Ground::isOnGroundLeft(*this, grounds[i]) == 1) {
 			distanceHorizontal = 0;
+			directionHorizontal = Direction::LEFT;
 			break;
 		}
 		else if (distanceHorizontal < 0 && Ground::isOnGroundRight(*this, grounds[i]) == 1) {
 			distanceHorizontal = 0;
+			directionHorizontal = Direction::RIGHT;
 			break;
 		}
 	}
 }
 
-void RShobu::switchSprite(Sprite sprite) {
+void RShobuBomb::handleGroundCollision() {
+	inAir = true;
+
+	for (size_t i = 0; i < grounds.size(); i++) {
+		if (velocityVertical > 0 && Ground::isOnGround(*this, grounds[i]) == 1) {
+			int relativePositionTop = absolutePositionTop - ViewPointY + ViewPointYInit;
+			int relativeCollisionBoxTop = relativePositionTop + collisionBoxTweakTop;
+			int relativeCollisionBoxBottom = relativeCollisionBoxTop + collisionBoxHeight;
+
+			distanceVertical = Ground::GetX_Height(grounds[i], absolutePositionLeft) - relativeCollisionBoxBottom;
+
+			inAir = false;
+			velocityVertical = 0;
+			break;
+		}
+	}
+}
+
+void RShobuBomb::switchSprite(Sprite sprite) {
 	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
 	int bias = (directionHorizontal == Direction::RIGHT) ? animationflipBias : 0;
 
@@ -277,7 +205,7 @@ void RShobu::switchSprite(Sprite sprite) {
 	SetFrameIndexOfBitmap(frameOffset);
 }
 
-void RShobu::nextFrame() {
+void RShobuBomb::nextFrame() {
 	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
 	int bias = (directionHorizontal == Direction::RIGHT) ? animationflipBias : 0;
 
@@ -291,69 +219,7 @@ void RShobu::nextFrame() {
 	SetFrameIndexOfBitmap(frameOffset);
 }
 
-int RShobu::getAbsLeft() const {
-	return absolutePositionLeft;
-}
-
-int RShobu::getAbsTop() const {
-	return absolutePositionTop;
-}
-
-int RShobu::getAbsFrame() {
-	return GetFrameIndexOfBitmap();
-}
-
-int RShobu::getRelFrame() {
-	int frameIndex = GetFrameIndexOfBitmap();
-	int bias = (directionHorizontal == Direction::RIGHT) ? animationflipBias : 0;
-	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
-	return frameIndex - range.first - bias;
-}
-
-std::string RShobu::getDirectionHorizontal() const {
-	switch (directionHorizontal) {
-	case Direction::NONE:
-		return "NONE";
-	case Direction::UP:
-		return "UP";
-	case Direction::DOWN:
-		return "DOWN";
-	case Direction::LEFT:
-		return "LEFT";
-	case Direction::RIGHT:
-		return "RIGHT";
-	default:
-		return "NULL";
-	}
-}
-
-std::string RShobu::getSprite() const {
-	switch (action) {
-	case Action::MOVE:
-		return "MOVE";
-	case Action::DIE:
-		return "DIE";
-	default:
-		return "NULL";
-	}
-}
-
-std::string RShobu::getAction() const {
-	switch (action) {
-	case Action::MOVE:
-		return "MOVE";
-	case Action::DIE:
-		return "DIE";
-	default:
-		return "NULL";
-	}
-}
-
-bool RShobu::isAnimationDone() const {
-	return animationDone;
-}
-
-RShobu &RShobu::operator=(const RShobu &other) {
+RShobuBomb &RShobuBomb::operator=(const RShobuBomb &other) {
 	absolutePositionLeft = other.absolutePositionLeft;
 	absolutePositionTop = other.absolutePositionTop;
 
@@ -369,6 +235,7 @@ RShobu &RShobu::operator=(const RShobu &other) {
 	velocityHorizontal = other.velocityHorizontal;
 	velocityVertical = other.velocityVertical;
 
+	inAir = other.inAir;
 	animationDone = other.animationDone;
 
 	spriteTimer = other.spriteTimer;
