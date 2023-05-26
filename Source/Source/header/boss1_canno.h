@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Library/gameutil.h"
-
+#include "../header/Boss1_laser.h"
+#include "../header/Boss1_fire.h"
 class boss1_canno : public Character {
 	public:
 		boss1_canno(int _x, int _y);
@@ -11,10 +12,12 @@ class boss1_canno : public Character {
 		void draw();
 	private:
 		enum class Action {
-			MovingDown,Movingup,AttackLow, AttackUp, IDLEDown,IDLEUp
-		} action = Action::MovingDown, lastAction = Action::MovingDown;
+			MovingDown,Movingup,AttackLow, AttackUp, IDLEDown,IDLEUp,LasetLow,LaserUp
+		} action = Action::LaserUp, lastAction = Action::LaserUp;
 		int x, y;
 		bool position;
 		time_t start_AI = clock();
 		bool Done=false;
+		Boss1_laser *laser;
+		vector<Boss1_fire*>fire;
 };

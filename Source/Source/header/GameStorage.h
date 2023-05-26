@@ -8,10 +8,11 @@
 #include "../header/Grenade.h"
 #include "../header/Boss1.h"
 #include "../header/boss1_canno.h"
+#include "../header/boss1_laser.h"
 #include "../header/Prisoner.h"
+#include "../header/boss1_fire.h"
 #include "../header/RShobu.h"
 #include "../header/RShobuBomb.h"
-
 #include <string>
 #include <vector>
 #include <set>
@@ -67,4 +68,5 @@ namespace game_framework {
 	extern bool Loading;
 	extern vector<vector<string>> groundcsv;
 	extern Boss1 boss;
+	extern Boss1_laser laser;
 }

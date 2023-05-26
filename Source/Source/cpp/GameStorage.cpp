@@ -189,13 +189,15 @@ namespace game_framework {
 		std::vector<std::vector<std::string>> csv = readCSV("resources/csv/mapobject.csv");
 		for (unsigned i = 1; i < csv.size(); i++) {
 			vector<std::string> image;
-			for (unsigned index = 6; index < csv[i].size(); index++) {
+			for (unsigned index = 10; index < csv[i].size(); index++) {
 				if (csv[i][index] == "")
 					break;
 				image.push_back(csv[i][index]);
 			}
-			if(std::stoi(csv[i][0])==1)
-				MapObjects.push_back(MapObject(std::stoi(csv[i][1]), std::stoi(csv[i][2]), std::stoi(csv[i][4]),image, csv[i][5], std::stoi(csv[i][3])));
+			if (std::stoi(csv[i][0]) == 1) {
+				MapObjects.push_back(MapObject(std::stoi(csv[i][1]), std::stoi(csv[i][2]), std::stoi(csv[i][4]), image, csv[i][5], std::stoi(csv[i][3]), { {std::stoi(csv[i][6]),std::stoi(csv[i][7])} ,{std::stoi(csv[i][8]),std::stoi(csv[i][9])} }));
+			}
+				
 		}
 	}
 	void removeInactiveSolider() {
@@ -233,7 +235,7 @@ namespace game_framework {
 	CMovingBitmap arrow;
 	CMovingBitmap background_mission1;
 	std::vector<CMovingBitmap> mainmenuButtons;
-	int ViewPointX = -0 ;
+	int ViewPointX = 0 ;
 	int ViewPointY = 580;
 	int MapScrollSpeed = 10;
 	bool scroll = false;
@@ -252,4 +254,5 @@ namespace game_framework {
 	bool Loading = false;
 	int ViewPointYInit = 580;
 	Boss1 boss(9900,- 190);
+	
 }

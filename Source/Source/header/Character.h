@@ -21,8 +21,10 @@ public:
 	virtual void collideWithGround() {}
 	virtual void collideWithWall() {}
 	virtual void draw() {}
+	bool IsOverlap_(Character) ;
   
 	bool isAlive() const;
+	void dead();
 	bool myIsOverlap(Character *other);
 protected:
 	int x;
@@ -41,5 +43,6 @@ protected:
 	std::pair<int, int> animationRange; // { start, end }, including start, excluding end
 	std::vector<std::pair<int, int>> animationRanges;
 	std::vector<int> animationDelays;
+	std::pair<std::pair<int, int>, std::pair<int, int>> CollideBox = { {-1,-1},{-1,-1} };
 	clock_t start = clock();
 };

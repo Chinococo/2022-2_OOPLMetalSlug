@@ -24,6 +24,8 @@
     <ClCompile Include="Source\Source\cpp\Marco.cpp" />
     <ClCompile Include="Source\Source\cpp\Prisoner.cpp" />
     <ClCompile Include="Source\Source\cpp\Soldier.cpp" />
+    <ClCompile Include="Source\Source\cpp\Boss1_laser.cpp" />
+    <ClCompile Include="Source\Source\cpp\boss1_fire.cpp" />
     <ClCompile Include="Source\Source\cpp\RShobu.cpp" />
     <ClCompile Include="Source\Source\cpp\RShobuBomb.cpp" />
   </ItemGroup>
@@ -51,6 +53,8 @@
     <ClInclude Include="Source\Source\header\Marco.h" />
     <ClInclude Include="Source\Source\header\Prisoner.h" />
     <ClInclude Include="Source\Source\header\Soldier.h" />
+    <ClInclude Include="Source\Source\header\Boss1_laser.h" />
+    <ClInclude Include="Source\Source\header\boss1_fire.h" />
     <ClInclude Include="Source\Source\header\RShobu.h" />
     <ClInclude Include="Source\Source\header\RShobuBomb.h" />
   </ItemGroup>

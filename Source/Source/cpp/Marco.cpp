@@ -421,6 +421,12 @@ void Marco::draw() {
 	}
 }
 
+void Marco::dead()
+{
+	dying = true;
+	deathTimer = clock();
+}
+
 bool Marco::isAttacking() {
 	return attacking;
 }

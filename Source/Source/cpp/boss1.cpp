@@ -6,6 +6,7 @@ Boss1::Boss1(int _x, int _y) : Character(_x, _y,0)
 	this->x = _x;
 	this->y = _y;
 	this->canno = new boss1_canno(x + 450, y+270);
+	this->CollideBox = { {x + 450,y},{x + 450,y + 600} };
 }
 void Boss1::init() {
 	vector<vector<string>> csv = readCSV("resources/csv/character.csv");
@@ -34,8 +35,16 @@ void Boss1::init() {
 
 void Boss1::update()
 {
+	for (size_t i = 0; i < bullets.size(); i++) {
+		if (bullets[i].owner == "hero" && bullets[i].IsOverlap_(*this) && isAlive()) {
+			if(now_hp>0)
+				now_hp -= 1;
+		}
+	}
+	this->SetFrameIndexOfBitmap(static_cast<int>(std::floor(static_cast<double>(static_cast<double>(hp - now_hp) / hp) * (this->GetFrameSizeOfBitmap() - 1))));
 	canno->Move();
 	canno->update();
+
 }
 
 void Boss1::draw()
@@ -43,4 +52,5 @@ void Boss1::draw()
 	this->SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
 	this->ShowBitmap(2);
 	this->canno->draw();
+	
 }
