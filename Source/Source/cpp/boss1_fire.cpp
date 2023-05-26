@@ -19,6 +19,10 @@ void Boss1_fire::move()
 		start = clock();
 	}
 	this->SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
+	if (IsOverlap(*this, marco)) {
+		this->isAlive = false;
+		marco.dead();
+	}
 }
 
 void Boss1_fire::draw()

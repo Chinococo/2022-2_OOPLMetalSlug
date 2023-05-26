@@ -20,6 +20,7 @@ public:
 	bool IsOverlap_(Character) ;
   
 	bool isAlive() const;
+	void dead();
 	bool myIsOverlap(Character *other);
 protected:
 	int x;

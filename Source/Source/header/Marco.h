@@ -17,6 +17,7 @@ public:
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
 	virtual void draw() override;
+	void dead();
 	bool isAttacking();
 private:
 	bool once = false;

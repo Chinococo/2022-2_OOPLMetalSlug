@@ -29,7 +29,9 @@ bool Character::IsOverlap_(Character bmp)
 bool Character::isAlive() const {
 	return alive;
 }
-
+void  Character::dead() {
+	alive=false;
+}
 bool Character::myIsOverlap(Character *other) {
 	int top = GetTop();
 	int left = GetLeft();
