@@ -66,6 +66,8 @@ public:
 	void update();
 	void draw();
 
+	bool isHurt(Character other);
+
 	RShobu &operator=(const RShobu &other);
 
 	// For debugging

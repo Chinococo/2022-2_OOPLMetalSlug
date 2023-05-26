@@ -198,6 +198,13 @@ void RShobu::fire() {
 	bombs.push_back(bomb);
 }
 
+bool RShobu::isHurt(Character other) {
+	for (size_t i = 0; i < bombs.size(); i++) {
+		// TBD
+	}
+	return false;
+}
+
 void RShobu::moveHorizontally(Direction direction) {
 	if (direction == Direction::LEFT) {
 		distanceHorizontal -= velocityHorizontal;
