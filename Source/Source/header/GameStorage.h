@@ -11,6 +11,8 @@
 #include "../header/boss1_laser.h"
 #include "../header/Prisoner.h"
 #include "../header/boss1_fire.h"
+#include "../header/RShobu.h"
+#include "../header/RShobuBomb.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -21,6 +23,7 @@ namespace game_framework {
 	// function
 	extern std::vector<std::vector<std::string>> readCSV(const std::string& filename);
 	extern void createPrisoners();
+	extern void createRShobus();
 	extern void createSoldiers();
 	extern void createGrounds();
 	extern void createMap();
@@ -59,6 +62,7 @@ namespace game_framework {
 	extern std::vector<Bullet> bullets;
 	extern std::vector<Firework> soldierFireworks;
 	extern std::vector<Prisoner> prisoners;
+	extern std::vector<RShobu> rshobus;
 	extern std::vector<Ground> grounds;
 	extern bool scroll;
 	extern bool Loading;

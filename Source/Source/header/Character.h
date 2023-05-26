@@ -2,6 +2,10 @@
 #include<chrono>
 #include "../../Library/gameutil.h"
 
+enum class Direction {
+	NONE, LEFT, RIGHT, UP, DOWN
+};
+
 class Character : public game_framework::CMovingBitmap {
 public:
 	Character(int _x, int _y, int _speedX);

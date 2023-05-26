@@ -31,6 +31,9 @@ namespace game_framework {
 	void createPrisoners() {
 		prisoners.push_back(Prisoner(200, 100));
 	}
+	void createRShobus() {
+		rshobus.push_back(RShobu(300, 100));
+	}
 	void createSoldiers() {
 		const int moveSpeed = 1;
 		soldiers.push_back(Soldier(100, 100, moveSpeed));
@@ -114,6 +117,16 @@ namespace game_framework {
 		soldierFireworks.erase(std::remove_if(soldierFireworks.begin(), soldierFireworks.end(), [](const Firework &firework) {
 			return !firework.isAlive();
 		}), soldierFireworks.end());
+
+		/* bug
+		prisoners.erase(std::remove_if(prisoners.begin(), prisoners.end(), [](const Prisoner &prisoner) {
+			return !prisoner.isAlive();
+		}), prisoners.end());
+		*/
+
+		rshobus.erase(std::remove_if(rshobus.begin(), rshobus.end(), [](const RShobu &rshobu) {
+			return !rshobu.isAlive();
+		}), rshobus.end());
 	}
 	void removeMapObject()
 	{
@@ -236,6 +249,7 @@ namespace game_framework {
 	std::vector<Bullet> bullets;
 	std::vector<Firework> soldierFireworks;
 	std::vector<Prisoner> prisoners;
+	std::vector<RShobu> rshobus;
 	std::vector<Ground> grounds;
 	bool Loading = false;
 	int ViewPointYInit = 580;

@@ -33,7 +33,11 @@ boss1_canno,44~45,resources/img_v2/boss1/canno/idleup/,100
 boss1_canno,45~51,resources/img_v2/boss1/canno/laserlow/,100
 boss1_canno,51~57,resources/img_v2/boss1/canno/laserup/,100
 prisoner,0~1,resources/img_v2/prisoner/tied/,1000
-prisoner,1~10,resources/img_v2/prisoner/rescued/,2000
-prisoner,10~22,resources/img_v2/prisoner/move/,500
-prisoner,22~23,resources/img_v2/prisoner/fall/,100
-prisoner,23~24,resources/img_v2/prisoner/reward/,300
+prisoner,1~10,resources/img_v2/prisoner/rescued/,1000
+prisoner,10~22,resources/img_v2/prisoner/move/,1000
+prisoner,22~27,resources/img_v2/prisoner/fall/,1000
+prisoner,27~37,resources/img_v2/prisoner/reward/,500
+rshobu,0~28,resources/img_v2/Rshobu/move/,100
+rshobu,28~29,resources/img_v2/Rshobu/die/,100
+rshobuBomb,0~7,resources/img_v2/Rshobu/bomb/,100
+

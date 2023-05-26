@@ -1,55 +1,77 @@
 #pragma once
 #include "Character.h"
 
-enum class Direction {
-	LEFT, RIGHT, UP, DOWN
-};
-
 class Prisoner : public Character {
 private:
-	const int WANDER_DISTANCE = 200;
+	const int WANDER_DISTANCE = 50;
 	
-	int anchoredX = 0;
+	int absolutePositionLeft = 0;
+	int absolutePositionTop = 0;
+
+	int absoluteAnchorHorizontal = 0;
+
+	int distanceHorizontal = 0;
+	int distanceVertical = 0;
+
+	int collisionBoxTweakLeft = 0;
+	int collisionBoxTweakTop = 0;
+
+	int collisionBoxWidth = 50;
+	int collisionBoxHeight = 90;
 	
-	int velocityX = 5;
-	int velocityY = 0;
+	int velocityHorizontal = 5;
+	int velocityVertical = 0;
 	
 	bool inAir = false;
-	bool once = true;
-	
+	bool animationDone = false;
+
+	std::chrono::time_point<std::chrono::steady_clock> spriteTimer = std::chrono::steady_clock::now();
+
+	Direction directionHorizontal = Direction::LEFT;
+	Direction directionVertical = Direction::NONE;
+
 	enum class Sprite {
 		TIED, RESCUED, MOVE, FALL, REWARD
 	} sprite = Sprite::TIED;
 
 	enum class Action {
-		TIED, RESCUED, MOVE, REWARD, LEAVE
+		TIED, RESCUED, MOVE, FALL, REWARD, LEAVE
 	} action = Action::TIED;
 
-	Direction direction = Direction::RIGHT;
+	void handleActionTied();
+	void handleActionRescued();
+	void handleActionMove();
+	void handleActionFall();
+	void handleActionReward();
+	void handleActionLeave();
 
-	void handleTied();
-	void handleRescued();
-	void handleMove();
-	void handleReward();
-	void handleLeave();
+	void moveHorizontally(Direction direction);
+	void moveVertically(Direction direction);
 
-	virtual void moveLeftRight() override;
-	void fall();
+	bool isCollideWith(Character other);
 
-	virtual void collideWithGround() override;
-	virtual void collideWithWall() override;
-	void collideWithBorder();
+	void handleGroundCollision();
+	void handleWallCollision();
 
-	virtual void changeAnimation() override;
-	virtual void updateAnimation() override;
+	void switchSprite(Sprite sprite);
+	void nextFrame();
 	
 public:
-	Prisoner(int x, int y);
+	Prisoner(int absolutePositionLeft, int absolutePositionTop);
 	
-	virtual void init() override;
-	virtual void update() override;
-	virtual void draw() override;
+	void init();
+	void update();
+	void draw();
+
+	Prisoner &operator=(const Prisoner &other);
 
 	// For debugging
+	int getAbsLeft() const;
+	int getAbsTop() const;
+	int getAbsFrame();
+	int getRelFrame();
+	std::string getDirectionHorizontal() const;
+	std::string getSprite() const;
 	std::string getAction() const;
+	bool isAnimationDone() const;
 };
