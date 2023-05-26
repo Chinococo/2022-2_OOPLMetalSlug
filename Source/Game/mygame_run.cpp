@@ -7,7 +7,6 @@
 #include "../Library/gamecore.h"
 #include "mygame.h"
 #include "../Source/header/GameStorage.h"
-
 using namespace game_framework;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -32,6 +31,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		removeInactives();
 		removeInactiveSolider();
 		marco.update();
+		for (size_t i = 0; i < rshobus.size(); i++) {
+			rshobus[i].update();
+		}
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].update();
 		}
@@ -71,6 +73,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	createSoldiers();
 	createMapObject();
 	createPrisoners();
+	createRShobus();
 	marco.init();
 	for (size_t i = 0; i < soldiers.size(); i++) {
 		soldiers[i].init();
@@ -80,6 +83,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	}
 	for (size_t i = 0; i < prisoners.size(); i++) {
 		prisoners[i].init();
+	}
+	for (size_t i = 0; i < rshobus.size(); i++) {
+		rshobus[i].init();
 	}
 }
 
@@ -156,26 +162,42 @@ void CGameStateRun::OnShow()
 		updateCharacter();
 		updateUpperCharacterLayer();
 		if (!Loading) {
-			Sleep(1000);
+			Sleep(100);
 			Loading = true;
 		}
 		else {
 			CDC *pDC = CDDraw::GetBackCDC();
 			//game_framework::ChangeFontLog
-			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(150, 150, 150), 500);
+			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0, 0, 0), 500);
 			CString str;
-			str.Format(_T("now index=%d x=%d y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
-
-			// 將CString轉換為std::string
-			std::string result = CT2A(str);
-
+			str.Format(_T("marco index=%d, x=%d, y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
+			std::string result = CT2A(str);// 將CString轉換為std::string
 			CTextDraw::Print(pDC, 0, 0, result);
-
-
+			
+		
 			// For debugging
-			str.Format(_T("prisoner action=%s"), prisoners[0].getAction().c_str());
-			result = CT2A(str);
-			CTextDraw::Print(pDC, 0, 30, result);
+			Prisoner prisoner = prisoners[0];
+			char buffer[256]; // 假設你的字串不會超過 256 個字元
+
+			std::snprintf(buffer, sizeof(buffer), "prisoner absLeft=%d, absTop=%d", prisoner.getAbsLeft(), prisoner.getAbsTop());
+			std::string str1 = buffer;
+			CTextDraw::Print(pDC, 0, 25, str1);
+
+			std::snprintf(buffer, sizeof(buffer), "prisoner action=%s, sprite=%s", prisoner.getAction().c_str(), prisoner.getSprite().c_str());
+			str1 = buffer;
+			CTextDraw::Print(pDC, 0, 50, str1);
+
+			std::snprintf(buffer, sizeof(buffer), "prisoner directionHorizontal=%s", prisoner.getDirectionHorizontal().c_str());
+			str1 = buffer;
+			CTextDraw::Print(pDC, 0, 75, str1);
+
+			std::snprintf(buffer, sizeof(buffer), "prisoner absFrame=%d, relFrame=%d", prisoner.getAbsFrame(), prisoner.getRelFrame());
+			str1 = buffer;
+			CTextDraw::Print(pDC, 0, 100, str1);
+
+			std::snprintf(buffer, sizeof(buffer), "prisoner animationDone=%d", prisoner.isAnimationDone());
+			str1 = buffer;
+			CTextDraw::Print(pDC, 0, 125, str1);
 
 
 			CDDraw::ReleaseBackCDC();
@@ -186,6 +208,9 @@ void CGameStateRun::OnShow()
 		}
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].draw();
+		}
+		for (size_t i = 0; i < rshobus.size(); i++) {
+			rshobus[i].draw();
 		}
 		boss.draw();
 		marco.draw();
