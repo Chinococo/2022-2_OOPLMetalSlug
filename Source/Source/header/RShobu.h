@@ -23,7 +23,7 @@ private:
 	int collisionBoxWidth = 150;
 	int collisionBoxHeight = 90;
 
-	int velocityHorizontal = 12;
+	int velocityHorizontal = 4;
 	int velocityVertical = 0;
 
 	bool animationDone = false;

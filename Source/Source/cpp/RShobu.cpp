@@ -136,14 +136,14 @@ void RShobu::handleActionMove() {
 	int relativeMarcoMiddleHorizontal = marco.GetLeft() + marco.GetWidth() / 2;
 	int relativeMarcoMiddleVertical = marco.GetTop() + marco.GetHeight() / 2;
 
+	int absoluteMarcoMiddleHorizontal = relativeMarcoMiddleHorizontal - ViewPointX;
+	int absoluteMarcoMiddleVertical = relativeMarcoMiddleVertical - ViewPointY + ViewPointYInit;
+
 	int absoluteMiddleHorizontal = absolutePositionLeft + GetWidth() / 2;
 	int absoluteMiddleVertical = absolutePositionTop + GetHeight() / 2;
 
-	int relativeMiddleHorizontal = absoluteMiddleHorizontal + ViewPointX;
-	int relativeMiddleVertical = absoluteMiddleVertical - ViewPointY + ViewPointYInit;
-
-	int distanceToMarcoHorizontal = relativeMarcoMiddleHorizontal - absoluteMiddleHorizontal;
-	int distanceToMarcoVertical = relativeMarcoMiddleVertical - absoluteMiddleVertical;
+	int distanceToMarcoHorizontal = absoluteMarcoMiddleHorizontal - absoluteMiddleHorizontal;
+	int distanceToMarcoVertical = absoluteMarcoMiddleVertical - absoluteMiddleVertical;
 
 	if (distanceToMarcoHorizontal < -DISTANCE_TO_HERO_HORIZONTAL) {
 		moveHorizontally(Direction::LEFT);
@@ -252,8 +252,8 @@ bool RShobu::isCollideWith(Character other) {
 	if (relativeCollisionBoxRight < otherRelativePositionLeft ||
 		otherRelativePositionRight < relativeCollisionBoxLeft ||
 		relativeCollisionBoxBottom < otherRelativePositionTop ||
-		otherRelativePositionBottom < relativeCollisionBoxTop
-		) {
+		otherRelativePositionBottom < relativeCollisionBoxTop)
+	{
 		return false;
 	}
 
