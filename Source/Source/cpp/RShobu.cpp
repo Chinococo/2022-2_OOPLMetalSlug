@@ -200,7 +200,9 @@ void RShobu::fire() {
 
 bool RShobu::isHurt(Character other) {
 	for (size_t i = 0; i < bombs.size(); i++) {
-		// TBD
+		if (bombs[i].isCollideWith(other)) {
+			return true;
+		}
 	}
 	return false;
 }

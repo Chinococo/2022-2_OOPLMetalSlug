@@ -19,6 +19,7 @@ public:
 	virtual void draw() override;
 	void dead();
 	bool isAttacking();
+	void respawn();
 private:
 	bool once = false;
 	int velocityY = 0;

@@ -7,7 +7,7 @@ class RShobu : public Character {
 private:
 	const int DISTANCE_TO_HERO_HORIZONTAL = 30;
 	const int DISTANCE_TO_HERO_VERTICAL = 100;
-	const int FIRE_DELAY_MILLISECOND = 1500;
+	const int FIRE_DELAY_MILLISECOND = 3000;
 
 	int health = 20;
 
