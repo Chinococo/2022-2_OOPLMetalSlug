@@ -27,6 +27,7 @@ private:
 
 	std::chrono::time_point<std::chrono::steady_clock> spriteTimer = std::chrono::steady_clock::now();
 
+	Direction lastDirectionHorizontal = Direction::LEFT;
 	Direction directionHorizontal = Direction::LEFT;
 	Direction directionVertical = Direction::NONE;
 
