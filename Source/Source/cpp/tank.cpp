@@ -270,6 +270,8 @@ void tank::collideWithWall() {
 }
 
 void tank::draw() {
+	for (unsigned i = 0; i < bullets.size(); i++)
+		bullets[i].update();
 	if (alive) {
 		if (drving==true) {
 			SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
