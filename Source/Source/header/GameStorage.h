@@ -1,5 +1,6 @@
 #pragma once
 #include "../header/Marco.h"
+#include "../header/tank.h"
 #include "../header/Soldier.h"
 #include "../header/Ground.h"
 #include "../header/Bullet.h"
@@ -57,6 +58,7 @@ namespace game_framework {
 	extern const int GRAVITY;
 	extern std::set<UINT> keyDowns;
 	extern Marco marco;
+	extern tank marco_tank;
 	extern std::vector <MapObject> MapObjects;
 	extern std::vector<Soldier> soldiers;
 	extern std::vector<Bullet> bullets;

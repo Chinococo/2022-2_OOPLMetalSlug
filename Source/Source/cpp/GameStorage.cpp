@@ -251,6 +251,7 @@ namespace game_framework {
 	std::vector<Prisoner> prisoners;
 	std::vector<RShobu> rshobus;
 	std::vector<Ground> grounds;
+	tank marco_tank(300, 100, 6);
 	bool Loading = false;
 	int ViewPointYInit = 580;
 	Boss1 boss(9900,- 190);

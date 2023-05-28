@@ -40,4 +40,9 @@ prisoner,27~37,resources/img_v2/prisoner/reward/,500
 rshobu,0~28,resources/img_v2/Rshobu/move/,100
 rshobu,28~29,resources/img_v2/Rshobu/die/,100
 rshobuBomb,0~7,resources/img_v2/Rshobu/bomb/,100
-
+tank,0~3,resources/img_v2/tank/idle/,100
+tank,3~6,resources/img_v2/tank/jumping/,100
+tank,6~10,resources/img_v2/tank/moving/,100
+tank,10~19,resources/img_v2/tank/shooting/,100
+tank,19~20,resources/img_v2/tank/crouch_idle/,100
+tank,20~24,resources/img_v2/tank/crouch_driving/,100

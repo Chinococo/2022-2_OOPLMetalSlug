@@ -2,10 +2,11 @@ from PIL import Image
 import os
 import sys
 
+
 def resize_all(scale):
     files = os.listdir()
     print(f"files: {files}")
-    
+
     for f in files:
         if os.path.isdir(f):
             print(f"{f}: dir, passed.")
@@ -17,7 +18,7 @@ def resize_all(scale):
         if ext not in supported_exts:
             print(f"{f}: not {supported_exts} file, passed.")
             continue
-        
+
         im = Image.open(f)
         print(f"processing {f}, size={im.size}... ", end="")
         new_width = round(im.width * scale)
@@ -26,9 +27,11 @@ def resize_all(scale):
         im.save(f)
         print("done.")
 
+
 def main():
-    scale = float(sys.argv[1]) if len(sys.argv) > 1 else 1
-    resize_all(scale)
+    # scale = float(sys.argv[1]) if len(sys.argv) > 1 else 1
+    resize_all(2.2)
+
 
 if __name__ == "__main__":
     main()

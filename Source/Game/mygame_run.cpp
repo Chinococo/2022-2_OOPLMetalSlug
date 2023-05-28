@@ -31,6 +31,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		removeInactives();
 		removeInactiveSolider();
 		marco.update();
+		marco_tank.update();
 		for (size_t i = 0; i < rshobus.size(); i++) {
 			rshobus[i].update();
 		}
@@ -75,6 +76,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	createPrisoners();
 	createRShobus();
 	marco.init();
+	marco_tank.init();
 	for (size_t i = 0; i < soldiers.size(); i++) {
 		soldiers[i].init();
 	}
@@ -170,7 +172,7 @@ void CGameStateRun::OnShow()
 			//game_framework::ChangeFontLog
 			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0, 0, 0), 500);
 			CString str;
-			str.Format(_T("marco index=%d, x=%d, y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
+			str.Format(_T("marco index=%d, x=%d, y=%d"), marco_tank.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
 			std::string result = CT2A(str);// 將CString轉換為std::string
 			CTextDraw::Print(pDC, 0, 0, result);
 			
@@ -214,6 +216,7 @@ void CGameStateRun::OnShow()
 		}
 		boss.draw();
 		marco.draw();
+		marco_tank.draw();
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
 		}
