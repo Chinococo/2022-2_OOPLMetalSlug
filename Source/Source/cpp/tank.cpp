@@ -5,10 +5,11 @@
 using namespace game_framework;
 
 tank::tank(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
-
+	barrel = new tank_barrel(x+20, y+20);
 }
 
 void tank::init() {
+	barrel->init();
 	// order following enum class Action
 	// IDLE, MOVE, JUMP, LOOK_UP, SHOOT, SHOOT_UP, SHOOT_DOWN, KNIFE, GRENADE, CROUCH_SHOOT, CROUCH_SHOOT_UP, CROUCH_KNIFE, CROUCH_GRENADE, DIE
 	std::vector<std::vector<std::string>> csv = readCSV("resources/csv/character.csv");
@@ -246,7 +247,10 @@ void tank::collideWithWall() {
 void tank::draw() {
 	if (alive) {
 		SetTopLeft(x, y);
+		barrel->SetTopLeft(x+30, y+50);
+		//SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
 		ShowBitmap();
+		barrel->draw();
 	}
 	else {
 		UnshowBitmap();

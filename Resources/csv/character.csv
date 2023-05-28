@@ -46,3 +46,4 @@ tank,6~10,resources/img_v2/tank/moving/,100
 tank,10~19,resources/img_v2/tank/shooting/,100
 tank,19~20,resources/img_v2/tank/crouch_idle/,100
 tank,20~24,resources/img_v2/tank/crouch_driving/,100
+tank_barrel,0~32,resources/img_v2/tank/barrel/,100

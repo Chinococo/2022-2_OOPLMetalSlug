@@ -1,0 +1,46 @@
+#include "stdafx.h"
+#include "../header/GameStorage.h"
+#include "../header/boss1_canno.h"
+#include "..\header\tank_ barrel.h"
+
+tank_barrel::tank_barrel(int _x, int _y)
+{
+	x = _x;
+	y = _y;
+}
+
+void tank_barrel::init()
+{
+	std::vector<std::vector<std::string>> csv = readCSV("resources/csv/character.csv");
+	std::vector<std::string> paths;
+	pair<int, int> range;
+	for (unsigned i = 1; i < csv.size(); i++) {
+		if (csv[i][0] != "tank_barrel")
+			continue;
+		string prefix = csv[i][2];
+		range = { std::stoi(csv[i][1].substr(0, csv[i][1].find('~'))), std::stoi(csv[i][1].substr(csv[i][1].find('~') + 1)) };
+		for (int i = 0; i < range.second - range.first; i++) {
+			paths.push_back(prefix + std::to_string(i) + ".bmp");
+		}
+	}
+	LoadBitmapByString(paths, RGB(255, 255, 255));
+}
+
+void tank_barrel::update()
+{
+	//SetTopLeft(x, y);
+	SetFrameIndexOfBitmap(angle);
+}
+void tank_barrel::draw() {
+	ShowBitmap(1.5);
+}
+
+int tank_barrel::GetAngele()
+{
+	return angle;
+}
+
+void tank_barrel::SetAngele(int _angle)
+{
+	this->angle = _angle;
+}

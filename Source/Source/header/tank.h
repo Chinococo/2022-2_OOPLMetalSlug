@@ -1,6 +1,6 @@
 #pragma once
 #include "../header/Character.h"
-
+#include "../header/tank_ barrel.h"
 class tank : public Character {
 public:
 	tank(int _x, int _y, int _speedX);
@@ -39,4 +39,5 @@ private:
 	enum class Action {
 		IDLE, JUMP,MOVING, SOOTING, Crouch, Crouch_Driving
 	} action = Action::IDLE, lastAction = Action::IDLE;
+	tank_barrel *barrel;
 };
