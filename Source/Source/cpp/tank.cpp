@@ -52,6 +52,7 @@ void tank::update() {
 		control();
 		move();
 		updateAction();
+		barrel->update(x,y);
 		changeAnimation();
 		updateAnimation();
 	}
@@ -126,11 +127,23 @@ void tank::attack() {
 void tank::moveLeftRight() {
 	if (movingLeft) {
 		dx += -speedX;
+		if (barrel->GetAngele() != 26) {
+			if (barrel->GetAngele() >= 11 && barrel->GetAngele() <= 25)
+				barrel->SetAngele((barrel->GetAngele()+1)%32);
+			else
+				barrel->SetAngele((barrel->GetAngele() + 31) % 32);
+		}
 		facingX = -1;
 		flip = true;
 	}
 	if (movingRight && (Checkcheckpoint() || !scroll)) {
 		dx += speedX;
+		if (barrel->GetAngele() != 10) {
+			if (barrel->GetAngele() >= 11 && barrel->GetAngele() <= 25)
+				barrel->SetAngele((barrel->GetAngele() + 31) % 32);
+			else
+				barrel->SetAngele((barrel->GetAngele() +1) % 32);
+		}
 		facingX = 1;
 		flip = false;
 	}
@@ -247,7 +260,6 @@ void tank::collideWithWall() {
 void tank::draw() {
 	if (alive) {
 		SetTopLeft(x, y);
-		barrel->SetTopLeft(x+30, y+50);
 		//SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
 		ShowBitmap();
 		barrel->draw();

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "../header/GameStorage.h"
 #include "../header/boss1_canno.h"
-#include "..\header\tank_ barrel.h"
+#include "../header/tank_ barrel.h"
 
 tank_barrel::tank_barrel(int _x, int _y)
 {
@@ -26,11 +26,28 @@ void tank_barrel::init()
 	LoadBitmapByString(paths, RGB(255, 255, 255));
 }
 
-void tank_barrel::update()
+void tank_barrel::update(int _x,int _y)
 {
-	//SetTopLeft(x, y);
-	SetFrameIndexOfBitmap(angle);
+	attacking = keyDowns.count(0x5A); // Z
+	if (attacking&&clock() - start > 100) {
+		fire = true;
+		start = clock();
+	}
+	else {
+		fire = false;
+	}
+	this->x = _x;
+	this->y = _y;
+	if (fire) {
+		SetTopLeft(x , y+20 );
+	}
+	else {
+		SetTopLeft(x + 30, y + 50);
+	}
+	
+	SetFrameIndexOfBitmap(angle+fire*32);
 }
+
 void tank_barrel::draw() {
 	ShowBitmap(1.5);
 }

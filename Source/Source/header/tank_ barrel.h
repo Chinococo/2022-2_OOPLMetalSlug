@@ -5,12 +5,14 @@ class tank_barrel : public game_framework::CMovingBitmap {
 public:
 	tank_barrel(int _x, int _y);
 	void init();
-	void update();
+	void update(int x, int y);
 	void draw();
 	int GetAngele();
 	void SetAngele(int);
 private:
 	int angle = 0;
-	time_t start_AI = clock();
+	time_t start = clock();
 	int x, y;
+	bool attacking;
+	bool fire = false;
 };
