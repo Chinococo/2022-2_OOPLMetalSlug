@@ -113,7 +113,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	else if (state == "map1") {
 		// 0x5A -> Z
 		// 0x58 -> X
-		if (nChar == VK_LEFT || nChar == VK_RIGHT || nChar == VK_SPACE || nChar == VK_UP|| nChar == VK_DOWN || nChar == 0x5A || nChar == 0x58) {
+		if (nChar == VK_LEFT || nChar == VK_RIGHT || nChar == VK_SPACE || nChar == VK_UP|| nChar == VK_DOWN || nChar == 0x5A || nChar == 0x58 || nChar == 0x43) {
 			keyDowns.insert(nChar);
 		}
 	}
@@ -155,8 +155,11 @@ void CGameStateRun::OnShow()
 	}
 	else if (state == "map1") {
 		
-		if (keyDowns.count(VK_RIGHT)&&scroll&&!Checkcheckpoint())
+		if (keyDowns.count(VK_RIGHT) && scroll && !Checkcheckpoint()) {
 			ViewPointX -= MapScrollSpeed;
+			if (Driving)
+				marco_tank.increaseX(MapScrollSpeed);
+		}
 		if (abs(ViewPointX) < 9500 && abs(ViewPointX) > 8700)
 			ViewPointY = static_cast<int>(580 +floor(static_cast<double>(abs(ViewPointX) -8700)/3.8));
 		updateUnderCharacterLayer();

@@ -12,6 +12,7 @@
 #include "../header/boss1_laser.h"
 #include "../header/Prisoner.h"
 #include "../header/boss1_fire.h"
+#include "../header/tank_bullet.h"
 #include "../header/RShobu.h"
 #include "../header/RShobuBomb.h"
 #include <string>

@@ -9,6 +9,7 @@ public:
 	virtual void control() override;
 	virtual void move() override;
 	void attack();
+	void increaseX(int increse);
 	virtual void moveLeftRight() override;
 	virtual void jumpAndFall() override;
 	void collideWithBullet();
@@ -37,8 +38,10 @@ private:
 	bool throwingGrenade = false;
 	bool pressingDown = false;
 	bool nearEnemy = false;
+	bool out = false;
 	clock_t lastAttackTime = clock();
 	clock_t roate = clock();
+	clock_t out_drviing = clock();
 	bool drving = false;
 	enum class Action {
 		IDLE, JUMP,MOVING, SOOTING, Crouch, Crouch_Driving

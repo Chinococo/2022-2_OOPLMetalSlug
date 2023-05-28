@@ -71,6 +71,7 @@ void tank::control() {
 	if (Driving) {
 		scroll = (this->GetLeft() > 400);
 	}
+	out = keyDowns.count(0x43); // C
 	if (Driving) {
 		movingLeft = keyDowns.count(VK_LEFT);
 		movingRight = keyDowns.count(VK_RIGHT);
@@ -79,6 +80,7 @@ void tank::control() {
 		pressingDown = keyDowns.count(VK_DOWN);
 		attacking = keyDowns.count(0x5A); // Z
 		throwingGrenade = keyDowns.count(0x58); // X
+		
 	}
 	
 	knifing = false;
@@ -98,6 +100,7 @@ void tank::move() {
 	collideWithGround();
 	jumpAndFall();
 	take_in();
+	take_out();
 	if (Driving) {
 		collideWithBullet();
 		moveLeftRight();
@@ -112,7 +115,7 @@ void tank::move() {
 		}
 		collideWithWall();
 		attack();
-		if (x + dx > 0 && 720 > x + dx) {
+		if (x + dx > 0&&this->GetLeft()+this->GetWidth()<800) {
 			x += dx;
 		}
 		y += dy;
@@ -125,7 +128,9 @@ void tank::attack() {
 		addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "hero");
 	}
 }
-
+void tank::increaseX(int increse) {
+	x += increse;
+}
 void tank::moveLeftRight() {
 	if (movingLeft) {
 		dx += -speedX;
@@ -267,7 +272,6 @@ void tank::collideWithWall() {
 void tank::draw() {
 	if (alive) {
 		if (drving==true) {
-			marco.UnshowBitmap();
 			SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
 		}
 		else {
@@ -283,7 +287,8 @@ void tank::draw() {
 
 void tank::take_in()
 {
-	if (IsOverlap(marco, *this) &&( marco.GetTop() + marco.GetHeight()-10) < this->GetTop()) {
+	clock_t temp = clock() - out_drviing;
+	if (IsOverlap(marco, *this) &&( marco.GetTop() + marco.GetHeight()-30) <= this->GetTop()&& clock()-out_drviing>400) {
 		Driving= true;
 		//x = x + ViewPointX;
 		//y = y + ViewPointYInit - ViewPointY;
@@ -294,6 +299,11 @@ void tank::take_in()
 
 void tank::take_out()
 {
+	if (Driving&&out) {
+		Driving = false;
+		marco.JumpOutDrving(ViewPointX + x-80, y - ViewPointYInit + ViewPointY);
+		out_drviing = clock();
+	}
 }
 
 void tank::dead()
