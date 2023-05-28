@@ -66,7 +66,9 @@ void Marco::update() {
 
 void Marco::control() {
 	clock_t currentTime = clock();
-	scroll = (this->GetLeft() > 400);
+	if (Driving) {
+		scroll = (this->GetLeft() > 400);
+	}
 	movingLeft = keyDowns.count(VK_LEFT);
 	movingRight = keyDowns.count(VK_RIGHT);
 	jumping = keyDowns.count(VK_SPACE);

@@ -53,7 +53,7 @@ namespace game_framework {
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;
 	extern vector<vector<string>> checkpointcsv;
-
+	extern bool Driving;
 	// character
 	extern const int GRAVITY;
 	extern std::set<UINT> keyDowns;

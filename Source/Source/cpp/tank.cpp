@@ -68,14 +68,19 @@ void tank::update() {
 
 void tank::control() {
 	clock_t currentTime = clock();
-	scroll = (this->GetLeft() > 400);
-	movingLeft = keyDowns.count(VK_LEFT);
-	movingRight = keyDowns.count(VK_RIGHT);
-	jumping = keyDowns.count(VK_SPACE);
-	lookingUp = keyDowns.count(VK_UP);
-	pressingDown = keyDowns.count(VK_DOWN);
-	attacking = keyDowns.count(0x5A); // Z
-	throwingGrenade = keyDowns.count(0x58); // X
+	if (Driving) {
+		scroll = (this->GetLeft() > 400);
+	}
+	if (Driving) {
+		movingLeft = keyDowns.count(VK_LEFT);
+		movingRight = keyDowns.count(VK_RIGHT);
+		jumping = keyDowns.count(VK_SPACE);
+		lookingUp = keyDowns.count(VK_UP);
+		pressingDown = keyDowns.count(VK_DOWN);
+		attacking = keyDowns.count(0x5A); // Z
+		throwingGrenade = keyDowns.count(0x58); // X
+	}
+	
 	knifing = false;
 	if (attacking) {
 		if (currentTime - lastAttackTime >= ATTACK_COOLDOWN) {
@@ -85,37 +90,34 @@ void tank::control() {
 			attacking = false;
 		}
 	}
-	if (attacking) {
-		for (size_t i = 0; i < soldiers.size(); i++) {
-			if (IsOverlap(*this, soldiers[i])) {
-				knifing = true;
-			}
-		}
-	}
 }
 
 void tank::move() {
 	dx = 0;
 	dy = 0;
-	collideWithBullet();
-	moveLeftRight();
-	if (lookingUp && !pressingDown) {
-		facingY = -1;
-	}
-	else if (!lookingUp && pressingDown) {
-		facingY = 1;
-	}
-	else {
-		facingY = 0;
-	}
-	collideWithWall();
 	collideWithGround();
-	jumpAndFall();	
-	attack();
-	if (x + dx > 0 && 720 > x + dx) {
-		x += dx;
-	}
-	y += dy;
+	jumpAndFall();
+	take_in();
+	if (Driving) {
+		collideWithBullet();
+		moveLeftRight();
+		if (lookingUp && !pressingDown) {
+			facingY = -1;
+		}
+		else if (!lookingUp && pressingDown) {
+			facingY = 1;
+		}
+		else {
+			facingY = 0;
+		}
+		collideWithWall();
+		attack();
+		if (x + dx > 0 && 720 > x + dx) {
+			x += dx;
+		}
+		y += dy;
+	}else
+		y += dy;
 }
 
 void tank::attack() {
@@ -127,7 +129,8 @@ void tank::attack() {
 void tank::moveLeftRight() {
 	if (movingLeft) {
 		dx += -speedX;
-		if (barrel->GetAngele() != 26) {
+		if (barrel->GetAngele() != 26&&clock()- roate>100) {
+			roate = clock();
 			if (barrel->GetAngele() >= 11 && barrel->GetAngele() <= 25)
 				barrel->SetAngele((barrel->GetAngele()+1)%32);
 			else
@@ -136,16 +139,20 @@ void tank::moveLeftRight() {
 		facingX = -1;
 		flip = true;
 	}
-	if (movingRight && (Checkcheckpoint() || !scroll)) {
-		dx += speedX;
-		if (barrel->GetAngele() != 10) {
+	if (movingRight ) {
+		if (barrel->GetAngele() != 10 && clock() - roate > 100) {
+			roate = clock();
+			int t = barrel->GetAngele();
 			if (barrel->GetAngele() >= 11 && barrel->GetAngele() <= 25)
 				barrel->SetAngele((barrel->GetAngele() + 31) % 32);
 			else
-				barrel->SetAngele((barrel->GetAngele() +1) % 32);
+				barrel->SetAngele((barrel->GetAngele() + 1) % 32);
 		}
-		facingX = 1;
-		flip = false;
+		if ((Checkcheckpoint() || !scroll)) {
+			dx += speedX;
+			facingX = 1;
+			flip = false;
+		}
 	}
 }
 
@@ -259,14 +266,34 @@ void tank::collideWithWall() {
 
 void tank::draw() {
 	if (alive) {
-		SetTopLeft(x, y);
-		//SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
+		if (drving==true) {
+			marco.UnshowBitmap();
+			SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
+		}
+		else {
+			SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
+		}
 		ShowBitmap();
 		barrel->draw();
 	}
 	else {
 		UnshowBitmap();
 	}
+}
+
+void tank::take_in()
+{
+	if (IsOverlap(marco, *this) &&( marco.GetTop() + marco.GetHeight()-10) < this->GetTop()) {
+		Driving= true;
+		//x = x + ViewPointX;
+		//y = y + ViewPointYInit - ViewPointY;
+		//SetTopLeft(x, y);
+	}
+		
+}
+
+void tank::take_out()
+{
 }
 
 void tank::dead()

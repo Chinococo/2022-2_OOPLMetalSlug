@@ -18,6 +18,8 @@ public:
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
 	virtual void draw() override;
+	void take_in();
+	void take_out();
 	void dead();
 	bool isAttacking();
 private:
@@ -36,6 +38,8 @@ private:
 	bool pressingDown = false;
 	bool nearEnemy = false;
 	clock_t lastAttackTime = clock();
+	clock_t roate = clock();
+	bool drving = false;
 	enum class Action {
 		IDLE, JUMP,MOVING, SOOTING, Crouch, Crouch_Driving
 	} action = Action::IDLE, lastAction = Action::IDLE;

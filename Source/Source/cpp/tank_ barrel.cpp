@@ -39,10 +39,10 @@ void tank_barrel::update(int _x,int _y)
 	this->x = _x;
 	this->y = _y;
 	if (fire) {
-		SetTopLeft(x , y+20 );
+		SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY+20);
 	}
 	else {
-		SetTopLeft(x + 30, y + 50);
+		SetTopLeft(ViewPointX + x+30, y - ViewPointYInit + ViewPointY + 50);
 	}
 	
 	SetFrameIndexOfBitmap(angle+fire*32);
