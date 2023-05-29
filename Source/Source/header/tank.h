@@ -1,6 +1,7 @@
 #pragma once
 #include "../header/Character.h"
 #include "../header/tank_ barrel.h"
+#include "../header/tank_bullet.h"
 class tank : public Character {
 public:
 	tank(int _x, int _y, int _speedX);

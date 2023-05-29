@@ -1,7 +1,7 @@
 #pragma once
 #include "../../Library/gameutil.h"
 #include "../header/Character.h"
-#include "../header/tank_bullet.h"
+
 class tank_barrel : public game_framework::CMovingBitmap {
 public:
 	tank_barrel(int _x, int _y);
@@ -11,10 +11,8 @@ public:
 	int GetAngele();
 	void SetAngele(int);
 private:
-	int angle = 0;
 	time_t start = clock();
 	int x, y;
 	bool attacking;
 	bool fire = false;
-	vector<tank_bullet *>bullet;
 };

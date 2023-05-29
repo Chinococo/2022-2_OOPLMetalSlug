@@ -45,7 +45,7 @@ void tank_barrel::update(int _x,int _y)
 		SetTopLeft(ViewPointX + x+30, y - ViewPointYInit + ViewPointY + 50);
 	}
 	
-	SetFrameIndexOfBitmap(angle+fire*32);
+	SetFrameIndexOfBitmap(tank_barrel_angle +fire*32);
 }
 
 void tank_barrel::draw() {
@@ -54,10 +54,10 @@ void tank_barrel::draw() {
 
 int tank_barrel::GetAngele()
 {
-	return angle;
+	return tank_barrel_angle;
 }
 
 void tank_barrel::SetAngele(int _angle)
 {
-	this->angle = _angle;
+	tank_barrel_angle = _angle;
 }

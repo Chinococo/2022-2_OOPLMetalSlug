@@ -223,6 +223,10 @@ void CGameStateRun::OnShow()
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
 		}
+		for (unsigned i = 0; i < tank_bullets.size(); i++) {
+			tank_bullets[i]->move();
+			tank_bullets[i]->draw();
+		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			soldierFireworks[i].draw();
 		}

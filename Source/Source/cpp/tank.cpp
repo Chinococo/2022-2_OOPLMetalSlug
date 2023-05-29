@@ -125,7 +125,9 @@ void tank::move() {
 
 void tank::attack() {
 	if (attacking) {
-		addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "hero");
+		tank_bullet * _bullet = new tank_bullet(x,y);
+		_bullet->init();
+		tank_bullets.push_back(_bullet);
 	}
 }
 void tank::increaseX(int increse) {
@@ -281,6 +283,8 @@ void tank::draw() {
 		}
 		ShowBitmap();
 		barrel->draw();
+
+			
 	}
 	else {
 		UnshowBitmap();

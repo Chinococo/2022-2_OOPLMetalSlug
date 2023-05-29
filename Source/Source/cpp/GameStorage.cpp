@@ -247,6 +247,7 @@ namespace game_framework {
 	std::vector <MapObject> MapObjects;
 	std::vector<Soldier> soldiers;
 	std::vector<Bullet> bullets;
+	std::vector<tank_bullet *> tank_bullets;
 	std::vector<Firework> soldierFireworks;
 	std::vector<Prisoner> prisoners;
 	std::vector<RShobu> rshobus;
@@ -256,4 +257,5 @@ namespace game_framework {
 	int ViewPointYInit = 580;
 	Boss1 boss(9900,- 190);
 	bool Driving = false;
+	int tank_barrel_angle = 0;
 }

@@ -72,4 +72,6 @@ namespace game_framework {
 	extern vector<vector<string>> groundcsv;
 	extern Boss1 boss;
 	extern Boss1_laser laser;
+	extern int tank_barrel_angle;
+	extern std::vector<tank_bullet *> tank_bullets;
 }
