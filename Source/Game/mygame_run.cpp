@@ -30,14 +30,13 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (state == "map1") {
 		removeInactives();
 		removeInactiveSolider();
-
+		marco_tank.update();
 		if (marco.isAlive()) {
 			marco.update();
 		}
 		else if (keyDowns.count(VK_RETURN)) {
 			marco.respawn();
 		}
-		
 		for (size_t i = 0; i < rshobus.size(); i++) {
 			rshobus[i].update();
 		}
@@ -82,6 +81,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	createPrisoners();
 	createRShobus();
 	marco.init();
+	marco_tank.init();
 	for (size_t i = 0; i < soldiers.size(); i++) {
 		soldiers[i].init();
 	}
@@ -118,6 +118,7 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	else if (state == "map1") {
 		// 0x5A -> Z
 		// 0x58 -> X
+
 		if (nChar == VK_LEFT || 
 			nChar == VK_RIGHT || 
 			nChar == VK_SPACE || 
@@ -125,7 +126,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			nChar == VK_DOWN || 
 			nChar == VK_RETURN || 
 			nChar == 0x5A || 
-			nChar == 0x58)
+			nChar == 0x58||
+      nChar == 0x43)
 		{
 			keyDowns.insert(nChar);
 		}
@@ -168,8 +170,11 @@ void CGameStateRun::OnShow()
 	}
 	else if (state == "map1") {
 		
-		if (keyDowns.count(VK_RIGHT)&&scroll&&!Checkcheckpoint())
+		if (keyDowns.count(VK_RIGHT) && scroll && !Checkcheckpoint()) {
 			ViewPointX -= MapScrollSpeed;
+			if (Driving)
+				marco_tank.increaseX(MapScrollSpeed);
+		}
 		if (abs(ViewPointX) < 9500 && abs(ViewPointX) > 8700)
 			ViewPointY = static_cast<int>(580 +floor(static_cast<double>(abs(ViewPointX) -8700)/3.8));
 		updateUnderCharacterLayer();
@@ -185,7 +190,7 @@ void CGameStateRun::OnShow()
 			//game_framework::ChangeFontLog
 			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0, 0, 0), 500);
 			CString str;
-			str.Format(_T("marco index=%d, x=%d, y=%d"), boss.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
+			str.Format(_T("marco index=%d, x=%d, y=%d"), marco_tank.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
 			std::string result = CT2A(str);// 將CString轉換為std::string
 			CTextDraw::Print(pDC, 0, 0, result);
 			
@@ -229,8 +234,13 @@ void CGameStateRun::OnShow()
 		}
 		boss.draw();
 		marco.draw();
+		marco_tank.draw();
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
+		}
+		for (unsigned i = 0; i < tank_bullets.size(); i++) {
+			tank_bullets[i]->move();
+			tank_bullets[i]->draw();
 		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			soldierFireworks[i].draw();

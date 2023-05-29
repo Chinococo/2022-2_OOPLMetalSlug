@@ -17,6 +17,7 @@ public:
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
 	virtual void draw() override;
+	void JumpOutDrving(int _x, int _y);
 	void dead();
 	bool isAttacking();
 	void respawn();

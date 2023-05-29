@@ -28,6 +28,9 @@
     <ClCompile Include="Source\Source\cpp\boss1_fire.cpp" />
     <ClCompile Include="Source\Source\cpp\RShobu.cpp" />
     <ClCompile Include="Source\Source\cpp\RShobuBomb.cpp" />
+    <ClCompile Include="Source\Source\cpp\tank.cpp" />
+    <ClCompile Include="Source\Source\cpp\tank_ barrel.cpp" />
+    <ClCompile Include="Source\Source\cpp\tank_bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\Game.h" />
@@ -57,6 +60,9 @@
     <ClInclude Include="Source\Source\header\boss1_fire.h" />
     <ClInclude Include="Source\Source\header\RShobu.h" />
     <ClInclude Include="Source\Source\header\RShobuBomb.h" />
+    <ClInclude Include="Source\Source\header\tank.h" />
+    <ClInclude Include="Source\Source\header\tank_ barrel.h" />
+    <ClInclude Include="Source\Source\header\tank_bullet.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc" />

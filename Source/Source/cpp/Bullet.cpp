@@ -155,11 +155,13 @@ void Bullet::collideWithCharacter() {
 				break;
 			}
 		}
+		/*
 		for (size_t i = 0; i < MapObjects.size(); i++) 
-			if (alive&&IsOverlap_(MapObjects[i])&&MapObjects[i].isAlive()) {
+			if (alive&&IsOverlap(*this,MapObjects[i])&&MapObjects[i].isAlive()) {
 				alive = false;
 				break;
 			}
+			*/
 		if(IsOverlap_(boss))
 			alive = false;
 	}

@@ -56,6 +56,7 @@ void MapObject::update(){
 }
 bool MapObject::isAlive() {
 	return  now_hp != 0;
+
 }
 
 void MapObject::init()
@@ -66,8 +67,20 @@ void MapObject::init()
 
 void MapObject::collideWithBullet() {
 	for (size_t i = 0; i < bullets.size(); i++) {
-		if (bullets[i].owner == "hero" && IsOverlap_(bullets[i]) && isAlive()) {
+		string test = bullets[i].owner;
+		bool check = IsOverlap(*this, bullets[i]);
+		bool check2 = isAlive();
+		if (bullets[i].owner == "hero" && IsOverlap(*this,bullets[i]) && isAlive()) {
 			now_hp -= 1;
+			bullets[i].dead();
+		}
+	}
+	
+	for (size_t i = 0; i < tank_bullets.size(); i++) {
+		if (IsOverlap(*tank_bullets[i],*this) && isAlive()) {
+			if (now_hp > 0)
+				now_hp -= 1, tank_bullets[i]->dead();
+			
 		}
 	}
 }

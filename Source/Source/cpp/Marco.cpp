@@ -47,14 +47,14 @@ void Marco::init() {
 }
 
 void Marco::update() {
-	if (!dying) {
+	if (!dying&&!Driving) {
 		control();
 		move();
 		updateAction();
 		changeAnimation();
 		updateAnimation();
 	}
-	else {
+	else if(!Driving){
 		action = Action::DIE;
 		changeAnimation();
 		updateAnimation();
@@ -98,7 +98,12 @@ void Marco::respawn() {
 
 void Marco::control() {
 	clock_t currentTime = clock();
-	scroll = (this->GetLeft() > 400);
+	if (!Driving) {
+		scroll = (this->GetLeft() > 400);
+	}
+	else {
+		x, y = marco_tank.GetLeft(), marco_tank.GetTop();
+	}
 	movingLeft = keyDowns.count(VK_LEFT);
 	movingRight = keyDowns.count(VK_RIGHT);
 	jumping = keyDowns.count(VK_SPACE);
@@ -444,7 +449,7 @@ void Marco::collideWithWall() {
 }
 
 void Marco::draw() {
-	if (alive) {
+	if (alive&&!Driving) {
 		SetTopLeft(x, y);
 		ShowBitmap();
 	}
@@ -452,7 +457,13 @@ void Marco::draw() {
 		UnshowBitmap();
 	}
 }
-
+void Marco::JumpOutDrving(int _x,int _y) {
+	x = _x;
+	y = _y;
+	velocityY = JUMP_VELOCITY;
+	inAir = true;
+	dy += velocityY;
+}
 void Marco::dead()
 {
 	dying = true;

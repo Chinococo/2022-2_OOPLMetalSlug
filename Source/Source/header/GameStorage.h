@@ -1,5 +1,6 @@
 #pragma once
 #include "../header/Marco.h"
+#include "../header/tank.h"
 #include "../header/Soldier.h"
 #include "../header/Ground.h"
 #include "../header/Bullet.h"
@@ -11,6 +12,7 @@
 #include "../header/boss1_laser.h"
 #include "../header/Prisoner.h"
 #include "../header/boss1_fire.h"
+#include "../header/tank_bullet.h"
 #include "../header/RShobu.h"
 #include "../header/RShobuBomb.h"
 #include <string>
@@ -52,11 +54,12 @@ namespace game_framework {
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UnderCharacter;
 	extern std::vector<std::pair<CMovingBitmap, std::vector<std::pair<int, int>>>> UpperCharacter;
 	extern vector<vector<string>> checkpointcsv;
-
+	extern bool Driving;
 	// character
 	extern const int GRAVITY;
 	extern std::set<UINT> keyDowns;
 	extern Marco marco;
+	extern tank marco_tank;
 	extern std::vector <MapObject> MapObjects;
 	extern std::vector<Soldier> soldiers;
 	extern std::vector<Bullet> bullets;
@@ -69,4 +72,6 @@ namespace game_framework {
 	extern vector<vector<string>> groundcsv;
 	extern Boss1 boss;
 	extern Boss1_laser laser;
+	extern int tank_barrel_angle;
+	extern std::vector<tank_bullet *> tank_bullets;
 }
