@@ -43,6 +43,7 @@ private:
 	clock_t lastAttackTime = clock();
 	clock_t roate = clock();
 	clock_t out_drviing = clock();
+	clock_t in_driving = clock();
 	bool drving = false;
 	enum class Action {
 		IDLE, JUMP,MOVING, SOOTING, Crouch, Crouch_Driving

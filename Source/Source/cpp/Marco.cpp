@@ -188,6 +188,7 @@ void Marco::collideWithBullet() {
 		if (bullets[i].owner == "enemy" && IsOverlap(*this, bullets[i])) {
 			dying = true;
 			deathTimer = clock();
+			bullets[i].dead();
 			break;
 		}
 	}

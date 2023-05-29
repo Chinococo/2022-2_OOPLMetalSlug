@@ -57,6 +57,7 @@ void tank::update() {
 		updateAnimation();
 	}
 	else {
+		Driving = false;
 		//action = Action::DIE;
 		changeAnimation();
 		updateAnimation();
@@ -179,6 +180,7 @@ void tank::collideWithBullet() {
 		if (bullets[i].owner == "enemy" && IsOverlap(*this, bullets[i])) {
 			dying = true;
 			deathTimer = clock();
+			bullets[i].dead();
 			break;
 		}
 	}
@@ -281,7 +283,7 @@ void tank::draw() {
 		ShowBitmap();
 		barrel->draw();
 
-			
+		
 	}
 	else {
 		UnshowBitmap();
@@ -291,20 +293,20 @@ void tank::draw() {
 void tank::take_in()
 {
 	clock_t temp = clock() - out_drviing;
-	if (IsOverlap(marco, *this) &&( marco.GetTop() + marco.GetHeight()-30) <= this->GetTop()&& clock()-out_drviing>1000) {
-		Driving= true;
+	if (IsOverlap(marco, *this) && (marco.GetTop() + marco.GetHeight() - 30) <= this->GetTop() && clock() - out_drviing > 1000) {
+		Driving = true;
+		in_driving = clock();
 		//x = x + ViewPointX;
 		//y = y + ViewPointYInit - ViewPointY;
 		//SetTopLeft(x, y);
 	}
-		
 }
 
 void tank::take_out()
 {
-	if (Driving&&out) {
+	if (Driving && out && clock() - in_driving > 1000) {
 		Driving = false;
-		marco.JumpOutDrving(ViewPointX + x-80, y - ViewPointYInit + ViewPointY);
+		marco.JumpOutDrving(ViewPointX + x - 80, y - ViewPointYInit + ViewPointY);
 		out_drviing = clock();
 	}
 }

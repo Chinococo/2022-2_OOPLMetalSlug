@@ -167,6 +167,12 @@ void RShobu::handleActionMove() {
 			break;
 		}
 	}
+	for (size_t i = 0; i < tank_bullets.size(); i++) {
+		if (isCollideWith(*tank_bullets[i])) {
+			health--;
+			break;
+		}
+	}
 
 	handleWallCollision();
 
