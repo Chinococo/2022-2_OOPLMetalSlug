@@ -7,7 +7,7 @@ class RShobu : public Character {
 private:
 	const int DISTANCE_TO_HERO_HORIZONTAL = 30;
 	const int DISTANCE_TO_HERO_VERTICAL = 100;
-	const int FIRE_DELAY_MILLISECOND = 1500;
+	const int FIRE_DELAY_MILLISECOND = 3000;
 
 	int health = 20;
 
@@ -23,7 +23,7 @@ private:
 	int collisionBoxWidth = 150;
 	int collisionBoxHeight = 90;
 
-	int velocityHorizontal = 12;
+	int velocityHorizontal = 4;
 	int velocityVertical = 0;
 
 	bool animationDone = false;

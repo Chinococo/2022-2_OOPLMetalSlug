@@ -20,6 +20,7 @@ public:
 	void JumpOutDrving(int _x, int _y);
 	void dead();
 	bool isAttacking();
+	void respawn();
 private:
 	bool once = false;
 	int velocityY = 0;

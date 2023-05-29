@@ -123,6 +123,10 @@ void Prisoner::handleActionTied() {
 
 	moveVertically(Direction::DOWN);
 
+	if (directionHorizontal != lastDirectionHorizontal) {
+		switchSprite(Sprite::TIED);
+	}
+
 	//-----------------------------
 
 	handleGroundCollision();
@@ -153,6 +157,10 @@ void Prisoner::handleActionRescued() {
 	//-----------------------------
 
 	moveVertically(Direction::DOWN);
+
+	if (directionHorizontal != lastDirectionHorizontal) {
+		switchSprite(Sprite::RESCUED);
+	}
 
 	//-----------------------------
 
@@ -188,6 +196,10 @@ void Prisoner::handleActionMove() {
 	moveHorizontally(directionHorizontal);
 	moveVertically(Direction::DOWN);
 	
+	if (directionHorizontal != lastDirectionHorizontal) {
+		switchSprite(Sprite::MOVE);
+	}
+
 	//-----------------------------
 
 	handleWallCollision();
@@ -211,6 +223,10 @@ void Prisoner::handleActionFall() {
 	//-----------------------------
 
 	moveVertically(Direction::DOWN);
+
+	if (directionHorizontal != lastDirectionHorizontal) {
+		switchSprite(Sprite::FALL);
+	}
 
 	//-----------------------------
 
@@ -236,6 +252,10 @@ void Prisoner::handleActionReward() {
 	//-----------------------------
 
 	moveVertically(Direction::DOWN);
+	
+	if (directionHorizontal != lastDirectionHorizontal) {
+		switchSprite(Sprite::REWARD);
+	}
 
 	//-----------------------------
 
@@ -259,6 +279,10 @@ void Prisoner::handleActionLeave() {
 
 	moveHorizontally(Direction::LEFT);
 	moveVertically(Direction::DOWN);
+
+	if (directionHorizontal != lastDirectionHorizontal) {
+		switchSprite(Sprite::MOVE);
+	}
 
 	//-----------------------------
 
@@ -369,6 +393,7 @@ void Prisoner::switchSprite(Sprite sprite) {
 	
 	int frameOffset = range.first + bias;
 
+	lastDirectionHorizontal = directionHorizontal;
 	this->sprite = sprite;
 	
 	SetFrameIndexOfBitmap(frameOffset);
@@ -401,10 +426,14 @@ int Prisoner::getAbsFrame() {
 }
 
 int Prisoner::getRelFrame() {
-	int frameIndex = GetFrameIndexOfBitmap();
-	int bias = (directionHorizontal == Direction::RIGHT) ? animationflipBias : 0;
 	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
-	return frameIndex - range.first - bias;
+	int bias = (directionHorizontal == Direction::RIGHT) ? animationflipBias : 0;
+
+	int frameIndex = GetFrameIndexOfBitmap();
+	int totalFrames = range.second - range.first;
+	int newFrameIndex = (frameIndex - range.first - bias + 1 + totalFrames) % totalFrames;
+
+	return newFrameIndex;
 }
 
 std::string Prisoner::getDirectionHorizontal() const {

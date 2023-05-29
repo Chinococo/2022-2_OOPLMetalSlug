@@ -30,8 +30,13 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	if (state == "map1") {
 		removeInactives();
 		removeInactiveSolider();
-		marco.update();
 		marco_tank.update();
+		if (marco.isAlive()) {
+			marco.update();
+		}
+		else if (keyDowns.count(VK_RETURN)) {
+			marco.respawn();
+		}
 		for (size_t i = 0; i < rshobus.size(); i++) {
 			rshobus[i].update();
 		}
@@ -113,7 +118,17 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	else if (state == "map1") {
 		// 0x5A -> Z
 		// 0x58 -> X
-		if (nChar == VK_LEFT || nChar == VK_RIGHT || nChar == VK_SPACE || nChar == VK_UP|| nChar == VK_DOWN || nChar == 0x5A || nChar == 0x58 || nChar == 0x43) {
+
+		if (nChar == VK_LEFT || 
+			nChar == VK_RIGHT || 
+			nChar == VK_SPACE || 
+			nChar == VK_UP|| 
+			nChar == VK_DOWN || 
+			nChar == VK_RETURN || 
+			nChar == 0x5A || 
+			nChar == 0x58||
+      nChar == 0x43)
+		{
 			keyDowns.insert(nChar);
 		}
 	}
