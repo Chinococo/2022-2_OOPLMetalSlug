@@ -49,7 +49,7 @@ void tank_barrel::update(int _x,int _y)
 }
 
 void tank_barrel::draw() {
-	ShowBitmap(1.5);
+	ShowBitmap(1.9);
 }
 
 int tank_barrel::GetAngele()
