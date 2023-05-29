@@ -141,6 +141,7 @@ namespace game_framework {
 	void updateCharacter()
 	{
 		for (size_t i = 0; i < soldiers.size(); i++) {
+			
 			soldiers[i].draw();
 		}
 		marco.draw();
