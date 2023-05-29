@@ -290,7 +290,7 @@ void tank::draw() {
 void tank::take_in()
 {
 	clock_t temp = clock() - out_drviing;
-	if (IsOverlap(marco, *this) &&( marco.GetTop() + marco.GetHeight()-30) <= this->GetTop()&& clock()-out_drviing>400) {
+	if (IsOverlap(marco, *this) &&( marco.GetTop() + marco.GetHeight()-30) <= this->GetTop()&& clock()-out_drviing>1000) {
 		Driving= true;
 		//x = x + ViewPointX;
 		//y = y + ViewPointYInit - ViewPointY;
