@@ -70,4 +70,11 @@ void MapObject::collideWithBullet() {
 			now_hp -= 1;
 		}
 	}
+	/*
+	for (size_t i = 0; i < tank_bullets.size(); i++) {
+		if (tank_bullets[i]->IsOverlap_(*this) && isAlive()) {
+			if (now_hp > 0)
+				now_hp -= 1;
+		}
+	}*/
 }

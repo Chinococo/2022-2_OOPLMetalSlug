@@ -29,7 +29,7 @@ void tank_barrel::init()
 void tank_barrel::update(int _x,int _y)
 {
 	attacking = keyDowns.count(0x5A); // Z
-	if (attacking&&clock() - start > 100) {
+	if (attacking&&clock() - start > 50) {
 		fire = true;
 		start = clock();
 	}

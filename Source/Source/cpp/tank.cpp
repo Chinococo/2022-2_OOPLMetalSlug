@@ -244,10 +244,7 @@ void tank::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (Ground::isOnGround(*this, grounds[i]) == 1 && velocityY > 0) {
 			//&& (this->GetTop() + this->GetHeight()) - Ground::GetX_Height(grounds[i], x) < 15;
-			dy = Ground::GetX_Height(grounds[i], abs(ViewPointX) + x) - GetHeight() - y + ViewPointY - ViewPointYInit;
-
-			if (abs(dy) > 40) // Prevent lifting by steep wall
-				dy = 0;
+			dy = Ground::GetX_Height(grounds[i], abs(ViewPointX) + x) - GetHeight() - y + ViewPointY - ViewPointYInit+2;
 
 			// Stop falling
 			velocityY = 0;
