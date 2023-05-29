@@ -64,6 +64,38 @@ void Marco::update() {
 	}
 }
 
+void Marco::respawn() {
+	alive = true;
+	dying = false;
+	once = false;
+	velocityY = 0;
+	movingLeft = false;
+	movingRight = false;
+	jumping = false;
+	inAir = false;
+	lookingUp = false;
+	attacking = false;
+	knifing = false;
+	throwingGrenade = false;
+	pressingDown = false;
+	nearEnemy = false;
+	lastAttackTime = clock();
+	action = Action::IDLE;
+	lastAction = Action::IDLE;
+	x = 100;
+	y = 300;
+	dx = 0;
+	dy = 0;
+	facingX = 1;
+	facingY = 0;
+	alive = true;
+	dying = false;
+	flip = false;
+	deathTimer = clock();
+	std::pair<std::pair<int, int>, std::pair<int, int>> CollideBox = { {-1,-1},{-1,-1} };
+	start = clock();
+}
+
 void Marco::control() {
 	clock_t currentTime = clock();
 	scroll = (this->GetLeft() > 400);

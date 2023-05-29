@@ -153,8 +153,8 @@ bool RShobuBomb::isCollideWith(Character other) {
 	if (relativeCollisionBoxRight < otherRelativePositionLeft ||
 		otherRelativePositionRight < relativeCollisionBoxLeft ||
 		relativeCollisionBoxBottom < otherRelativePositionTop ||
-		otherRelativePositionBottom < relativeCollisionBoxTop
-		) {
+		otherRelativePositionBottom < relativeCollisionBoxTop)
+	{
 		return false;
 	}
 

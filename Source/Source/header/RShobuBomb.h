@@ -38,8 +38,6 @@ private:
 
 	void moveVertically(Direction direction);
 
-	bool isCollideWith(Character other);
-
 	void handleGroundCollision();
 	void handleWallCollision();
 
@@ -52,6 +50,8 @@ public:
 	void init();
 	void update();
 	void draw();
+
+	bool isCollideWith(Character other);
 
 	RShobuBomb &operator=(const RShobuBomb &other);
 };
