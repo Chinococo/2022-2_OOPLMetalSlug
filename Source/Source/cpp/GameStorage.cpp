@@ -72,9 +72,8 @@ namespace game_framework {
 			}
 		}
 		for (size_t i = 0; i < rshobus.size(); i++) {
-			if (rshobus[i].isHurt(*this)) {
-				dying = true;
-				deathTimer = clock();
+			if (rshobus[i].isHurt(marco)) {
+				marco.dead();
 				break;
 			}
 		}
