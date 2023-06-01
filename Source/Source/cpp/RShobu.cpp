@@ -161,18 +161,6 @@ void RShobu::handleActionMove() {
 
 	//-----------------------------
 
-	for (size_t i = 0; i < bullets.size(); i++) {
-		if (isCollideWith(bullets[i])) {
-			health--;
-			break;
-		}
-	}
-	for (size_t i = 0; i < tank_bullets.size(); i++) {
-		if (isCollideWith(*tank_bullets[i])) {
-			health--;
-			break;
-		}
-	}
 
 	handleWallCollision();
 
@@ -182,7 +170,9 @@ void RShobu::handleActionMove() {
 		action = Action::DIE;
 	}
 }
-
+void RShobu::damge(int damge) {
+	health = max(0, health - damge);
+}
 void RShobu::handleActionDie() {
 	if (sprite != Sprite::DIE) {
 		switchSprite(Sprite::DIE);

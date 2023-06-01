@@ -32,21 +32,11 @@ void Boss1::init() {
 	animationDelay = animationDelays[static_cast<int>(action)];
 	this->canno->init();
 }
-
+void Boss1::damge(int damge) {
+	now_hp = max(0, now_hp - damge);
+}
 void Boss1::update()
 {
-	for (size_t i = 0; i < bullets.size(); i++) {
-		if (bullets[i].owner == "hero" && bullets[i].IsOverlap_(*this) && isAlive()) {
-			if(now_hp>0)
-				now_hp -= 1;
-		}
-	}/*
-	for (size_t i = 0; i < tank_bullets.size(); i++) {
-		if (tank_bullets[i]->IsOverlap_(*this) && isAlive()) {
-			if (now_hp > 0)
-				now_hp -= 1;
-		}
-	}*/
 	this->SetFrameIndexOfBitmap(static_cast<int>(std::floor(static_cast<double>(static_cast<double>(hp - now_hp) / hp) * (this->GetFrameSizeOfBitmap() - 1))));
 	canno->Move();
 	canno->update();

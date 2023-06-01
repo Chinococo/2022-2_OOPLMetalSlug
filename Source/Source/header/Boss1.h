@@ -5,6 +5,7 @@ class Boss1 : public Character {
 public:
 	Boss1(int _x, int _y);
 	virtual void init() override;
+	void damge(int damge);
 	virtual void update() override;
 	virtual void draw() override;
 	/*

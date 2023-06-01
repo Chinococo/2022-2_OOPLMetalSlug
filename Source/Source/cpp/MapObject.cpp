@@ -64,17 +64,10 @@ void MapObject::init()
 	this->LoadBitmapByString(path, RGB(255, 255, 255));
 	this->SetTopLeft(x, y);
 }
-
+void MapObject::damge(int damge) {
+	now_hp = max(0, now_hp - damge);
+}
 void MapObject::collideWithBullet() {
-	for (size_t i = 0; i < bullets.size(); i++) {
-		string test = bullets[i].owner;
-		bool check = IsOverlap(*this, bullets[i]);
-		bool check2 = isAlive();
-		if (bullets[i].owner == "hero" && IsOverlap(*this,bullets[i]) && isAlive()) {
-			now_hp -= 1;
-			bullets[i].dead();
-		}
-	}
 	
 	for (size_t i = 0; i < tank_bullets.size(); i++) {
 		if (IsOverlap(*tank_bullets[i],*this) && isAlive()) {

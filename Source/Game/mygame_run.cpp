@@ -55,7 +55,7 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		for (size_t i = 0; i < prisoners.size(); i++) {
 			prisoners[i].update();
 		}
-
+		collideWithBullet();
 	}
 }
 

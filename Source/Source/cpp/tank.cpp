@@ -176,20 +176,7 @@ void tank::jumpAndFall() {
 }
 
 void tank::collideWithBullet() {
-	for (size_t i = 0; i < soldierFireworks.size(); i++) {
-		if (IsOverlap(*this, soldierFireworks[i])) {
-			dying = true;
-			deathTimer = clock();
-			break;
-		}
-	}
-	for (size_t i = 0; i < rshobus.size(); i++) {
-		if (rshobus[i].isHurt(*this)) {
-			dying = true;
-			deathTimer = clock();
-			break;
-		}
-	}
+	
 }
 
 void tank::updateAction() {

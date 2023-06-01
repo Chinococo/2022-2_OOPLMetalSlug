@@ -149,26 +149,7 @@ void Bullet::jumpAndFall() {
 
 void Bullet::collideWithCharacter() {
 	if (owner == "hero") {
-		for (size_t i = 0; i < soldiers.size(); i++) {
-			if (alive&&IsOverlap(*this, soldiers[i])) {
-				alive = false;
-				break;
-			}
-		}
-		/*
-		for (size_t i = 0; i < MapObjects.size(); i++) 
-			if (alive&&IsOverlap(*this,MapObjects[i])&&MapObjects[i].isAlive()) {
-				alive = false;
-				break;
-			}
-			*/
-		if(IsOverlap_(boss))
-			alive = false;
-	}
-	else if (owner == "enemy") {
-		if (IsOverlap(*this, marco)) {
-			alive = false;
-		}
+		
 	}
 }
 
