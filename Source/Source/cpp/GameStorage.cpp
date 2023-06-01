@@ -182,7 +182,7 @@ namespace game_framework {
 		}), soldierFireworks.end());
 
 		for (unsigned i = 0; i < tank_bullets.size();)
-			if (tank_bullets[i]->isAlive()) {
+			if (!tank_bullets[i]->isAlive()) {
 				delete tank_bullets[i];
 				tank_bullets.erase(tank_bullets.begin() + i);
 			}
