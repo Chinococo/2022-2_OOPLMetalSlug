@@ -17,11 +17,13 @@ void Grenade::update(void) {
 	if (!alive) {
 		return;
 	}
-
-	velocityHorizontal += 0;
-	velocityVertical += GRAVITY;
-	distanceHorizontal += velocityHorizontal;
-	distanceVertical += velocityVertical;
+	distanceHorizontal = max(0, distanceHorizontal -1);
+	distanceVertical = min(20, distanceVertical + 3);
+	for (size_t i = 0; i < grounds.size(); i++) {
+		if (Ground::isOnGround(*this, grounds[i]) == 1) {
+			distanceVertical = Ground::GetX_Height(grounds[i], abs(ViewPointX) + absolutePositionLeft) - GetHeight() - absolutePositionTop;
+		}
+	}
 	absolutePositionLeft += (directionHorizontal == Direction::LEFT) ? -distanceHorizontal : distanceHorizontal;
 	absolutePositionTop += distanceVertical;
 

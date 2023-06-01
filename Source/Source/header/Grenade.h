@@ -5,10 +5,10 @@ class Grenade : public Character {
 private:
 	int absolutePositionLeft = 0;
 	int absolutePositionTop = 0;
-	int distanceHorizontal = 0;
-	int distanceVertical = 0;
+	int distanceHorizontal = 20;
+	int distanceVertical = -20;
 	int velocityHorizontal = 20;
-	int velocityVertical = -15;
+	int velocityVertical = -30;
 	Direction directionHorizontal = Direction::RIGHT;
 	std::chrono::time_point<std::chrono::steady_clock> spawnTime = std::chrono::steady_clock::now();
 
