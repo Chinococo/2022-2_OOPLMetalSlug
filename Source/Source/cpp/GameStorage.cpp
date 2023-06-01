@@ -294,12 +294,10 @@ namespace game_framework {
 		}
 	}
 	void removeInactiveSolider() {
-		for (size_t i = 0; i < soldiers.size();) {
-			if (!soldiers[i].isAlive()) {
-				soldiers.erase(soldiers.begin()+i);
+		for (int i = soldiers.size(); i > 0; --i) {
+			if (!soldiers[i - 1].isAlive()) {
+				soldiers.erase(soldiers.begin() + i - 1);
 			}
-			else
-				i++;
 		}
 	}
 	bool Checkcheckpoint() {
