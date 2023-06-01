@@ -199,6 +199,7 @@ void Marco::collideWithBullet() {
 			break;
 		}
 	}
+	/*
 	for (size_t i = 0; i < rshobus.size(); i++) {
 		if (rshobus[i].isHurt(*this)) {
 			dying = true;
@@ -206,6 +207,7 @@ void Marco::collideWithBullet() {
 			break;
 		}
 	}
+	*/
 }
 
 void Marco::updateAction() {
