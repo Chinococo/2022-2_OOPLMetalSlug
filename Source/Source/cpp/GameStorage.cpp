@@ -65,26 +65,26 @@ namespace game_framework {
 				break;
 			}
 			for (size_t j = 0; j < soldiers.size(); j++) {
-				if (game_framework::CMovingBitmap::IsOverlap(bullets[i], soldiers[j])) {
+				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(bullets[i], soldiers[j])) {
 					soldiers[j].dead();
 					bullets[i].dead();
 					break;
 				}
 			}
 			for (size_t j = 0; j < MapObjects.size(); j++) {
-				if (game_framework::CMovingBitmap::IsOverlap(bullets[i], MapObjects[j])&& MapObjects[j].isAlive()) {
+				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(bullets[i], MapObjects[j])&& MapObjects[j].isAlive()) {
 					MapObjects[j].damge(1);;
 					bullets[i].dead();
 					break;
 				}
 			}
 			for (size_t j = 0; j < rshobus.size(); j++)
-				if (game_framework::CMovingBitmap::IsOverlap(bullets[i], rshobus[j])) {
+				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(bullets[i], rshobus[j])) {
 					bullets[i].dead();
 					rshobus[j].damge(1);
 					break;
 				}
-			if(game_framework::CMovingBitmap::IsOverlap(bullets[i], boss)){
+			if(bullets[i].owner == "hero" && bullets[i].IsOverlap_(boss)){
 				bullets[i].dead();
 				boss.damge(1);
 				break;
