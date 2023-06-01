@@ -48,3 +48,4 @@ tank,19~20,resources/img_v2/tank/crouch_idle/,100
 tank,20~24,resources/img_v2/tank/crouch_driving/,100
 tank_barrel,0~32,resources/img_v2/tank/barrel/,100
 tank_barrel,32~64,resources/img_v2/tank/barrel/shooting/,100
+grenade,0~1,resources/img_v2/grenade/move/,100

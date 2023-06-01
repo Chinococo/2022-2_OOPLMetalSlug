@@ -15,6 +15,8 @@
 #include "../header/tank_bullet.h"
 #include "../header/RShobu.h"
 #include "../header/RShobuBomb.h"
+#include "../header/Grenade.h"
+#include "../header/CsvReader.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -74,4 +76,5 @@ namespace game_framework {
 	extern Boss1_laser laser;
 	extern int tank_barrel_angle;
 	extern std::vector<tank_bullet *> tank_bullets;
+	extern Grenade grenade;
 }
