@@ -72,7 +72,7 @@ namespace game_framework {
 				}
 			}
 			for (size_t j = 0; j < MapObjects.size(); j++) {
-				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(bullets[i], MapObjects[j])&& MapObjects[j].isAlive()) {
+				if (bullets[i].owner == "hero" &&bullets[i].IsOverlap_(MapObjects[j])&& MapObjects[j].isAlive()) {
 					MapObjects[j].damge(1);;
 					bullets[i].dead();
 					break;
