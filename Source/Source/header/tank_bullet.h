@@ -8,8 +8,8 @@ public:
 	void move();
 	void draw();
 	void setXY(int _x, int _y);
-	bool isAlive = false;
 	void collideWithCharacter();
+	void dead();
 private:
 	time_t start;
 	int x, y;

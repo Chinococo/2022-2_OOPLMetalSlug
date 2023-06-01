@@ -51,6 +51,9 @@ void tank_bullet::collideWithCharacter()
 			break;
 		}
 	if (IsOverlap_(boss)){
-		//alive = false;
+		alive = false;
 	}
+}
+void tank_bullet::dead() {
+	alive = false;
 }
