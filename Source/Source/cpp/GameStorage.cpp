@@ -52,6 +52,33 @@ namespace game_framework {
 		soldiers.push_back(Soldier(4500, 500, 1));
 		
 	}
+	void collideWithBullet() {
+		for (size_t i = 0; i < bullets.size(); i++) {
+			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco, bullets[i])) {
+				marco.dead();
+				bullets[i].dead();
+				break;
+			}
+			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco_tank, bullets[i])) {
+				marco_tank.dead();
+				bullets[i].dead();
+
+			}
+		}
+		for (size_t i = 0; i < soldierFireworks.size(); i++) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i])) {
+				marco.dead();
+				break;
+			}
+		}
+		for (size_t i = 0; i < rshobus.size(); i++) {
+			if (rshobus[i].isHurt(*this)) {
+				dying = true;
+				deathTimer = clock();
+				break;
+			}
+		}
+	}
 	void createGrounds() {
 		/* 地板 */
 		for (unsigned i = 1; i < groundcsv.size(); i++) {

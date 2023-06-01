@@ -176,14 +176,6 @@ void tank::jumpAndFall() {
 }
 
 void tank::collideWithBullet() {
-	for (size_t i = 0; i < bullets.size(); i++) {
-		if (bullets[i].owner == "enemy" && IsOverlap(*this, bullets[i])) {
-			dying = true;
-			deathTimer = clock();
-			bullets[i].dead();
-			break;
-		}
-	}
 	for (size_t i = 0; i < soldierFireworks.size(); i++) {
 		if (IsOverlap(*this, soldierFireworks[i])) {
 			dying = true;
@@ -246,8 +238,8 @@ void tank::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
 		if (Ground::isOnGround(*this, grounds[i]) == 1 && velocityY > 0) {
 			//&& (this->GetTop() + this->GetHeight()) - Ground::GetX_Height(grounds[i], x) < 15;
-			dy = Ground::GetX_Height(grounds[i], abs(ViewPointX) + x) - GetHeight() - y + ViewPointY - ViewPointYInit+2;
-
+			if(dy==0||abs(dy)<abs( Ground::GetX_Height(grounds[i], x) - GetHeight() - y + ViewPointY - ViewPointYInit))
+				dy = Ground::GetX_Height(grounds[i], x) - GetHeight() - y + ViewPointY - ViewPointYInit;
 			// Stop falling
 			velocityY = 0;
 			inAir = false;
