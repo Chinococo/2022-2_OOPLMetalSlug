@@ -223,10 +223,11 @@ void tank::updateAnimation() {
 
 void tank::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
-		if (Ground::isOnGround(*this, grounds[i]) == 1 && velocityY > 0) {
+		if (Ground::isOnGround(*this, grounds[i]) == 1 && velocityY > 0) {                     
+			int absoulty = y - ViewPointYInit + ViewPointY;
 			//&& (this->GetTop() + this->GetHeight()) - Ground::GetX_Height(grounds[i], x) < 15;
-			if(dy==0||abs(dy)<abs( Ground::GetX_Height(grounds[i], x) - GetHeight() - y + ViewPointY - ViewPointYInit))
-				dy = Ground::GetX_Height(grounds[i], x) - GetHeight() - y + ViewPointY - ViewPointYInit;
+			if(dy==0||dy> Ground::GetX_Height(grounds[i], x) - GetHeight() - absoulty)
+				dy = Ground::GetX_Height(grounds[i], x) - GetHeight() - y;
 			// Stop falling
 			velocityY = 0;
 			inAir = false;
