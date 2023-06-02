@@ -356,4 +356,5 @@ namespace game_framework {
 	Boss1 boss(9900,- 190);
 	bool Driving = false;
 	int tank_barrel_angle = 0;
+	Grenade grenade(100, 100, Direction::RIGHT);
 }

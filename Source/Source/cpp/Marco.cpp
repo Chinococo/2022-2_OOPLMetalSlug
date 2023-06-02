@@ -53,6 +53,13 @@ void Marco::update() {
 		updateAction();
 		changeAnimation();
 		updateAnimation();
+
+		grenades.erase(std::remove_if(grenades.begin(), grenades.end(), [](const Grenade &grenade) {
+			return !grenade.isAlive();
+		}), grenades.end());
+		for (auto &grenade : grenades) {
+			grenade.update();
+		}
 	}
 	else if(!Driving){
 		action = Action::DIE;
@@ -147,6 +154,7 @@ void Marco::move() {
 	collideWithGround();
 	jumpAndFall();
 	attack();
+	throwGrenade();
 	if (x + dx > 0&&720 > x + dx ) {
 		x += dx;
 	}
@@ -156,6 +164,20 @@ void Marco::move() {
 void Marco::attack() {
 	if (attacking) {
 		addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "hero");
+	}
+}
+
+void Marco::throwGrenade() {
+	if (throwingGrenade) {
+		Direction directionHorizontal = (facingX == 1) ? Direction::RIGHT : Direction::LEFT;
+
+		auto t = ViewPointX;
+		auto t1 = ViewPointY;
+		auto t2 = ViewPointYInit;
+
+		Grenade grenade = Grenade(x - ViewPointX, y - ViewPointY + ViewPointYInit, directionHorizontal);
+		grenade.init();
+		grenades.push_back(grenade);
 	}
 }
 
@@ -432,6 +454,10 @@ void Marco::draw() {
 	if (alive&&!Driving) {
 		SetTopLeft(x, y);
 		ShowBitmap();
+
+		for (auto &grenade : grenades) {
+			grenade.draw();
+		}
 	}
 	else {
 		UnshowBitmap();
