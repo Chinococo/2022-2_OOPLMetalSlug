@@ -9,6 +9,7 @@ public:
 	void draw();
 	void setXY(int _x, int _y);
 	void collideWithCharacter();
+	void dead();
 private:
 	time_t start;
 	int x, y;

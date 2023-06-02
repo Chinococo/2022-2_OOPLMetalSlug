@@ -184,8 +184,7 @@ void Marco::jumpAndFall() {
 }
 
 void Marco::collideWithBullet() {
-	/*
-	*/
+
 }
 
 void Marco::updateAction() {

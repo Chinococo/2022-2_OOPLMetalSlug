@@ -70,7 +70,7 @@ void MapObject::damge(int damge) {
 void MapObject::collideWithBullet() {
 	
 	for (size_t i = 0; i < tank_bullets.size(); i++) {
-		if (IsOverlap(*tank_bullets[i],*this) && isAlive()) {
+		if (IsOverlap(*tank_bullets[i],*this)&& tank_bullets[i]->isAlive() && isAlive()) {
 			if (now_hp > 0)
 				now_hp -= 1, tank_bullets[i]->dead();
 			

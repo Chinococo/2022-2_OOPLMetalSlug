@@ -38,4 +38,8 @@ void tank_bullet::setXY(int _x, int _y) {
 
 void tank_bullet::collideWithCharacter()
 {
+
+}
+void tank_bullet::dead() {
+	alive = false;
 }
