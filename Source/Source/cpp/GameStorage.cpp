@@ -54,6 +54,8 @@ namespace game_framework {
 	}
 	void collideWithBullet() {
 		for (size_t i = 0; i < bullets.size(); i++) {
+			if (!bullets[i].isAlive())
+				continue;
 			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco, bullets[i])) {
 				marco.dead();
 				bullets[i].dead();
@@ -294,9 +296,14 @@ namespace game_framework {
 		}
 	}
 	void removeInactiveSolider() {
+		vector<bool> test,test2;
+		for (unsigned i = 0; i < soldiers.size(); i++)
+			test.push_back(soldiers[i].isAlive());
 		for (int i = soldiers.size(); i > 0; --i) {
 			if (!soldiers[i - 1].isAlive()) {
 				soldiers.erase(soldiers.begin() + i - 1);
+				for (unsigned j = 0; j < soldiers.size(); j++)
+					test2.push_back(soldiers[j].isAlive());
 			}
 		}
 	}

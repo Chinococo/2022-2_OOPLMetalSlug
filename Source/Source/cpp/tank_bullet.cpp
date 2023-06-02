@@ -38,19 +38,4 @@ void tank_bullet::setXY(int _x, int _y) {
 
 void tank_bullet::collideWithCharacter()
 {
-	for (size_t i = 0; i < soldiers.size(); i++) {
-		if (IsOverlap(*this, soldiers[i])) {
-			soldiers[i].dead();
-			//alive = false;
-			break;
-		}
-	}
-	for (size_t i = 0; i < MapObjects.size(); i++)
-		if (IsOverlap_(MapObjects[i]) && MapObjects[i].isAlive()) {
-			//alive = false;
-			break;
-		}
-	if (IsOverlap_(boss)){
-		//alive = false;
-	}
 }
