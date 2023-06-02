@@ -60,7 +60,7 @@ void tank::update() {
 		Driving = false;
 		//action = Action::DIE;
 		changeAnimation();
-		updateAnimation();
+		//updateAnimation();
 		if (clock() - deathTimer > 1000) {
 			alive = false;
 		}
