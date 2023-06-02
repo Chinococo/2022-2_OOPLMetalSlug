@@ -52,6 +52,98 @@ namespace game_framework {
 		soldiers.push_back(Soldier(4500, 500, 1));
 		
 	}
+	void collideWithBullet() {
+		for (size_t i = 0; i < bullets.size(); i++) {
+			if (!bullets[i].isAlive())
+				continue;
+			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco, bullets[i])) {
+				marco.dead();
+				bullets[i].dead();
+				break;
+			}
+			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco_tank, bullets[i])) {
+				marco_tank.dead();
+				bullets[i].dead();
+				break;
+			}
+			for (size_t j = 0; j < soldiers.size(); j++) {
+				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(bullets[i], soldiers[j])) {
+					soldiers[j].dead();
+					bullets[i].dead();
+					break;
+				}
+			}
+			for (size_t j = 0; j < MapObjects.size(); j++) {
+				if (bullets[i].owner == "hero" &&bullets[i].IsOverlap_(MapObjects[j])&& MapObjects[j].isAlive()) {
+					MapObjects[j].damge(1);;
+					bullets[i].dead();
+					break;
+				}
+			}
+			for (size_t j = 0; j < rshobus.size(); j++)
+				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(bullets[i], rshobus[j])) {
+					bullets[i].dead();
+					rshobus[j].damge(1);
+					break;
+				}
+			if(bullets[i].owner == "hero" && bullets[i].IsOverlap_(boss)){
+				bullets[i].dead();
+				boss.damge(1);
+				break;
+			}
+		}
+		for (size_t i = 0; i < soldierFireworks.size(); i++) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i])) {
+				marco.dead();
+				break;
+			}
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])) {
+				marco.dead();
+				soldierFireworks[i].dead();
+				break;
+			}
+			
+		}
+		for (size_t i = 0; i < tank_bullets.size(); i++) {
+			for (size_t j = 0; j < soldiers.size(); j++) {
+				if (game_framework::CMovingBitmap::IsOverlap(*tank_bullets[i], soldiers[j])) {
+					soldiers[j].dead();
+					(*tank_bullets[i]).dead();
+					break;
+				}
+			}
+			for (size_t j = 0; j < MapObjects.size(); j++) {
+				if (( *tank_bullets[i]).IsOverlap_(MapObjects[j]) && MapObjects[j].isAlive()) {
+					MapObjects[j].damge(1);;
+					(*tank_bullets[i]).dead();
+					break;
+				}
+			}
+			for (size_t j = 0; j < rshobus.size(); j++)
+				if(game_framework::CMovingBitmap::IsOverlap(*tank_bullets[i], rshobus[j])) {
+					(*tank_bullets[i]).dead();
+					rshobus[j].damge(1);
+					break;
+				}
+			if ((*tank_bullets[i]).IsOverlap_(boss)) {
+				(*tank_bullets[i]).dead();
+				boss.damge(1);
+				break;
+			}
+		}
+		for (size_t i = 0; i < soldierFireworks.size(); i++) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i])) {
+				marco.dead();
+				break;
+			}
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])) {
+				marco.dead();
+				soldierFireworks[i].dead();
+				break;
+			}
+
+		}
+	}
 	void createGrounds() {
 		/* 地板 */
 		for (unsigned i = 1; i < groundcsv.size(); i++) {
@@ -117,12 +209,16 @@ namespace game_framework {
 			return !firework.isAlive();
 		}), soldierFireworks.end());
 
-		/* bug
-		prisoners.erase(std::remove_if(prisoners.begin(), prisoners.end(), [](const Prisoner &prisoner) {
-			return !prisoner.isAlive();
-		}), prisoners.end());
-		*/
-
+		for (unsigned i = 0; i < tank_bullets.size();)
+			if (!tank_bullets[i]->isAlive()) {
+				delete tank_bullets[i];
+				tank_bullets.erase(tank_bullets.begin() + i);
+			}
+			else
+				i++;
+		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet &bullet) {
+			return !bullet.isAlive();
+		}), bullets.end());
 		rshobus.erase(std::remove_if(rshobus.begin(), rshobus.end(), [](const RShobu &rshobu) {
 			return !rshobu.isAlive();
 		}), rshobus.end());
@@ -200,12 +296,15 @@ namespace game_framework {
 		}
 	}
 	void removeInactiveSolider() {
-		for (size_t i = 0; i < soldiers.size();) {
-			if (!soldiers[i].isAlive()) {
-				soldiers.erase(soldiers.begin()+i);
+		vector<bool> test,test2;
+		for (unsigned i = 0; i < soldiers.size(); i++)
+			test.push_back(soldiers[i].isAlive());
+		for (int i = soldiers.size(); i > 0; --i) {
+			if (!soldiers[i - 1].isAlive()) {
+				soldiers.erase(soldiers.begin() + i - 1);
+				for (unsigned j = 0; j < soldiers.size(); j++)
+					test2.push_back(soldiers[j].isAlive());
 			}
-			else
-				i++;
 		}
 	}
 	bool Checkcheckpoint() {

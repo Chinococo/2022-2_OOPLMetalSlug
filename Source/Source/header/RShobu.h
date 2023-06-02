@@ -45,6 +45,7 @@ private:
 	} action = Action::MOVE;
 
 	void handleActionMove();
+	
 	void handleActionDie();
 
 	void fire();
@@ -61,7 +62,7 @@ private:
 
 public:
 	RShobu(int absolutePositionLeft, int absolutePositionTop);
-
+	void damge(int damge);
 	void init();
 	void update();
 	void draw();

@@ -22,7 +22,6 @@ public:
 	virtual void collideWithWall() {}
 	virtual void draw() {}
 	bool IsOverlap_(Character) ;
-  
 	bool isAlive() const;
 	void dead();
 	bool myIsOverlap(Character *other);

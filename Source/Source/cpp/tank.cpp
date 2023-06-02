@@ -176,28 +176,7 @@ void tank::jumpAndFall() {
 }
 
 void tank::collideWithBullet() {
-	for (size_t i = 0; i < bullets.size(); i++) {
-		if (bullets[i].owner == "enemy" && IsOverlap(*this, bullets[i])) {
-			dying = true;
-			deathTimer = clock();
-			bullets[i].dead();
-			break;
-		}
-	}
-	for (size_t i = 0; i < soldierFireworks.size(); i++) {
-		if (IsOverlap(*this, soldierFireworks[i])) {
-			dying = true;
-			deathTimer = clock();
-			break;
-		}
-	}
-	for (size_t i = 0; i < rshobus.size(); i++) {
-		if (rshobus[i].isHurt(*this)) {
-			dying = true;
-			deathTimer = clock();
-			break;
-		}
-	}
+	
 }
 
 void tank::updateAction() {
@@ -244,10 +223,11 @@ void tank::updateAnimation() {
 
 void tank::collideWithGround() {
 	for (size_t i = 0; i < grounds.size(); i++) {
-		if (Ground::isOnGround(*this, grounds[i]) == 1 && velocityY > 0) {
+		if (Ground::isOnGround(*this, grounds[i]) == 1 && velocityY > 0) {                     
+			int absoulty = y - ViewPointYInit + ViewPointY;
 			//&& (this->GetTop() + this->GetHeight()) - Ground::GetX_Height(grounds[i], x) < 15;
-			dy = Ground::GetX_Height(grounds[i], abs(ViewPointX) + x) - GetHeight() - y + ViewPointY - ViewPointYInit+2;
-
+			if(dy==0||dy> Ground::GetX_Height(grounds[i], x) - GetHeight() - absoulty)
+				dy = Ground::GetX_Height(grounds[i], x) - GetHeight() - y;
 			// Stop falling
 			velocityY = 0;
 			inAir = false;
@@ -293,7 +273,7 @@ void tank::draw() {
 void tank::take_in()
 {
 	clock_t temp = clock() - out_drviing;
-	if (IsOverlap(marco, *this) && (marco.GetTop() + marco.GetHeight() - 30) <= this->GetTop() && clock() - out_drviing > 1000) {
+	if (!Driving&&IsOverlap(marco, *this) && (marco.GetTop() + marco.GetHeight() - 30) <= this->GetTop() && clock() - out_drviing > 1000) {
 		Driving = true;
 		in_driving = clock();
 		//x = x + ViewPointX;

@@ -26,7 +26,9 @@ bool Character::IsOverlap_(Character bmp)
 	}
 }
 
-bool Character::isAlive() const {
+
+
+bool Character::isAlive()const {
 	return alive;
 }
 void  Character::dead() {

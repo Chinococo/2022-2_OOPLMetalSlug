@@ -40,6 +40,7 @@ namespace game_framework {
 	extern void updateMapObject();
 	extern void createMapObject();
 	extern bool Checkcheckpoint();
+	extern void collideWithBullet();
 	// map
 	extern std::string state;
 	extern int selectIndex;

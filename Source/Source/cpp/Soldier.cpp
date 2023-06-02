@@ -165,13 +165,15 @@ void Soldier::jumpAndFall() {
 	dy += velocityY;
 }
 
-void Soldier::collideWithBullet() {
-	for (size_t i = 0; i < bullets.size(); i++) {
-		if (bullets[i].owner == "hero" && IsOverlap(*this, bullets[i])) {
-			dying = true;
-			deathTimer = clock();
-		}
+void Soldier::dead() {
+	if (!dying) {
+		dying = true;
+		deathTimer = clock();
 	}
+}
+
+void Soldier::collideWithBullet()
+{
 }
 
 void Soldier::updateAction() {

@@ -184,30 +184,7 @@ void Marco::jumpAndFall() {
 }
 
 void Marco::collideWithBullet() {
-	for (size_t i = 0; i < bullets.size(); i++) {
-		if (bullets[i].owner == "enemy" && IsOverlap(*this, bullets[i])) {
-			dying = true;
-			deathTimer = clock();
-			bullets[i].dead();
-			break;
-		}
-	}
-	for (size_t i = 0; i < soldierFireworks.size(); i++) {
-		if (IsOverlap(*this, soldierFireworks[i])) {
-			dying = true;
-			deathTimer = clock();
-			break;
-		}
-	}
-	/*
-	for (size_t i = 0; i < rshobus.size(); i++) {
-		if (rshobus[i].isHurt(*this)) {
-			dying = true;
-			deathTimer = clock();
-			break;
-		}
-	}
-	*/
+
 }
 
 void Marco::updateAction() {

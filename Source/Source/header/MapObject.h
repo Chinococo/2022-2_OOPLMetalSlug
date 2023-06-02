@@ -12,6 +12,7 @@ public:
 	bool isAlive();
 	void collideWithBullet();
 	void init();
+	void damge(int damge);
 protected:
 	int hp;
 	int now_hp;

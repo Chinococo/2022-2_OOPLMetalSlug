@@ -10,6 +10,7 @@ public:
 	void attack();
 	virtual void moveLeftRight() override;
 	virtual void jumpAndFall() override;
+	void dead();
 	void collideWithBullet();
 	virtual void updateAction() override;
 	virtual void changeAnimation() override;
