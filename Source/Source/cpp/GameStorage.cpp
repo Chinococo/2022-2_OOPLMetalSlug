@@ -68,29 +68,21 @@ namespace game_framework {
 			ASSERT(grenadeColBox == emptyColBox);
 			ASSERT(&grenadeColBox != &emptyColBox);
 
-			ASSERT(grenade.isAlive());
-
 			if (grenade.isExpired()) {
-				ASSERT(grenade.isAlive());
 				grenadeColBox = grenade.explode();
-				ASSERT(!grenade.isAlive());
 			}
 			else {
 				for (auto &soldier : soldiers) {
 					if (grenade.IsOverlap_(soldier)) { // soldier overlapped
 						ASSERT(grenadeColBox == emptyColBox);
-						ASSERT(grenade.isAlive());
 						grenadeColBox = grenade.explode();
-						ASSERT(!grenade.isAlive());
 						break;
 					}
 				}
 				for (auto &rshobu : rshobus) {
 					if (grenade.IsOverlap_(rshobu)) {
 						ASSERT(grenadeColBox == emptyColBox);
-						ASSERT(grenade.isAlive());
 						grenadeColBox = grenade.explode();
-						ASSERT(!grenade.isAlive());
 						break;
 					}
 				}
@@ -101,7 +93,6 @@ namespace game_framework {
 					ColBox soldierColBox = soldier.getColBox();
 					ASSERT(soldierColBox != emptyColBox);
 					if (isColboxOverlap(grenadeColBox, soldierColBox)) {
-						ASSERT(soldier.isAlive());
 						soldier.dead();
 					}
 				}
@@ -109,7 +100,6 @@ namespace game_framework {
 					ColBox rshobuColBox = rshobu.getColBox();
 					ASSERT(rshobuColBox != emptyColBox);
 					if (isColboxOverlap(grenadeColBox, rshobuColBox)) {
-						ASSERT(rshobu.isAlive());
 						rshobu.damge(10);
 					}
 				}

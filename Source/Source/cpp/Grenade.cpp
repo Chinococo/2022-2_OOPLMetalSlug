@@ -20,10 +20,17 @@ void Grenade::update(void) {
 	if (!alive) {
 		return;
 	}
-	distanceHorizontal = max(0, distanceHorizontal -1);
-	distanceVertical = min(20, distanceVertical + 3);
-	
-	handleGroundCollision();
+
+	switch (action) {
+	case Action::MOVE:
+		handleActionMove();
+		ASSERT(sprite == Sprite::MOVE);
+		break;
+	case Action::EXPLODE:
+		handleActionExplode();
+		ASSERT(sprite == Sprite::EXPLODE);
+		break;
+	}
 
 	absolutePositionLeft += (directionHorizontal == Direction::LEFT) ? -distanceHorizontal : distanceHorizontal;
 	absolutePositionTop += distanceVertical;
@@ -42,13 +49,40 @@ void Grenade::draw(void) {
 	}
 }
 
+void Grenade::handleActionMove(void) {
+	if (sprite != Sprite::MOVE) {
+		switchSprite(Sprite::MOVE);
+		ASSERT(GetFrameIndexOfBitmap() == 0 || GetFrameIndexOfBitmap() == 32);
+	}
+	distanceHorizontal = max(0, distanceHorizontal - 1);
+	distanceVertical = min(20, distanceVertical + 3);
+	if (directionHorizontal != lastDirectionHorizontal) {
+		switchSprite(Sprite::MOVE);
+	}
+	handleGroundCollision();
+	if (dying) {
+		action = Action::EXPLODE;
+	}
+}
+
+void Grenade::handleActionExplode(void) {
+	if (sprite != Sprite::EXPLODE) {
+		switchSprite(Sprite::EXPLODE);
+		ASSERT(GetFrameIndexOfBitmap() == 12 || GetFrameIndexOfBitmap() == 44);
+	}
+	handleGroundCollision();
+	if (animationDone) {
+		alive = false;
+	}
+}
+
 bool Grenade::isExpired(void) const {
 	auto nowTime = std::chrono::steady_clock::now();
 	return nowTime - spawnTime > std::chrono::milliseconds(2000);
 }
 
 ColBox Grenade::explode(void) {
-	alive = false;
+	dying = true;
 	return {
 		{absolutePositionLeft, absolutePositionTop},
 		{absolutePositionLeft + GetWidth(), absolutePositionTop + GetHeight()}
@@ -65,14 +99,28 @@ void Grenade::handleGroundCollision(void) {
 	}
 }
 
+void Grenade::switchSprite(Sprite sprite) {
+	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
+	int bias = (directionHorizontal == Direction::LEFT) ? animationflipBias : 0;
+
+	int frameOffset = range.first + bias;
+
+	lastDirectionHorizontal = directionHorizontal;
+	this->sprite = sprite;
+
+	SetFrameIndexOfBitmap(frameOffset);
+}
+
 void Grenade::nextFrame(void) {
-	auto range = animationRanges[0];
-	int bias = (directionHorizontal == Direction::RIGHT) ? animationflipBias : 0;
+	std::pair<int, int> range = animationRanges[static_cast<int>(sprite)];
+	int bias = (directionHorizontal == Direction::LEFT) ? animationflipBias : 0;
 
 	int frameIndex = GetFrameIndexOfBitmap();
 	int totalFrames = range.second - range.first;
 	int newFrameIndex = (frameIndex - range.first - bias + 1 + totalFrames) % totalFrames;
 	int frameOffset = newFrameIndex + range.first + bias;
+
+	animationDone = (frameOffset - range.first + totalFrames) % totalFrames == totalFrames - 1;
 
 	SetFrameIndexOfBitmap(frameOffset);
 }
