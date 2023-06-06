@@ -18,6 +18,7 @@
 #include "../header/Grenade.h"
 #include "../header/CsvReader.h"
 #include "../header/DamageEffect.h"
+#include "../header/Pickup.h"
 #include <string>
 #include <vector>
 #include <set>
