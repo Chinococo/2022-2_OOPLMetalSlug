@@ -206,6 +206,10 @@ bool RShobu::isHurt(Character other) {
 	return false;
 }
 
+std::vector<RShobuBomb> RShobu::getBombs(void) {
+	return this->bombs;
+}
+
 void RShobu::moveHorizontally(Direction direction) {
 	if (direction == Direction::LEFT) {
 		distanceHorizontal -= velocityHorizontal;

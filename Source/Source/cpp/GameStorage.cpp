@@ -59,6 +59,14 @@ namespace game_framework {
 			colbox2.second.second < colbox1.first.second);
 	}
 	void collideWithBullet() {
+		for (auto &rshobu : rshobus) {
+			for (auto &bomb : rshobu.getBombs()) {
+				if (marco.IsOverlap_(bomb)) {
+					if (!godmode) { marco.dead(); }
+				}
+			}
+		}
+
 		for (auto &grenade : heroGrenades) {
 			ColBox emptyColBox = {
 				{-1, -1},

@@ -50,3 +50,4 @@ tank_barrel,0~32,resources/img_v2/tank/barrel/,100
 tank_barrel,32~64,resources/img_v2/tank/barrel/shooting/,100
 grenade,0~12,resources/img_v2/grenade/move/,100
 grenade,12~32,resources/img_v2/grenade/explode/,100
+pickup,0~1,resources/img_v2/pickup/simple/,100

@@ -1,6 +1,40 @@
 #include "stdafx.h"
 #include "../header/GameStorage.h"
 
+Vec2::Vec2(std::pair<int, int> vec2)
+	: vec2(vec2) {
+	
+}
+
+Vec2::Vec2(std::initializer_list<int> values) {
+	if (values.size() != 2) {
+		throw std::invalid_argument("The number of arguments must be 2.");
+	}
+	auto it = values.begin();
+	this->vec2.first = *(it++);
+	this->vec2.second = *it;
+}
+
+Vec2 &Vec2::setHoriz(int horiz) {
+	this->vec2.first = horiz;
+	return *this;
+}
+
+Vec2 &Vec2::setVert(int vert) {
+	this->vec2.second = vert;
+	return *this;
+}
+
+Vec2 Vec2::operator+(const Vec2 &other) {
+	return Vec2(vec2) += other.vec2;
+}
+
+Vec2 &Vec2::operator+=(const Vec2 &other) {
+	this->vec2.first += other.vec2.first;
+	this->vec2.second += other.vec2.second;
+	return *this;
+}
+
 RectBox::RectBox(int left, int top, int width, int height)
 	: left(left), top(top),
 	right(left + width), bottom(top + height),
@@ -84,7 +118,7 @@ RectBox &RectBox::setHeight(int height) {
 
 Pickup::Pickup(int absLeft, int absTop)
 	: Character(absLeft, absTop, 0), absRectBox(absLeft, absTop, 50, 50) {
-
+	accel = { 0, GRAVITY };
 }
 
 RectBox Pickup::getAbsRectBox(void) {
@@ -101,7 +135,12 @@ void Pickup::update(void) {
 	if (!alive) {
 		return;
 	}
-	vel.first += 
+	vel += accel;
+	dist += vel;
+	SetTopLeft(
+		absRectBox.getRelRectBox().getLeft(),
+		absRectBox.getRelRectBox().getTop()
+	);
 }
 
 void Pickup::draw(void) {
@@ -118,7 +157,7 @@ void Pickup::handleGroundCollision(void) {
 		if (Ground::isOnGround(*this, ground) == 1) {
 			const int relPosLeft = absRectBox.getRelRectBox().getLeft();
 			const int relPosBottom = absRectBox.getRelRectBox().getBottom();
-			dist.second = Ground::GetX_Height(ground, relPosLeft) - relPosBottom;
+			dist.setVert(Ground::GetX_Height(ground, relPosLeft) - relPosBottom);
 		}
 	}
 }

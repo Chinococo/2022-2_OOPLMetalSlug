@@ -6,14 +6,12 @@ private:
 	std::pair<int, int> vec2;
 
 public:
-	Vec2 operator+(const Vec2 &other) {
-
-	}
-	Vec2 &operator+=(const Vec2 &other) {
-		this->vec2.first += other.vec2.first;
-		this->vec2.second += other.vec2.second;
-		return *this;
-	}
+	Vec2(std::pair<int, int> vec2);
+	Vec2(std::initializer_list<int> values);
+	Vec2 &setHoriz(int horiz);
+	Vec2 &setVert(int vert);
+	Vec2 operator+(const Vec2 &other);
+	Vec2 &operator+=(const Vec2 &other);
 };
 
 class RectBox {
@@ -44,10 +42,10 @@ public:
 
 class Pickup : public Character {
 private:
-	RectBox absRectBox = {0, 0, 0, 0};
-	Vec2 accel = {0, GRAVITY};
-	Vec2 vel = {0, 0};
-	Vec2 dist = {0, 0};
+	RectBox absRectBox = { 0, 0, 0, 0 };
+	Vec2 accel = { 0, 0 };
+	Vec2 vel = { 0, 0 };
+	Vec2 dist = { 0, 0 };
 
 public:
 	Pickup(int left, int top);
