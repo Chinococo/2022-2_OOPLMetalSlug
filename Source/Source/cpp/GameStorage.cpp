@@ -52,7 +52,55 @@ namespace game_framework {
 		soldiers.push_back(Soldier(4500, 500, 1));
 		
 	}
+	bool isColboxOverlap(ColBox colbox1, ColBox colbox2) {
+		return !(colbox1.second.first < colbox2.first.first ||
+			colbox1.second.second < colbox2.first.second ||
+			colbox2.second.first < colbox1.first.first ||
+			colbox2.second.second < colbox1.first.second);
+	}
 	void collideWithBullet() {
+		for (auto &grenade : heroGrenades) {
+			ColBox *colbox = nullptr;
+
+			for (auto &soldier : soldiers) {
+				if (grenade.isExpired() || grenade.IsOverlap_(soldier)) { // soldier overlapped
+					colbox = &grenade.explode();
+				}
+			}
+			for (auto &rshobu : rshobus) {
+				if (grenade.isExpired() || grenade.IsOverlap_(rshobu)) {
+					colbox = &grenade.explode();
+				}
+			}
+
+			if (colbox) { // check in range soldier
+				for (auto &soldier : soldiers) {
+					if (isColboxOverlap(*colbox, soldier.getColBox())) {
+						soldier.dead();
+					}
+				}
+				for (auto &rshobu : rshobus) {
+					if (isColboxOverlap(*colbox, rshobu.getColBox())) {
+						rshobu.dead();
+					}
+				}
+			}
+		}
+
+		for (auto &grenade : enemyGrenades) {
+			ColBox *colbox = nullptr;
+
+			if (grenade.isExpired() || grenade.IsOverlap_(marco)) {
+				colbox = &grenade.explode();
+			}
+			
+			if (colbox) { // check in range soldier
+				if (isColboxOverlap(*colbox, marco.getColBox())) {
+					marco.dead();
+				}
+			}
+		}
+
 		for (size_t i = 0; i < bullets.size(); i++) {
 			if (!bullets[i].isAlive())
 				continue;
@@ -94,11 +142,11 @@ namespace game_framework {
 		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i])) {
-				marco.dead();
+				if (!godmode) { marco.dead(); }
 				break;
 			}
 			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])) {
-				marco.dead();
+				if (!godmode) { marco.dead(); }
 				soldierFireworks[i].dead();
 				break;
 			}
@@ -133,11 +181,11 @@ namespace game_framework {
 		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i])) {
-				marco.dead();
+				if (!godmode) { marco.dead(); }
 				break;
 			}
 			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])) {
-				marco.dead();
+				if (!godmode) { marco.dead(); }
 				soldierFireworks[i].dead();
 				break;
 			}
@@ -201,6 +249,14 @@ namespace game_framework {
 		soldierFireworks.push_back(firework);
 	}
 	void removeInactives() {
+		heroGrenades.erase(std::remove_if(heroGrenades.begin(), heroGrenades.end(), [](const Grenade &grenade) {
+			return !grenade.isAlive();
+		}), heroGrenades.end());
+
+		enemyGrenades.erase(std::remove_if(enemyGrenades.begin(), enemyGrenades.end(), [](const Grenade &grenade) {
+			return !grenade.isAlive();
+		}), enemyGrenades.end());
+
 		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet &bullet) {
 			return !bullet.isAlive();
 		}), bullets.end());
@@ -357,4 +413,7 @@ namespace game_framework {
 	bool Driving = false;
 	int tank_barrel_angle = 0;
 	Grenade grenade(100, 100, Direction::RIGHT);
+	bool godmode = false;
+	std::vector<Grenade> heroGrenades;
+	std::vector<Grenade> enemyGrenades;
 }

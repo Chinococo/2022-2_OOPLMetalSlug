@@ -131,6 +131,11 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		{
 			keyDowns.insert(nChar);
 		}
+
+		if (nChar == 0x47) { // G
+			godmode = !godmode;
+		}
+
 	}
 }
 
@@ -187,17 +192,21 @@ void CGameStateRun::OnShow()
 		}
 		else {
 			CDC *pDC = CDDraw::GetBackCDC();
+
+			char buffer[256]; // 假設你的字串不會超過 256 個字元
+
 			//game_framework::ChangeFontLog
 			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0, 0, 0), 500);
+
+			/*
 			CString str;
 			str.Format(_T("marco index=%d, x=%d, y=%d"), marco_tank.GetFrameIndexOfBitmap(), marco.GetLeft()+abs(ViewPointX), marco.GetTop());
 			std::string result = CT2A(str);// 將CString轉換為std::string
 			CTextDraw::Print(pDC, 0, 0, result);
-			
-		
-			// For debugging
+			*/
+
+			/*
 			Prisoner prisoner = prisoners[0];
-			char buffer[256]; // 假設你的字串不會超過 256 個字元
 
 			std::snprintf(buffer, sizeof(buffer), "prisoner absLeft=%d, absTop=%d", prisoner.getAbsLeft(), prisoner.getAbsTop());
 			std::string str1 = buffer;
@@ -218,7 +227,38 @@ void CGameStateRun::OnShow()
 			std::snprintf(buffer, sizeof(buffer), "prisoner animationDone=%d", prisoner.isAnimationDone());
 			str1 = buffer;
 			CTextDraw::Print(pDC, 0, 125, str1);
+			*/
 
+			std::snprintf(buffer, sizeof(buffer), "Godmode %s", (godmode) ? "on" : "off");
+			CTextDraw::Print(pDC, 600, 0, std::string(buffer));
+
+			std::snprintf(buffer, sizeof(buffer), "Marco alive:%d", marco.isAlive());
+			CTextDraw::Print(pDC, 0, 0, std::string(buffer));
+
+			int i = 0;
+			std::snprintf(buffer, sizeof(buffer), "Soldier count:%d", soldiers.size());
+			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+			std::snprintf(buffer, sizeof(buffer), "Prisoner count:%d", prisoners.size());
+			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+			std::snprintf(buffer, sizeof(buffer), "Bullet count:%d", bullets.size());
+			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+			std::snprintf(buffer, sizeof(buffer), "Firework count:%d", soldierFireworks.size());
+			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+			std::snprintf(buffer, sizeof(buffer), "Hero grenade count:%d", heroGrenades.size());
+			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+			std::snprintf(buffer, sizeof(buffer), "Enemy grenade count:%d", enemyGrenades.size());
+			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+			std::snprintf(buffer, sizeof(buffer), "Tank bullet count:%d", tank_bullets.size());
+			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+			std::snprintf(buffer, sizeof(buffer), "RShobu count:%d", rshobus.size());
+			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
 			CDDraw::ReleaseBackCDC();
 		}

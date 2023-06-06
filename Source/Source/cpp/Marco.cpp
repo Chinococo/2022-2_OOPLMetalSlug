@@ -479,3 +479,9 @@ void Marco::dead()
 bool Marco::isAttacking() {
 	return attacking;
 }
+
+ColBox Marco::getColBox(void) {
+	const int absPosLeft = x - ViewPointX;
+	const int absPosTop = y - ViewPointY + ViewPointYInit;
+	return { {absPosLeft, absPosTop}, {absPosLeft + GetWidth(), absPosTop + GetHeight()} };
+}

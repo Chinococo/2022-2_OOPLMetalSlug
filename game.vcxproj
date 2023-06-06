@@ -258,6 +258,7 @@
     <ClCompile Include="Source\Source\cpp\Bullet.cpp" />
     <ClCompile Include="Source\Source\cpp\Character.cpp" />
     <ClCompile Include="Source\Source\cpp\CsvReader.cpp" />
+    <ClCompile Include="Source\Source\cpp\DamageEffect.cpp" />
     <ClCompile Include="Source\Source\cpp\Firework.cpp" />
     <ClCompile Include="Source\Source\cpp\GameStorage.cpp" />
     <ClCompile Include="Source\Source\cpp\Grenade.cpp" />
@@ -291,6 +292,7 @@
     <ClInclude Include="Source\Source\header\Bullet.h" />
     <ClInclude Include="Source\Source\header\Character.h" />
     <ClInclude Include="Source\Source\header\CsvReader.h" />
+    <ClInclude Include="Source\Source\header\DamageEffect.h" />
     <ClInclude Include="Source\Source\header\Firework.h" />
     <ClInclude Include="Source\Source\header\GameStorage.h" />
     <ClInclude Include="Source\Source\header\Grenade.h" />

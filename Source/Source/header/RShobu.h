@@ -68,6 +68,7 @@ public:
 	void draw();
 
 	bool isHurt(Character other);
+	virtual ColBox getColBox(void) override;
 
 	RShobu &operator=(const RShobu &other);
 

@@ -4,7 +4,7 @@
 using namespace game_framework;
 
 Soldier::Soldier(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
-
+	
 }
 
 void Soldier::init() {
@@ -257,4 +257,8 @@ Soldier &Soldier::operator=(const Soldier &other) {
 	y = other.y;
 	speedX = other.speedX;
 	return *this;
+}
+
+ColBox Soldier::getColBox(void) {
+	return { {x, y}, {x + GetWidth(), y + GetHeight()} };
 }

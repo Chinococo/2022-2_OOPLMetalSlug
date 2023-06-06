@@ -5,7 +5,10 @@ Grenade::Grenade(int absolutePositionLeft, int absolutePositionTop, Direction di
 	: Character(absolutePositionLeft, absolutePositionTop, 5),
 	absolutePositionLeft(absolutePositionLeft),
 	absolutePositionTop(absolutePositionTop),
-	directionHorizontal(directionHorizontal) {}
+	directionHorizontal(directionHorizontal)
+{
+	
+}
 
 void Grenade::init(void) {
 	std::vector<std::string> paths;
@@ -19,39 +22,42 @@ void Grenade::update(void) {
 	}
 	distanceHorizontal = max(0, distanceHorizontal -1);
 	distanceVertical = min(20, distanceVertical + 3);
-	for (size_t i = 0; i < grounds.size(); i++) {
-		if (Ground::isOnGround(*this, grounds[i]) == 1) {
-			distanceVertical = Ground::GetX_Height(grounds[i], abs(ViewPointX) + absolutePositionLeft) - GetHeight() - absolutePositionTop;
-		}
-	}
+	
+	handleGroundCollision();
+
 	absolutePositionLeft += (directionHorizontal == Direction::LEFT) ? -distanceHorizontal : distanceHorizontal;
 	absolutePositionTop += distanceVertical;
 
 	SetTopLeft(absolutePositionLeft + ViewPointX, absolutePositionTop + ViewPointY - ViewPointYInit);
+
+	nextFrame();
 }
 
 void Grenade::draw(void) {
-#if 0
-	ShowBitmap(2.0);
-#else
 	if (alive) {
 		ShowBitmap(2.0);
 	}
 	else {
 		UnshowBitmap();
 	}
-#endif
 }
 
-void Grenade::explode(void) {
-	// create explosion effect
+bool Grenade::isExpired(void) const {
+	auto nowTime = std::chrono::steady_clock::now();
+	return nowTime - spawnTime > std::chrono::seconds(2);
+}
+
+ColBox Grenade::explode(void) {
+	alive = false;
+	return CollideBox;
 }
 
 void Grenade::handleGroundCollision(void) {
 	for (const auto &ground : grounds) {
 		if (Ground::isOnGround(*this, ground) == 1) {
-			explode();
-			alive = false;
+			const int relPosLeft = abs(ViewPointX) + absolutePositionLeft;
+			const int relPosBottom = GetHeight() - absolutePositionTop;
+			distanceVertical = Ground::GetX_Height(ground, relPosLeft) - relPosBottom;
 		}
 	}
 }
@@ -66,4 +72,8 @@ void Grenade::nextFrame(void) {
 	int frameOffset = newFrameIndex + range.first + bias;
 
 	SetFrameIndexOfBitmap(frameOffset);
+}
+
+ColBox Grenade::getColBox(void) {
+	return { {absolutePositionLeft, absolutePositionTop}, {absolutePositionLeft + GetWidth(), absolutePositionTop + GetHeight()} };
 }

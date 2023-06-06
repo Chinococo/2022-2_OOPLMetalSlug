@@ -4,7 +4,10 @@
 RShobu::RShobu(int absolutePositionLeft, int absolutePositionTop)
 	: Character(absolutePositionLeft, absolutePositionTop, velocityHorizontal),
 	absolutePositionLeft(absolutePositionLeft),
-	absolutePositionTop(absolutePositionTop) {}
+	absolutePositionTop(absolutePositionTop)
+{
+	
+}
 
 void RShobu::init() {
 	std::vector<std::vector<std::string>> csv = readCSV("resources/csv/character.csv");
@@ -386,4 +389,8 @@ RShobu &RShobu::operator=(const RShobu &other) {
 	action = other.action;
 
 	return *this;
+}
+
+ColBox RShobu::getColBox(void) {
+	return { {absolutePositionLeft, absolutePositionTop}, {absolutePositionLeft + GetWidth(), absolutePositionTop + GetHeight()} };
 }

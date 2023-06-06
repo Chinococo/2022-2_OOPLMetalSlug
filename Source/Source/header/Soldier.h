@@ -19,6 +19,8 @@ public:
 	virtual void collideWithWall() override;
 	virtual void draw() override;
 	Soldier &operator=(const Soldier &other);
+	virtual ColBox getColBox(void) override;
+
 private:
 	bool once = true;
 	int velocityY = 0;

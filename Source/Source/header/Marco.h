@@ -23,6 +23,8 @@ public:
 	void dead();
 	bool isAttacking();
 	void respawn();
+	virtual ColBox getColBox(void) override;
+
 private:
 	bool once = false;
 	int velocityY = 0;
