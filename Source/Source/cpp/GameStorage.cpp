@@ -103,7 +103,6 @@ namespace game_framework {
 					if (isColboxOverlap(grenadeColBox, soldierColBox)) {
 						ASSERT(soldier.isAlive());
 						soldier.dead();
-						ASSERT(!soldier.isAlive());
 					}
 				}
 				for (auto &rshobu : rshobus) {
@@ -111,27 +110,27 @@ namespace game_framework {
 					ASSERT(rshobuColBox != emptyColBox);
 					if (isColboxOverlap(grenadeColBox, rshobuColBox)) {
 						ASSERT(rshobu.isAlive());
-						rshobu.dead();
-						ASSERT(!rshobu.isAlive());
+						rshobu.damge(10);
 					}
 				}
-				ASSERT(grenade.isAlive());
-				grenade.dead();
-				ASSERT(!grenade.isAlive());
 			}
 		}
 
 		for (auto &grenade : enemyGrenades) {
-			ColBox *colbox = nullptr;
+			ColBox emptyColBox = {
+				{-1, -1},
+				{-1, -1}
+			};
+			ColBox grenadeColbox = emptyColBox;
 
 			if (grenade.isExpired() || grenade.IsOverlap_(marco)) {
-				colbox = &grenade.explode();
+				grenadeColbox = grenade.explode();
 			}
 			
-			if (colbox) { // check in range soldier
-				if (isColboxOverlap(*colbox, marco.getColBox())) {
-					marco.dead();
-				}
+			if (grenadeColbox != emptyColBox &&
+				isColboxOverlap(grenadeColbox, marco.getColBox())
+			) {
+				marco.dead();
 			}
 		}
 

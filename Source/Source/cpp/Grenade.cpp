@@ -49,7 +49,10 @@ bool Grenade::isExpired(void) const {
 
 ColBox Grenade::explode(void) {
 	alive = false;
-	return CollideBox;
+	return {
+		{absolutePositionLeft, absolutePositionTop},
+		{absolutePositionLeft + GetWidth(), absolutePositionTop + GetHeight()}
+	};
 }
 
 void Grenade::handleGroundCollision(void) {
