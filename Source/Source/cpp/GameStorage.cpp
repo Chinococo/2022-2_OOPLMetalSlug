@@ -353,6 +353,7 @@ namespace game_framework {
 	}
 	void removeInactiveSolider() {
 		vector<bool> test,test2;
+		/*
 		for (unsigned i = 0; i < soldiers.size(); i++)
 			test.push_back(soldiers[i].isAlive());
 		for (int i = soldiers.size(); i > 0; --i) {
@@ -362,6 +363,9 @@ namespace game_framework {
 					test2.push_back(soldiers[j].isAlive());
 			}
 		}
+		*/
+
+		
 	}
 	bool Checkcheckpoint() {
 		for (unsigned i = 1; i < checkpointcsv.size(); i++) {
