@@ -44,7 +44,7 @@ void Grenade::draw(void) {
 
 bool Grenade::isExpired(void) const {
 	auto nowTime = std::chrono::steady_clock::now();
-	return nowTime - spawnTime > std::chrono::seconds(2);
+	return nowTime - spawnTime > std::chrono::milliseconds(2000);
 }
 
 ColBox Grenade::explode(void) {
@@ -75,5 +75,8 @@ void Grenade::nextFrame(void) {
 }
 
 ColBox Grenade::getColBox(void) {
-	return { {absolutePositionLeft, absolutePositionTop}, {absolutePositionLeft + GetWidth(), absolutePositionTop + GetHeight()} };
+	return {
+		{absolutePositionLeft, absolutePositionTop},
+		{absolutePositionLeft + GetWidth(), absolutePositionTop + GetHeight()}
+	};
 }

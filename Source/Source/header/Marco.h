@@ -30,6 +30,7 @@ private:
 	int velocityY = 0;
 	const int JUMP_VELOCITY = -15;
 	const int ATTACK_COOLDOWN = 300;
+	const int GRENADE_COOLDOWN = 300;
 	bool movingLeft = false;
 	bool movingRight = false;
 	bool jumping = false;
@@ -41,8 +42,8 @@ private:
 	bool pressingDown = false;
 	bool nearEnemy = false;
 	clock_t lastAttackTime = clock();
+	std::chrono::time_point<std::chrono::steady_clock> grenadeTimer = std::chrono::steady_clock::now();
 	enum class Action {
 		IDLE, MOVE, JUMP, LOOK_UP, SHOOT, SHOOT_UP, SHOOT_DOWN, KNIFE, GRENADE, CROUCH_IDLE, CROUCH_MOVE, CROUCH_SHOOT, CROUCH_KNIFE, CROUCH_GRENADE, DIE
 	} action = Action::IDLE, lastAction = Action::IDLE;
-	std::vector<Grenade> grenades;
 };

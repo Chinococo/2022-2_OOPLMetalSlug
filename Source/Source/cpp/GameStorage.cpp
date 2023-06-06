@@ -60,30 +60,64 @@ namespace game_framework {
 	}
 	void collideWithBullet() {
 		for (auto &grenade : heroGrenades) {
-			ColBox *colbox = nullptr;
+			ColBox emptyColBox = {
+				{-1, -1},
+				{-1, -1}
+			};
+			ColBox grenadeColBox = emptyColBox;
+			ASSERT(grenadeColBox == emptyColBox);
+			ASSERT(&grenadeColBox != &emptyColBox);
 
-			for (auto &soldier : soldiers) {
-				if (grenade.isExpired() || grenade.IsOverlap_(soldier)) { // soldier overlapped
-					colbox = &grenade.explode();
-				}
-			}
-			for (auto &rshobu : rshobus) {
-				if (grenade.isExpired() || grenade.IsOverlap_(rshobu)) {
-					colbox = &grenade.explode();
-				}
-			}
+			ASSERT(grenade.isAlive());
 
-			if (colbox) { // check in range soldier
+			if (grenade.isExpired()) {
+				ASSERT(grenade.isAlive());
+				grenadeColBox = grenade.explode();
+				ASSERT(!grenade.isAlive());
+			}
+			else {
 				for (auto &soldier : soldiers) {
-					if (isColboxOverlap(*colbox, soldier.getColBox())) {
-						soldier.dead();
+					if (grenade.IsOverlap_(soldier)) { // soldier overlapped
+						ASSERT(grenadeColBox == emptyColBox);
+						ASSERT(grenade.isAlive());
+						grenadeColBox = grenade.explode();
+						ASSERT(!grenade.isAlive());
+						break;
 					}
 				}
 				for (auto &rshobu : rshobus) {
-					if (isColboxOverlap(*colbox, rshobu.getColBox())) {
-						rshobu.dead();
+					if (grenade.IsOverlap_(rshobu)) {
+						ASSERT(grenadeColBox == emptyColBox);
+						ASSERT(grenade.isAlive());
+						grenadeColBox = grenade.explode();
+						ASSERT(!grenade.isAlive());
+						break;
 					}
 				}
+			}
+			
+			if (grenadeColBox != emptyColBox) { // check in range soldier
+				for (auto &soldier : soldiers) {
+					ColBox soldierColBox = soldier.getColBox();
+					ASSERT(soldierColBox != emptyColBox);
+					if (isColboxOverlap(grenadeColBox, soldierColBox)) {
+						ASSERT(soldier.isAlive());
+						soldier.dead();
+						ASSERT(!soldier.isAlive());
+					}
+				}
+				for (auto &rshobu : rshobus) {
+					ColBox rshobuColBox = rshobu.getColBox();
+					ASSERT(rshobuColBox != emptyColBox);
+					if (isColboxOverlap(grenadeColBox, rshobuColBox)) {
+						ASSERT(rshobu.isAlive());
+						rshobu.dead();
+						ASSERT(!rshobu.isAlive());
+					}
+				}
+				ASSERT(grenade.isAlive());
+				grenade.dead();
+				ASSERT(!grenade.isAlive());
 			}
 		}
 

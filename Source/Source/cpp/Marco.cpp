@@ -53,13 +53,6 @@ void Marco::update() {
 		updateAction();
 		changeAnimation();
 		updateAnimation();
-
-		grenades.erase(std::remove_if(grenades.begin(), grenades.end(), [](const Grenade &grenade) {
-			return !grenade.isAlive();
-		}), grenades.end());
-		for (auto &grenade : grenades) {
-			grenade.update();
-		}
 	}
 	else if(!Driving){
 		action = Action::DIE;
@@ -168,7 +161,11 @@ void Marco::attack() {
 }
 
 void Marco::throwGrenade() {
-	if (throwingGrenade) {
+	auto nowTime = std::chrono::steady_clock::now();
+	auto cooldown = std::chrono::milliseconds(GRENADE_COOLDOWN);
+	bool allowGrenade = nowTime - grenadeTimer > cooldown;
+
+	if (throwingGrenade && allowGrenade) {
 		Direction directionHorizontal = (facingX == 1) ? Direction::RIGHT : Direction::LEFT;
 
 		auto t = ViewPointX;
@@ -177,7 +174,9 @@ void Marco::throwGrenade() {
 
 		Grenade grenade = Grenade(x - ViewPointX, y - ViewPointY + ViewPointYInit, directionHorizontal);
 		grenade.init();
-		grenades.push_back(grenade);
+		heroGrenades.push_back(grenade);
+
+		grenadeTimer = nowTime;
 	}
 }
 
@@ -454,10 +453,6 @@ void Marco::draw() {
 	if (alive&&!Driving) {
 		SetTopLeft(x, y);
 		ShowBitmap();
-
-		for (auto &grenade : grenades) {
-			grenade.draw();
-		}
 	}
 	else {
 		UnshowBitmap();
@@ -483,5 +478,8 @@ bool Marco::isAttacking() {
 ColBox Marco::getColBox(void) {
 	const int absPosLeft = x - ViewPointX;
 	const int absPosTop = y - ViewPointY + ViewPointYInit;
-	return { {absPosLeft, absPosTop}, {absPosLeft + GetWidth(), absPosTop + GetHeight()} };
+	return {
+		{absPosLeft, absPosTop},
+		{absPosLeft + GetWidth(), absPosTop + GetHeight()}
+	};
 }

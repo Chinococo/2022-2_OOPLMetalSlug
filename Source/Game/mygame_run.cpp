@@ -49,6 +49,12 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			soldierFireworks[i].update();
 		}
+		for (auto &grenade : heroGrenades) {
+			grenade.update();
+		}
+		for (auto &grenade : enemyGrenades) {
+			grenade.update();
+		}
 
 		boss.update();
 
@@ -277,6 +283,12 @@ void CGameStateRun::OnShow()
 		marco_tank.draw();
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
+		}
+		for (auto &grenade : heroGrenades) {
+			grenade.draw();
+		}
+		for (auto &grenade : enemyGrenades) {
+			grenade.draw();
 		}
 		for (unsigned i = 0; i < tank_bullets.size(); i++) {
 			tank_bullets[i]->move();

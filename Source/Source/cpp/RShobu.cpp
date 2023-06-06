@@ -392,5 +392,8 @@ RShobu &RShobu::operator=(const RShobu &other) {
 }
 
 ColBox RShobu::getColBox(void) {
-	return { {absolutePositionLeft, absolutePositionTop}, {absolutePositionLeft + GetWidth(), absolutePositionTop + GetHeight()} };
+	return {
+		{absolutePositionLeft, absolutePositionTop},
+		{absolutePositionLeft + GetWidth(), absolutePositionTop + GetHeight()}
+	};
 }

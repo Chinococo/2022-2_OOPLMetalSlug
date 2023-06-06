@@ -260,5 +260,8 @@ Soldier &Soldier::operator=(const Soldier &other) {
 }
 
 ColBox Soldier::getColBox(void) {
-	return { {x, y}, {x + GetWidth(), y + GetHeight()} };
+	return {
+		{x, y},
+		{x + GetWidth(), y + GetHeight()}
+	};
 }
