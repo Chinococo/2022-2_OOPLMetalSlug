@@ -55,6 +55,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		for (auto &grenade : enemyGrenades) {
 			grenade.update();
 		}
+		for (auto &pickup : pickups) {
+			pickup.update();
+		}
 
 		boss.update();
 
@@ -86,6 +89,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	createMapObject();
 	createPrisoners();
 	createRShobus();
+	createPickups();
 	marco.init();
 	marco_tank.init();
 	for (size_t i = 0; i < soldiers.size(); i++) {
@@ -266,37 +270,13 @@ void CGameStateRun::OnShow()
 			std::snprintf(buffer, sizeof(buffer), "RShobu count:%d", rshobus.size());
 			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
+			std::snprintf(buffer, sizeof(buffer), "Pickup count:%d", pickups.size());
+			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
 			CDDraw::ReleaseBackCDC();
 		}
 		
-		for (size_t i = 0; i < prisoners.size(); i++) {
-			prisoners[i].draw();
-		}
-		for (size_t i = 0; i < soldiers.size(); i++) {
-			soldiers[i].draw();
-		}
-		for (size_t i = 0; i < rshobus.size(); i++) {
-			rshobus[i].draw();
-		}
-		boss.draw();
-		marco.draw();
-		marco_tank.draw();
-		for (size_t i = 0; i < bullets.size(); i++) {
-			bullets[i].draw();
-		}
-		for (auto &grenade : heroGrenades) {
-			grenade.draw();
-		}
-		for (auto &grenade : enemyGrenades) {
-			grenade.draw();
-		}
-		for (unsigned i = 0; i < tank_bullets.size(); i++) {
-			tank_bullets[i]->move();
-			tank_bullets[i]->draw();
-		}
-		for (size_t i = 0; i < soldierFireworks.size(); i++) {
-			soldierFireworks[i].draw();
-		}
+		
 		
 	}
 }

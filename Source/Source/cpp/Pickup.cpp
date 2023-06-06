@@ -15,6 +15,13 @@ Vec2::Vec2(std::initializer_list<int> values) {
 	this->vec2.second = *it;
 }
 
+int Vec2::getHoriz(void) const {
+	return this->vec2.first;
+}
+int Vec2::getVert(void) const {
+	return this->vec2.second;
+}
+
 Vec2 &Vec2::setHoriz(int horiz) {
 	this->vec2.first = horiz;
 	return *this;
@@ -25,8 +32,8 @@ Vec2 &Vec2::setVert(int vert) {
 	return *this;
 }
 
-Vec2 Vec2::operator+(const Vec2 &other) {
-	return Vec2(vec2) += other.vec2;
+Vec2 Vec2::operator+(const Vec2 &other) const {
+	return Vec2(this->vec2) += other.vec2;
 }
 
 Vec2 &Vec2::operator+=(const Vec2 &other) {
@@ -52,41 +59,41 @@ RectBox::RectBox(std::initializer_list<int> values) {
 	this->height = *it;
 }
 
-int RectBox::getLeft(void) {
+int RectBox::getLeft(void) const {
 	return this->left;
 }
 
-int RectBox::getTop(void) {
+int RectBox::getTop(void) const {
 	return this->top;
 }
 
-int RectBox::getRight(void) {
+int RectBox::getRight(void) const {
 	return this->right;
 }
 
-int RectBox::getBottom(void) {
+int RectBox::getBottom(void) const {
 	return this->bottom;
 }
 
-int RectBox::getWidth(void) {
+int RectBox::getWidth(void) const {
 	return this->width;
 }
 
-int RectBox::getHeight(void) {
+int RectBox::getHeight(void) const {
 	return this->height;
 }
 
-ColBox RectBox::getColBox(void) {
+ColBox RectBox::getColBox(void) const {
 	return {
 		{this->left, this->top},
 		{this->right, this->bottom}
 	};
 }
 
-RectBox RectBox::getRelRectBox(void) {
+RectBox RectBox::getRelRectBox(void) const {
 	return RectBox(
-		this->left + abs(ViewPointX),
-		this->top + ViewPointY - ViewPointYInit,
+		this->left + ViewPointX,
+		this->top - ViewPointY + ViewPointYInit,
 		this->width,
 		this->height
 	);
@@ -116,27 +123,62 @@ RectBox &RectBox::setHeight(int height) {
 	return *this;
 }
 
+RectBox &RectBox::setTopLeft(Vec2 vec2) {
+	this->left = vec2.getHoriz();
+	this->top = vec2.getVert();
+	this->right = vec2.getHoriz() + this->width;
+	this->bottom = vec2.getVert() + this->height;
+	return *this;
+}
+
+RectBox &RectBox::setBottomRight(Vec2 vec2) {
+	this->left = vec2.getHoriz() - this->width;
+	this->top = vec2.getVert() - this->height;
+	this->right = vec2.getHoriz();
+	this->bottom = vec2.getVert();
+	return *this;
+}
+
+RectBox &RectBox::addTopLeft(Vec2 vec2) {
+	this->left += vec2.getHoriz();
+	this->top += vec2.getVert();
+	this->right = this->left + this->width;
+	this->bottom = this->top + this->height;
+	return *this;
+}
+
+RectBox &RectBox::addBottomRight(Vec2 vec2) {
+	this->right += vec2.getHoriz();
+	this->bottom += vec2.getVert();
+	this->left = this->right - this->width;
+	this->top = this->bottom - this->height;
+	return *this;
+}
+
 Pickup::Pickup(int absLeft, int absTop)
 	: Character(absLeft, absTop, 0), absRectBox(absLeft, absTop, 50, 50) {
 	accel = { 0, GRAVITY };
 }
 
-RectBox Pickup::getAbsRectBox(void) {
+RectBox Pickup::getAbsRectBox(void) const {
 	return absRectBox;
 }
 
 void Pickup::init(void) {
 	std::vector<std::string> paths;
 	CsvReader::readCsv(&animationRanges, &animationDelays, &animationflipBias, &paths, "pickup");
-	LoadBitmapByString(paths, RGB(0, 0, 0));
+	LoadBitmapByString(paths, RGB(0, 177, 64));
 }
 
 void Pickup::update(void) {
 	if (!alive) {
 		return;
 	}
+	dist = { 0, 0 };
 	vel += accel;
 	dist += vel;
+	handleGroundCollision();
+	absRectBox.addTopLeft(dist);
 	SetTopLeft(
 		absRectBox.getRelRectBox().getLeft(),
 		absRectBox.getRelRectBox().getTop()
@@ -145,7 +187,7 @@ void Pickup::update(void) {
 
 void Pickup::draw(void) {
 	if (alive) {
-		ShowBitmap();
+		ShowBitmap(1.5);
 	}
 	else {
 		UnshowBitmap();
@@ -158,6 +200,13 @@ void Pickup::handleGroundCollision(void) {
 			const int relPosLeft = absRectBox.getRelRectBox().getLeft();
 			const int relPosBottom = absRectBox.getRelRectBox().getBottom();
 			dist.setVert(Ground::GetX_Height(ground, relPosLeft) - relPosBottom);
+			vel = { 0, 0 };
 		}
 	}
+}
+
+void Pickup::createPickup(int absLeft, int absTop) {
+	Pickup pickup = Pickup(absLeft, absTop);
+	pickup.init();
+	pickups.push_back(pickup);
 }

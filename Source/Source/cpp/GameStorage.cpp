@@ -3,6 +3,12 @@
 #include <fstream>
 #include <sstream>
 namespace game_framework {
+	void createPickups(void) {
+		Pickup::createPickup(100, 200);
+		Pickup::createPickup(200, 200);
+		Pickup::createPickup(300, 200);
+		Pickup::createPickup(400, 200);
+	}
 	std::vector<std::vector<std::string>> readCSV(const std::string& filename) {
 		std::vector<std::vector<std::string>> data;
 		std::ifstream file(filename);
@@ -309,6 +315,10 @@ namespace game_framework {
 		rshobus.erase(std::remove_if(rshobus.begin(), rshobus.end(), [](const RShobu &rshobu) {
 			return !rshobu.isAlive();
 		}), rshobus.end());
+
+		pickups.erase(std::remove_if(pickups.begin(), pickups.end(), [](const Pickup &pickup) {
+			return !pickup.isAlive();
+		}), pickups.end());
 	}
 	void removeMapObject()
 	{
@@ -322,12 +332,37 @@ namespace game_framework {
 	}
 	void updateCharacter()
 	{
+		for (size_t i = 0; i < prisoners.size(); i++) {
+			prisoners[i].draw();
+		}
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].draw();
 		}
+		for (size_t i = 0; i < rshobus.size(); i++) {
+			rshobus[i].draw();
+		}
+		boss.draw();
+		marco_tank.draw();
+		for (size_t i = 0; i < bullets.size(); i++) {
+			bullets[i].draw();
+		}
+		for (auto &grenade : heroGrenades) {
+			grenade.draw();
+		}
+		for (auto &grenade : enemyGrenades) {
+			grenade.draw();
+		}
+		for (unsigned i = 0; i < tank_bullets.size(); i++) {
+			tank_bullets[i]->move();
+			tank_bullets[i]->draw();
+		}
+		for (size_t i = 0; i < soldierFireworks.size(); i++) {
+			soldierFireworks[i].draw();
+		}
+		for (auto &pickup : pickups) {
+			pickup.draw();
+		}
 		marco.draw();
-		
-		
 	}
 	void updateUnderCharacterLayer()
 	{
@@ -451,4 +486,5 @@ namespace game_framework {
 	bool godmode = false;
 	std::vector<Grenade> heroGrenades;
 	std::vector<Grenade> enemyGrenades;
+	std::vector<Pickup> pickups;
 }

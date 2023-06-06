@@ -46,6 +46,7 @@ namespace game_framework {
 	extern bool Checkcheckpoint();
 	extern void collideWithBullet();
 	extern bool isColboxOverlap(ColBox colbox1, ColBox colbox2);
+	extern void createPickups(void);
 	// map
 	extern std::string state;
 	extern int selectIndex;
@@ -83,4 +84,5 @@ namespace game_framework {
 	extern std::vector<Grenade> heroGrenades;
 	extern std::vector<Grenade> enemyGrenades;
 	extern bool godmode;
+	extern std::vector<Pickup> pickups;
 }
