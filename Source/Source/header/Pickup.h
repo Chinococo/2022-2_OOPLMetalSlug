@@ -13,7 +13,15 @@ public:
 	Vec2 &setHoriz(int horiz);
 	Vec2 &setVert(int vert);
 	Vec2 operator+(const Vec2 &other) const;
+	//Vec2 operator-(const Vec2 &other) const;
+	//Vec2 dot(const Vec2 &other) const;
+	//Vec2 cross(const Vec2 &other) const;
+	//Vec2 operator*(int scalar) const;
+	//Vec2 operator/(int scalar) const;
 	Vec2 &operator+=(const Vec2 &other);
+	//Vec2 &operator-=(const Vec2 &other);
+	//Vec2 &operator*=(int scalar);
+	//Vec2 &operator/=(int scalar);
 };
 
 class RectBox {
@@ -42,8 +50,10 @@ public:
 	RectBox &setHeight(int height);
 	RectBox &setTopLeft(Vec2 vec2);
 	RectBox &setBottomRight(Vec2 vec2);
+	//RectBox &setCenter(Vec2 vec2);
 	RectBox &addTopLeft(Vec2 vec2);
 	RectBox &addBottomRight(Vec2 vec2);
+	//RectBox &addCenter(Vec2 vec2);
 };
 
 class Pickup : public Character {

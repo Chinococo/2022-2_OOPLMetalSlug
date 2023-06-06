@@ -478,8 +478,9 @@ bool Marco::isAttacking() {
 ColBox Marco::getColBox(void) {
 	const int absPosLeft = x - ViewPointX;
 	const int absPosTop = y - ViewPointY + ViewPointYInit;
-	return {
+	CollideBox = {
 		{absPosLeft, absPosTop},
 		{absPosLeft + GetWidth(), absPosTop + GetHeight()}
 	};
+	return CollideBox;
 }

@@ -228,6 +228,13 @@ namespace game_framework {
 			}
 
 		}
+
+		for (auto &pickup : pickups) {
+			if (isColboxOverlap(pickup.getAbsRectBox().getColBox(), marco.getColBox())) {
+				marco.dead();
+				pickup.dead();
+			}
+		}
 	}
 	void createGrounds() {
 		/* 地板 */
