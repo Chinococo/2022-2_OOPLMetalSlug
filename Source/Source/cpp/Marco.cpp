@@ -127,6 +127,12 @@ void Marco::control() {
 			}
 		}
 	}
+
+	auto nowTime = std::chrono::steady_clock::now();
+	if (isPoweredUp && nowTime - powerUpTimer > std::chrono::seconds(POWER_UP_DURATION_SEC)) {
+		isPoweredUp = false;
+		powerUpTimer = nowTime;
+	}
 }
 
 void Marco::move() {
@@ -156,7 +162,15 @@ void Marco::move() {
 
 void Marco::attack() {
 	if (attacking) {
-		addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "hero");
+		if (isPoweredUp) {
+			addBullet(x + facingX * 20, y + 20, 20, -1, 0, "hero");
+			addBullet(x + facingX * 20, y + 20, 20, 1, 0, "hero");
+			addBullet(x + facingX * 20, y + 20, 20, 0, -1, "hero");
+			addBullet(x + facingX * 20, y + 20, 20, 0, 1, "hero");
+		}
+		else {
+			addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "hero");
+		}
 	}
 }
 
@@ -483,4 +497,9 @@ ColBox Marco::getColBox(void) {
 		{absPosLeft + GetWidth(), absPosTop + GetHeight()}
 	};
 	return CollideBox;
+}
+
+void Marco::powerUp(void) {
+	this->isPoweredUp = true;
+	this->powerUpTimer = std::chrono::steady_clock::now();
 }

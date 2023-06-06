@@ -239,13 +239,19 @@ void CGameStateRun::OnShow()
 			CTextDraw::Print(pDC, 0, 125, str1);
 			*/
 
+			int i = 0;
+
 			std::snprintf(buffer, sizeof(buffer), "Godmode %s", (godmode) ? "on" : "off");
 			CTextDraw::Print(pDC, 600, 0, std::string(buffer));
+
+			std::snprintf(buffer, sizeof(buffer), "PowerUp %s", (marco.isPoweredUp) ? "on" : "off");
+			CTextDraw::Print(pDC, 600, i += 25, std::string(buffer));
+
+			i = 0;
 
 			std::snprintf(buffer, sizeof(buffer), "Marco alive:%d", marco.isAlive());
 			CTextDraw::Print(pDC, 0, 0, std::string(buffer));
 
-			int i = 0;
 			std::snprintf(buffer, sizeof(buffer), "Soldier count:%d", soldiers.size());
 			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
