@@ -34,6 +34,12 @@
     <ClCompile Include="Source\Source\cpp\CsvReader.cpp" />
     <ClCompile Include="Source\Source\cpp\DamageEffect.cpp" />
     <ClCompile Include="Source\Source\cpp\Pickup.cpp" />
+    <ClCompile Include="Source\Source\cpp\Mission1State.cpp" />
+    <ClCompile Include="Source\Source\cpp\Mission2State.cpp" />
+    <ClCompile Include="Source\Source\cpp\State.cpp" />
+    <ClCompile Include="Source\Source\cpp\MapController.cpp" />
+    <ClCompile Include="Source\Source\cpp\FinishState.cpp" />
+    <ClCompile Include="Source\Source\cpp\MenuState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\Game.h" />
@@ -69,6 +75,12 @@
     <ClInclude Include="Source\Source\header\CsvReader.h" />
     <ClInclude Include="Source\Source\header\DamageEffect.h" />
     <ClInclude Include="Source\Source\header\Pickup.h" />
+    <ClInclude Include="Source\Source\header\Mission1State.h" />
+    <ClInclude Include="Source\Source\header\Mission2State.h" />
+    <ClInclude Include="Source\Source\header\State.h" />
+    <ClInclude Include="Source\Source\header\MapController.h" />
+    <ClInclude Include="Source\Source\header\MenuState.h" />
+    <ClInclude Include="Source\Source\header\FinishState.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc" />
