@@ -152,6 +152,10 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			isDisplayInfo = !isDisplayInfo;
 		}
 
+		if (nChar == 0x51) { // Q
+			resetWorld();
+		}
+
 		if (!boss.isAlive() && nChar == 0x4E) { // N
 			if (state == "map1") {
 				state = "map2";

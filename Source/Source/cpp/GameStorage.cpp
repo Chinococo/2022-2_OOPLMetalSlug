@@ -456,8 +456,77 @@ namespace game_framework {
 				
 	}
 	void resetWorld(void) {
+
+		selectIndex = 0;
+		ViewPointX = 0;
+		ViewPointY = 580;
+		MapScrollSpeed = 10;
+		scroll = false;
+		marco = Marco(300, 100, 6);
+		MapObjects = std::vector<MapObject>();
+		soldiers = std::vector<Soldier>();
+		bullets = std::vector<Bullet>();
+		tank_bullets = std::vector<tank_bullet *>();
+		soldierFireworks = std::vector<Firework>();
+		prisoners = std::vector<Prisoner>();
+		rshobus = std::vector<RShobu>();
+		grounds = std::vector<Ground>();
+		marco_tank = tank(300, 100, 6);
+		Loading = false;
+		ViewPointYInit = 580;
+		boss = Boss1(9900, -190);
+		Driving = false;
+		tank_barrel_angle = 0;
+		godmode = false;
+		isDisplayInfo = false;
+		heroGrenades = std::vector<Grenade>();
+		enemyGrenades = std::vector<Grenade>();
+		pickups = std::vector<Pickup>();
+
+		boss.init();
+		background.LoadBitmapByString({ "resources/backgrounds/bg_mainmenu.bmp" }, RGB(0, 0, 0));
+		arrow.LoadBitmapByString({ "resources/bmp/arrow.bmp" }, RGB(255, 255, 255));
+		background.SetTopLeft(0, 0);
+		for (int i = 0; i < 4; i++) {
+			CMovingBitmap btn;
+			btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
+			btn.SetTopLeft(540, 70 * i + 175);
+			mainmenuButtons.push_back(btn);
+		}
+		int position[5] = { 185,255,325,400,500 };
+		arrow.SetTopLeft(430, position[selectIndex] - 35);
+		std::srand(static_cast<unsigned int>(std::time(nullptr)));
+		createMap();
+		createGrounds();
+		createSoldiers();
+		createMapObject();
+		createPrisoners();
+		createRShobus();
+		createPickups();
+		marco.init();
+		marco_tank.init();
+		for (size_t i = 0; i < soldiers.size(); i++) {
+			soldiers[i].init();
+		}
+		for (size_t i = 0; i < MapObjects.size(); i++) {
+			MapObjects[i].init();
+		}
+		for (size_t i = 0; i < prisoners.size(); i++) {
+			prisoners[i].init();
+		}
+		for (size_t i = 0; i < rshobus.size(); i++) {
+			rshobus[i].init();
+		}
+
+
+
+
+
+
+		/*
 		ViewPointX = 0;
 		ViewPointY = 500;
+		
 		scroll = false;
 		Driving = false;
 		tank_barrel_angle = 0;
@@ -482,6 +551,7 @@ namespace game_framework {
 		for (size_t i = 0; i < prisoners.size(); i++) {
 			prisoners[i].reset();
 		}
+		*/
 		/*
 		heroGrenades
 		enemyGrenades

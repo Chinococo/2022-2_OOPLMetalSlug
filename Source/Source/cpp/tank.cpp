@@ -9,10 +9,12 @@ tank::tank(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
 }
 
 tank::~tank() {
-	delete barrel;
+	//delete barrel;
 }
 
 void tank::init() {
+	//delete barrel;
+	barrel = new tank_barrel(x + 20, y + 20);
 	barrel->init();
 	// order following enum class Action
 	// IDLE, MOVE, JUMP, LOOK_UP, SHOOT, SHOOT_UP, SHOOT_DOWN, KNIFE, GRENADE, CROUCH_SHOOT, CROUCH_SHOOT_UP, CROUCH_KNIFE, CROUCH_GRENADE, DIE
