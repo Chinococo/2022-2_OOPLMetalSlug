@@ -4,6 +4,7 @@
 #include "../header/Boss1_fire.h"
 class boss1_canno : public Character {
 	public:
+		vector<Boss1_fire*>fire;
 		boss1_canno(int _x, int _y);
 		void Setaction(string _action);
 		void init();
@@ -19,5 +20,4 @@ class boss1_canno : public Character {
 		time_t start_AI = clock();
 		bool Done=false;
 		Boss1_laser *laser;
-		vector<Boss1_fire*>fire;
 };

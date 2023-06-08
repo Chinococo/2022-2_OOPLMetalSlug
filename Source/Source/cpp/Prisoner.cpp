@@ -489,3 +489,39 @@ Prisoner &Prisoner::operator=(const Prisoner &other) {
 
 	return *this;
 }
+
+void Prisoner::reset(void) {
+	absolutePositionLeft = 0;
+	absolutePositionTop = 0;
+
+	absoluteAnchorHorizontal = 0;
+
+	distanceHorizontal = 0;
+	distanceVertical = 0;
+
+	collisionBoxTweakLeft = 0;
+	collisionBoxTweakTop = 0;
+
+	collisionBoxWidth = 50;
+	collisionBoxHeight = 90;
+
+	velocityHorizontal = 5;
+	velocityVertical = 0;
+
+	inAir = false;
+	animationDone = false;
+
+	spriteTimer = std::chrono::steady_clock::now();
+
+	lastDirectionHorizontal = Direction::LEFT;
+	directionHorizontal = Direction::LEFT;
+	directionVertical = Direction::NONE;
+
+	sprite = Sprite::TIED;
+
+	action = Action::TIED;
+
+	alive = true;
+
+	SetFrameIndexOfBitmap(0);
+}

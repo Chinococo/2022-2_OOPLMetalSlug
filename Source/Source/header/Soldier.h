@@ -20,6 +20,7 @@ public:
 	virtual void draw() override;
 	Soldier &operator=(const Soldier &other);
 	virtual ColBox getColBox(void) override;
+	void reset(void);
 
 private:
 	bool once = true;

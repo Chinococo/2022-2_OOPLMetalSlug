@@ -257,6 +257,8 @@ void CGameStateRun::OnShow()
 
 			int i = 0;
 
+			CTextDraw::Print(pDC, 0, 0, "Press <i> for detailed information");
+
 			std::snprintf(buffer, sizeof(buffer), "State:%s", state.c_str());
 			CTextDraw::Print(pDC, 600, i += 25, std::string(buffer));
 

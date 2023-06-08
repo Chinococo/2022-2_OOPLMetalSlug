@@ -5,6 +5,10 @@ using namespace game_framework;
 MapObject::MapObject(int _x, int _y, int _hp, vector<string> _path,  string _name, int _destry_animation_index) : Character(_x, _y, 0) {
 
 	//this->SetTopLeft(_x, _y);
+	this->hp_init = _hp;
+	this->destry_animation_index_init = _destry_animation_index;
+	this->x_init = _x;
+	this->y_init = _y;
 	this->x = _x;
 	this->y = _y;
 	this->hp = _hp;
@@ -17,6 +21,10 @@ MapObject::MapObject(int _x, int _y, int _hp, vector<string> _path,  string _nam
 
 MapObject::MapObject(int _x, int _y, int _hp, vector<string> _path, string _name, int _destry_animation_index, pair<pair<int, int>, pair<int, int>> _CollideBox) : Character(_x, _y, 0)
 {
+	this->hp_init = _hp;
+	this->destry_animation_index_init = _destry_animation_index;
+	this->x_init = _x;
+	this->y_init = _y;
 	this->x = _x;
 	this->y = _y;
 	this->hp = _hp;
@@ -76,4 +84,14 @@ void MapObject::collideWithBullet() {
 			
 		}
 	}
+}
+
+void MapObject::reset(void) {
+	this->x = x_init;
+	this->y = y_init;
+	this->hp = hp_init;
+	this->now_hp = hp_init;
+	this->destry_animation_index = destry_animation_index_init;
+	this->start = clock();
+	SetFrameIndexOfBitmap(0);
 }

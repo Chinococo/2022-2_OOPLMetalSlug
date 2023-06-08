@@ -63,6 +63,7 @@ public:
 	void init();
 	void update();
 	void draw();
+	void reset(void);
 
 	Prisoner &operator=(const Prisoner &other);
 

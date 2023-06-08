@@ -41,6 +41,9 @@ void Boss1::update()
 	if (alive) {
 		canno->Move();
 	}
+	else {
+		canno->fire.clear();
+	}
 	canno->update();
 	if (now_hp <= 0) {
 		alive = false;
