@@ -458,6 +458,49 @@ namespace game_framework {
 		return false;
 				
 	}
+	void resetWorld(void) {
+		ViewPointX = 0;
+		ViewPointY = 500;
+		scroll = false;
+		marco = Marco(300, 100, 6);
+		marco.init();
+		marco_tank = tank(300, 100, 6);
+		//marco_tank.init();
+		boss = Boss1(9900, -190);
+		boss.init();
+		Driving = false;
+		tank_barrel_angle = 0;
+		MapObjects = std::vector<MapObject>();
+		soldiers = std::vector<Soldier>();
+		bullets = std::vector<Bullet>();
+		tank_bullets = std::vector<tank_bullet *>();
+		soldierFireworks = std::vector<Firework>();
+		prisoners = std::vector<Prisoner>();
+		rshobus = std::vector<RShobu>();
+		grounds = std::vector<Ground>();
+		heroGrenades = std::vector<Grenade>();
+		enemyGrenades = std::vector<Grenade>();
+		pickups = std::vector<Pickup>();
+		createMap();
+		createGrounds();
+		createSoldiers();
+		createMapObject();
+		createPrisoners();
+		createRShobus();
+		createPickups();
+		for (size_t i = 0; i < soldiers.size(); i++) {
+			soldiers[i].init();
+		}
+		for (size_t i = 0; i < MapObjects.size(); i++) {
+			MapObjects[i].init();
+		}
+		for (size_t i = 0; i < prisoners.size(); i++) {
+			prisoners[i].init();
+		}
+		for (size_t i = 0; i < rshobus.size(); i++) {
+			rshobus[i].init();
+		}
+	}
 	vector<vector<string>> checkpointcsv = readCSV("resources/csv/checkpoint.csv");
 	vector<vector<string>> groundcsv = readCSV("resources/csv/ground.csv");
 	std::string state = "init";
@@ -489,8 +532,8 @@ namespace game_framework {
 	Boss1 boss(9900,- 190);
 	bool Driving = false;
 	int tank_barrel_angle = 0;
-	Grenade grenade(100, 100, Direction::RIGHT);
 	bool godmode = false;
+	bool isDisplayInfo = false;
 	std::vector<Grenade> heroGrenades;
 	std::vector<Grenade> enemyGrenades;
 	std::vector<Pickup> pickups;

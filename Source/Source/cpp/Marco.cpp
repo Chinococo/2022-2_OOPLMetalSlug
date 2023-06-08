@@ -92,8 +92,10 @@ void Marco::respawn() {
 	dying = false;
 	flip = false;
 	deathTimer = clock();
-	std::pair<std::pair<int, int>, std::pair<int, int>> CollideBox = { {-1,-1},{-1,-1} };
 	start = clock();
+	isPoweredUp = false;
+	powerUpTimer = std::chrono::steady_clock::now();
+	grenadeTimer = std::chrono::steady_clock::now();
 }
 
 void Marco::control() {
@@ -481,6 +483,9 @@ void Marco::JumpOutDrving(int _x,int _y) {
 }
 void Marco::dead()
 {
+	if (godmode) {
+		return;
+	}
 	dying = true;
 	deathTimer = clock();
 }
@@ -502,4 +507,37 @@ ColBox Marco::getColBox(void) {
 void Marco::powerUp(void) {
 	this->isPoweredUp = true;
 	this->powerUpTimer = std::chrono::steady_clock::now();
+}
+
+Marco &Marco::operator=(const Marco &other) {
+	once = other.once;
+	velocityY = other.velocityY;
+	movingLeft = other.movingLeft;
+	movingRight = other.movingRight;
+	jumping = other.jumping;
+	inAir = other.inAir;
+	lookingUp = other.lookingUp;
+	attacking = other.attacking;
+	knifing = other.knifing;
+	throwingGrenade = other.throwingGrenade;
+	pressingDown = other.pressingDown;
+	nearEnemy = other.nearEnemy;
+	lastAttackTime = other.lastAttackTime;
+	action = other.action;
+	lastAction = other.lastAction;
+	x = other.x;
+	y = other.y;
+	dx = other.dx;
+	dy = other.dy;
+	facingX = other.facingX;
+	facingY = other.facingY;
+	alive = other.alive;
+	dying = other.dying;
+	flip = other.flip;
+	deathTimer = other.deathTimer;
+	start = other.start;
+	isPoweredUp = other.isPoweredUp;
+	powerUpTimer = other.powerUpTimer;
+	grenadeTimer = other.grenadeTimer;
+	return *this;
 }

@@ -27,6 +27,7 @@ public:
 	void respawn();
 	virtual ColBox getColBox(void) override;
 	void powerUp(void);
+	Marco &operator=(const Marco &other);
 
 private:
 	bool once = false;

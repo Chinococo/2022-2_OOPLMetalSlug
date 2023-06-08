@@ -27,14 +27,14 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
-	if (state == "map1") {
+	if (state == "map1" || state == "map2") {
 		removeInactives();
 		removeInactiveSolider();
 		marco_tank.update();
 		if (marco.isAlive()) {
 			marco.update();
 		}
-		else if (keyDowns.count(VK_RETURN)) {
+		else if (keyDowns.count(0x52)) {
 			marco.respawn();
 		}
 		for (size_t i = 0; i < rshobus.size(); i++) {
@@ -118,14 +118,14 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if (nChar == VK_RETURN) {
 			if (selectIndex == 0) {
 				Loading = false;
-				
 				state = "map1";
 			}
+			
 		}
 
 
 	}
-	else if (state == "map1") {
+	else if (state == "map1" || state == "map2") {
 		// 0x5A -> Z
 		// 0x58 -> X
 
@@ -135,15 +135,31 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			nChar == VK_UP|| 
 			nChar == VK_DOWN || 
 			nChar == VK_RETURN || 
-			nChar == 0x5A || 
-			nChar == 0x58||
-      nChar == 0x43)
-		{
+			nChar == 0x5A || // Z
+			nChar == 0x58 || // X
+			nChar == 0x43 || // C
+			nChar == 0x52 || // R
+			nChar == 0x4E // N
+			) {
 			keyDowns.insert(nChar);
 		}
 
 		if (nChar == 0x47) { // G
 			godmode = !godmode;
+		}
+
+		if (nChar == 0x49) { // I
+			isDisplayInfo = !isDisplayInfo;
+		}
+
+		if (!boss.isAlive() && nChar == 0x4E) { // N
+			if (state == "map1") {
+				state = "map2";
+				resetWorld();
+			}
+			else if (state == "map2") {
+				state = "finish";
+			}
 		}
 
 	}
@@ -183,7 +199,7 @@ void CGameStateRun::OnShow()
 		}
 		arrow.ShowBitmap();
 	}
-	else if (state == "map1") {
+	else if (state == "map1" || state == "map2") {
 		
 		if (keyDowns.count(VK_RIGHT) && scroll && !Checkcheckpoint()) {
 			ViewPointX -= MapScrollSpeed;
@@ -206,7 +222,7 @@ void CGameStateRun::OnShow()
 			char buffer[256]; // 假設你的字串不會超過 256 個字元
 
 			//game_framework::ChangeFontLog
-			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(0, 0, 0), 500);
+			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(255, 0, 0), 500);
 
 			/*
 			CString str;
@@ -241,48 +257,63 @@ void CGameStateRun::OnShow()
 
 			int i = 0;
 
-			std::snprintf(buffer, sizeof(buffer), "Godmode %s", (godmode) ? "on" : "off");
-			CTextDraw::Print(pDC, 600, 0, std::string(buffer));
-
-			std::snprintf(buffer, sizeof(buffer), "PowerUp %s", (marco.isPoweredUp) ? "on" : "off");
+			std::snprintf(buffer, sizeof(buffer), "State:%s", state.c_str());
 			CTextDraw::Print(pDC, 600, i += 25, std::string(buffer));
 
-			i = 0;
+			std::snprintf(buffer, sizeof(buffer), "Godmode:%s", (godmode) ? "on" : "off");
+			CTextDraw::Print(pDC, 600, i += 25, std::string(buffer));
 
-			std::snprintf(buffer, sizeof(buffer), "Marco alive:%d", marco.isAlive());
-			CTextDraw::Print(pDC, 0, 0, std::string(buffer));
+			std::snprintf(buffer, sizeof(buffer), "PowerUp:%s", (marco.isPoweredUp) ? "on" : "off");
+			CTextDraw::Print(pDC, 600, i += 25, std::string(buffer));
 
-			std::snprintf(buffer, sizeof(buffer), "Soldier count:%d", soldiers.size());
-			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+			if (isDisplayInfo) {
+				i = 0;
 
-			std::snprintf(buffer, sizeof(buffer), "Prisoner count:%d", prisoners.size());
-			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+				std::snprintf(buffer, sizeof(buffer), "Marco alive:%d", marco.isAlive());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
-			std::snprintf(buffer, sizeof(buffer), "Bullet count:%d", bullets.size());
-			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+				std::snprintf(buffer, sizeof(buffer), "Boss alive:%d", boss.isAlive());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
-			std::snprintf(buffer, sizeof(buffer), "Firework count:%d", soldierFireworks.size());
-			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+				std::snprintf(buffer, sizeof(buffer), "Soldier count:%d", soldiers.size());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
-			std::snprintf(buffer, sizeof(buffer), "Hero grenade count:%d", heroGrenades.size());
-			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+				std::snprintf(buffer, sizeof(buffer), "Prisoner count:%d", prisoners.size());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
-			std::snprintf(buffer, sizeof(buffer), "Enemy grenade count:%d", enemyGrenades.size());
-			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+				std::snprintf(buffer, sizeof(buffer), "Bullet count:%d", bullets.size());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
-			std::snprintf(buffer, sizeof(buffer), "Tank bullet count:%d", tank_bullets.size());
-			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+				std::snprintf(buffer, sizeof(buffer), "Firework count:%d", soldierFireworks.size());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
-			std::snprintf(buffer, sizeof(buffer), "RShobu count:%d", rshobus.size());
-			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+				std::snprintf(buffer, sizeof(buffer), "Hero grenade count:%d", heroGrenades.size());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
-			std::snprintf(buffer, sizeof(buffer), "Pickup count:%d", pickups.size());
-			CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+				std::snprintf(buffer, sizeof(buffer), "Enemy grenade count:%d", enemyGrenades.size());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+				std::snprintf(buffer, sizeof(buffer), "Tank bullet count:%d", tank_bullets.size());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+				std::snprintf(buffer, sizeof(buffer), "RShobu count:%d", rshobus.size());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+				std::snprintf(buffer, sizeof(buffer), "Pickup count:%d", pickups.size());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+			}
 
 			CDDraw::ReleaseBackCDC();
 		}
 		
 		
 		
+	}
+	else if (state == "finish") {
+		CDC *pDC = CDDraw::GetBackCDC();
+		CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(255, 255, 255), 1000);
+		CTextDraw::Print(pDC, 255, 230, "All Missions Complete");
+		CTextDraw::Print(pDC, 255, 260, "Thank you for playing");
+		CDDraw::ReleaseBackCDC();
 	}
 }

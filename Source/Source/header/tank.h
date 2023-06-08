@@ -5,6 +5,7 @@
 class tank : public Character {
 public:
 	tank(int _x, int _y, int _speedX);
+	~tank();
 	virtual void init() override;
 	virtual void update() override;
 	virtual void control() override;
@@ -24,6 +25,7 @@ public:
 	void take_out();
 	void dead();
 	bool isAttacking();
+	tank &operator=(const tank &other);
 private:
 	bool once = false;
 	int velocityY = 0;

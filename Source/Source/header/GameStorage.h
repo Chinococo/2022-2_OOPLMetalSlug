@@ -47,6 +47,7 @@ namespace game_framework {
 	extern void collideWithBullet();
 	extern bool isColboxOverlap(ColBox colbox1, ColBox colbox2);
 	extern void createPickups(void);
+	extern void resetWorld(void);
 	// map
 	extern std::string state;
 	extern int selectIndex;
@@ -84,5 +85,6 @@ namespace game_framework {
 	extern std::vector<Grenade> heroGrenades;
 	extern std::vector<Grenade> enemyGrenades;
 	extern bool godmode;
+	extern bool isDisplayInfo;
 	extern std::vector<Pickup> pickups;
 }

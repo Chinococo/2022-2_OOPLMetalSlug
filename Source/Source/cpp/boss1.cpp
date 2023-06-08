@@ -38,9 +38,13 @@ void Boss1::damge(int damge) {
 void Boss1::update()
 {
 	this->SetFrameIndexOfBitmap(static_cast<int>(std::floor(static_cast<double>(static_cast<double>(hp - now_hp) / hp) * (this->GetFrameSizeOfBitmap() - 1))));
-	canno->Move();
+	if (alive) {
+		canno->Move();
+	}
 	canno->update();
-
+	if (now_hp <= 0) {
+		alive = false;
+	}
 }
 
 void Boss1::draw()
