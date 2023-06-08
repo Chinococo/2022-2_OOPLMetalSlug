@@ -19,6 +19,14 @@ void MapController::setState(State *state) {
 	this->state = state;
 }
 
-void MapController::handle(void) {
-	state->handle(this);
+void MapController::onMove(void) {
+	state->onMove(this);
+}
+
+void MapController::onShow(void) {
+	state->onShow(this);
+}
+
+void MapController::onKeyDown(UINT nChar) {
+	state->onKeyDown(this, nChar);
 }

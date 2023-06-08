@@ -8,3 +8,7 @@ void Mission2State::onMove(MapController *mapController) {
 void Mission2State::onShow(MapController *mapController) {
 
 }
+
+void Mission2State::onKeyDown(MapController *mapController, UINT nChar) {
+
+}

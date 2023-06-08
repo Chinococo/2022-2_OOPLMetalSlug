@@ -1,5 +1,6 @@
 #pragma once
-#include "State.h"
+
+class State;
 
 class MapController {
 private:
@@ -10,5 +11,7 @@ public:
 	~MapController();
 	State *getState(void);
 	void setState(State *state);
-	void handle(void);
+	void onMove(void);
+	void onShow(void);
+	void onKeyDown(UINT nChar);
 };
