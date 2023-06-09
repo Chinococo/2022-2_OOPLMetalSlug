@@ -301,10 +301,47 @@ void tank::dead()
 {
 	dying = true;
 	deathTimer = clock();
+	take_out();
 }
 
 bool tank::isAttacking() {
 	return attacking;
+}
+
+void tank::respawn(void)
+{
+	x = 100 - ViewPointX;
+	y = 300 - ViewPointY + ViewPointYInit;
+	dx = 0;
+	dy = 0;
+	once = false;
+	velocityY = 0;
+	movingLeft = false;
+	movingRight = false;
+	jumping = false;
+	inAir = false;
+	lookingUp = false;
+	attacking = false;
+	knifing = false;
+	throwingGrenade = false;
+	pressingDown = false;
+	nearEnemy = false;
+	out = false;
+	lastAttackTime = clock();
+	roate = clock();
+	out_drviing = clock();
+	in_driving = clock();
+	drving = false;
+	lastAction = action;
+	action = Action::IDLE;
+	updateAnimation();
+	facingX = 1;
+	facingY = 0;
+	flip = false;
+	deathTimer = clock();
+	start = clock();
+	alive = true;
+	dying = false;
 }
 
 tank &tank::operator=(const tank &other) {

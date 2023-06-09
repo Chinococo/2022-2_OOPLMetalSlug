@@ -199,7 +199,7 @@ void Pickup::handleGroundCollision(void) {
 		if (Ground::isOnGround(*this, ground) == 1) {
 			const int relPosLeft = absRectBox.getRelRectBox().getLeft();
 			const int relPosBottom = absRectBox.getRelRectBox().getBottom();
-			dist.setVert(Ground::GetX_Height(ground, relPosLeft) - relPosBottom);
+			dist.setVert(Ground::GetX_Height(ground, relPosLeft) - (relPosBottom-this->GetHeight()));
 			vel = { 0, 0 };
 		}
 	}

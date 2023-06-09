@@ -25,6 +25,7 @@ public:
 	void take_out();
 	void dead();
 	bool isAttacking();
+	void respawn(void);
 	tank &operator=(const tank &other);
 private:
 	bool once = false;
