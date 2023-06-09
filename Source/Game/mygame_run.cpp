@@ -309,6 +309,12 @@ void CGameStateRun::OnShow()
 				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 			}
 
+			if (!boss.isAlive()) {
+				CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(255, 255, 255), 1000);
+				CTextDraw::Print(pDC, 255, 230, "Boss is defeated!");
+				CTextDraw::Print(pDC, 200, 260, "Press <n> to next mission");
+			}
+
 			CDDraw::ReleaseBackCDC();
 		}
 		

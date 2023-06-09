@@ -198,12 +198,12 @@ void Marco::throwGrenade() {
 
 void Marco::moveLeftRight() {
 	if (movingLeft) {
-		dx += -speedX;
+		dx += -speedX * ((godmode) ? 2 : 1);
 		facingX = -1;
 		flip = true;
 	}
 	if (movingRight&&(Checkcheckpoint()||!scroll)) {
-		dx += speedX;
+		dx += speedX * ((godmode) ? 2 : 1);
 		facingX = 1;
 		flip = false;
 	}

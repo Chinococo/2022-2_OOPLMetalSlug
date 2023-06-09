@@ -3,6 +3,8 @@
 
 Boss1::Boss1(int _x, int _y) : Character(_x, _y,0)
 {
+	this->hp = (state == "map1") ? 20 : 40;
+	this->now_hp = this->hp;
 	this->x = _x;
 	this->y = _y;
 	this->canno = new boss1_canno(x + 450, y+270);

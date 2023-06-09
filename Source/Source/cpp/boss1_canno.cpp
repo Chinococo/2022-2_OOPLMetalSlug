@@ -42,7 +42,8 @@ void boss1_canno::Move() {
 		this->fire[i]->move();
 	}
 	position = static_cast<int>(action) % 2;
-	if (clock() - start_AI > 5000&&Done) {
+	int aiDelay = (state == "map1") ? 5000 : 2500; 
+	if (clock() - start_AI > aiDelay&&Done) {
 		lastAction = action;
 		start_AI = clock();
 		if (rand() % 4 == 0) {

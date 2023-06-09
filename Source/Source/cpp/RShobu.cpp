@@ -125,6 +125,8 @@ void RShobu::handleActionMove() {
 
 	//-----------------------------
 
+	const int fireDelayMilli = (state == "map1") ? FIRE_DELAY_MILLISECOND : FIRE_DELAY_MILLISECOND / 2;
+
 	auto delayMillisecond = std::chrono::milliseconds(FIRE_DELAY_MILLISECOND);
 	auto timePointNow = std::chrono::steady_clock::now();
 	auto elapsedMilliSecond = std::chrono::duration_cast<std::chrono::milliseconds>(timePointNow - fireTimer);

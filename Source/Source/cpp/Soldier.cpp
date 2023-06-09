@@ -97,9 +97,8 @@ void Soldier::control() { // AI
 		jumping = false;
 	}
 	
-
 	
-	if (currentTime - lastAttackTime >= ATTACK_COOLDOWN) {
+	if (currentTime - lastAttackTime >= ((state == "map1") ? ATTACK_COOLDOWN : ATTACK_COOLDOWN / 2)) {
 		lastAttackTime = currentTime;
 		attacking = true;
 	}

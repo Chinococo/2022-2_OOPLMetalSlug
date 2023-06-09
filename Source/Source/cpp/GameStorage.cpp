@@ -5,9 +5,9 @@
 namespace game_framework {
 	void createPickups(void) {
 		Pickup::createPickup(100, 200);
-		Pickup::createPickup(200, 200);
-		Pickup::createPickup(300, 200);
-		Pickup::createPickup(400, 200);
+		Pickup::createPickup(2000, 200);
+		Pickup::createPickup(5000, 200);
+		Pickup::createPickup(7000, 200);
 	}
 	std::vector<std::vector<std::string>> readCSV(const std::string& filename) {
 		std::vector<std::vector<std::string>> data;
@@ -36,9 +36,14 @@ namespace game_framework {
 	}
 	void createPrisoners() {
 		prisoners.push_back(Prisoner(200, 100));
+		prisoners.push_back(Prisoner(1000, 100));
+		prisoners.push_back(Prisoner(3000, 100));
+		prisoners.push_back(Prisoner(5000, 100));
+		prisoners.push_back(Prisoner(7000, 100));
+		prisoners.push_back(Prisoner(9000, 100));
 	}
 	void createRShobus() {
-		rshobus.push_back(RShobu(300, 100));
+		rshobus.push_back(RShobu(5000, 100));
 	}
 	void createSoldiers() {
 		const int moveSpeed = 1;
