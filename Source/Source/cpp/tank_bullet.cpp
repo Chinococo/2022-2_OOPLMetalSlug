@@ -43,3 +43,22 @@ void tank_bullet::collideWithCharacter()
 void tank_bullet::dead() {
 	alive = false;
 }
+
+bool tank_bullet::isOverlap_tank_bullet(Character other)
+{
+	const int relPosLeft = x;
+	const int relPosTop = y;
+	const int relPosRight = x + GetWidth();
+	const int relPosBottom = y + GetHeight();
+	const int otherRelPosLeft = other.x + ViewPointX;
+	const int otherRelPosTop = other.y - ViewPointY + ViewPointYInit;
+	const int otherRelPosRight = otherRelPosLeft + other.GetWidth();
+	const int otherRelPosBottom = otherRelPosTop + other.GetHeight();
+	if (relPosLeft < other.CollideBox.second.first &&
+		relPosRight > other.CollideBox.first.first &&
+		relPosTop < other.CollideBox.second.second &&
+		relPosBottom > other.CollideBox.first.second) {
+		return true;
+	}
+	return false;
+}

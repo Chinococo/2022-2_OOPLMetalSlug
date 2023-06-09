@@ -34,9 +34,6 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		if (marco.isAlive()) {
 			marco.update();
 		}
-		else if (keyDowns.count(0x52)) {
-			marco.respawn();
-		}
 		for (size_t i = 0; i < rshobus.size(); i++) {
 			rshobus[i].update();
 		}
@@ -142,6 +139,11 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			nChar == 0x4E // N
 			) {
 			keyDowns.insert(nChar);
+		}
+
+		if (keyDowns.count(0x52)) { // R
+			marco.respawn();
+			marco_tank.respawn();
 		}
 
 		if (nChar == 0x47) { // G

@@ -10,6 +10,9 @@ enum class Direction {
 
 class Character : public game_framework::CMovingBitmap {
 public:
+	int x;
+	int y;
+	ColBox CollideBox = { {-1, -1},{-1, -1} };
 	Character(int _x, int _y, int _speedX);
 	virtual void init() {}
 	virtual void update() {}
@@ -30,8 +33,6 @@ public:
 	virtual ColBox getColBox(void);
 
 protected:
-	int x;
-	int y;
 	int dx = 0;
 	int dy = 0;
 	int speedX;
@@ -46,6 +47,5 @@ protected:
 	std::pair<int, int> animationRange; // { start, end }, including start, excluding end
 	std::vector<std::pair<int, int>> animationRanges;
 	std::vector<int> animationDelays;
-	ColBox CollideBox = { {-1, -1},{-1, -1} };
 	clock_t start = clock();
 };

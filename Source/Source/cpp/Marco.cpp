@@ -89,8 +89,6 @@ void Marco::respawn() {
 	dy = 0;
 	facingX = 1;
 	facingY = 0;
-	alive = true;
-	dying = false;
 	flip = false;
 	deathTimer = clock();
 	start = clock();

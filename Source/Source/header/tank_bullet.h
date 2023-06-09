@@ -10,6 +10,7 @@ public:
 	void setXY(int _x, int _y);
 	void collideWithCharacter();
 	void dead();
+	bool isOverlap_tank_bullet(Character other);
 private:
 	time_t start;
 	int x, y;
