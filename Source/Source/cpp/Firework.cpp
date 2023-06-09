@@ -90,7 +90,7 @@ void Firework::move() {
 	dx = 0;
 	dy = 0;
 
-	collideWithHero();
+	//collideWithHero();
 	moveLeftRight();
 	collideWithGround();
 

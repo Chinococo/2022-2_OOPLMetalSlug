@@ -137,7 +137,7 @@ namespace game_framework {
 			}
 			
 			if (grenadeColbox != emptyColBox &&
-				isColboxOverlap(grenadeColbox, marco.getColBox())
+				isColboxOverlap(grenadeColbox, marco.getColBox()) && marco.isAlive()
 			) {
 				marco.dead();
 			}
@@ -146,7 +146,7 @@ namespace game_framework {
 		for (size_t i = 0; i < bullets.size(); i++) {
 			if (!bullets[i].isAlive())
 				continue;
-			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco, bullets[i])) {
+			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco, bullets[i])&&marco.isAlive()) {
 				marco.dead();
 				bullets[i].dead();
 				break;
@@ -183,12 +183,13 @@ namespace game_framework {
 			}
 		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
-			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i])) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i]) && marco.isAlive()) {
 				if (!godmode) { marco.dead(); }
+				soldierFireworks[i].dead();
 				break;
 			}
-			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])) {
-				if (!godmode) { marco.dead(); }
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])&&marco_tank.isAlive()) {
+				if (!godmode) { marco_tank.dead();  }
 				soldierFireworks[i].dead();
 				break;
 			}
@@ -222,12 +223,13 @@ namespace game_framework {
 			}
 		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
-			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i])) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i]) && marco.isAlive()) {
 				if (!godmode) { marco.dead(); }
+				soldierFireworks[i].dead();
 				break;
 			}
-			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])) {
-				if (!godmode) { marco.dead(); }
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i]) && marco_tank.isAlive()) {
+				if (!godmode) { marco_tank.dead(); }
 				soldierFireworks[i].dead();
 				break;
 			}

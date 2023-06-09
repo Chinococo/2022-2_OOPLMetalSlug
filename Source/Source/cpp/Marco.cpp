@@ -80,8 +80,9 @@ void Marco::respawn() {
 	pressingDown = false;
 	nearEnemy = false;
 	lastAttackTime = clock();
+	lastAction = action;
 	action = Action::IDLE;
-	lastAction = Action::IDLE;
+	changeAnimation();
 	x = 100;
 	y = 300;
 	dx = 0;
@@ -486,8 +487,10 @@ void Marco::dead()
 	if (godmode) {
 		return;
 	}
-	dying = true;
-	deathTimer = clock();
+	if (!dying) {
+		dying = true;
+		deathTimer = clock();
+	}
 }
 
 bool Marco::isAttacking() {

@@ -301,6 +301,7 @@ void tank::dead()
 {
 	dying = true;
 	deathTimer = clock();
+	take_out();
 }
 
 bool tank::isAttacking() {
