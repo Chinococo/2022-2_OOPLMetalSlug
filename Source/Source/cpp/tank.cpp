@@ -8,7 +8,13 @@ tank::tank(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
 	barrel = new tank_barrel(x+20, y+20);
 }
 
+tank::~tank() {
+	//delete barrel;
+}
+
 void tank::init() {
+	//delete barrel;
+	barrel = new tank_barrel(x + 20, y + 20);
 	barrel->init();
 	// order following enum class Action
 	// IDLE, MOVE, JUMP, LOOK_UP, SHOOT, SHOOT_UP, SHOOT_DOWN, KNIFE, GRENADE, CROUCH_SHOOT, CROUCH_SHOOT_UP, CROUCH_KNIFE, CROUCH_GRENADE, DIE
@@ -299,4 +305,29 @@ void tank::dead()
 
 bool tank::isAttacking() {
 	return attacking;
+}
+
+tank &tank::operator=(const tank &other) {
+	once = other.once;
+	velocityY = other.velocityY;
+	movingLeft = other.movingLeft;
+	movingRight = other.movingRight;
+	jumping = other.jumping;
+	inAir = other.inAir;
+	lookingUp = other.lookingUp;
+	attacking = other.attacking;
+	knifing = other.knifing;
+	throwingGrenade = other.throwingGrenade;
+	pressingDown = other.pressingDown;
+	nearEnemy = other.nearEnemy;
+	out = other.out;
+	lastAttackTime = other.lastAttackTime;
+	roate = other.roate;
+	out_drviing = other.out_drviing;
+	in_driving = other.in_driving;
+	drving = other.drving;
+	action = other.action;
+	lastAction = other.lastAction;
+	barrel = other.barrel;
+	return *this;
 }

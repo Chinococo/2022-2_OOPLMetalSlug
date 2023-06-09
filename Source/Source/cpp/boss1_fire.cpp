@@ -23,6 +23,7 @@ void Boss1_fire::move()
 		this->isAlive = false;
 		marco.dead();
 	}
+	
 }
 
 void Boss1_fire::draw()

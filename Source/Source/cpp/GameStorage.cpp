@@ -3,6 +3,12 @@
 #include <fstream>
 #include <sstream>
 namespace game_framework {
+	void createPickups(void) {
+		Pickup::createPickup(100, 200);
+		Pickup::createPickup(2000, 200);
+		Pickup::createPickup(5000, 200);
+		Pickup::createPickup(7000, 200);
+	}
 	std::vector<std::vector<std::string>> readCSV(const std::string& filename) {
 		std::vector<std::vector<std::string>> data;
 		std::ifstream file(filename);
@@ -30,9 +36,14 @@ namespace game_framework {
 	}
 	void createPrisoners() {
 		prisoners.push_back(Prisoner(200, 100));
+		prisoners.push_back(Prisoner(1000, 100));
+		prisoners.push_back(Prisoner(3000, 100));
+		prisoners.push_back(Prisoner(5000, 100));
+		prisoners.push_back(Prisoner(7000, 100));
+		prisoners.push_back(Prisoner(9000, 100));
 	}
 	void createRShobus() {
-		rshobus.push_back(RShobu(300, 100));
+		rshobus.push_back(RShobu(5000, 100));
 	}
 	void createSoldiers() {
 		const int moveSpeed = 1;
@@ -52,7 +63,86 @@ namespace game_framework {
 		soldiers.push_back(Soldier(4500, 500, 1));
 		
 	}
+	bool isColboxOverlap(ColBox colbox1, ColBox colbox2) {
+		return !(colbox1.second.first < colbox2.first.first ||
+			colbox1.second.second < colbox2.first.second ||
+			colbox2.second.first < colbox1.first.first ||
+			colbox2.second.second < colbox1.first.second);
+	}
 	void collideWithBullet() {
+		for (auto &rshobu : rshobus) {
+			for (auto &bomb : rshobu.getBombs()) {
+				if (marco.IsOverlap_(bomb)) {
+					if (!godmode) { marco.dead(); }
+				}
+			}
+		}
+
+		for (auto &grenade : heroGrenades) {
+			ColBox emptyColBox = {
+				{-1, -1},
+				{-1, -1}
+			};
+			ColBox grenadeColBox = emptyColBox;
+			ASSERT(grenadeColBox == emptyColBox);
+			ASSERT(&grenadeColBox != &emptyColBox);
+
+			if (grenade.isExpired()) {
+				grenadeColBox = grenade.explode();
+			}
+			else {
+				for (auto &soldier : soldiers) {
+					if (grenade.IsOverlap_(soldier)) { // soldier overlapped
+						ASSERT(grenadeColBox == emptyColBox);
+						grenadeColBox = grenade.explode();
+						break;
+					}
+				}
+				for (auto &rshobu : rshobus) {
+					if (grenade.IsOverlap_(rshobu)) {
+						ASSERT(grenadeColBox == emptyColBox);
+						grenadeColBox = grenade.explode();
+						break;
+					}
+				}
+			}
+			
+			if (grenadeColBox != emptyColBox) { // check in range soldier
+				for (auto &soldier : soldiers) {
+					ColBox soldierColBox = soldier.getColBox();
+					ASSERT(soldierColBox != emptyColBox);
+					if (isColboxOverlap(grenadeColBox, soldierColBox)) {
+						soldier.dead();
+					}
+				}
+				for (auto &rshobu : rshobus) {
+					ColBox rshobuColBox = rshobu.getColBox();
+					ASSERT(rshobuColBox != emptyColBox);
+					if (isColboxOverlap(grenadeColBox, rshobuColBox)) {
+						rshobu.damge(10);
+					}
+				}
+			}
+		}
+
+		for (auto &grenade : enemyGrenades) {
+			ColBox emptyColBox = {
+				{-1, -1},
+				{-1, -1}
+			};
+			ColBox grenadeColbox = emptyColBox;
+
+			if (grenade.isExpired() || grenade.IsOverlap_(marco)) {
+				grenadeColbox = grenade.explode();
+			}
+			
+			if (grenadeColbox != emptyColBox &&
+				isColboxOverlap(grenadeColbox, marco.getColBox())
+			) {
+				marco.dead();
+			}
+		}
+
 		for (size_t i = 0; i < bullets.size(); i++) {
 			if (!bullets[i].isAlive())
 				continue;
@@ -94,11 +184,11 @@ namespace game_framework {
 		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i])) {
-				marco.dead();
+				if (!godmode) { marco.dead(); }
 				break;
 			}
 			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])) {
-				marco.dead();
+				if (!godmode) { marco.dead(); }
 				soldierFireworks[i].dead();
 				break;
 			}
@@ -133,15 +223,22 @@ namespace game_framework {
 		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i])) {
-				marco.dead();
+				if (!godmode) { marco.dead(); }
 				break;
 			}
 			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])) {
-				marco.dead();
+				if (!godmode) { marco.dead(); }
 				soldierFireworks[i].dead();
 				break;
 			}
 
+		}
+
+		for (auto &pickup : pickups) {
+			if (isColboxOverlap(pickup.getAbsRectBox().getColBox(), marco.getColBox())) {
+				marco.powerUp();
+				pickup.dead();
+			}
 		}
 	}
 	void createGrounds() {
@@ -201,6 +298,14 @@ namespace game_framework {
 		soldierFireworks.push_back(firework);
 	}
 	void removeInactives() {
+		heroGrenades.erase(std::remove_if(heroGrenades.begin(), heroGrenades.end(), [](const Grenade &grenade) {
+			return !grenade.isAlive();
+		}), heroGrenades.end());
+
+		enemyGrenades.erase(std::remove_if(enemyGrenades.begin(), enemyGrenades.end(), [](const Grenade &grenade) {
+			return !grenade.isAlive();
+		}), enemyGrenades.end());
+
 		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet &bullet) {
 			return !bullet.isAlive();
 		}), bullets.end());
@@ -216,12 +321,13 @@ namespace game_framework {
 			}
 			else
 				i++;
-		bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const Bullet &bullet) {
-			return !bullet.isAlive();
-		}), bullets.end());
 		rshobus.erase(std::remove_if(rshobus.begin(), rshobus.end(), [](const RShobu &rshobu) {
 			return !rshobu.isAlive();
 		}), rshobus.end());
+
+		pickups.erase(std::remove_if(pickups.begin(), pickups.end(), [](const Pickup &pickup) {
+			return !pickup.isAlive();
+		}), pickups.end());
 	}
 	void removeMapObject()
 	{
@@ -235,12 +341,37 @@ namespace game_framework {
 	}
 	void updateCharacter()
 	{
+		for (size_t i = 0; i < prisoners.size(); i++) {
+			prisoners[i].draw();
+		}
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].draw();
 		}
+		for (size_t i = 0; i < rshobus.size(); i++) {
+			rshobus[i].draw();
+		}
+		boss.draw();
+		marco_tank.draw();
+		for (size_t i = 0; i < bullets.size(); i++) {
+			bullets[i].draw();
+		}
+		for (auto &grenade : heroGrenades) {
+			grenade.draw();
+		}
+		for (auto &grenade : enemyGrenades) {
+			grenade.draw();
+		}
+		for (unsigned i = 0; i < tank_bullets.size(); i++) {
+			tank_bullets[i]->move();
+			tank_bullets[i]->draw();
+		}
+		for (size_t i = 0; i < soldierFireworks.size(); i++) {
+			soldierFireworks[i].draw();
+		}
+		for (auto &pickup : pickups) {
+			pickup.draw();
+		}
 		marco.draw();
-		
-		
 	}
 	void updateUnderCharacterLayer()
 	{
@@ -297,6 +428,7 @@ namespace game_framework {
 	}
 	void removeInactiveSolider() {
 		vector<bool> test,test2;
+		/*
 		for (unsigned i = 0; i < soldiers.size(); i++)
 			test.push_back(soldiers[i].isAlive());
 		for (int i = soldiers.size(); i > 0; --i) {
@@ -306,6 +438,9 @@ namespace game_framework {
 					test2.push_back(soldiers[j].isAlive());
 			}
 		}
+		*/
+
+		
 	}
 	bool Checkcheckpoint() {
 		for (unsigned i = 1; i < checkpointcsv.size(); i++) {
@@ -324,6 +459,113 @@ namespace game_framework {
 		}
 		return false;
 				
+	}
+	void resetWorld(void) {
+
+		selectIndex = 0;
+		ViewPointX = 0;
+		ViewPointY = 580;
+		MapScrollSpeed = 10;
+		scroll = false;
+		marco = Marco(300, 100, 6);
+		MapObjects = std::vector<MapObject>();
+		soldiers = std::vector<Soldier>();
+		bullets = std::vector<Bullet>();
+		tank_bullets = std::vector<tank_bullet *>();
+		soldierFireworks = std::vector<Firework>();
+		prisoners = std::vector<Prisoner>();
+		rshobus = std::vector<RShobu>();
+		grounds = std::vector<Ground>();
+		marco_tank = tank(300, 100, 6);
+		Loading = false;
+		ViewPointYInit = 580;
+		boss = Boss1(9900, -190);
+		Driving = false;
+		tank_barrel_angle = 0;
+		godmode = false;
+		isDisplayInfo = false;
+		heroGrenades = std::vector<Grenade>();
+		enemyGrenades = std::vector<Grenade>();
+		pickups = std::vector<Pickup>();
+
+		boss.init();
+		background.LoadBitmapByString({ "resources/backgrounds/bg_mainmenu.bmp" }, RGB(0, 0, 0));
+		arrow.LoadBitmapByString({ "resources/bmp/arrow.bmp" }, RGB(255, 255, 255));
+		background.SetTopLeft(0, 0);
+		for (int i = 0; i < 4; i++) {
+			CMovingBitmap btn;
+			btn.LoadBitmapByString({ "resources/menus/btn_generic.bmp" }, RGB(0, 0, 0));
+			btn.SetTopLeft(540, 70 * i + 175);
+			mainmenuButtons.push_back(btn);
+		}
+		int position[5] = { 185,255,325,400,500 };
+		arrow.SetTopLeft(430, position[selectIndex] - 35);
+		std::srand(static_cast<unsigned int>(std::time(nullptr)));
+		createMap();
+		createGrounds();
+		createSoldiers();
+		createMapObject();
+		createPrisoners();
+		createRShobus();
+		createPickups();
+		marco.init();
+		marco_tank.init();
+		for (size_t i = 0; i < soldiers.size(); i++) {
+			soldiers[i].init();
+		}
+		for (size_t i = 0; i < MapObjects.size(); i++) {
+			MapObjects[i].init();
+		}
+		for (size_t i = 0; i < prisoners.size(); i++) {
+			prisoners[i].init();
+		}
+		for (size_t i = 0; i < rshobus.size(); i++) {
+			rshobus[i].init();
+		}
+
+
+
+
+
+
+		/*
+		ViewPointX = 0;
+		ViewPointY = 500;
+		
+		scroll = false;
+		Driving = false;
+		tank_barrel_angle = 0;
+		marco.respawn();
+		//marco_tank.reset();
+		//boss.reset();
+		heroGrenades = std::vector<Grenade>();
+		enemyGrenades = std::vector<Grenade>();
+		bullets = std::vector<Bullet>();
+		soldierFireworks = std::vector<Firework>();
+		tank_bullets = std::vector<tank_bullet *>();
+		rshobus = std::vector<RShobu>();
+		pickups = std::vector<Pickup>();
+		createRShobus();
+		createPickups();
+		for (size_t i = 0; i < MapObjects.size(); i++) {
+			MapObjects[i].reset();
+		}
+		for (size_t i = 0; i < soldiers.size(); i++) {
+			soldiers[i].reset();
+		}
+		for (size_t i = 0; i < prisoners.size(); i++) {
+			prisoners[i].reset();
+		}
+		*/
+		/*
+		heroGrenades
+		enemyGrenades
+		bullets
+		soldierFireworks
+		tank_bullets
+		rshobus
+		pickups
+		*/
 	}
 	vector<vector<string>> checkpointcsv = readCSV("resources/csv/checkpoint.csv");
 	vector<vector<string>> groundcsv = readCSV("resources/csv/ground.csv");
@@ -356,5 +598,9 @@ namespace game_framework {
 	Boss1 boss(9900,- 190);
 	bool Driving = false;
 	int tank_barrel_angle = 0;
-	Grenade grenade(100, 100, Direction::RIGHT);
+	bool godmode = false;
+	bool isDisplayInfo = false;
+	std::vector<Grenade> heroGrenades;
+	std::vector<Grenade> enemyGrenades;
+	std::vector<Pickup> pickups;
 }

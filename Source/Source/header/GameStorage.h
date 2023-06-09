@@ -17,6 +17,8 @@
 #include "../header/RShobuBomb.h"
 #include "../header/Grenade.h"
 #include "../header/CsvReader.h"
+#include "../header/DamageEffect.h"
+#include "../header/Pickup.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -43,6 +45,9 @@ namespace game_framework {
 	extern void createMapObject();
 	extern bool Checkcheckpoint();
 	extern void collideWithBullet();
+	extern bool isColboxOverlap(ColBox colbox1, ColBox colbox2);
+	extern void createPickups(void);
+	extern void resetWorld(void);
 	// map
 	extern std::string state;
 	extern int selectIndex;
@@ -77,5 +82,9 @@ namespace game_framework {
 	extern Boss1_laser laser;
 	extern int tank_barrel_angle;
 	extern std::vector<tank_bullet *> tank_bullets;
-	extern Grenade grenade;
+	extern std::vector<Grenade> heroGrenades;
+	extern std::vector<Grenade> enemyGrenades;
+	extern bool godmode;
+	extern bool isDisplayInfo;
+	extern std::vector<Pickup> pickups;
 }

@@ -13,13 +13,14 @@ public:
 	void collideWithBullet();
 	void init();
 	void damge(int damge);
+	void reset(void);
 protected:
-	int hp;
+	int hp, hp_init;
 	int now_hp;
-	int x;
-	int y;
+	int x, x_init;
+	int y, y_init;
 	clock_t start;
-	int destry_animation_index;
+	int destry_animation_index, destry_animation_index_init;
 	vector<string> path;
 	string name;
 };

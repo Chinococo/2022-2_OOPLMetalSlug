@@ -4,7 +4,7 @@
 using namespace game_framework;
 
 Soldier::Soldier(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
-
+	
 }
 
 void Soldier::init() {
@@ -88,7 +88,7 @@ void Soldier::control() { // AI
 		}
 	}
 
-	/*
+	
 	if ((currentTime - lastJumpTime >= JUMP_COOLDOWN) && (rand() % 10 == 0)) {
 		lastJumpTime = currentTime;
 		jumping = true;
@@ -96,17 +96,16 @@ void Soldier::control() { // AI
 	else {
 		jumping = false;
 	}
-	*/
-
-	/*
-	if (currentTime - lastAttackTime >= ATTACK_COOLDOWN) {
+	
+	
+	if (currentTime - lastAttackTime >= ((state == "map1") ? ATTACK_COOLDOWN : ATTACK_COOLDOWN / 2)) {
 		lastAttackTime = currentTime;
 		attacking = true;
 	}
 	else {
 		attacking = false;
 	}
-	*/
+	
 }
 
 void Soldier::move() {
@@ -257,4 +256,41 @@ Soldier &Soldier::operator=(const Soldier &other) {
 	y = other.y;
 	speedX = other.speedX;
 	return *this;
+}
+
+ColBox Soldier::getColBox(void) {
+	return {
+		{x, y},
+		{x + GetWidth(), y + GetHeight()}
+	};
+}
+
+void Soldier::reset(void) {
+	once = true;
+	velocityY = 0;
+	movingLeft = false;
+	movingRight = false;
+	jumping = false;
+	inAir = false;
+	lookingUp = false;
+	attacking = false;
+	nearEnemy = false;
+	throwingGrenade = false;
+	pressingDown = false;
+	lastJumpTime = clock();
+	lastAttackTime = clock();
+	action = Action::IDLE;
+	lastAction = Action::IDLE;
+	alive = true;
+	dying = false;
+	x = 100;
+	y = 300;
+	dx = 0;
+	dy = 0;
+	facingX = 1;
+	facingY = 0;
+	flip = false;
+	deathTimer = clock();
+	start = clock();
+	SetFrameIndexOfBitmap(0);
 }

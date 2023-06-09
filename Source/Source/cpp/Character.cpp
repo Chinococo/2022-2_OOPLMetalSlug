@@ -60,3 +60,8 @@ bool Character::myIsOverlap(Character *other) {
 	}
 	return true;
 }
+
+
+ColBox Character::getColBox(void) {
+	return CollideBox;
+}

@@ -53,13 +53,6 @@ void Marco::update() {
 		updateAction();
 		changeAnimation();
 		updateAnimation();
-
-		grenades.erase(std::remove_if(grenades.begin(), grenades.end(), [](const Grenade &grenade) {
-			return !grenade.isAlive();
-		}), grenades.end());
-		for (auto &grenade : grenades) {
-			grenade.update();
-		}
 	}
 	else if(!Driving){
 		action = Action::DIE;
@@ -99,8 +92,10 @@ void Marco::respawn() {
 	dying = false;
 	flip = false;
 	deathTimer = clock();
-	std::pair<std::pair<int, int>, std::pair<int, int>> CollideBox = { {-1,-1},{-1,-1} };
 	start = clock();
+	isPoweredUp = false;
+	powerUpTimer = std::chrono::steady_clock::now();
+	grenadeTimer = std::chrono::steady_clock::now();
 }
 
 void Marco::control() {
@@ -134,6 +129,12 @@ void Marco::control() {
 			}
 		}
 	}
+
+	auto nowTime = std::chrono::steady_clock::now();
+	if (isPoweredUp && nowTime - powerUpTimer > std::chrono::seconds(POWER_UP_DURATION_SEC)) {
+		isPoweredUp = false;
+		powerUpTimer = nowTime;
+	}
 }
 
 void Marco::move() {
@@ -163,12 +164,24 @@ void Marco::move() {
 
 void Marco::attack() {
 	if (attacking) {
-		addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "hero");
+		if (isPoweredUp) {
+			addBullet(x + facingX * 20, y + 20, 20, -1, 0, "hero");
+			addBullet(x + facingX * 20, y + 20, 20, 1, 0, "hero");
+			addBullet(x + facingX * 20, y + 20, 20, 0, -1, "hero");
+			addBullet(x + facingX * 20, y + 20, 20, 0, 1, "hero");
+		}
+		else {
+			addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "hero");
+		}
 	}
 }
 
 void Marco::throwGrenade() {
-	if (throwingGrenade) {
+	auto nowTime = std::chrono::steady_clock::now();
+	auto cooldown = std::chrono::milliseconds(GRENADE_COOLDOWN);
+	bool allowGrenade = nowTime - grenadeTimer > cooldown;
+
+	if (throwingGrenade && allowGrenade) {
 		Direction directionHorizontal = (facingX == 1) ? Direction::RIGHT : Direction::LEFT;
 
 		auto t = ViewPointX;
@@ -177,18 +190,20 @@ void Marco::throwGrenade() {
 
 		Grenade grenade = Grenade(x - ViewPointX, y - ViewPointY + ViewPointYInit, directionHorizontal);
 		grenade.init();
-		grenades.push_back(grenade);
+		heroGrenades.push_back(grenade);
+
+		grenadeTimer = nowTime;
 	}
 }
 
 void Marco::moveLeftRight() {
 	if (movingLeft) {
-		dx += -speedX;
+		dx += -speedX * ((godmode) ? 2 : 1);
 		facingX = -1;
 		flip = true;
 	}
 	if (movingRight&&(Checkcheckpoint()||!scroll)) {
-		dx += speedX;
+		dx += speedX * ((godmode) ? 2 : 1);
 		facingX = 1;
 		flip = false;
 	}
@@ -454,10 +469,6 @@ void Marco::draw() {
 	if (alive&&!Driving) {
 		SetTopLeft(x, y);
 		ShowBitmap();
-
-		for (auto &grenade : grenades) {
-			grenade.draw();
-		}
 	}
 	else {
 		UnshowBitmap();
@@ -472,10 +483,61 @@ void Marco::JumpOutDrving(int _x,int _y) {
 }
 void Marco::dead()
 {
+	if (godmode) {
+		return;
+	}
 	dying = true;
 	deathTimer = clock();
 }
 
 bool Marco::isAttacking() {
 	return attacking;
+}
+
+ColBox Marco::getColBox(void) {
+	const int absPosLeft = x - ViewPointX;
+	const int absPosTop = y - ViewPointY + ViewPointYInit;
+	CollideBox = {
+		{absPosLeft, absPosTop},
+		{absPosLeft + GetWidth(), absPosTop + GetHeight()}
+	};
+	return CollideBox;
+}
+
+void Marco::powerUp(void) {
+	this->isPoweredUp = true;
+	this->powerUpTimer = std::chrono::steady_clock::now();
+}
+
+Marco &Marco::operator=(const Marco &other) {
+	once = other.once;
+	velocityY = other.velocityY;
+	movingLeft = other.movingLeft;
+	movingRight = other.movingRight;
+	jumping = other.jumping;
+	inAir = other.inAir;
+	lookingUp = other.lookingUp;
+	attacking = other.attacking;
+	knifing = other.knifing;
+	throwingGrenade = other.throwingGrenade;
+	pressingDown = other.pressingDown;
+	nearEnemy = other.nearEnemy;
+	lastAttackTime = other.lastAttackTime;
+	action = other.action;
+	lastAction = other.lastAction;
+	x = other.x;
+	y = other.y;
+	dx = other.dx;
+	dy = other.dy;
+	facingX = other.facingX;
+	facingY = other.facingY;
+	alive = other.alive;
+	dying = other.dying;
+	flip = other.flip;
+	deathTimer = other.deathTimer;
+	start = other.start;
+	isPoweredUp = other.isPoweredUp;
+	powerUpTimer = other.powerUpTimer;
+	grenadeTimer = other.grenadeTimer;
+	return *this;
 }

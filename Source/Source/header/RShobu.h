@@ -68,6 +68,8 @@ public:
 	void draw();
 
 	bool isHurt(Character other);
+	virtual ColBox getColBox(void) override;
+	std::vector<RShobuBomb> getBombs(void);
 
 	RShobu &operator=(const RShobu &other);
 

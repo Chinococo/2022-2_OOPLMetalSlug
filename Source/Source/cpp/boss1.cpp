@@ -3,6 +3,8 @@
 
 Boss1::Boss1(int _x, int _y) : Character(_x, _y,0)
 {
+	this->hp = (state == "map1") ? 20 : 40;
+	this->now_hp = this->hp;
 	this->x = _x;
 	this->y = _y;
 	this->canno = new boss1_canno(x + 450, y+270);
@@ -38,9 +40,16 @@ void Boss1::damge(int damge) {
 void Boss1::update()
 {
 	this->SetFrameIndexOfBitmap(static_cast<int>(std::floor(static_cast<double>(static_cast<double>(hp - now_hp) / hp) * (this->GetFrameSizeOfBitmap() - 1))));
-	canno->Move();
+	if (alive) {
+		canno->Move();
+	}
+	else {
+		canno->fire.clear();
+	}
 	canno->update();
-
+	if (now_hp <= 0) {
+		alive = false;
+	}
 }
 
 void Boss1::draw()

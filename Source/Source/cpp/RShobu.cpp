@@ -4,7 +4,10 @@
 RShobu::RShobu(int absolutePositionLeft, int absolutePositionTop)
 	: Character(absolutePositionLeft, absolutePositionTop, velocityHorizontal),
 	absolutePositionLeft(absolutePositionLeft),
-	absolutePositionTop(absolutePositionTop) {}
+	absolutePositionTop(absolutePositionTop)
+{
+	
+}
 
 void RShobu::init() {
 	std::vector<std::vector<std::string>> csv = readCSV("resources/csv/character.csv");
@@ -122,6 +125,8 @@ void RShobu::handleActionMove() {
 
 	//-----------------------------
 
+	const int fireDelayMilli = (state == "map1") ? FIRE_DELAY_MILLISECOND : FIRE_DELAY_MILLISECOND / 2;
+
 	auto delayMillisecond = std::chrono::milliseconds(FIRE_DELAY_MILLISECOND);
 	auto timePointNow = std::chrono::steady_clock::now();
 	auto elapsedMilliSecond = std::chrono::duration_cast<std::chrono::milliseconds>(timePointNow - fireTimer);
@@ -201,6 +206,10 @@ bool RShobu::isHurt(Character other) {
 		}
 	}
 	return false;
+}
+
+std::vector<RShobuBomb> RShobu::getBombs(void) {
+	return this->bombs;
 }
 
 void RShobu::moveHorizontally(Direction direction) {
@@ -386,4 +395,11 @@ RShobu &RShobu::operator=(const RShobu &other) {
 	action = other.action;
 
 	return *this;
+}
+
+ColBox RShobu::getColBox(void) {
+	return {
+		{absolutePositionLeft, absolutePositionTop},
+		{absolutePositionLeft + GetWidth(), absolutePositionTop + GetHeight()}
+	};
 }
