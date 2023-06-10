@@ -242,6 +242,53 @@ namespace game_framework {
 				pickup.dead();
 			}
 		}
+
+		for (auto &tankCannonShell : tankCannonShells) {
+			ColBox emptyColBox = {
+				{-1, -1},
+				{-1, -1}
+			};
+			ColBox tankCannonShellColBox = emptyColBox;
+			ASSERT(tankCannonShellColBox == emptyColBox);
+			ASSERT(&tankCannonShellColBox != &emptyColBox);
+
+			if (tankCannonShell.isExpired()) {
+				tankCannonShellColBox = tankCannonShell.explode();
+			}
+			else {
+				for (auto &soldier : soldiers) {
+					if (tankCannonShell.IsOverlap_(soldier)) { // soldier overlapped
+						ASSERT(tankCannonShellColBox == emptyColBox);
+						tankCannonShellColBox = tankCannonShell.explode();
+						break;
+					}
+				}
+				for (auto &rshobu : rshobus) {
+					if (tankCannonShell.IsOverlap_(rshobu)) {
+						ASSERT(tankCannonShellColBox == emptyColBox);
+						tankCannonShellColBox = tankCannonShell.explode();
+						break;
+					}
+				}
+			}
+
+			if (tankCannonShellColBox != emptyColBox) { // check in range soldier
+				for (auto &soldier : soldiers) {
+					ColBox soldierColBox = soldier.getColBox();
+					ASSERT(soldierColBox != emptyColBox);
+					if (isColboxOverlap(tankCannonShellColBox, soldierColBox)) {
+						soldier.dead();
+					}
+				}
+				for (auto &rshobu : rshobus) {
+					ColBox rshobuColBox = rshobu.getColBox();
+					ASSERT(rshobuColBox != emptyColBox);
+					if (isColboxOverlap(tankCannonShellColBox, rshobuColBox)) {
+						rshobu.damge(10);
+					}
+				}
+			}
+		}
 	}
 	void createGrounds() {
 		/* 地板 */
@@ -330,6 +377,10 @@ namespace game_framework {
 		pickups.erase(std::remove_if(pickups.begin(), pickups.end(), [](const Pickup &pickup) {
 			return !pickup.isAlive();
 		}), pickups.end());
+
+		tankCannonShells.erase(std::remove_if(tankCannonShells.begin(), tankCannonShells.end(), [](const TankCannonShell &tankCannonShell) {
+			return !tankCannonShell.isAlive;
+		}), tankCannonShells.end());
 	}
 	void removeMapObject()
 	{
@@ -366,6 +417,9 @@ namespace game_framework {
 		for (unsigned i = 0; i < tank_bullets.size(); i++) {
 			tank_bullets[i]->move();
 			tank_bullets[i]->draw();
+		}
+		for (auto &tankCannonShell : tankCannonShells) {
+			tankCannonShell.draw();
 		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			soldierFireworks[i].draw();
@@ -605,4 +659,5 @@ namespace game_framework {
 	std::vector<Grenade> heroGrenades;
 	std::vector<Grenade> enemyGrenades;
 	std::vector<Pickup> pickups;
+	std::vector<TankCannonShell> tankCannonShells;
 }

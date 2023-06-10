@@ -272,6 +272,7 @@
     <ClCompile Include="Source\Source\cpp\Mission2State.cpp" />
     <ClCompile Include="Source\Source\cpp\Pickup.cpp" />
     <ClCompile Include="Source\Source\cpp\Prisoner.cpp" />
+    <ClCompile Include="Source\Source\cpp\RectBox.cpp" />
     <ClCompile Include="Source\Source\cpp\RShobu.cpp" />
     <ClCompile Include="Source\Source\cpp\RShobuBomb.cpp" />
     <ClCompile Include="Source\Source\cpp\Soldier.cpp" />
@@ -279,6 +280,7 @@
     <ClCompile Include="Source\Source\cpp\tank.cpp" />
     <ClCompile Include="Source\Source\cpp\tank_ barrel.cpp" />
     <ClCompile Include="Source\Source\cpp\tank_bullet.cpp" />
+    <ClCompile Include="Source\Source\cpp\tank_cannon_shell.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\Game.h" />
@@ -313,6 +315,7 @@
     <ClInclude Include="Source\Source\header\Mission2State.h" />
     <ClInclude Include="Source\Source\header\Pickup.h" />
     <ClInclude Include="Source\Source\header\Prisoner.h" />
+    <ClInclude Include="Source\Source\header\RectBox.h" />
     <ClInclude Include="Source\Source\header\RShobu.h" />
     <ClInclude Include="Source\Source\header\RShobuBomb.h" />
     <ClInclude Include="Source\Source\header\Soldier.h" />
@@ -320,6 +323,7 @@
     <ClInclude Include="Source\Source\header\tank.h" />
     <ClInclude Include="Source\Source\header\tank_ barrel.h" />
     <ClInclude Include="Source\Source\header\tank_bullet.h" />
+    <ClInclude Include="Source\Source\header\tank_cannon_shell.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc" />

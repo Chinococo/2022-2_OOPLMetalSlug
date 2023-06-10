@@ -211,10 +211,6 @@ void Prisoner::handleActionReward() {
 
 	//-----------------------------
 
-	// Build a new pickup here (point pickup or weapon pickup)
-
-	//-----------------------------
-
 	moveVertically(Direction::DOWN);
 	
 	if (directionHorizontal != lastDirectionHorizontal) {
@@ -229,6 +225,7 @@ void Prisoner::handleActionReward() {
 	//-----------------------------
 
 	if (animationDone) {
+		Pickup::createPickup(absolutePositionLeft, absolutePositionTop);
 		switchSprite(Sprite::MOVE);
 		action = Action::LEAVE;
 	}

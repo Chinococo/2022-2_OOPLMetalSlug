@@ -61,6 +61,11 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		for (size_t i = 0; i < prisoners.size(); i++) {
 			prisoners[i].update();
 		}
+
+		for (auto &tankCannonShell : tankCannonShells) {
+			tankCannonShell.update();
+		}
+
 		collideWithBullet();
 	}
 }
@@ -155,6 +160,11 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 
 		if (nChar == 0x51) { // Q
+			resetWorld();
+		}
+
+		if (nChar == 0x4D) { // M
+			state = "map2";
 			resetWorld();
 		}
 
@@ -308,6 +318,9 @@ void CGameStateRun::OnShow()
 				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 
 				std::snprintf(buffer, sizeof(buffer), "Pickup count:%d", pickups.size());
+				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
+
+				std::snprintf(buffer, sizeof(buffer), "Tank Cannon Shell count:%d", tankCannonShells.size());
 				CTextDraw::Print(pDC, 0, i += 25, std::string(buffer));
 			}
 
