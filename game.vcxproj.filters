@@ -40,6 +40,8 @@
     <ClCompile Include="Source\Source\cpp\MapController.cpp" />
     <ClCompile Include="Source\Source\cpp\FinishState.cpp" />
     <ClCompile Include="Source\Source\cpp\MenuState.cpp" />
+    <ClCompile Include="Source\Source\cpp\tank_cannon_shell.cpp" />
+    <ClCompile Include="Source\Source\cpp\RectBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Core\Game.h" />
@@ -81,6 +83,8 @@
     <ClInclude Include="Source\Source\header\MapController.h" />
     <ClInclude Include="Source\Source\header\MenuState.h" />
     <ClInclude Include="Source\Source\header\FinishState.h" />
+    <ClInclude Include="Source\Source\header\tank_cannon_shell.h" />
+    <ClInclude Include="Source\Source\header\RectBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\Core\game.rc" />

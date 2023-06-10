@@ -158,6 +158,11 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			resetWorld();
 		}
 
+		if (nChar == 0x4D) { // M
+			state = "map2";
+			resetWorld();
+		}
+
 		if (!boss.isAlive() && nChar == 0x4E) { // N
 			if (state == "map1") {
 				state = "map2";

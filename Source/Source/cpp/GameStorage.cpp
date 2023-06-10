@@ -330,6 +330,10 @@ namespace game_framework {
 		pickups.erase(std::remove_if(pickups.begin(), pickups.end(), [](const Pickup &pickup) {
 			return !pickup.isAlive();
 		}), pickups.end());
+
+		tankCannonShells.erase(std::remove_if(tankCannonShells.begin(), tankCannonShells.end(), [](const TankCannonShell &tankCannonShell) {
+			return !tankCannonShell.isAlive;
+		}), tankCannonShells.end());
 	}
 	void removeMapObject()
 	{
@@ -605,4 +609,5 @@ namespace game_framework {
 	std::vector<Grenade> heroGrenades;
 	std::vector<Grenade> enemyGrenades;
 	std::vector<Pickup> pickups;
+	std::vector<TankCannonShell> tankCannonShells;
 }

@@ -19,6 +19,7 @@
 #include "../header/CsvReader.h"
 #include "../header/DamageEffect.h"
 #include "../header/Pickup.h"
+#include "../header/tank_cannon_shell.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -87,4 +88,5 @@ namespace game_framework {
 	extern bool godmode;
 	extern bool isDisplayInfo;
 	extern std::vector<Pickup> pickups;
+	extern std::vector<TankCannonShell> tankCannonShells;
 }

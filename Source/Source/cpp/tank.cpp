@@ -136,6 +136,10 @@ void tank::attack() {
 		_bullet->init();
 		tank_bullets.push_back(_bullet);
 	}
+	else if (throwingGrenade) {
+		Direction dirHoriz = (facingX == 1) ? Direction::RIGHT : Direction::LEFT;
+		tankCannonShells.push_back(TankCannonShell::create(x, y, dirHoriz));
+	}
 }
 void tank::increaseX(int increse) {
 	x += increse;
