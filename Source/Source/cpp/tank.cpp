@@ -136,9 +136,10 @@ void tank::attack() {
 		_bullet->init();
 		tank_bullets.push_back(_bullet);
 	}
-	else if (throwingGrenade) {
+	else if (throwingGrenade && (std::chrono::steady_clock::now() - lastCannonTime > std::chrono::seconds(1))) {
 		Direction dirHoriz = (facingX == 1) ? Direction::RIGHT : Direction::LEFT;
-		tankCannonShells.push_back(TankCannonShell::create(x, y, dirHoriz));
+		tankCannonShells.push_back(TankCannonShell::create(x + GetWidth()/2 + ((dirHoriz == Direction::RIGHT) ? 50 : -50), y + 20, dirHoriz));
+		lastCannonTime = std::chrono::steady_clock::now();
 	}
 }
 void tank::increaseX(int increse) {

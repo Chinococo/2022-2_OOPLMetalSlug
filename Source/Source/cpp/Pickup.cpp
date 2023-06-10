@@ -2,7 +2,7 @@
 #include "../header/GameStorage.h"
 
 Pickup::Pickup(int absLeft, int absTop)
-	: Character(absLeft, absTop, 0), absRectBox(absLeft, absTop, 50, 50), accel{ 0, GRAVITY } {
+	: Character(absLeft, absTop, 0), absRectBox(absLeft, absTop, 20, 20), accel{ 0, GRAVITY } {
 
 }
 
@@ -45,7 +45,7 @@ void Pickup::handleGroundCollision(void) {
 		if (Ground::isOnGround(*this, ground) == 1) {
 			const int relPosLeft = absRectBox.getRelRectBox().getLeft();
 			const int relPosTop = absRectBox.getRelRectBox().getTop();
-			dist.setVert(Ground::GetX_Height(ground, relPosLeft) - relPosTop);
+			dist.setVert(Ground::GetX_Height(ground, relPosLeft) - relPosTop - GetHeight());
 			vel = { 0, 0 };
 		}
 	}

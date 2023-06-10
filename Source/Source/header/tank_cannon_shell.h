@@ -3,12 +3,12 @@
 
 class TankCannonShell : public Character {
 private:
-	RectBox absRectBox = { 0, 0, 0, 0 };
-	Vec2 accel = { 0, 0 };
-	Vec2 vel = { 0, 0 };
-	Vec2 dist = { 0, 0 };
-	Vec2 absPos = { 0, 0 };
-	Direction dirHoriz = Direction::NONE;
+	Vec2 accel;
+	Vec2 vel;
+	Vec2 dist;
+	RectBox absRectBox;
+	Direction dirHoriz;
+	std::chrono::time_point<std::chrono::steady_clock> spawnTime;
 	TankCannonShell(int absPosLeft, int absPosTop, Direction dirHoriz);
 
 public:
@@ -17,7 +17,8 @@ public:
 	void update(void);
 	void draw(void);
 	void handleGroundCollision(void);
-	virtual void dead(void) override;
+	bool isExpired(void);
+	ColBox explode(void);
 	RectBox getAbsRectBox(void) const;
 	static TankCannonShell create(int absLeft, int absTop, Direction dirHoriz);
 };

@@ -49,7 +49,8 @@ private:
 	clock_t in_driving = clock();
 	bool drving = false;
 	enum class Action {
-		IDLE, JUMP,MOVING, SOOTING, Crouch, Crouch_Driving
+		IDLE, JUMP, MOVING, SOOTING, Crouch, Crouch_Driving
 	} action = Action::IDLE, lastAction = Action::IDLE;
 	tank_barrel *barrel;
+	std::chrono::time_point<std::chrono::steady_clock> lastCannonTime = std::chrono::steady_clock::now();
 };

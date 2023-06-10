@@ -3,9 +3,13 @@
 
 TankCannonShell::TankCannonShell(int absPosLeft, int absPosTop, Direction dirHoriz) :
 	Character(absPosLeft, absPosTop, 10),
-	accel{ (dirHoriz == Direction::RIGHT) ? 1 : -1, GRAVITY },
-	absPos{ absPosLeft, absPosTop },
-	dirHoriz(dirHoriz) {
+	accel{ 0, GRAVITY },
+	vel{ (dirHoriz == Direction::RIGHT) ? 10 : -10, -10 },
+	dist{ 0, 0 },
+	absRectBox{ absPosLeft, absPosTop, 20, 20 },
+	dirHoriz(dirHoriz),
+	spawnTime(std::chrono::steady_clock::now())
+{
 
 }
 
@@ -42,13 +46,19 @@ void TankCannonShell::draw(void) {
 void TankCannonShell::handleGroundCollision(void) {
 	for (const auto &ground : grounds) {
 		if (Ground::isOnGround(*this, ground) == 1) {
-			isAlive = false;
+			explode();
 		}
 	}
 }
 
-void TankCannonShell::dead(void) {
+bool TankCannonShell::isExpired(void) {
+	auto nowTime = std::chrono::steady_clock::now();
+	return nowTime - spawnTime > std::chrono::seconds(3);
+}
+
+ColBox TankCannonShell::explode(void) {
 	isAlive = false;
+	return absRectBox.getColBox();
 }
 
 RectBox TankCannonShell::getAbsRectBox(void) const {
