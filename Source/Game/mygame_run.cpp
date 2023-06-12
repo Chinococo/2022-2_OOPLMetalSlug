@@ -350,6 +350,14 @@ void CGameStateRun::OnShow()
 		}
 		information_arm.ShowBitmap(3);
 		information_bomb.ShowBitmap(3);
+		if (Driving) {
+			information_life.SetFrameIndexOfBitmap(marco_tank.gethp());
+		}
+		else {
+			information_life.SetFrameIndexOfBitmap(0);
+		}
+		
+		information_life.ShowBitmap(3);
 		
 	}
 	else if (state == "finish") {

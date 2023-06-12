@@ -152,7 +152,7 @@ namespace game_framework {
 				break;
 			}
 			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco_tank, bullets[i])) {
-				if (!godmode) marco_tank.dead();
+				if (!godmode) marco_tank.damge(1);
 				bullets[i].dead();
 				break;
 			}
@@ -189,7 +189,7 @@ namespace game_framework {
 				break;
 			}
 			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])&&marco_tank.isAlive()) {
-				if (!godmode) { marco_tank.dead();  }
+				if (!godmode) { marco_tank.damge(1); }
 				soldierFireworks[i].dead();
 				break;
 			}
@@ -229,7 +229,7 @@ namespace game_framework {
 				break;
 			}
 			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i]) && marco_tank.isAlive()) {
-				if (!godmode) { marco_tank.dead(); }
+				if (!godmode) { marco_tank.damge(1); }
 				soldierFireworks[i].dead();
 				break;
 			}
@@ -308,8 +308,18 @@ namespace game_framework {
 	void createMap() {
 		information_arm.LoadBitmapByString({ "resources/Information/arms.bmp" }, RGB(255, 255, 255));
 		information_bomb.LoadBitmapByString({ "resources/Information/Bomb.bmp" }, RGB(255, 255, 255));
+
+		
+		vector<string> path;
+		for (int i = 0; i < 10; i++) {
+			char buffer[100];
+			sprintf(buffer, "resources/Information/life_%d.bmp", i);
+			path.push_back(buffer);
+		}
+		information_life.LoadBitmapByString(path,RGB(255,255,255));
+		information_life.SetTopLeft(0, 100);
 		information_arm.SetTopLeft(50, -2);
-		information_bomb.SetTopLeft(150, 0);
+		information_bomb.SetTopLeft(100, 0);
 		background_mission1.LoadBitmapByString({ "resources/maps/background4.bmp" }, RGB(255, 255, 255));
 		background_mission1.SetTopLeft(8000, -100);
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF,bool>> layer;
@@ -666,4 +676,6 @@ namespace game_framework {
 	std::vector<TankCannonShell> tankCannonShells;
 	CMovingBitmap information_arm;
 	CMovingBitmap information_bomb;
+	CMovingBitmap information_life;
+	bool Invincible = false;
 }

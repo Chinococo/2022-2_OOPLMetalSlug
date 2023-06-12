@@ -479,10 +479,12 @@ void Marco::JumpOutDrving(int _x,int _y) {
 	velocityY = JUMP_VELOCITY;
 	inAir = true;
 	dy += velocityY;
+	Sleep(200);
+	Invincible = false;
 }
 void Marco::dead()
 {
-	if (godmode) {
+	if (godmode|| Invincible) {
 		return;
 	}
 	if (!dying) {

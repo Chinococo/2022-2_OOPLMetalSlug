@@ -91,4 +91,6 @@ namespace game_framework {
 	extern std::vector<TankCannonShell> tankCannonShells;
 	extern CMovingBitmap information_arm;
 	extern CMovingBitmap information_bomb;
+	extern CMovingBitmap information_life;
+	extern bool Invincible;
 }
