@@ -515,16 +515,16 @@ namespace game_framework {
 	bool Checkcheckpoint() {
 		for (unsigned i = 1; i < checkpointcsv.size(); i++) {
 		
-			if (checkpointcsv[i][1] == "boss1"&&abs(ViewPointX) >= std::stoi(checkpointcsv[i][3])) 
+			if (checkpointcsv[i][1] == "boss1" &&abs(ViewPointX) >= std::stoi(checkpointcsv[i][3]))
 				return true;
-			
-		
+
+			if ( checkpointcsv[i][1] == "Helicopter"&& abs(ViewPointX) >= std::stoi(checkpointcsv[i][3])&& rshobus.size() >0 &&rshobus[0].isAlive())
+				return true;
 			for (unsigned j = 0; j < MapObjects.size(); j++) {
 				if (MapObjects[j].GetName() != checkpointcsv[i][2]|| checkpointcsv[i][1]!="MapObject"|| checkpointcsv[i][0] != "1")
 					continue;
 				if(MapObjects[j].isAlive() && abs(ViewPointX) >= std::stoi(checkpointcsv[i][3]))
 					return true;
-				
 			}
 		}
 		return false;
