@@ -93,4 +93,5 @@ namespace game_framework {
 	extern CMovingBitmap information_bomb;
 	extern CMovingBitmap information_life;
 	extern bool Invincible;
+	extern int Helicopter_count;
 }

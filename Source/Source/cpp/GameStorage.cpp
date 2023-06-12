@@ -43,7 +43,7 @@ namespace game_framework {
 		prisoners.push_back(Prisoner(9000, 100));
 	}
 	void createRShobus() {
-		rshobus.push_back(RShobu(5000, 100));
+		
 	}
 	void createSoldiers() {
 		const int moveSpeed = 1;
@@ -513,13 +513,24 @@ namespace game_framework {
 		
 	}
 	bool Checkcheckpoint() {
+		int rshobus_count = 0;
 		for (unsigned i = 1; i < checkpointcsv.size(); i++) {
 		
 			if (checkpointcsv[i][1] == "boss1" &&abs(ViewPointX) >= std::stoi(checkpointcsv[i][3]))
 				return true;
 
-			if ( checkpointcsv[i][1] == "Helicopter"&& abs(ViewPointX) >= std::stoi(checkpointcsv[i][3])&& rshobus.size() >0 &&rshobus[0].isAlive())
-				return true;
+			if (checkpointcsv[i][1] == "Helicopter"&& abs(ViewPointX) >= std::stoi(checkpointcsv[i][3])) {
+				rshobus_count += 1;
+				if (Helicopter_count < rshobus_count) {
+					rshobus.push_back(RShobu(abs(ViewPointX)+400, 100));
+					rshobus[rshobus.size() - 1].init();
+					Helicopter_count += 1;
+				}
+				else if(rshobus.size() > 0 && rshobus[0].isAlive()) {
+					return true;
+				}
+			}
+				
 			for (unsigned j = 0; j < MapObjects.size(); j++) {
 				if (MapObjects[j].GetName() != checkpointcsv[i][2]|| checkpointcsv[i][1]!="MapObject"|| checkpointcsv[i][0] != "1")
 					continue;
@@ -678,4 +689,5 @@ namespace game_framework {
 	CMovingBitmap information_bomb;
 	CMovingBitmap information_life;
 	bool Invincible = false;
+	int Helicopter_count = 0;
 }
