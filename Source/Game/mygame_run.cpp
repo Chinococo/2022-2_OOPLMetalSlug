@@ -232,7 +232,10 @@ void CGameStateRun::OnShow()
 		
 	}
 	else if (state == "map1" || state == "map2") {
-		
+		if (marco.x > 430 && !Checkcheckpoint() && marco.isAlive()) {
+			ViewPointX -= MapScrollSpeed/2;
+			marco.x -= MapScrollSpeed/2;
+		}
 		if (keyDowns.count(VK_RIGHT) && scroll && !Checkcheckpoint()&&marco.isAlive()) {
 			ViewPointX -= MapScrollSpeed;
 			if (Driving)
