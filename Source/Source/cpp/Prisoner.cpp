@@ -107,6 +107,13 @@ void Prisoner::handleActionTied() {
 			break;
 		}
 	}
+	for (size_t i = 0; i < tank_bullets.size(); i++) {
+		if (isCollideWith(*tank_bullets[i])) {
+			isRescuredByHeroBullet = true;
+			break;
+		}
+
+	}
 
 	if (isRescuredByHeroKnife || isRescuredByHeroBullet) {
 		action = Action::RESCUED;
