@@ -89,4 +89,5 @@ namespace game_framework {
 	extern bool isDisplayInfo;
 	extern std::vector<Pickup> pickups;
 	extern std::vector<TankCannonShell> tankCannonShells;
+	extern CMovingBitmap information_arm;
 }

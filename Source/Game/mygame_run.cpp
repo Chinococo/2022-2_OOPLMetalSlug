@@ -348,8 +348,7 @@ void CGameStateRun::OnShow()
 
 			CDDraw::ReleaseBackCDC();
 		}
-		
-		
+		information_arm.ShowBitmap(3);
 		
 	}
 	else if (state == "finish") {
