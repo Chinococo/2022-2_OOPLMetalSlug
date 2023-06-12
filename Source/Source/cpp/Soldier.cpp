@@ -79,7 +79,7 @@ void Soldier::control() { // AI
 
 	movingLeft = false;
 	movingRight = false;
-	if (abs(distanceX) > 250) {
+	if (abs(distanceX) > 250&& abs(distanceX) < 700) {
 		if (distanceX > 0) {
 			movingRight = true;
 		}
@@ -98,7 +98,7 @@ void Soldier::control() { // AI
 	}
 	
 	
-	if (currentTime - lastAttackTime >= ((state == "map1") ? ATTACK_COOLDOWN : ATTACK_COOLDOWN / 2)) {
+	if (currentTime - lastAttackTime >= ((state == "map1") ? ATTACK_COOLDOWN : ATTACK_COOLDOWN / 2)&& abs(distanceX) < 400) {
 		lastAttackTime = currentTime;
 		attacking = true;
 	}
@@ -136,7 +136,7 @@ void Soldier::attack() {
 	if (attacking) {
 		//addBullet(ViewPointX+x + facingX * 20, y + 20, 20, facingX, facingY, "enemy");
 		std::string direction = (facingX == -1) ? "left" : "right";
-		addFirework(x, y , direction);
+		addFirework(x, y +10, direction);
 	}
 }
 
