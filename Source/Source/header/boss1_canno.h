@@ -14,7 +14,7 @@ class boss1_canno : public Character {
 	private:
 		enum class Action {
 			MovingDown,Movingup,AttackLow, AttackUp, IDLEDown,IDLEUp,LasetLow,LaserUp
-		} action = Action::LaserUp, lastAction = Action::LaserUp;
+		} action = Action::IDLEDown, lastAction = Action::IDLEDown;
 		int x, y;
 		bool position;
 		time_t start_AI = clock();

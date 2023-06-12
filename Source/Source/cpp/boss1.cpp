@@ -39,6 +39,8 @@ void Boss1::damge(int damge) {
 }
 void Boss1::update()
 {
+	if (this->now_hp == this->hp)
+		return;
 	this->SetFrameIndexOfBitmap(static_cast<int>(std::floor(static_cast<double>(static_cast<double>(hp - now_hp) / hp) * (this->GetFrameSizeOfBitmap() - 1))));
 	if (alive) {
 		canno->Move();
