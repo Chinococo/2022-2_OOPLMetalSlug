@@ -121,6 +121,9 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			if (selectIndex == 0) {
 				Loading = false;
 				state = "map1";
+			}else if (selectIndex == 1) {
+				Loading = false;
+				state = "map2";
 			}
 			
 		}
