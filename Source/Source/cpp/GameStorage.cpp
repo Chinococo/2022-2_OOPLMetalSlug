@@ -307,6 +307,9 @@ namespace game_framework {
 	}
 	void createMap() {
 		information_arm.LoadBitmapByString({ "resources/Information/arms.bmp" }, RGB(255, 255, 255));
+		information_bomb.LoadBitmapByString({ "resources/Information/Bomb.bmp" }, RGB(255, 255, 255));
+		information_arm.SetTopLeft(50, -2);
+		information_bomb.SetTopLeft(150, 0);
 		background_mission1.LoadBitmapByString({ "resources/maps/background4.bmp" }, RGB(255, 255, 255));
 		background_mission1.SetTopLeft(8000, -100);
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF,bool>> layer;
@@ -662,4 +665,5 @@ namespace game_framework {
 	std::vector<Pickup> pickups;
 	std::vector<TankCannonShell> tankCannonShells;
 	CMovingBitmap information_arm;
+	CMovingBitmap information_bomb;
 }

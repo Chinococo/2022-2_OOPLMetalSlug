@@ -90,4 +90,5 @@ namespace game_framework {
 	extern std::vector<Pickup> pickups;
 	extern std::vector<TankCannonShell> tankCannonShells;
 	extern CMovingBitmap information_arm;
+	extern CMovingBitmap information_bomb;
 }
