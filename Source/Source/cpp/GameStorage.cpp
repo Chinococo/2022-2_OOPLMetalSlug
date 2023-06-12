@@ -151,7 +151,7 @@ namespace game_framework {
 				bullets[i].dead();
 				break;
 			}
-			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco_tank, bullets[i])) {
+			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco_tank, bullets[i]) && Driving) {
 				if (!godmode) marco_tank.damge(1);
 				bullets[i].dead();
 				break;
@@ -188,7 +188,7 @@ namespace game_framework {
 				soldierFireworks[i].dead();
 				break;
 			}
-			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])&&marco_tank.isAlive()) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])&&marco_tank.isAlive()&&Driving) {
 				if (!godmode) { marco_tank.damge(1); }
 				soldierFireworks[i].dead();
 				break;
@@ -228,7 +228,7 @@ namespace game_framework {
 				soldierFireworks[i].dead();
 				break;
 			}
-			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i]) && marco_tank.isAlive()) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i]) && marco_tank.isAlive() && Driving) {
 				if (!godmode) { marco_tank.damge(1); }
 				soldierFireworks[i].dead();
 				break;
@@ -317,9 +317,9 @@ namespace game_framework {
 			path.push_back(buffer);
 		}
 		information_life.LoadBitmapByString(path,RGB(255,255,255));
-		information_life.SetTopLeft(0, 100);
-		information_arm.SetTopLeft(50, -2);
-		information_bomb.SetTopLeft(100, 0);
+		information_life.SetTopLeft(0, 30);
+		information_arm.SetTopLeft(-20, -2);
+		information_bomb.SetTopLeft(70, 0);
 		background_mission1.LoadBitmapByString({ "resources/maps/background4.bmp" }, RGB(255, 255, 255));
 		background_mission1.SetTopLeft(8000, -100);
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF,bool>> layer;
