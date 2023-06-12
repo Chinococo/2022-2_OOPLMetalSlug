@@ -237,7 +237,7 @@ namespace game_framework {
 		}
 
 		for (auto &pickup : pickups) {
-			if (isColboxOverlap(pickup.getAbsRectBox().getColBox(), marco.getColBox())) {
+			if (isColboxOverlap(pickup.getAbsRectBox().getColBox(), marco.getColBox())||game_framework::CMovingBitmap::IsOverlap(pickup,marco_tank)) {
 				marco.powerUp();
 				pickup.dead();
 			}
