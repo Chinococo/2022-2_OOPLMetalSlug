@@ -148,7 +148,7 @@ void tank::increaseX(int increse) {
 void tank::moveLeftRight() {
 	if (movingLeft) {
 		dx += -speedX;
-		if (barrel->GetAngele() != 26&&clock()- roate>100) {
+		if (barrel->GetAngele() != 26&&clock()- roate>50) {
 			roate = clock();
 			if (barrel->GetAngele() >= 11 && barrel->GetAngele() <= 25)
 				barrel->SetAngele((barrel->GetAngele()+1)%32);
@@ -287,6 +287,7 @@ void tank::take_in()
 	if (!Driving&&IsOverlap(marco, *this) && (marco.GetTop() + marco.GetHeight() - 30) <= this->GetTop() && clock() - out_drviing > 1000) {
 		Driving = true;
 		in_driving = clock();
+		Invincible = true;
 		//x = x + ViewPointX;
 		//y = y + ViewPointYInit - ViewPointY;
 		//SetTopLeft(x, y);
@@ -298,6 +299,8 @@ void tank::take_out()
 	if (Driving && out && clock() - in_driving > 1000) {
 		Driving = false;
 		marco.JumpOutDrving(ViewPointX + x - 80, y - ViewPointYInit + ViewPointY);
+		Sleep(200);
+		Invincible = false;
 		out_drviing = clock();
 	}
 }
@@ -306,6 +309,7 @@ void tank::dead()
 {
 	dying = true;
 	deathTimer = clock();
+	out = true;
 	take_out();
 }
 
@@ -347,6 +351,22 @@ void tank::respawn(void)
 	start = clock();
 	alive = true;
 	dying = false;
+}
+
+void tank::damge(int damge1)
+{
+	this->hp -= damge1;
+	if (this->hp <= 0) {
+		this->hp = 0;
+		take_out();
+		this->dead();
+	}
+
+}
+
+int tank::gethp()
+{
+	return this->hp;
 }
 
 tank &tank::operator=(const tank &other) {

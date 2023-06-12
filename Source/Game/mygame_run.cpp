@@ -121,6 +121,9 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 			if (selectIndex == 0) {
 				Loading = false;
 				state = "map1";
+			}else if (selectIndex == 1) {
+				Loading = false;
+				state = "map2";
 			}
 			
 		}
@@ -214,10 +217,26 @@ void CGameStateRun::OnShow()
 			mainmenuButtons.at(i).ShowBitmap();
 		}
 		arrow.ShowBitmap();
+		if (!Loading) {
+			Sleep(100);
+			Loading = true;
+		}
+		else {
+			CDC *pDC = CDDraw::GetBackCDC();
+			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(255, 0, 0), 500);
+			CTextDraw::Print(pDC, 580, 80 * 0 + 175, "Mission1");
+			CTextDraw::Print(pDC, 580, 80 * 1 + 175, "Mission2");
+			CDDraw::ReleaseBackCDC();
+		}
+		
+		
 	}
 	else if (state == "map1" || state == "map2") {
-		
-		if (keyDowns.count(VK_RIGHT) && scroll && !Checkcheckpoint()) {
+		if (marco.x > 430 && !Checkcheckpoint() && marco.isAlive()) {
+			ViewPointX -= MapScrollSpeed/2;
+			marco.x -= MapScrollSpeed/2;
+		}
+		if (keyDowns.count(VK_RIGHT) && scroll && !Checkcheckpoint()&&marco.isAlive()) {
 			ViewPointX -= MapScrollSpeed;
 			if (Driving)
 				marco_tank.increaseX(MapScrollSpeed);
@@ -332,8 +351,16 @@ void CGameStateRun::OnShow()
 
 			CDDraw::ReleaseBackCDC();
 		}
+		information_arm.ShowBitmap(3);
+		information_bomb.ShowBitmap(3);
+		if (Driving) {
+			information_life.SetFrameIndexOfBitmap(marco_tank.gethp());
+		}
+		else {
+			information_life.SetFrameIndexOfBitmap(0);
+		}
 		
-		
+		information_life.ShowBitmap(3);
 		
 	}
 	else if (state == "finish") {

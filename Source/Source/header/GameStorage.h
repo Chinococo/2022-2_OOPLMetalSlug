@@ -89,4 +89,9 @@ namespace game_framework {
 	extern bool isDisplayInfo;
 	extern std::vector<Pickup> pickups;
 	extern std::vector<TankCannonShell> tankCannonShells;
+	extern CMovingBitmap information_arm;
+	extern CMovingBitmap information_bomb;
+	extern CMovingBitmap information_life;
+	extern bool Invincible;
+	extern int Helicopter_count;
 }

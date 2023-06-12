@@ -26,6 +26,8 @@ public:
 	void dead();
 	bool isAttacking();
 	void respawn(void);
+	void damge(int);
+	int gethp();
 	tank &operator=(const tank &other);
 private:
 	bool once = false;
@@ -43,6 +45,7 @@ private:
 	bool pressingDown = false;
 	bool nearEnemy = false;
 	bool out = false;
+	int hp = 9;
 	clock_t lastAttackTime = clock();
 	clock_t roate = clock();
 	clock_t out_drviing = clock();

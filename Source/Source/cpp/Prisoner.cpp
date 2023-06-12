@@ -107,6 +107,13 @@ void Prisoner::handleActionTied() {
 			break;
 		}
 	}
+	for (size_t i = 0; i < tank_bullets.size(); i++) {
+		if (isCollideWith(*tank_bullets[i])) {
+			isRescuredByHeroBullet = true;
+			break;
+		}
+
+	}
 
 	if (isRescuredByHeroKnife || isRescuredByHeroBullet) {
 		action = Action::RESCUED;
@@ -171,7 +178,7 @@ void Prisoner::handleActionMove() {
 
 	//-----------------------------
 
-	if (isCollideWith(marco)) {
+	if (isCollideWith(marco)|| isCollideWith(marco_tank)) {
 		action = Action::REWARD;
 	}
 	else if (inAir) {

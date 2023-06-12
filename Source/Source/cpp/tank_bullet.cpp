@@ -6,7 +6,7 @@ tank_bullet::tank_bullet(int _x, int _y):Character(x,y,0)
 	this->start = clock();
 	this->angle = ((((tank_barrel_angle + 22) % 32) * (static_cast<float>(360) / 32)) / 180) * 3.14f;
 	this->x = _x+30+ int(25 * cos(angle));
-	this->y = _y+30+int(25 * sin(angle));
+	this->y = _y+60+int(25 * sin(angle));
 	
 
 

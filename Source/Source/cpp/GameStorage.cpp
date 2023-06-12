@@ -43,7 +43,7 @@ namespace game_framework {
 		prisoners.push_back(Prisoner(9000, 100));
 	}
 	void createRShobus() {
-		rshobus.push_back(RShobu(5000, 100));
+		
 	}
 	void createSoldiers() {
 		const int moveSpeed = 1;
@@ -151,8 +151,8 @@ namespace game_framework {
 				bullets[i].dead();
 				break;
 			}
-			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco_tank, bullets[i])) {
-				if (!godmode) marco_tank.dead();
+			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco_tank, bullets[i]) && Driving) {
+				if (!godmode) marco_tank.damge(1);
 				bullets[i].dead();
 				break;
 			}
@@ -188,8 +188,8 @@ namespace game_framework {
 				soldierFireworks[i].dead();
 				break;
 			}
-			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])&&marco_tank.isAlive()) {
-				if (!godmode) { marco_tank.dead();  }
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i])&&marco_tank.isAlive()&&Driving) {
+				if (!godmode) { marco_tank.damge(1); }
 				soldierFireworks[i].dead();
 				break;
 			}
@@ -228,8 +228,8 @@ namespace game_framework {
 				soldierFireworks[i].dead();
 				break;
 			}
-			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i]) && marco_tank.isAlive()) {
-				if (!godmode) { marco_tank.dead(); }
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i]) && marco_tank.isAlive() && Driving) {
+				if (!godmode) { marco_tank.damge(1); }
 				soldierFireworks[i].dead();
 				break;
 			}
@@ -237,7 +237,7 @@ namespace game_framework {
 		}
 
 		for (auto &pickup : pickups) {
-			if (isColboxOverlap(pickup.getAbsRectBox().getColBox(), marco.getColBox())) {
+			if (isColboxOverlap(pickup.getAbsRectBox().getColBox(), marco.getColBox())||game_framework::CMovingBitmap::IsOverlap(pickup,marco_tank)) {
 				marco.powerUp();
 				pickup.dead();
 			}
@@ -306,6 +306,20 @@ namespace game_framework {
 
 	}
 	void createMap() {
+		information_arm.LoadBitmapByString({ "resources/Information/arms.bmp" }, RGB(255, 255, 255));
+		information_bomb.LoadBitmapByString({ "resources/Information/Bomb.bmp" }, RGB(255, 255, 255));
+
+		
+		vector<string> path;
+		for (int i = 0; i < 10; i++) {
+			char buffer[100];
+			sprintf(buffer, "resources/Information/life_%d.bmp", i);
+			path.push_back(buffer);
+		}
+		information_life.LoadBitmapByString(path,RGB(255,255,255));
+		information_life.SetTopLeft(0, 30);
+		information_arm.SetTopLeft(-20, -2);
+		information_bomb.SetTopLeft(70, 0);
 		background_mission1.LoadBitmapByString({ "resources/maps/background4.bmp" }, RGB(255, 255, 255));
 		background_mission1.SetTopLeft(8000, -100);
 		std::vector<std::tuple<std::vector<std::string>, std::vector<std::pair<int, int>>, COLORREF,bool>> layer;
@@ -499,18 +513,29 @@ namespace game_framework {
 		
 	}
 	bool Checkcheckpoint() {
+		int rshobus_count = 0;
 		for (unsigned i = 1; i < checkpointcsv.size(); i++) {
 		
-			if (checkpointcsv[i][1] == "boss1"&&abs(ViewPointX) >= std::stoi(checkpointcsv[i][3])) 
+			if (checkpointcsv[i][1] == "boss1" &&abs(ViewPointX) >= std::stoi(checkpointcsv[i][3]))
 				return true;
-			
-		
+
+			if (checkpointcsv[i][1] == "Helicopter"&& abs(ViewPointX) >= std::stoi(checkpointcsv[i][3])) {
+				rshobus_count += 1;
+				if (Helicopter_count < rshobus_count) {
+					rshobus.push_back(RShobu(abs(ViewPointX)+400, 100));
+					rshobus[rshobus.size() - 1].init();
+					Helicopter_count += 1;
+				}
+				else if(rshobus.size() > 0 && rshobus[0].isAlive()) {
+					return true;
+				}
+			}
+				
 			for (unsigned j = 0; j < MapObjects.size(); j++) {
 				if (MapObjects[j].GetName() != checkpointcsv[i][2]|| checkpointcsv[i][1]!="MapObject"|| checkpointcsv[i][0] != "1")
 					continue;
 				if(MapObjects[j].isAlive() && abs(ViewPointX) >= std::stoi(checkpointcsv[i][3]))
 					return true;
-				
 			}
 		}
 		return false;
@@ -660,4 +685,9 @@ namespace game_framework {
 	std::vector<Grenade> enemyGrenades;
 	std::vector<Pickup> pickups;
 	std::vector<TankCannonShell> tankCannonShells;
+	CMovingBitmap information_arm;
+	CMovingBitmap information_bomb;
+	CMovingBitmap information_life;
+	bool Invincible = false;
+	int Helicopter_count = 0;
 }

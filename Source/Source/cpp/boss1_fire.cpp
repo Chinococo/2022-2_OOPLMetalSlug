@@ -23,6 +23,9 @@ void Boss1_fire::move()
 		this->isAlive = false;
 		marco.dead();
 	}
+	for (size_t i = 0; i < grounds.size(); i++)
+		if (Ground::isOnGround(*this, grounds[i]) == 1)
+			this->isAlive = false;
 	
 }
 
