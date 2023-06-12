@@ -178,7 +178,7 @@ void Prisoner::handleActionMove() {
 
 	//-----------------------------
 
-	if (isCollideWith(marco)) {
+	if (isCollideWith(marco)|| isCollideWith(marco_tank)) {
 		action = Action::REWARD;
 	}
 	else if (inAir) {
