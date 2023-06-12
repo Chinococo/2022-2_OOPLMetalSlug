@@ -214,6 +214,19 @@ void CGameStateRun::OnShow()
 			mainmenuButtons.at(i).ShowBitmap();
 		}
 		arrow.ShowBitmap();
+		if (!Loading) {
+			Sleep(100);
+			Loading = true;
+		}
+		else {
+			CDC *pDC = CDDraw::GetBackCDC();
+			CTextDraw::ChangeFontLog(pDC, 25, "微軟正黑體", RGB(255, 0, 0), 500);
+			CTextDraw::Print(pDC, 580, 80 * 0 + 175, "Mission1");
+			CTextDraw::Print(pDC, 580, 80 * 1 + 175, "Mission2");
+			CDDraw::ReleaseBackCDC();
+		}
+		
+		
 	}
 	else if (state == "map1" || state == "map2") {
 		
