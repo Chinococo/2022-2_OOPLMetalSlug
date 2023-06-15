@@ -21,6 +21,7 @@
 #include "../header/Pickup.h"
 #include "../header/tank_cannon_shell.h"
 #include "../header/Enemy_tank.h"
+#include "../header/enemy_tank_bullet.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -73,6 +74,7 @@ namespace game_framework {
 	extern std::vector <MapObject> MapObjects;
 	extern std::vector<Soldier> soldiers;
 	extern std::vector<Enemy_tank> enemy_tnak;
+	extern std::vector<Enemy_tank> enemy_tnak_bullets;
 	extern std::vector<Bullet> bullets;
 	extern std::vector<Firework> soldierFireworks;
 	extern std::vector<Prisoner> prisoners;

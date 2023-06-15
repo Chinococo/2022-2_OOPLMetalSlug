@@ -444,6 +444,9 @@ namespace game_framework {
 		marco_tank.draw();
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
+		} 
+		for (size_t i = 0; i < enemy_tnak_bullets.size(); i++) {
+				enemy_tnak_bullets[i].draw();
 		}
 		for (auto &grenade : heroGrenades) {
 			grenade.draw();
@@ -454,6 +457,10 @@ namespace game_framework {
 		for (unsigned i = 0; i < tank_bullets.size(); i++) {
 			tank_bullets[i]->move();
 			tank_bullets[i]->draw();
+		}
+		for (unsigned i = 0; i < tank_bullets.size(); i++) {
+			enemy_tnak_bullets[i].move();
+			enemy_tnak_bullets[i].draw();
 		}
 		for (auto &tankCannonShell : tankCannonShells) {
 			tankCannonShell.draw();
@@ -714,4 +721,5 @@ namespace game_framework {
 	bool Invincible = false;
 	int Helicopter_count = 0;
 	std::vector<Enemy_tank> enemy_tnak;
+	std::vector<Enemy_tank> enemy_tnak_bullets;
 }
