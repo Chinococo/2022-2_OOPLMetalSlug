@@ -105,6 +105,10 @@ namespace game_framework {
 						break;
 					}
 				}
+				if (grenade.IsOverlap_(boss)) {
+					ASSERT(grenadeColBox == emptyColBox);
+					grenadeColBox = grenade.explode();
+				}
 			}
 			
 			if (grenadeColBox != emptyColBox) { // check in range soldier
@@ -121,6 +125,11 @@ namespace game_framework {
 					if (isColboxOverlap(grenadeColBox, rshobuColBox)) {
 						rshobu.damge(10);
 					}
+				}
+				ColBox bossColBox = boss.getColBox();
+				ASSERT(bossColBox != emptyColBox);
+				if (isColboxOverlap(grenadeColBox, bossColBox)) {
+					boss.damge(10);
 				}
 			}
 		}
@@ -270,6 +279,12 @@ namespace game_framework {
 						break;
 					}
 				}
+				/*
+				if (tankCannonShell.IsOverlap_()) {
+					ASSERT(tankCannonShellColBox == emptyColBox);
+					tankCannonShellColBox = tankCannonShell.explode();
+				}
+				*/
 			}
 
 			if (tankCannonShellColBox != emptyColBox) { // check in range soldier
@@ -286,6 +301,10 @@ namespace game_framework {
 					if (isColboxOverlap(tankCannonShellColBox, rshobuColBox)) {
 						rshobu.damge(10);
 					}
+				}
+				ColBox bossColBox = boss.getColBox();
+				if (isColboxOverlap(tankCannonShellColBox, bossColBox)) {
+					boss.damge(10);
 				}
 			}
 		}
@@ -542,7 +561,7 @@ namespace game_framework {
 				
 	}
 	void resetWorld(void) {
-
+		Helicopter_count = 0;
 		selectIndex = 0;
 		ViewPointX = 0;
 		ViewPointY = 580;
@@ -604,7 +623,7 @@ namespace game_framework {
 			rshobus[i].init();
 		}
 
-
+		marco_tank.respawn();
 
 
 

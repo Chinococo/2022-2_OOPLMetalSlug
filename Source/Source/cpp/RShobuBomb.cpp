@@ -91,7 +91,7 @@ void RShobuBomb::update() {
 
 void RShobuBomb::draw() {
 	if (alive) {
-		ShowBitmap(2.2);
+		ShowBitmap();
 	}
 	else {
 		UnshowBitmap();
