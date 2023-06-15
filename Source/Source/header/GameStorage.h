@@ -20,6 +20,7 @@
 #include "../header/DamageEffect.h"
 #include "../header/Pickup.h"
 #include "../header/tank_cannon_shell.h"
+#include "../header/Enemy_tank.h"
 #include <string>
 #include <vector>
 #include <set>
