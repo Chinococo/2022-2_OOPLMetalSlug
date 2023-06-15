@@ -182,7 +182,7 @@ namespace game_framework {
 				break;
 			}
 			for (size_t j = 0; j < soldiers.size(); j++) {
-				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(bullets[i], soldiers[j])) {
+				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(bullets[i], soldiers[j])&&soldiers[j].isAlive()) {
 					soldiers[j].dead();
 					bullets[i].dead();
 					break;
