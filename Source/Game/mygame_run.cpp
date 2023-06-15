@@ -305,7 +305,10 @@ void CGameStateRun::OnShow()
 
 			std::snprintf(buffer, sizeof(buffer), "PowerUp:%s", (marco.isPoweredUp) ? "on" : "off");
 			CTextDraw::Print(pDC, 600, i += 25, std::string(buffer));
-
+			CTextDraw::ChangeFontLog(pDC, 15, "微軟正黑體", RGB(255, 255, 255), 500);
+			CTextDraw::Print(pDC, 20, 15, "inf");
+			CTextDraw::Print(pDC, 95, 15, "inf");
+			CTextDraw::ChangeFontLog(pDC, 20, "微軟正黑體", RGB(255, 255,255), 500);
 			if (isDisplayInfo) {
 				i = 0;
 
