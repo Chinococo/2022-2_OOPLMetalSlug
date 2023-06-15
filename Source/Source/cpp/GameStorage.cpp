@@ -52,6 +52,11 @@ namespace game_framework {
 		//soldiers.push_back(Soldier(300, 300, moveSpeed));
 		//soldiers.push_back(Soldier(400, 400, moveSpeed));
 		//soldiers.push_back(Soldier(500, 500, moveSpeed));
+		for(int i=500;i<=12000;i+=100)
+			if(rand()%(state=="map1"?5:4)==0)
+				soldiers.push_back(Soldier(i, 100, 1));
+		int t = soldiers.size();
+		/*
 		soldiers.push_back(Soldier(600, 100, moveSpeed));
 		soldiers.push_back(Soldier(1000, 500, 1));
 		soldiers.push_back(Soldier(1500, 500, 1));
@@ -61,6 +66,7 @@ namespace game_framework {
 		soldiers.push_back(Soldier(3500, 500, 1));
 		soldiers.push_back(Soldier(4000, 500, 1));
 		soldiers.push_back(Soldier(4500, 500, 1));
+		*/
 		enemy_tnak.push_back(Enemy_tank(300, 100, 1));
 		
 	}
@@ -161,6 +167,13 @@ namespace game_framework {
 				bullets[i].dead();
 				break;
 			}
+			for(unsigned k=0;k< enemy_tnak.size();k++)
+				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(enemy_tnak[k], bullets[i])) {
+					enemy_tnak[k].dead();
+					bullets[i].dead();
+					break;
+				}
+
 			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco_tank, bullets[i]) && Driving) {
 				if (!godmode) marco_tank.damge(1);
 				bullets[i].dead();
@@ -217,6 +230,7 @@ namespace game_framework {
 				break;
 			}
 
+
 		}
 		for (size_t i = 0; i < tank_bullets.size(); i++) {
 			for (size_t j = 0; j < soldiers.size(); j++) {
@@ -244,6 +258,12 @@ namespace game_framework {
 				boss.damge(1);
 				break;
 			}
+			for (unsigned k = 0; k < enemy_tnak.size(); k++)
+				if (game_framework::CMovingBitmap::IsOverlap(enemy_tnak[k], *tank_bullets[i])) {
+					enemy_tnak[k].dead();
+					(*tank_bullets[i]).dead();
+					break;
+				}
 		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i]) && marco.isAlive()) {
