@@ -386,7 +386,7 @@ namespace game_framework {
 			path.push_back(buffer);
 		}
 		information_life.LoadBitmapByString(path,RGB(255,255,255));
-		information_life.SetTopLeft(0, 0);
+		information_life.SetTopLeft(0, 40);
 		information_arm.SetTopLeft(-20, -2);
 		information_bomb.SetTopLeft(70, 0);
 		background_mission1.LoadBitmapByString({ "resources/maps/background4.bmp" }, RGB(255, 255, 255));
