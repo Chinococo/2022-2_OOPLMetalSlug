@@ -101,7 +101,7 @@ namespace game_framework {
 				}
 				for (auto &rshobu : rshobus) {
 					if (grenade.IsOverlap_(rshobu)) {
-						ASSERT(grenadeColBox == emptyColBox);
+						//ASSERT(grenadeColBox == emptyColBox);
 						grenadeColBox = grenade.explode();
 						break;
 					}
@@ -205,6 +205,19 @@ namespace game_framework {
 			}
 			
 		}
+		for (size_t i = 0; i < enemy_tnak_bullets.size(); i++) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco, enemy_tnak_bullets[i]) && marco.isAlive()) {
+				if (!godmode) { marco.dead(); }
+				enemy_tnak_bullets[i].dead();
+				break;
+			}
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, enemy_tnak_bullets[i]) && marco_tank.isAlive() && Driving) {
+				if (!godmode) { marco_tank.damge(1); }
+				enemy_tnak_bullets[i].dead();
+				break;
+			}
+
+		}
 		for (size_t i = 0; i < tank_bullets.size(); i++) {
 			for (size_t j = 0; j < soldiers.size(); j++) {
 				if (game_framework::CMovingBitmap::IsOverlap(*tank_bullets[i], soldiers[j])) {
@@ -241,6 +254,19 @@ namespace game_framework {
 			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i]) && marco_tank.isAlive() && Driving) {
 				if (!godmode) { marco_tank.damge(1); }
 				soldierFireworks[i].dead();
+				break;
+			}
+
+		}
+		for (size_t i = 0; i < enemy_tnak_bullets.size(); i++) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco, enemy_tnak_bullets[i]) && marco.isAlive()) {
+				if (!godmode) { marco.dead(); }
+				enemy_tnak_bullets[i].dead();
+				break;
+			}
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, enemy_tnak_bullets[i]) && marco_tank.isAlive() && Driving) {
+				if (!godmode) { marco_tank.damge(1); }
+				enemy_tnak_bullets[i].dead();
 				break;
 			}
 
@@ -396,6 +422,11 @@ namespace game_framework {
 		soldierFireworks.erase(std::remove_if(soldierFireworks.begin(), soldierFireworks.end(), [](const Firework &firework) {
 			return !firework.isAlive();
 		}), soldierFireworks.end());
+		
+		for (int i = enemy_tnak_bullets.size() - 1; i >= 0; i--)
+			if (!enemy_tnak_bullets[i].isAlive())
+				enemy_tnak_bullets.erase(enemy_tnak_bullets.begin() + i);
+			
 
 		for (unsigned i = 0; i < tank_bullets.size();)
 			if (!tank_bullets[i]->isAlive()) {
