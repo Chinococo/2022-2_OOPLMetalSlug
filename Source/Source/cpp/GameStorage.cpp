@@ -236,7 +236,7 @@ namespace game_framework {
 		}
 		for (size_t i = 0; i < tank_bullets.size(); i++) {
 			for (size_t j = 0; j < soldiers.size(); j++) {
-				if (game_framework::CMovingBitmap::IsOverlap(*tank_bullets[i], soldiers[j])) {
+				if (game_framework::CMovingBitmap::IsOverlap(*tank_bullets[i], soldiers[j]) && soldiers[j].isAlive()) {
 					soldiers[j].dead();
 					(*tank_bullets[i]).dead();
 					break;
