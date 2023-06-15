@@ -80,7 +80,7 @@ void Enemy_tank::control() { // AI
 
 	movingLeft = false;
 	movingRight = false;
-	if (abs(distanceX) > 250 && abs(distanceX) < 700) {
+	if ( abs(distanceX) < 700) {
 		if (distanceX > 0) {
 			movingRight = true;
 		}
