@@ -40,6 +40,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].update();
 		}
+		for (size_t i = 0; i < enemy_tnak.size(); i++) {
+			enemy_tnak[i].update();
+		}
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].update();
 		}

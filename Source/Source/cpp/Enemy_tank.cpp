@@ -5,7 +5,7 @@
 using namespace game_framework;
 
 Enemy_tank::Enemy_tank(int _x, int _y, int _speedX) : Character(_x, _y, _speedX) {
-
+	init();
 }
 
 void Enemy_tank::init() {
@@ -39,7 +39,7 @@ void Enemy_tank::init() {
 		animationRanges.push_back(range);
 		animationDelays.push_back(delay);
 	}
-	LoadBitmapByString(paths, RGB(0, 0, 0));
+	LoadBitmapByString(paths, RGB(255, 255, 255));
 	animationRange = animationRanges[static_cast<int>(action)];
 	animationDelay = animationDelays[static_cast<int>(action)];
 }
@@ -87,15 +87,6 @@ void Enemy_tank::control() { // AI
 		else if (distanceX < 0) {
 			movingLeft = true;
 		}
-	}
-
-
-	if ((currentTime - lastJumpTime >= JUMP_COOLDOWN) && (rand() % 10 == 0)) {
-		lastJumpTime = currentTime;
-		jumping = true;
-	}
-	else {
-		jumping = false;
 	}
 
 

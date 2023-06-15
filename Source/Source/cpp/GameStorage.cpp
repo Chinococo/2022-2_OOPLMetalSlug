@@ -61,8 +61,7 @@ namespace game_framework {
 		soldiers.push_back(Soldier(3500, 500, 1));
 		soldiers.push_back(Soldier(4000, 500, 1));
 		soldiers.push_back(Soldier(4500, 500, 1));
-		Enemy_tank test(300, 100,1);
-		test.init();
+		enemy_tnak.push_back(Enemy_tank(300, 100, 1));
 		
 	}
 	bool isColboxOverlap(ColBox colbox1, ColBox colbox2) {
@@ -435,6 +434,9 @@ namespace game_framework {
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].draw();
 		}
+		for (size_t i = 0; i < enemy_tnak.size(); i++) {
+			enemy_tnak[i].draw();
+		}
 		for (size_t i = 0; i < rshobus.size(); i++) {
 			rshobus[i].draw();
 		}
@@ -711,4 +713,5 @@ namespace game_framework {
 	CMovingBitmap information_life;
 	bool Invincible = false;
 	int Helicopter_count = 0;
+	std::vector<Enemy_tank> enemy_tnak;
 }

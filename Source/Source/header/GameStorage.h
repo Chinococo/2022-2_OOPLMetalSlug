@@ -72,6 +72,7 @@ namespace game_framework {
 	extern tank marco_tank;
 	extern std::vector <MapObject> MapObjects;
 	extern std::vector<Soldier> soldiers;
+	extern std::vector<Enemy_tank> enemy_tnak;
 	extern std::vector<Bullet> bullets;
 	extern std::vector<Firework> soldierFireworks;
 	extern std::vector<Prisoner> prisoners;
@@ -95,4 +96,5 @@ namespace game_framework {
 	extern CMovingBitmap information_life;
 	extern bool Invincible;
 	extern int Helicopter_count;
+	 
 }
