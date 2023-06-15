@@ -170,7 +170,7 @@ void Marco::attack() {
 			addBullet(x + facingX * 20, y + 20, 20, 0, 1, "hero");
 		}
 		else {
-			addBullet(x + facingX * 20, y + 20, 20, facingX, facingY, "hero");
+			addBullet(x+GetWidth()/2 + facingX * 30, y + 20, 20, facingX, facingY, "hero");
 		}
 	}
 }

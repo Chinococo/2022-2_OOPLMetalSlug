@@ -136,13 +136,16 @@ void Enemy_tank::attack() {
 }
 
 void Enemy_tank::moveLeftRight() {
+	int distanceX = abs((abs(ViewPointX) + marco.GetLeft()) - x);
 	if (movingLeft) {
-		dx += -speedX;
+		if(distanceX>100)
+			dx += -speedX;
 		facingX = -1;
 		flip = false;
 	}
 	if (movingRight) {
-		dx += speedX;
+		if (distanceX > 100)
+			dx += speedX;
 		facingX = 1;
 		flip = true;
 	}
