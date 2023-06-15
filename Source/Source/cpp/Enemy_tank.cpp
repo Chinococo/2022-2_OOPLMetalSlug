@@ -128,7 +128,7 @@ void Enemy_tank::attack() {
 	if (attacking) {
 		//addBullet(ViewPointX+x + facingX * 20, y + 20, 20, facingX, facingY, "enemy");
 		std::string direction = (facingX == -1) ? "left" : "right";
-		addFirework(x, y + 10, direction);
+		enemy_tnak_bullets.push_back(Enemy_tank_bullet(ViewPointX + x + facingX * 20, y + 20,direction));
 	}
 }
 

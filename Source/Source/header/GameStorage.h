@@ -74,7 +74,7 @@ namespace game_framework {
 	extern std::vector <MapObject> MapObjects;
 	extern std::vector<Soldier> soldiers;
 	extern std::vector<Enemy_tank> enemy_tnak;
-	extern std::vector<Enemy_tank> enemy_tnak_bullets;
+	extern std::vector<Enemy_tank_bullet> enemy_tnak_bullets;
 	extern std::vector<Bullet> bullets;
 	extern std::vector<Firework> soldierFireworks;
 	extern std::vector<Prisoner> prisoners;

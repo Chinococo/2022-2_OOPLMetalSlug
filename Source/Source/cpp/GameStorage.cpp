@@ -445,9 +445,6 @@ namespace game_framework {
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
 		} 
-		for (size_t i = 0; i < enemy_tnak_bullets.size(); i++) {
-				enemy_tnak_bullets[i].draw();
-		}
 		for (auto &grenade : heroGrenades) {
 			grenade.draw();
 		}
@@ -458,7 +455,7 @@ namespace game_framework {
 			tank_bullets[i]->move();
 			tank_bullets[i]->draw();
 		}
-		for (unsigned i = 0; i < tank_bullets.size(); i++) {
+		for (unsigned i = 0; i < enemy_tnak_bullets.size(); i++) {
 			enemy_tnak_bullets[i].move();
 			enemy_tnak_bullets[i].draw();
 		}
@@ -721,5 +718,5 @@ namespace game_framework {
 	bool Invincible = false;
 	int Helicopter_count = 0;
 	std::vector<Enemy_tank> enemy_tnak;
-	std::vector<Enemy_tank> enemy_tnak_bullets;
+	std::vector<Enemy_tank_bullet> enemy_tnak_bullets;
 }

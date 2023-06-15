@@ -1,21 +1,30 @@
 #include "stdafx.h"
 #include "../header/GameStorage.h"
-Enemy_tank_bullet::Enemy_tank_bullet(int _x, int _y)
+Enemy_tank_bullet::Enemy_tank_bullet(int _x, int _y, std::string direction)
 {
 	this->start = clock();
 	this->x = _x;
 	this->y = _y;
+	this->direction = direction;
+	init();
 
 }void   Enemy_tank_bullet::init() {
-	this->LoadBitmapByString({ "resources/img_v2/boss1/canno/laser/air0.bmp" }, RGB(255, 255, 255));
+	if (direction == "left")
+		this->LoadBitmapByString({ "resources/enemy_tank/enemy_bullet.bmp" }, RGB(255, 255, 255));
+	else
+		this->LoadBitmapByString({ "resources/enemy_tank/flip_enemy_bullet.bmp" }, RGB(255, 255, 255));
+	
 }
 void  Enemy_tank_bullet::move()
 {
 	if (clock() - start > 100) {
-		x -= 10;
+		if (direction == "left")
+			x -= 10;
+		else
+			x += 10;
 		start = clock();
 	}
-	this->SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);
+	this->SetTopLeft(x, y - ViewPointYInit + ViewPointY);
 	if (IsOverlap(*this, marco)) {
 		this->isAlive = false;
 		marco.dead();
