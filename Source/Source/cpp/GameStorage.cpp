@@ -52,10 +52,12 @@ namespace game_framework {
 		//soldiers.push_back(Soldier(300, 300, moveSpeed));
 		//soldiers.push_back(Soldier(400, 400, moveSpeed));
 		//soldiers.push_back(Soldier(500, 500, moveSpeed));
-		for(int i=500;i<=12000;i+=100)
+		for(int i=500;i<=10000;i+=100)
 			if(rand()%(state=="map1"?5:4)==0)
 				soldiers.push_back(Soldier(i, 100, 1));
-		int t = soldiers.size();
+		for (int i = 8000; i <= 10000; i += 100)
+			if (rand() % (state == "map1" ? 8 : 6) == 0)
+				enemy_tnak.push_back(Enemy_tank(i, 100, 1));
 		/*
 		soldiers.push_back(Soldier(600, 100, moveSpeed));
 		soldiers.push_back(Soldier(1000, 500, 1));
@@ -67,7 +69,7 @@ namespace game_framework {
 		soldiers.push_back(Soldier(4000, 500, 1));
 		soldiers.push_back(Soldier(4500, 500, 1));
 		*/
-		enemy_tnak.push_back(Enemy_tank(300, 100, 1));
+		
 		
 	}
 	bool isColboxOverlap(ColBox colbox1, ColBox colbox2) {
