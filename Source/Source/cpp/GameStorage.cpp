@@ -61,6 +61,8 @@ namespace game_framework {
 		soldiers.push_back(Soldier(3500, 500, 1));
 		soldiers.push_back(Soldier(4000, 500, 1));
 		soldiers.push_back(Soldier(4500, 500, 1));
+		Enemy_tank test(300, 100,1);
+		test.init();
 		
 	}
 	bool isColboxOverlap(ColBox colbox1, ColBox colbox2) {

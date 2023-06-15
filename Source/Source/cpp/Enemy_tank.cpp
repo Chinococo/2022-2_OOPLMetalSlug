@@ -246,13 +246,6 @@ void Enemy_tank::draw() {
 	}
 }
 
-Enemy_tank &Enemy_tank::operator=(const Enemy_tank &other) {
-	x = other.x;
-	y = other.y;
-	speedX = other.speedX;
-	return *this;
-}
-
 ColBox Enemy_tank::getColBox(void) {
 	return {
 		{x, y},

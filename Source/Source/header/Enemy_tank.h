@@ -19,7 +19,6 @@ public:
 	virtual void collideWithGround() override;
 	virtual void collideWithWall() override;
 	virtual void draw() override;
-	Enemy_tank &operator=(const Enemy_tank &other);
 	virtual ColBox getColBox(void) override;
 	void reset(void);
 
