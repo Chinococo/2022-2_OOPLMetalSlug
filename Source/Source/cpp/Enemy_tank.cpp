@@ -13,7 +13,7 @@ void Enemy_tank::init() {
 	std::vector<std::string> paths;
 	std::pair<int, int> range;
 	for (unsigned i = 1; i < csv.size(); i++) {
-		if (csv[i][0] != "soldier")
+		if (csv[i][0] != "enemy_tank")
 			continue;
 		int delay = std::stoi(csv[i][3]);
 		string prefix = csv[i][2];
@@ -28,7 +28,7 @@ void Enemy_tank::init() {
 
 	/*filp*/
 	for (unsigned i = 1; i < csv.size(); i++) {
-		if (csv[i][0] != "soldier")
+		if (csv[i][0] != "enemy_tank")
 			continue;
 		int delay = std::stoi(csv[i][3]);
 		string prefix = csv[i][2];
@@ -180,19 +180,13 @@ void Enemy_tank::updateAction() {
 	lastAction = action;
 	if (inAir) {
 		if (attacking) {
-			action = Action::BOMB;
+			action = Action::Shooting;
 			once = false;
-		}
-		else if (movingLeft || movingRight) {
-			action = Action::JUMP;
-		}
-		else {
-			action = Action::JUMP;
 		}
 	}
 	else {
 		if (attacking) {
-			action = Action::BOMB;
+			action = Action::Shooting;
 			once = false;
 		}
 		else if (movingLeft || movingRight) {

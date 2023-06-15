@@ -41,6 +41,6 @@ private:
 	clock_t lastJumpTime = clock();
 	clock_t lastAttackTime = clock();
 	enum class Action {
-		IDLE, MOVE, JUMP, FIREWORK, GRENADE, BOMB, DIE
+		IDLE, MOVE, Shooting,DIE
 	} action = Action::IDLE, lastAction = Action::IDLE;
 };
