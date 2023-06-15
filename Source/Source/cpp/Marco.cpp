@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <chrono>
+#include <thread>
 #include "../header/GameStorage.h"
 
 using namespace game_framework;
@@ -164,11 +165,11 @@ void Marco::move() {
 void Marco::attack() {
 	if (attacking) {
 		if (isPoweredUp) {
-			addBullet(x + GetWidth() / 2 + facingX * 30, y + 30, 20, facingX, facingY, "hero");
-			Sleep(50);
-			addBullet(x + GetWidth() / 2 + facingX * 30, y + 20, 20, facingX, facingY, "hero");
-			Sleep(50);
-			addBullet(x + GetWidth() / 2 + facingX * 30, y + 10, 20, facingX, facingY, "hero");
+			std::thread myThread(addTripleBullet, x + GetWidth() / 2 + facingX * 30, y, 20, facingX, facingY, "hero");
+			// Detach the thread if you don't want to wait for its completion
+			myThread.detach();
+			//addBullet(x + GetWidth() / 2 + facingX * 30, y + 20, 20, facingX, facingY, "hero");
+			//addBullet(x + GetWidth() / 2 + facingX * 30, y + 10, 20, facingX, facingY, "hero");
 			//addBullet(x + facingX * 20, y + 20, 20, -1, 0, "hero");
 			//addBullet(x + facingX * 20, y + 20, 20, 1, 0, "hero");
 			//addBullet(x + facingX * 20, y + 20, 20, 0, -1, "hero");

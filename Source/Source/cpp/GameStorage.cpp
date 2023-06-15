@@ -2,6 +2,7 @@
 #include "../header/GameStorage.h"
 #include <fstream>
 #include <sstream>
+#include <thread>
 namespace game_framework {
 	void createPickups(void) {
 		Pickup::createPickup(100, 200);
@@ -422,6 +423,18 @@ namespace game_framework {
 		Bullet bullet(x, y, speedX, facingX, facingY, owner);
 		bullet.init();
 		bullets.push_back(bullet);
+	}
+	void addTripleBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner) {
+		for (int i = 10; i <= 30; i += 10) {
+			std::thread myThread(addBullet, x, y + i, 20, facingX, facingY, "hero");
+			// Detach the thread if you don't want to wait for its completion
+			myThread.detach();
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		}
+
+		//Bullet bullet(x, y, speedX, facingX, facingY, owner);
+		//bullet.init();
+		//bullets.push_back(bullet);
 	}
 	void addFirework(int x, int y, std::string direction) {
 		Firework firework(x, y, direction);

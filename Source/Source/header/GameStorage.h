@@ -38,6 +38,7 @@ namespace game_framework {
 	extern void createMap();
 	extern void removeInactiveSolider();
 	extern void addBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner);
+	extern void addTripleBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner);
 	extern void addFirework(int x, int y, std::string direction);
 	extern void removeInactives();
 	extern void removeMapObject();
