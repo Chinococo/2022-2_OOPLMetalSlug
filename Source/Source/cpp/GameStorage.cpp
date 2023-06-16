@@ -288,7 +288,7 @@ namespace game_framework {
 			if ((*tank_bullets[i]).isOverlap_tank_bullet(boss)) {
 				(*tank_bullets[i]).dead();
 				boss.damge(1);
-				break;
+				continue;
 			}
 			for (unsigned k = 0; k < enemy_tnak.size(); k++)
 				if (game_framework::CMovingBitmap::IsOverlap(enemy_tnak[k], *tank_bullets[i])) {
