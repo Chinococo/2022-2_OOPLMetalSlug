@@ -106,7 +106,7 @@ ColBox RectBox::getColBox(void) const {
 RectBox RectBox::getRelRectBox(void) const {
 	return RectBox(
 		this->left + ViewPointX,
-		this->top - ViewPointY + ViewPointYInit,
+		this->top + ViewPointY - ViewPointYInit,
 		this->width,
 		this->height
 	);
