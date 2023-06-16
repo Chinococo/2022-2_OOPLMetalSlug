@@ -20,6 +20,8 @@
 #include "../header/DamageEffect.h"
 #include "../header/Pickup.h"
 #include "../header/tank_cannon_shell.h"
+#include "../header/Enemy_tank.h"
+#include "../header/enemy_tank_bullet.h"
 #include <string>
 #include <vector>
 #include <set>
@@ -36,6 +38,7 @@ namespace game_framework {
 	extern void createMap();
 	extern void removeInactiveSolider();
 	extern void addBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner);
+	extern void addTripleBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner);
 	extern void addFirework(int x, int y, std::string direction);
 	extern void removeInactives();
 	extern void removeMapObject();
@@ -71,6 +74,8 @@ namespace game_framework {
 	extern tank marco_tank;
 	extern std::vector <MapObject> MapObjects;
 	extern std::vector<Soldier> soldiers;
+	extern std::vector<Enemy_tank> enemy_tnak;
+	extern std::vector<Enemy_tank_bullet> enemy_tnak_bullets;
 	extern std::vector<Bullet> bullets;
 	extern std::vector<Firework> soldierFireworks;
 	extern std::vector<Prisoner> prisoners;
@@ -94,4 +99,5 @@ namespace game_framework {
 	extern CMovingBitmap information_life;
 	extern bool Invincible;
 	extern int Helicopter_count;
+	 
 }

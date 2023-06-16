@@ -13,6 +13,7 @@ tank::~tank() {
 }
 
 void tank::init() {
+	this->hp = 9;
 	//delete barrel;
 	barrel = new tank_barrel(x + 20, y + 20);
 	barrel->init();
@@ -351,6 +352,7 @@ void tank::respawn(void)
 	start = clock();
 	alive = true;
 	dying = false;
+	hp = 9;
 }
 
 void tank::damge(int damge1)

@@ -2,6 +2,7 @@
 #include "../header/GameStorage.h"
 #include <fstream>
 #include <sstream>
+#include <thread>
 namespace game_framework {
 	void createPickups(void) {
 		Pickup::createPickup(100, 200);
@@ -52,6 +53,13 @@ namespace game_framework {
 		//soldiers.push_back(Soldier(300, 300, moveSpeed));
 		//soldiers.push_back(Soldier(400, 400, moveSpeed));
 		//soldiers.push_back(Soldier(500, 500, moveSpeed));
+		for(int i=500;i<=10000;i+=100)
+			if(rand()%(state=="map1"?5:4)==0)
+				soldiers.push_back(Soldier(i, 100, 1));
+		for (int i = 8000; i <= 10000; i += 100)
+			if (rand() % (state == "map1" ? 8 : 6) == 0)
+				enemy_tnak.push_back(Enemy_tank(i, 100, 1));
+		/*
 		soldiers.push_back(Soldier(600, 100, moveSpeed));
 		soldiers.push_back(Soldier(1000, 500, 1));
 		soldiers.push_back(Soldier(1500, 500, 1));
@@ -61,6 +69,8 @@ namespace game_framework {
 		soldiers.push_back(Soldier(3500, 500, 1));
 		soldiers.push_back(Soldier(4000, 500, 1));
 		soldiers.push_back(Soldier(4500, 500, 1));
+		*/
+		
 		
 	}
 	bool isColboxOverlap(ColBox colbox1, ColBox colbox2) {
@@ -87,24 +97,50 @@ namespace game_framework {
 			ASSERT(grenadeColBox == emptyColBox);
 			ASSERT(&grenadeColBox != &emptyColBox);
 
-			if (grenade.isExpired()) {
-				grenadeColBox = grenade.explode();
+			bool isExplode = false;
+
+			if (grenade.isExpired() && grenade.isAlive()) {
+				isExplode = true;
 			}
 			else {
 				for (auto &soldier : soldiers) {
-					if (grenade.IsOverlap_(soldier)) { // soldier overlapped
+					if (isExplode) {
+						break;
+					}
+					if (grenade.IsOverlap_(soldier) && grenade.isAlive()) { // soldier overlapped
 						ASSERT(grenadeColBox == emptyColBox);
-						grenadeColBox = grenade.explode();
+						isExplode = true;
 						break;
 					}
 				}
 				for (auto &rshobu : rshobus) {
-					if (grenade.IsOverlap_(rshobu)) {
+					if (isExplode) {
+						break;
+					}
+					if (grenade.IsOverlap_(rshobu) && grenade.isAlive()) {
 						ASSERT(grenadeColBox == emptyColBox);
-						grenadeColBox = grenade.explode();
+						isExplode = true;
 						break;
 					}
 				}
+				for (auto &enemyTank : enemy_tnak) {
+					if (isExplode) {
+						break;
+					}
+					if (grenade.IsOverlap_(enemyTank) && grenade.isAlive()) {
+						ASSERT(grenadeColBox == emptyColBox);
+						isExplode = true;
+						break;
+					}
+				}
+				if (grenade.IsOverlap_(boss) && grenade.isAlive()) {
+					ASSERT(grenadeColBox == emptyColBox);
+					isExplode = true;
+				}
+			}
+
+			if (isExplode) {
+				grenadeColBox = grenade.explode();
 			}
 			
 			if (grenadeColBox != emptyColBox) { // check in range soldier
@@ -121,6 +157,17 @@ namespace game_framework {
 					if (isColboxOverlap(grenadeColBox, rshobuColBox)) {
 						rshobu.damge(10);
 					}
+				}
+				for (auto &enemyTank : enemy_tnak) {
+					ColBox enemyTankColBox = enemyTank.getColBox();
+					ASSERT(enemyTankColBox != emptyColBox);
+					if (isColboxOverlap(grenadeColBox, enemyTankColBox)) {
+						enemyTank.dead();
+					}
+				}
+				ColBox bossColBox = boss.getColBox();
+				if (isColboxOverlap(grenadeColBox, bossColBox)) {
+					boss.damge(10);
 				}
 			}
 		}
@@ -151,13 +198,20 @@ namespace game_framework {
 				bullets[i].dead();
 				break;
 			}
+			for(unsigned k=0;k< enemy_tnak.size();k++)
+				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(enemy_tnak[k], bullets[i])) {
+					enemy_tnak[k].dead();
+					bullets[i].dead();
+					break;
+				}
+
 			if (bullets[i].owner == "enemy" && game_framework::CMovingBitmap::IsOverlap(marco_tank, bullets[i]) && Driving) {
 				if (!godmode) marco_tank.damge(1);
 				bullets[i].dead();
 				break;
 			}
 			for (size_t j = 0; j < soldiers.size(); j++) {
-				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(bullets[i], soldiers[j])) {
+				if (bullets[i].owner == "hero" &&game_framework::CMovingBitmap::IsOverlap(bullets[i], soldiers[j])&&soldiers[j].isAlive()) {
 					soldiers[j].dead();
 					bullets[i].dead();
 					break;
@@ -195,9 +249,23 @@ namespace game_framework {
 			}
 			
 		}
+		for (size_t i = 0; i < enemy_tnak_bullets.size(); i++) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco, enemy_tnak_bullets[i]) && marco.isAlive()) {
+				if (!godmode) { marco.dead(); }
+				enemy_tnak_bullets[i].dead();
+				break;
+			}
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, enemy_tnak_bullets[i]) && marco_tank.isAlive() && Driving) {
+				if (!godmode) { marco_tank.damge(1); }
+				enemy_tnak_bullets[i].dead();
+				break;
+			}
+
+
+		}
 		for (size_t i = 0; i < tank_bullets.size(); i++) {
 			for (size_t j = 0; j < soldiers.size(); j++) {
-				if (game_framework::CMovingBitmap::IsOverlap(*tank_bullets[i], soldiers[j])) {
+				if (game_framework::CMovingBitmap::IsOverlap(*tank_bullets[i], soldiers[j]) && soldiers[j].isAlive()) {
 					soldiers[j].dead();
 					(*tank_bullets[i]).dead();
 					break;
@@ -221,6 +289,12 @@ namespace game_framework {
 				boss.damge(1);
 				break;
 			}
+			for (unsigned k = 0; k < enemy_tnak.size(); k++)
+				if (game_framework::CMovingBitmap::IsOverlap(enemy_tnak[k], *tank_bullets[i])) {
+					enemy_tnak[k].dead();
+					(*tank_bullets[i]).dead();
+					break;
+				}
 		}
 		for (size_t i = 0; i < soldierFireworks.size(); i++) {
 			if (game_framework::CMovingBitmap::IsOverlap(marco, soldierFireworks[i]) && marco.isAlive()) {
@@ -231,6 +305,19 @@ namespace game_framework {
 			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, soldierFireworks[i]) && marco_tank.isAlive() && Driving) {
 				if (!godmode) { marco_tank.damge(1); }
 				soldierFireworks[i].dead();
+				break;
+			}
+
+		}
+		for (size_t i = 0; i < enemy_tnak_bullets.size(); i++) {
+			if (game_framework::CMovingBitmap::IsOverlap(marco, enemy_tnak_bullets[i]) && marco.isAlive()) {
+				if (!godmode) { marco.dead(); }
+				enemy_tnak_bullets[i].dead();
+				break;
+			}
+			if (game_framework::CMovingBitmap::IsOverlap(marco_tank, enemy_tnak_bullets[i]) && marco_tank.isAlive() && Driving) {
+				if (!godmode) { marco_tank.damge(1); }
+				enemy_tnak_bullets[i].dead();
 				break;
 			}
 
@@ -252,24 +339,50 @@ namespace game_framework {
 			ASSERT(tankCannonShellColBox == emptyColBox);
 			ASSERT(&tankCannonShellColBox != &emptyColBox);
 
-			if (tankCannonShell.isExpired()) {
-				tankCannonShellColBox = tankCannonShell.explode();
+			bool isExplode = false;
+
+			if (tankCannonShell.isExpired() && tankCannonShell.isAlive) {
+				isExplode = true;
 			}
 			else {
 				for (auto &soldier : soldiers) {
-					if (tankCannonShell.IsOverlap_(soldier)) { // soldier overlapped
+					if (isExplode) {
+						break;
+					}
+					if (tankCannonShell.IsOverlap_(soldier) && tankCannonShell.isAlive) { // soldier overlapped
 						ASSERT(tankCannonShellColBox == emptyColBox);
-						tankCannonShellColBox = tankCannonShell.explode();
+						isExplode = true;
 						break;
 					}
 				}
 				for (auto &rshobu : rshobus) {
-					if (tankCannonShell.IsOverlap_(rshobu)) {
+					if (isExplode) {
+						break;
+					}
+					if (tankCannonShell.IsOverlap_(rshobu) && tankCannonShell.isAlive) {
 						ASSERT(tankCannonShellColBox == emptyColBox);
-						tankCannonShellColBox = tankCannonShell.explode();
+						isExplode = true;
 						break;
 					}
 				}
+				for (auto &enemyTank : enemy_tnak) {
+					if (isExplode) {
+						break;
+					}
+					if (tankCannonShell.IsOverlap_(enemyTank) && tankCannonShell.isAlive) {
+						ASSERT(tankCannonShellColBox == emptyColBox);
+						isExplode = true;
+						break;
+					}
+				}
+				if (tankCannonShell.IsOverlap_(boss) && tankCannonShell.isAlive) {
+					ASSERT(tankCannonShellColBox == emptyColBox);
+					isExplode = true;
+				}
+			}
+
+			if (isExplode) {
+				tankCannonShellColBox = tankCannonShell.explode();
 			}
 
 			if (tankCannonShellColBox != emptyColBox) { // check in range soldier
@@ -286,6 +399,17 @@ namespace game_framework {
 					if (isColboxOverlap(tankCannonShellColBox, rshobuColBox)) {
 						rshobu.damge(10);
 					}
+				}
+				for (auto &enemyTank : enemy_tnak) {
+					ColBox enemyTankColBox = enemyTank.getColBox();
+					ASSERT(enemyTankColBox != emptyColBox);
+					if (isColboxOverlap(tankCannonShellColBox, enemyTankColBox)) {
+						enemyTank.dead();
+					}
+				}
+				ColBox bossColBox = boss.getColBox();
+				if (isColboxOverlap(tankCannonShellColBox, bossColBox)) {
+					boss.damge(10);
 				}
 			}
 		}
@@ -317,7 +441,7 @@ namespace game_framework {
 			path.push_back(buffer);
 		}
 		information_life.LoadBitmapByString(path,RGB(255,255,255));
-		information_life.SetTopLeft(0, 30);
+		information_life.SetTopLeft(0, 0);
 		information_arm.SetTopLeft(-20, -2);
 		information_bomb.SetTopLeft(70, 0);
 		background_mission1.LoadBitmapByString({ "resources/maps/background4.bmp" }, RGB(255, 255, 255));
@@ -355,6 +479,18 @@ namespace game_framework {
 		bullet.init();
 		bullets.push_back(bullet);
 	}
+	void addTripleBullet(int x, int y, int speedX, int facingX, int facingY, std::string owner) {
+		for (int i = 10; i <= 30; i += 10) {
+			std::thread myThread(addBullet, x, y + i, 20, facingX, facingY, "hero");
+			// Detach the thread if you don't want to wait for its completion
+			myThread.detach();
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		}
+
+		//Bullet bullet(x, y, speedX, facingX, facingY, owner);
+		//bullet.init();
+		//bullets.push_back(bullet);
+	}
 	void addFirework(int x, int y, std::string direction) {
 		Firework firework(x, y, direction);
 		firework.init();
@@ -376,6 +512,11 @@ namespace game_framework {
 		soldierFireworks.erase(std::remove_if(soldierFireworks.begin(), soldierFireworks.end(), [](const Firework &firework) {
 			return !firework.isAlive();
 		}), soldierFireworks.end());
+		
+		for (int i = enemy_tnak_bullets.size() - 1; i >= 0; i--)
+			if (!enemy_tnak_bullets[i].isAlive())
+				enemy_tnak_bullets.erase(enemy_tnak_bullets.begin() + i);
+			
 
 		for (unsigned i = 0; i < tank_bullets.size();)
 			if (!tank_bullets[i]->isAlive()) {
@@ -414,6 +555,9 @@ namespace game_framework {
 		for (size_t i = 0; i < soldiers.size(); i++) {
 			soldiers[i].draw();
 		}
+		for (size_t i = 0; i < enemy_tnak.size(); i++) {
+			enemy_tnak[i].draw();
+		}
 		for (size_t i = 0; i < rshobus.size(); i++) {
 			rshobus[i].draw();
 		}
@@ -421,7 +565,7 @@ namespace game_framework {
 		marco_tank.draw();
 		for (size_t i = 0; i < bullets.size(); i++) {
 			bullets[i].draw();
-		}
+		} 
 		for (auto &grenade : heroGrenades) {
 			grenade.draw();
 		}
@@ -431,6 +575,10 @@ namespace game_framework {
 		for (unsigned i = 0; i < tank_bullets.size(); i++) {
 			tank_bullets[i]->move();
 			tank_bullets[i]->draw();
+		}
+		for (unsigned i = 0; i < enemy_tnak_bullets.size(); i++) {
+			enemy_tnak_bullets[i].move();
+			enemy_tnak_bullets[i].draw();
 		}
 		for (auto &tankCannonShell : tankCannonShells) {
 			tankCannonShell.draw();
@@ -542,7 +690,7 @@ namespace game_framework {
 				
 	}
 	void resetWorld(void) {
-
+		Helicopter_count = 0;
 		selectIndex = 0;
 		ViewPointX = 0;
 		ViewPointY = 580;
@@ -604,7 +752,7 @@ namespace game_framework {
 			rshobus[i].init();
 		}
 
-
+		marco_tank.respawn();
 
 
 
@@ -690,4 +838,6 @@ namespace game_framework {
 	CMovingBitmap information_life;
 	bool Invincible = false;
 	int Helicopter_count = 0;
+	std::vector<Enemy_tank> enemy_tnak;
+	std::vector<Enemy_tank_bullet> enemy_tnak_bullets;
 }

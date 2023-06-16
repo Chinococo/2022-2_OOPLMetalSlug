@@ -107,11 +107,11 @@ void RShobu::update() {
 
 void RShobu::draw() {
 	if (alive) {
-		ShowBitmap(2.3);
-
 		for (size_t i = 0; i < bombs.size(); i++) {
 			bombs[i].draw();
 		}
+
+		ShowBitmap();
 	}
 	else {
 		UnshowBitmap();
@@ -138,30 +138,60 @@ void RShobu::handleActionMove() {
 
 	//-----------------------------
 
+	// Marco position
 	int relativeMarcoMiddleHorizontal = marco.GetLeft() + marco.GetWidth() / 2;
 	int relativeMarcoMiddleVertical = marco.GetTop() + marco.GetHeight() / 2;
 
 	int absoluteMarcoMiddleHorizontal = relativeMarcoMiddleHorizontal - ViewPointX;
 	int absoluteMarcoMiddleVertical = relativeMarcoMiddleVertical - ViewPointY + ViewPointYInit;
 
+	// Tank position
+	int relativeTankMiddleHorizontal = marco_tank.GetLeft() + marco_tank.GetWidth() / 2;
+	int relativeTankMiddleVertical = marco_tank.GetTop() + marco_tank.GetHeight() / 2;
+
+	int absoluteTankMiddleHorizontal = relativeTankMiddleHorizontal - ViewPointX;
+	int absoluteTankMiddleVertical = relativeTankMiddleVertical - ViewPointY + ViewPointYInit;
+
+	// This rshobu position
 	int absoluteMiddleHorizontal = absolutePositionLeft + GetWidth() / 2;
 	int absoluteMiddleVertical = absolutePositionTop + GetHeight() / 2;
 
+	// Distance
 	int distanceToMarcoHorizontal = absoluteMarcoMiddleHorizontal - absoluteMiddleHorizontal;
 	int distanceToMarcoVertical = absoluteMarcoMiddleVertical - absoluteMiddleVertical;
 
-	if (distanceToMarcoHorizontal < -DISTANCE_TO_HERO_HORIZONTAL) {
-		moveHorizontally(Direction::LEFT);
-	}
-	else if (distanceToMarcoHorizontal > DISTANCE_TO_HERO_HORIZONTAL) {
-		moveHorizontally(Direction::RIGHT);
-	}
+	int distanceToTankHorizontal = absoluteTankMiddleHorizontal - absoluteMiddleHorizontal;
+	int distanceToTankVertical = absoluteTankMiddleVertical - absoluteMiddleVertical;
 
-	if (distanceToMarcoVertical < DISTANCE_TO_HERO_VERTICAL) {
-		moveVertically(Direction::UP);
+	if (Driving) {
+		if (distanceToTankHorizontal < -DISTANCE_TO_HERO_HORIZONTAL) {
+			moveHorizontally(Direction::LEFT);
+		}
+		else if (distanceToTankHorizontal > DISTANCE_TO_HERO_HORIZONTAL) {
+			moveHorizontally(Direction::RIGHT);
+		}
+
+		if (distanceToTankVertical < DISTANCE_TO_HERO_VERTICAL) {
+			moveVertically(Direction::UP);
+		}
+		else if (distanceToTankVertical > DISTANCE_TO_HERO_VERTICAL) {
+			moveVertically(Direction::DOWN);
+		}
 	}
-	else if (distanceToMarcoVertical > DISTANCE_TO_HERO_VERTICAL) {
-		moveVertically(Direction::DOWN);
+	else {
+		if (distanceToMarcoHorizontal < -DISTANCE_TO_HERO_HORIZONTAL) {
+			moveHorizontally(Direction::LEFT);
+		}
+		else if (distanceToMarcoHorizontal > DISTANCE_TO_HERO_HORIZONTAL) {
+			moveHorizontally(Direction::RIGHT);
+		}
+
+		if (distanceToMarcoVertical < DISTANCE_TO_HERO_VERTICAL) {
+			moveVertically(Direction::UP);
+		}
+		else if (distanceToMarcoVertical > DISTANCE_TO_HERO_VERTICAL) {
+			moveVertically(Direction::DOWN);
+		}
 	}
 
 	//-----------------------------
@@ -192,9 +222,9 @@ void RShobu::handleActionDie() {
 
 void RShobu::fire() {
 	int absolutePositionMiddleHorizontal = absolutePositionLeft + GetWidth() / 2;
-	int absolutePositionBottom = absolutePositionTop + GetHeight();
+	int absolutePositionMiddleVertical = absolutePositionTop + GetHeight() / 2;
 
-	RShobuBomb bomb(absolutePositionMiddleHorizontal + 35, absolutePositionBottom + 50);
+	RShobuBomb bomb(absolutePositionMiddleHorizontal - 10, absolutePositionMiddleVertical);
 	bomb.init();
 	bombs.push_back(bomb);
 }

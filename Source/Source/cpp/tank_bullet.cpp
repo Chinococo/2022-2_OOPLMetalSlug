@@ -5,8 +5,12 @@ tank_bullet::tank_bullet(int _x, int _y):Character(x,y,0)
 {
 	this->start = clock();
 	this->angle = ((((tank_barrel_angle + 22) % 32) * (static_cast<float>(360) / 32)) / 180) * 3.14f;
+	/*
 	this->x = _x+30+ int(25 * cos(angle));
 	this->y = _y+60+int(25 * sin(angle));
+	*/
+	this->x = _x + 30 + int(50 * cos(angle));
+	this->y = _y + 60 + int(50 * sin(angle));
 	
 
 
@@ -16,8 +20,12 @@ tank_bullet::tank_bullet(int _x, int _y):Character(x,y,0)
 void tank_bullet::move()
 {
 	if (clock() - start > 100) {
+		x += int(50 * cos(angle));
+		y += int(50 * sin(angle));
+		/*
 		x += int(25*cos(angle));
 		y += int(25*sin(angle));
+		*/
 		start = clock();
 	}
 	this->SetTopLeft(ViewPointX + x, y - ViewPointYInit + ViewPointY);

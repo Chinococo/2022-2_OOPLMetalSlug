@@ -52,3 +52,7 @@ grenade,0~12,resources/img_v2/grenade/move/,100
 grenade,12~32,resources/img_v2/grenade/explode/,100
 pickup,0~1,resources/img_v2/pickup/simple/,100
 tank_cannon_shell,0~9,resources/img_v2/tank/cannon_shell/,100
+enemy_tank,0~1,resources/enemy_tank/idle/,100
+enemy_tank,1~5,resources/enemy_tank/drving/,100
+enemy_tank,5~9,resources/enemy_tank/shooting/,500
+enemy_tank,9~10,resources/enemy_tank/die/,100

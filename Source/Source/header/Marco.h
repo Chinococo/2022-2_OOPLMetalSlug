@@ -32,7 +32,7 @@ public:
 private:
 	bool once = false;
 	int velocityY = 0;
-	const int JUMP_VELOCITY = -15;
+	const int JUMP_VELOCITY = -17;
 	const int ATTACK_COOLDOWN = 300;
 	const int GRENADE_COOLDOWN = 300;
 	const int POWER_UP_DURATION_SEC = 5;

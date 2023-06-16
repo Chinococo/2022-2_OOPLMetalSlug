@@ -13,6 +13,7 @@ public:
 	int x;
 	int y;
 	ColBox CollideBox = { {-1, -1},{-1, -1} };
+	bool alive = true;
 	Character(int _x, int _y, int _speedX);
 	virtual void init() {}
 	virtual void update() {}
@@ -40,7 +41,6 @@ protected:
 	int facingY = 0;
 	int animationflipBias = 0;
 	int animationDelay;
-	bool alive = true;
 	bool dying = false;
 	bool flip = false;
 	clock_t deathTimer = clock();
