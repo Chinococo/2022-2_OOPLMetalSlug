@@ -97,28 +97,50 @@ namespace game_framework {
 			ASSERT(grenadeColBox == emptyColBox);
 			ASSERT(&grenadeColBox != &emptyColBox);
 
-			if (grenade.isExpired()) {
-				grenadeColBox = grenade.explode();
+			bool isExplode = false;
+
+			if (grenade.isExpired() && grenade.isAlive()) {
+				isExplode = true;
 			}
 			else {
 				for (auto &soldier : soldiers) {
-					if (grenade.IsOverlap_(soldier)) { // soldier overlapped
+					if (isExplode) {
+						break;
+					}
+					if (grenade.IsOverlap_(soldier) && grenade.isAlive()) { // soldier overlapped
 						ASSERT(grenadeColBox == emptyColBox);
-						grenadeColBox = grenade.explode();
+						isExplode = true;
 						break;
 					}
 				}
 				for (auto &rshobu : rshobus) {
-					if (grenade.IsOverlap_(rshobu)) {
-						//ASSERT(grenadeColBox == emptyColBox);
-						grenadeColBox = grenade.explode();
+					if (isExplode) {
+						break;
+					}
+					if (grenade.IsOverlap_(rshobu) && grenade.isAlive()) {
+						ASSERT(grenadeColBox == emptyColBox);
+						isExplode = true;
 						break;
 					}
 				}
-				if (grenade.IsOverlap_(boss)) {
-					ASSERT(grenadeColBox == emptyColBox);
-					grenadeColBox = grenade.explode();
+				for (auto &enemyTank : enemy_tnak) {
+					if (isExplode) {
+						break;
+					}
+					if (grenade.IsOverlap_(enemyTank) && grenade.isAlive()) {
+						ASSERT(grenadeColBox == emptyColBox);
+						isExplode = true;
+						break;
+					}
 				}
+				if (grenade.IsOverlap_(boss) && grenade.isAlive()) {
+					ASSERT(grenadeColBox == emptyColBox);
+					isExplode = true;
+				}
+			}
+
+			if (isExplode) {
+				grenadeColBox = grenade.explode();
 			}
 			
 			if (grenadeColBox != emptyColBox) { // check in range soldier
@@ -136,8 +158,14 @@ namespace game_framework {
 						rshobu.damge(10);
 					}
 				}
+				for (auto &enemyTank : enemy_tnak) {
+					ColBox enemyTankColBox = enemyTank.getColBox();
+					ASSERT(enemyTankColBox != emptyColBox);
+					if (isColboxOverlap(grenadeColBox, enemyTankColBox)) {
+						enemyTank.dead();
+					}
+				}
 				ColBox bossColBox = boss.getColBox();
-				ASSERT(bossColBox != emptyColBox);
 				if (isColboxOverlap(grenadeColBox, bossColBox)) {
 					boss.damge(10);
 				}
@@ -311,30 +339,50 @@ namespace game_framework {
 			ASSERT(tankCannonShellColBox == emptyColBox);
 			ASSERT(&tankCannonShellColBox != &emptyColBox);
 
-			if (tankCannonShell.isExpired()) {
-				tankCannonShellColBox = tankCannonShell.explode();
+			bool isExplode = false;
+
+			if (tankCannonShell.isExpired() && tankCannonShell.isAlive) {
+				isExplode = true;
 			}
 			else {
 				for (auto &soldier : soldiers) {
-					if (tankCannonShell.IsOverlap_(soldier)) { // soldier overlapped
+					if (isExplode) {
+						break;
+					}
+					if (tankCannonShell.IsOverlap_(soldier) && tankCannonShell.isAlive) { // soldier overlapped
 						ASSERT(tankCannonShellColBox == emptyColBox);
-						tankCannonShellColBox = tankCannonShell.explode();
+						isExplode = true;
 						break;
 					}
 				}
 				for (auto &rshobu : rshobus) {
-					if (tankCannonShell.IsOverlap_(rshobu)) {
+					if (isExplode) {
+						break;
+					}
+					if (tankCannonShell.IsOverlap_(rshobu) && tankCannonShell.isAlive) {
 						ASSERT(tankCannonShellColBox == emptyColBox);
-						tankCannonShellColBox = tankCannonShell.explode();
+						isExplode = true;
 						break;
 					}
 				}
-				/*
-				if (tankCannonShell.IsOverlap_()) {
-					ASSERT(tankCannonShellColBox == emptyColBox);
-					tankCannonShellColBox = tankCannonShell.explode();
+				for (auto &enemyTank : enemy_tnak) {
+					if (isExplode) {
+						break;
+					}
+					if (tankCannonShell.IsOverlap_(enemyTank) && tankCannonShell.isAlive) {
+						ASSERT(tankCannonShellColBox == emptyColBox);
+						isExplode = true;
+						break;
+					}
 				}
-				*/
+				if (tankCannonShell.IsOverlap_(boss) && tankCannonShell.isAlive) {
+					ASSERT(tankCannonShellColBox == emptyColBox);
+					isExplode = true;
+				}
+			}
+
+			if (isExplode) {
+				tankCannonShellColBox = tankCannonShell.explode();
 			}
 
 			if (tankCannonShellColBox != emptyColBox) { // check in range soldier
@@ -350,6 +398,13 @@ namespace game_framework {
 					ASSERT(rshobuColBox != emptyColBox);
 					if (isColboxOverlap(tankCannonShellColBox, rshobuColBox)) {
 						rshobu.damge(10);
+					}
+				}
+				for (auto &enemyTank : enemy_tnak) {
+					ColBox enemyTankColBox = enemyTank.getColBox();
+					ASSERT(enemyTankColBox != emptyColBox);
+					if (isColboxOverlap(tankCannonShellColBox, enemyTankColBox)) {
+						enemyTank.dead();
 					}
 				}
 				ColBox bossColBox = boss.getColBox();
