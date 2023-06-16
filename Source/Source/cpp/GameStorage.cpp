@@ -53,6 +53,7 @@ namespace game_framework {
 		//soldiers.push_back(Soldier(300, 300, moveSpeed));
 		//soldiers.push_back(Soldier(400, 400, moveSpeed));
 		//soldiers.push_back(Soldier(500, 500, moveSpeed));
+		enemy_tnak.push_back(Enemy_tank(400, 100, 1));
 		for(int i=500;i<=10000;i+=100)
 			if(rand()%(state=="map1"?5:4)==0)
 				soldiers.push_back(Soldier(i, 100, 1));
@@ -441,7 +442,7 @@ namespace game_framework {
 			path.push_back(buffer);
 		}
 		information_life.LoadBitmapByString(path,RGB(255,255,255));
-		information_life.SetTopLeft(0, 0);
+		information_life.SetTopLeft(0, 40);
 		information_arm.SetTopLeft(-20, -2);
 		information_bomb.SetTopLeft(70, 0);
 		background_mission1.LoadBitmapByString({ "resources/maps/background4.bmp" }, RGB(255, 255, 255));

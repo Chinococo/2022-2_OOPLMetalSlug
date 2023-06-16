@@ -149,7 +149,7 @@ void tank::increaseX(int increse) {
 void tank::moveLeftRight() {
 	if (movingLeft) {
 		dx += -speedX;
-		if (barrel->GetAngele() != 26&&clock()- roate>50) {
+		if (barrel->GetAngele() != 26&&clock()- roate>20) {
 			roate = clock();
 			if (barrel->GetAngele() >= 11 && barrel->GetAngele() <= 25)
 				barrel->SetAngele((barrel->GetAngele()+1)%32);

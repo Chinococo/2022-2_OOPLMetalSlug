@@ -129,9 +129,9 @@ void Enemy_tank::attack() {
 		//addBullet(ViewPointX+x + facingX * 20, y + 20, 20, facingX, facingY, "enemy");
 		std::string direction = (facingX == -1) ? "left" : "right";
 		if(direction=="left")
-			enemy_tnak_bullets.push_back(Enemy_tank_bullet(ViewPointX + x - 5, y + 20,direction));
+			enemy_tnak_bullets.push_back(Enemy_tank_bullet(x - 5, y + 20,direction));
 		else
-			enemy_tnak_bullets.push_back(Enemy_tank_bullet(ViewPointX + x +5+GetWidth(), y + 20, direction));
+			enemy_tnak_bullets.push_back(Enemy_tank_bullet(x +5+GetWidth(), y + 20, direction));
 	}
 }
 
@@ -235,7 +235,7 @@ void Enemy_tank::collideWithWall() {
 
 void Enemy_tank::draw() {
 	if (alive) {
-		SetTopLeft(ViewPointX + x, y);
+		SetTopLeft(ViewPointX + x, y+ViewPointY-ViewPointY);
 		ShowBitmap();
 	}
 	else {

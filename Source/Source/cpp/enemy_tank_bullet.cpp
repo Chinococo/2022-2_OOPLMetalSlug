@@ -24,7 +24,7 @@ void  Enemy_tank_bullet::move()
 			x += 10;
 		start = clock();
 	}
-	this->SetTopLeft(x, y - ViewPointYInit + ViewPointY);
+	this->SetTopLeft(x+ViewPointX, y - ViewPointYInit + ViewPointY);
 	if (IsOverlap(*this, marco)) {
 		this->alive = false;
 		marco.dead();
